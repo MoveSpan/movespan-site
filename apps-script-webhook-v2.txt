@@ -1,0 +1,66 @@
+// MoveSpan System — Google Apps Script webhook v2
+// Обновлённый код для приёма данных Body Age Test И Visual Assessment.
+//
+// КАК УСТАНОВИТЬ:
+// 1. Открой script.google.com → свой существующий проект (тот, чей /exec URL стоит в коде сайта)
+// 2. Замени ВЕСЬ код на этот
+// 3. Deploy → Manage deployments → карандаш → Version: New version → Deploy
+//    (URL /exec останется тем же — сайт менять не надо)
+// 4. В таблице появятся/будут использоваться два листа: "BioAge" и "Assessment"
+//    (создадутся автоматически при первом событии)
+
+function doPost(e) {
+  try {
+    var data = JSON.parse(e.postData.contents);
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+    if (data.type === 'bioage') {
+      var sh = getSheet(ss, 'BioAge', [
+        'Date', 'UID', 'Email', 'Gender', 'Real Age', 'Bio Age', 'Age Diff',
+        'Weakest System', 'T1 Heart', 'T2 Breath', 'T3 Flex', 'T4 Balance',
+        'T5 Shoulder', 'T6 SitRise', 'Zones'
+      ]);
+      sh.appendRow([
+        new Date(data.ts || Date.now()),
+        data.uid || '', data.email || '',
+        data.gender || '', data.realAge || '', data.bioAge || '',
+        data.ageDiff !== null && data.ageDiff !== undefined ? data.ageDiff : '',
+        data.weakest || '',
+        n(data.t1), n(data.t2), n(data.t3), n(data.t4), n(data.t5), n(data.t6),
+        data.zones || ''
+      ]);
+    } else if (data.type === 'assessment') {
+      var sh2 = getSheet(ss, 'Assessment', [
+        'Date', 'UID', 'Email', 'Mirror', 'Feet', 'Wall'
+      ]);
+      sh2.appendRow([
+        new Date(data.ts || Date.now()),
+        data.uid || '', data.email || '',
+        data.mirror || '', data.feet || '', data.wall || ''
+      ]);
+    } else {
+      // Неизвестный тип — пишем в лог-лист, чтобы ничего не терять
+      var sh3 = getSheet(ss, 'Other', ['Date', 'Payload']);
+      sh3.appendRow([new Date(), e.postData.contents]);
+    }
+
+    return ContentService.createTextOutput(JSON.stringify({ ok: true }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ ok: false, error: String(err) }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function getSheet(ss, name, headers) {
+  var sh = ss.getSheetByName(name);
+  if (!sh) {
+    sh = ss.insertSheet(name);
+    sh.appendRow(headers);
+    sh.getRange(1, 1, 1, headers.length).setFontWeight('bold');
+    sh.setFrozenRows(1);
+  }
+  return sh;
+}
+
+function n(v) { return (v === null || v === undefined) ? '' : v; }
