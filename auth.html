@@ -247,7 +247,7 @@ window.signInGoogle = async function() {
   try {
     window._signingIn = true;
     document.getElementById('loading').style.display = 'block';
-    const result = await signInWithRedirect(auth, provider);
+    const result = await signInWithPopup(auth, provider);
     const isNew = result._tokenResponse?.isNewUser;
     if (isNew) {
       await saveUserProfile(result.user);
