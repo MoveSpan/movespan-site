@@ -140,13 +140,6 @@ async function routeAfterAuth(user) {
   window.location.replace('/onboarding');
 }
 
-// Handle Google redirect result
-getRedirectResult(auth).then(result => {
-  if (result && result.user) {
-    routeAfterAuth(result.user);
-  }
-}).catch(e => console.log('redirect error:', e));
-
 // Already signed in - route by profile
 onAuthStateChanged(auth, async (user) => {
   if (user && !window._signingIn) {
