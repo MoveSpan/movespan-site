@@ -242,9 +242,8 @@ window.signInGoogle = async function() {
     await routeAfterAuth(result.user);
   } catch(e) {
     document.getElementById('loading').style.display = 'none';
-    if (e.code !== 'auth/popup-closed-by-user') {
-      showErr('Google sign in failed. Please try again');
-    }
+    console.error('Google auth error:', e.code, e.message);
+    showErr('Error: ' + (e.code || e.message));
   }
 }
 
