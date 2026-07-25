@@ -138,12 +138,12 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
       <div class="block-sub">Select one or more. Joint Recovery is the foundation of every program.</div>
       <div id="practice-list" style="display:flex;flex-direction:column;gap:8px">
         <div class="prac-item" data-val="joint" onclick="togPractice(this)"><span class="prac-icon">&#129463;</span><div class="prac-text"><div class="prac-name">Joint Recovery</div><div class="prac-sub">Full-body joint gymnastics &mdash; the core of every program</div></div></div>
-        <div class="prac-item" data-val="breathwork" onclick="togPractice(this)"><span class="prac-icon">&#127870;</span><div class="prac-text"><div class="prac-name">Breathwork &amp; Meditation</div><div class="prac-sub">Reset your nervous system &middot; Svistyelka, Impulse Breathing</div></div></div>
         <div class="prac-item" data-val="release" onclick="togPractice(this)"><span class="prac-icon">&#128134;</span><div class="prac-text"><div class="prac-name">Body Release</div><div class="prac-sub">Myofascial release &middot; self-massage &middot; tension relief</div></div></div>
         <div class="prac-item" data-val="neurogym" onclick="togPractice(this)"><span class="prac-icon">&#129504;</span><div class="prac-text"><div class="prac-name">Neuro Gym</div><div class="prac-sub">Brain-body coordination &middot; sharpen balance &amp; memory</div></div></div>
+        <div class="prac-item" data-val="taichi" onclick="togPractice(this)"><span class="prac-icon">&#129355;</span><div class="prac-text"><div class="prac-name">Tai Chi &amp; Flow</div><div class="prac-sub">Slow flowing movement &middot; balance &amp; awareness</div></div></div>
+        <div class="prac-item" data-val="walking" onclick="togPractice(this)"><span class="prac-icon">&#128694;</span><div class="prac-text"><div class="prac-name">Walking Therapy</div><div class="prac-sub">Gait &amp; posture reprogramming &middot; daily movement</div></div></div>
+        <div class="prac-item" data-val="breathwork" onclick="togPractice(this)"><span class="prac-icon">&#127870;</span><div class="prac-text"><div class="prac-name">Breathwork &amp; Meditation</div><div class="prac-sub">Reset your nervous system &middot; Svistyelka, Impulse Breathing</div></div></div>
         <div class="prac-item" data-val="sbodyoga" onclick="togPractice(this)"><span class="prac-icon">&#128170;</span><div class="prac-text"><div class="prac-name">Strong Body Yoga</div><div class="prac-sub">Static holds &middot; strengthen joints, tendons &amp; deep muscles</div></div></div>
-        <div class="prac-item soon" data-val="taichi" onclick="togPractice(this)"><span class="prac-icon">&#129355;</span><div class="prac-text"><div class="prac-name">Tai Chi &amp; Flow <span class="soon-badge">SOON</span></div><div class="prac-sub">Slow flowing movement &middot; balance &amp; awareness</div></div></div>
-        <div class="prac-item soon" data-val="walking" onclick="togPractice(this)"><span class="prac-icon">&#128694;</span><div class="prac-text"><div class="prac-name">Walking Therapy <span class="soon-badge">SOON</span></div><div class="prac-sub">Gait &amp; posture reprogramming &middot; daily movement</div></div></div>
       </div>
       <div class="max-hint" style="margin-top:8px">Practices marked SOON will be added when they launch &mdash; we&rsquo;ll notify you.</div>
       <button class="btn-primary" id="btn-s2" disabled onclick="nextFromPractices()">Continue &#8594;</button>
@@ -311,7 +311,7 @@ window.nextFromTracker = function() {
 
 // ---------- step 2: practices ----------
 window.togPractice = function(el) {
-  if (el.classList.contains('soon')) return;
+  // all practices are now active
   el.classList.toggle('sel');
   const v = el.dataset.val;
   const i = state.practices.indexOf(v);
