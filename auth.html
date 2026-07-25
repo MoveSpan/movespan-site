@@ -191,6 +191,7 @@ window.switchTab = function(tab) {
 
 window.signIn = async function() {
   hideMessages();
+    window._signingIn = true;
   const email = document.getElementById('si-email').value.trim();
   const pass = document.getElementById('si-pass').value;
   if (!email || !pass) { showErr('Please enter email and password'); return; }
@@ -211,6 +212,7 @@ window.signIn = async function() {
 
 window.signUp = async function() {
   hideMessages();
+    window._signingIn = true;
   const name = document.getElementById('su-name').value.trim();
   const email = document.getElementById('su-email').value.trim();
   const pass = document.getElementById('su-pass').value;
