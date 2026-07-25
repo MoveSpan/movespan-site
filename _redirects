@@ -1,13 +1,1 @@
-/auth           /auth               200
-/program        /program            200
-/onboarding     /onboarding         200
-/test           /test               200
-/zones          /zones              200
-/reset          /reset              200
-/inventory      /inventory          200
-/journal        /journal            200
-/visual         /visual             200
-/measure        /measure            200
-/sleep          /sleep              200
-/metronome      /metronome          200
-/*              /index.html         200
+/*    /index.html   200
