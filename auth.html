@@ -124,11 +124,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
   // Handle Google redirect result
-  getRedirectResult(auth).then(result => {
-    if (result && result.user) {
-      window.location.replace(sessionStorage.getItem("mw_redirect") || "/onboarding");
-    }
-  }).catch(e => console.log("redirect result error:", e));
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
@@ -144,6 +139,13 @@ async function routeAfterAuth(user) {
   } catch (e) { console.log('Route check error:', e); }
   window.location.replace('/onboarding');
 }
+
+// Handle Google redirect result
+getRedirectResult(auth).then(result => {
+  if (result && result.user) {
+    routeAfterAuth(result.user);
+  }
+}).catch(e => console.log('redirect error:', e));
 
 // Already signed in - route by profile
 onAuthStateChanged(auth, async (user) => {
