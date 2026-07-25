@@ -1,6 +1,4 @@
-/auth.html      /auth.html          200
 /auth           /auth.html          200
-/program.html   /program.html       200
 /program        /program.html       200
 /onboarding     /onboarding.html    200
 /test           /test.html          200
@@ -12,5 +10,3 @@
 /measure        /measure.html       200
 /sleep          /sleep.html         200
 /metronome      /metronome.html     200
-/*.html         /:splat             200
-/*              /index.html         200
