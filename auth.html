@@ -129,14 +129,6 @@ const provider = new GoogleAuthProvider();
 
 // Smart routing: onboarding done → /program, otherwise → /onboarding (resumes saved step)
 async function routeAfterAuth(user) {
-  try {
-    const snap = await getDoc(doc(db, 'users', user.uid));
-    const profile = snap.exists() ? snap.data() : null;
-    if (profile && profile.onboarding && profile.onboarding.completedAt) {
-      window.location.replace('/program');
-      return;
-    }
-  } catch (e) { console.log('Route check error:', e); }
   window.location.replace('/onboarding');
 }
 
