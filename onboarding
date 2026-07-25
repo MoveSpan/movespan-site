@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MoveSpan System — Get Started</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="manifest" href="/manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MoveSpan System">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --green: #2D7D52; --green-light: #E8F5EE; --green-border: #A8D5B8;
+  --text: #1A1A1A; --text-sec: #5A6370; --text-muted: #9AA3AD;
+  --border: #E2E6EA; --surface: #F7F9FB; --white: #FFFFFF;
+  --radius: 14px; --font: 'Inter', system-ui, sans-serif;
+  --orange: #F59E0B; --orange-light: #FEF3C7;
+  --red: #EF4444; --red-light: #FEE2E2;
+}
+body { font-family: var(--font); background: var(--surface); color: var(--text); min-height: 100vh; }
+.wrap { max-width: 560px; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
+.logo { display: flex; align-items: center; gap: 8px; margin-bottom: 1.75rem; }
+.logo-icon { width: 40px; height: 40px; border-radius: 11px; overflow: hidden; flex-shrink: 0; }
+.logo-name { font-size: 15px; font-weight: 600; color: var(--text); }
+.progress-wrap { height: 4px; background: var(--border); border-radius: 2px; margin-bottom: .6rem; }
+.progress { height: 4px; background: var(--green); border-radius: 2px; transition: width .4s ease; }
+.step-label { font-size: 12px; color: var(--text-muted); margin-bottom: 1.75rem; }
+.card { background: var(--white); border-radius: 20px; padding: 2rem 1.75rem; box-shadow: 0 1px 6px rgba(0,0,0,.07); }
+.section { display: none; }
+.section.active { display: block; animation: fadeIn .25s ease; }
+.block-title { font-size: 22px; font-weight: 600; color: var(--text); margin-bottom: 6px; letter-spacing: -.02em; line-height: 1.3; }
+.block-sub { font-size: 14px; color: var(--text-sec); margin-bottom: 1.5rem; line-height: 1.6; }
+.q-label { font-size: 13px; font-weight: 600; color: var(--text); margin: 1.1rem 0 8px; display: block; }
+.q-label:first-of-type { margin-top: 0; }
+.options { display: flex; flex-direction: column; gap: 10px; margin-bottom: .5rem; }
+.option { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius);
+  padding: 13px 16px; font-size: 15px; color: var(--text-sec); cursor: pointer;
+  transition: all .15s; text-align: left; font-family: var(--font); user-select: none; }
+.option:hover { border-color: var(--green-border); color: var(--text); }
+.option.selected { border-color: var(--green); background: var(--green-light); color: var(--green); font-weight: 500; }
+.option .opt-ic { font-size: 19px; margin-right: 10px; display: inline-block; width: 24px; text-align: center; vertical-align: -2px; }
+.option small { display: block; font-size: 12px; color: var(--text-muted); margin-top: 2px; font-weight: 400; }
+.option.selected small { color: var(--green); opacity: .8; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: .25rem; }
+.chip { background: var(--surface); border: 1.5px solid var(--border); border-radius: 40px;
+  padding: 9px 16px; font-size: 14px; font-family: var(--font); color: var(--text-sec);
+  cursor: pointer; transition: all .15s; user-select: none; }
+.chip:hover:not(.disabled) { border-color: var(--green-border); color: var(--text); }
+.chip.sel { background: var(--green-light); color: var(--green); border-color: var(--green-border); font-weight: 500; }
+.chip.disabled { opacity: .35; cursor: not-allowed; }
+.chip .soon { font-size: 10px; color: var(--orange); font-weight: 600; margin-left: 4px; }
+.max-hint { font-size: 12px; color: var(--text-muted); margin: 6px 0 0; }
+.btn-primary { width: 100%; padding: 14px; background: var(--green); color: white; border: none;
+  border-radius: var(--radius); font-size: 15px; font-weight: 500; font-family: var(--font);
+  cursor: pointer; transition: opacity .15s; margin-top: 1.25rem; }
+.btn-primary:hover:not(:disabled) { opacity: .88; }
+.btn-primary:disabled{background:var(--gl);border:1.5px solid var(--gb);color:var(--green);cursor:not-allowed;opacity:1}
+.btn-back { background: transparent; border: none; color: var(--text-muted); font-size: 13px;
+  font-family: var(--font); cursor: pointer; margin-top: 14px; width: 100%; text-align: center; padding: 6px; }
+.btn-back:hover { color: var(--text-sec); }
+.edit-banner { display: none; background: var(--orange-light); border: 1.5px solid var(--orange);
+  border-radius: var(--radius); padding: 10px 14px; font-size: 13px; color: #92400E; margin-bottom: 1.25rem; line-height: 1.5; }
+.err { background: var(--red-light); color: var(--red); border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-top: 12px; display: none; }
+/* INTERSTITIAL */
+.build-wrap { text-align: center; padding: 1.5rem 0 .5rem; }
+.build-spin { width: 46px; height: 46px; margin: 0 auto 1.25rem; border-radius: 50%;
+  border: 3px solid var(--green-light); border-top-color: var(--green); animation: spin 1s linear infinite; }
+.build-title { font-size: 20px; font-weight: 600; letter-spacing: -.02em; margin-bottom: 1.5rem; }
+.build-lines { text-align: left; max-width: 340px; margin: 0 auto; }
+.build-line { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-muted);
+  padding: 7px 0; opacity: 0; transform: translateY(4px); transition: all .35s ease; }
+.build-line.on { opacity: 1; transform: none; color: var(--text-sec); }
+.build-line .tick { color: var(--green); font-weight: 600; }
+/* CARE SCREEN (pain 3) */
+.care { text-align: center; padding: .5rem 0; }
+.care-emoji { font-size: 48px; display: block; margin-bottom: 1rem; }
+.care-title { font-size: 21px; font-weight: 600; letter-spacing: -.02em; margin-bottom: 10px; }
+.care-text { font-size: 14px; color: var(--text-sec); line-height: 1.7; margin-bottom: 12px; text-align: left; }
+.care-note { background: var(--orange-light); border-radius: var(--radius); padding: 12px 16px; font-size: 13px;
+  color: #92400E; line-height: 1.6; text-align: left; margin-bottom: .5rem; }
+#zone-fig .on { fill: #2D7D52 !important; stroke: #1F5A3A !important; }
+.prac-item { display:flex; align-items:flex-start; gap:12px; background:var(--surface); border:1.5px solid var(--border); border-radius:14px; padding:12px 14px; cursor:pointer; transition:all .15s; user-select:none; }
+.prac-item:hover:not(.soon) { border-color:var(--green-border); }
+.prac-item.sel { background:var(--green-light); border-color:var(--green); }
+.prac-item.sel .prac-name { color:var(--green); font-weight:500; }
+.prac-item.sel .prac-sub { color:var(--green); opacity:.8; }
+.prac-item.soon { opacity:.55; cursor:default; }
+.prac-icon { font-size:22px; flex-shrink:0; width:28px; text-align:center; margin-top:1px; }
+.prac-name { font-size:14px; font-weight:600; color:var(--text); margin-bottom:2px; }
+.prac-sub { font-size:12px; color:var(--text-sec); line-height:1.45; }
+.soon-badge { font-size:10px; font-weight:600; color:var(--orange); background:#FEF3C7; border-radius:20px; padding:2px 7px; margin-left:5px; }
+.chip { position:relative; }
+.chip .pr { display:none; position:absolute; left:8px; top:50%; transform:translateY(-50%); width:17px; height:17px; border-radius:50%; background:var(--green); color:white; font-size:10px; font-weight:700; line-height:17px; text-align:center; }
+.chip.sel { padding-left:32px; }
+.chip.sel .pr { display:block; }
+#zone-fig circle, #zone-fig rect, #zone-fig path { transition: fill .2s, stroke .2s; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">
+    <div class="logo-icon"><img src="data:image/png;base64,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" style="width:100%;height:100%;object-fit:cover;display:block;" alt="MoveSpan"></div>
+    <span class="logo-name">MoveSpan System</span>
+  </div>
+  <div class="progress-wrap"><div class="progress" id="progress" style="width:8%"></div></div>
+  <div class="step-label" id="step-label">Step 1 of 3</div>
+
+  <div class="edit-banner" id="edit-banner">
+    &#9998; <b>Editing your profile.</b> Your current answers are pre-filled — change anything and your program will be rebuilt.
+  </div>
+
+  <div class="card">
+
+    <!-- STEP 1 — TRACKER -->
+    <div class="section active" id="sec-tracker">
+      <div class="block-title">Do you use a fitness tracker?</div>
+      <div class="block-sub">We&rsquo;ll adapt your program to your recovery data. Manual entry for now &mdash; automatic sync is coming.</div>
+      <div class="options" id="tracker-opts">
+        <button class="option" data-val="whoop" onclick="pickTracker(this)"><span class="opt-ic">&#8986;</span> WHOOP</button>
+        <button class="option" data-val="apple" onclick="pickTracker(this)"><span class="opt-ic">&#127822;</span> Apple Watch</button>
+        <button class="option" data-val="oura" onclick="pickTracker(this)"><span class="opt-ic">&#128141;</span> Oura Ring</button>
+        <button class="option" data-val="garmin" onclick="pickTracker(this)"><span class="opt-ic">&#8986;</span> Garmin</button>
+        <button class="option" data-val="none" onclick="pickTracker(this)"><span class="opt-ic">&#9995;</span> I don&rsquo;t use any</button>
+      </div>
+      <div style="margin-top:6px;padding:12px 14px;background:#FEF9EC;border-radius:10px;border-left:3px solid var(--orange);font-size:13px;color:#92400E;line-height:1.6">
+        <b>MoveSpan System works with your tracker.</b><br>Your recovery score, HRV and sleep data help the system choose the right practice for you each day.
+      </div>
+      <button class="btn-primary" id="btn-s1" disabled onclick="nextFromTracker()">Continue &#8594;</button>
+    </div>
+
+    <!-- STEP 2 — PRACTICES -->
+    <div class="section" id="sec-practices">
+      <div class="block-title">Choose your practices</div>
+      <div class="block-sub">Select one or more. Joint Recovery is the foundation of every program.</div>
+      <div id="practice-list" style="display:flex;flex-direction:column;gap:8px">
+        <div class="prac-item" data-val="joint" onclick="togPractice(this)"><span class="prac-icon">&#129463;</span><div class="prac-text"><div class="prac-name">Joint Recovery</div><div class="prac-sub">Full-body joint gymnastics &mdash; the core of every program</div></div></div>
+        <div class="prac-item" data-val="breathwork" onclick="togPractice(this)"><span class="prac-icon">&#127870;</span><div class="prac-text"><div class="prac-name">Breathwork &amp; Meditation</div><div class="prac-sub">Reset your nervous system &middot; Svistyelka, Impulse Breathing</div></div></div>
+        <div class="prac-item" data-val="release" onclick="togPractice(this)"><span class="prac-icon">&#128134;</span><div class="prac-text"><div class="prac-name">Body Release</div><div class="prac-sub">Myofascial release &middot; self-massage &middot; tension relief</div></div></div>
+        <div class="prac-item" data-val="neurogym" onclick="togPractice(this)"><span class="prac-icon">&#129504;</span><div class="prac-text"><div class="prac-name">Neuro Gym</div><div class="prac-sub">Brain-body coordination &middot; sharpen balance &amp; memory</div></div></div>
+        <div class="prac-item" data-val="sbodyoga" onclick="togPractice(this)"><span class="prac-icon">&#128170;</span><div class="prac-text"><div class="prac-name">Strong Body Yoga</div><div class="prac-sub">Static holds &middot; strengthen joints, tendons &amp; deep muscles</div></div></div>
+        <div class="prac-item soon" data-val="taichi" onclick="togPractice(this)"><span class="prac-icon">&#129355;</span><div class="prac-text"><div class="prac-name">Tai Chi &amp; Flow <span class="soon-badge">SOON</span></div><div class="prac-sub">Slow flowing movement &middot; balance &amp; awareness</div></div></div>
+        <div class="prac-item soon" data-val="walking" onclick="togPractice(this)"><span class="prac-icon">&#128694;</span><div class="prac-text"><div class="prac-name">Walking Therapy <span class="soon-badge">SOON</span></div><div class="prac-sub">Gait &amp; posture reprogramming &middot; daily movement</div></div></div>
+      </div>
+      <div class="max-hint" style="margin-top:8px">Practices marked SOON will be added when they launch &mdash; we&rsquo;ll notify you.</div>
+      <button class="btn-primary" id="btn-s2" disabled onclick="nextFromPractices()">Continue &#8594;</button>
+      <button class="btn-back" onclick="goStep(1)">&#8592; Back</button>
+    </div>
+
+    <!-- STEP 3 — ABOUT YOUR BODY -->
+    <div class="section" id="sec-body">
+      <div class="block-title">About your body</div>
+      <div class="block-sub">This is enough to build your first program. You can refine it with tests later.</div>
+
+      <span class="q-label">Where do you feel the most discomfort? <span style="color:var(--text-muted);font-weight:400">(up to 3)</span></span>
+    <div style="font-size:12px;color:var(--green);margin-bottom:10px">Your <strong>first choice</strong> becomes the primary focus of your program</div>
+      <div style="display:flex;gap:16px;align-items:flex-start">
+        <svg id="zone-fig" width="96" height="245" viewBox="0 0 110 280" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+          <circle id="f-head" cx="55" cy="28" r="22" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
+          <rect id="f-neck" x="47" y="49" width="16" height="14" rx="4" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
+          <path id="f-shoulders" d="M15 75 Q15 62 30 62 L80 62 Q95 62 95 75 L95 85 L15 85 Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
+          <rect id="f-midback" x="28" y="85" width="54" height="45" rx="4" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
+          <rect id="f-lower" x="28" y="128" width="54" height="35" rx="4" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
+          <path id="f-arms-l" d="M28 65 Q12 70 8 90 L8 145 Q8 152 15 152 L22 152 L25 95 L28 85Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
+          <path id="f-arms-r" d="M82 65 Q98 70 102 90 L102 145 Q102 152 95 152 L88 152 L85 95 L82 85Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
+          <path id="f-hips" d="M25 163 Q25 155 55 155 Q85 155 85 163 L88 195 L22 195 Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
+          <path id="f-knees-l" d="M22 195 L28 240 L48 240 L52 195Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
+          <path id="f-knees-r" d="M88 195 L82 240 L62 240 L58 195Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
+          <path id="f-feet-l" d="M28 240 Q24 260 26 275 L44 275 Q46 258 48 240Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
+          <path id="f-feet-r" d="M82 240 Q86 260 84 275 L66 275 Q64 258 62 240Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
+        </svg>
+      <div class="chips" id="zone-chips">
+        <span class="chip" data-val="head_jaw" onclick="togZone(this)"><span class="pr"></span>Head &amp; jaw</span>
+        <span class="chip" data-val="neck_shoulders" onclick="togZone(this)"><span class="pr"></span>Neck &amp; shoulders</span>
+        <span class="chip" data-val="mid_back" onclick="togZone(this)"><span class="pr"></span>Mid-back</span>
+        <span class="chip" data-val="lower_back" onclick="togZone(this)"><span class="pr"></span>Lower back</span>
+        <span class="chip" data-val="arms_wrists" onclick="togZone(this)"><span class="pr"></span>Elbows &amp; wrists</span>
+        <span class="chip" data-val="hips_pelvis" onclick="togZone(this)"><span class="pr"></span>Hips &amp; pelvis</span>
+        <span class="chip" data-val="knees" onclick="togZone(this)"><span class="pr"></span>Knees</span>
+        <span class="chip" data-val="feet_ankles" onclick="togZone(this)"><span class="pr"></span>Feet &amp; ankles</span>
+        <span class="chip" data-val="none" onclick="togZone(this)"><span class="pr"></span>No specific areas</span>
+      </div>
+      </div>
+
+      <span class="q-label">Pain level right now</span>
+      <div class="options" id="pain-opts">
+        <button class="option" data-val="0" onclick="pickOne(this,'pain-opts','pain')">No pain <small>I just want to move better</small></button>
+        <button class="option" data-val="1" onclick="pickOne(this,'pain-opts','pain')">Mild discomfort <small>Stiffness, tension</small></button>
+        <button class="option" data-val="2" onclick="pickOne(this,'pain-opts','pain')">Moderate pain <small>It affects my daily activities</small></button>
+        <button class="option" data-val="3" onclick="pickOne(this,'pain-opts','pain')">Acute pain <small>I need to be very careful</small></button>
+      </div>
+
+      <span class="q-label">Your experience with body practices</span>
+      <div class="options" id="exp-opts">
+        <button class="option" data-val="first_time" onclick="pickOne(this,'exp-opts','experience')">First time</button>
+        <button class="option" data-val="tried_before" onclick="pickOne(this,'exp-opts','experience')">Tried before</button>
+        <button class="option" data-val="regular" onclick="pickOne(this,'exp-opts','experience')">Practice regularly</button>
+      </div>
+
+      <span class="q-label">Session length</span>
+      <div class="chips" id="len-chips">
+        <span class="chip" data-val="15" onclick="pickLen(this)">15 min</span>
+        <span class="chip" data-val="30" onclick="pickLen(this)">30 min</span>
+        <span class="chip" data-val="60" onclick="pickLen(this)">60 min</span>
+      </div>
+
+      <div class="err" id="body-err"></div>
+      <button class="btn-primary" id="btn-s3" disabled onclick="finishOnboarding()">Build my program &#8594;</button>
+      <button class="btn-back" onclick="goStep(2)">&#8592; Back</button>
+    </div>
+
+    <!-- CARE SCREEN (pain = 3) -->
+    <div class="section" id="sec-care">
+      <div class="care">
+        <span class="care-emoji">&#129728;</span>
+        <div class="care-title">We&rsquo;ll take extra care of you</div>
+        <div class="care-text">Because you&rsquo;re experiencing acute pain, we&rsquo;ve built a very gentle program: calm breathing and soft lying movements only. Nothing that could strain the painful area.</div>
+        <div class="care-note">&#9888;&#65039; Acute pain deserves professional attention. Please consider seeing a doctor &mdash; our program supports recovery, but it does not replace medical care.</div>
+        <button class="btn-primary" onclick="showInterstitial()">See my gentle program &#8594;</button>
+      </div>
+    </div>
+
+    <!-- INTERSTITIAL -->
+    <div class="section" id="sec-build">
+      <div class="build-wrap">
+        <div class="build-spin"></div>
+        <div class="build-title" id="build-title">Building your program&hellip;</div>
+        <div class="build-lines" id="build-lines"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="module" src="/firebase-auth.js"></script>
+<script type="module">
+import { auth, db } from '/firebase-auth.js';
+import { doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+const params = new URLSearchParams(window.location.search);
+const EDIT = params.get('edit') === '1';
+const FRESH = params.get('fresh') === '1'; // test param: run onboarding from scratch
+let state = { tracker: null, practices: [], zones: [], pain: null, experience: null, length: null };
+let oldState = null;
+let uid = null;
+let ready = false;
+
+// ---------- helpers ----------
+function $(id) { return document.getElementById(id); }
+function computeMode(pain, exp) {
+  if (pain === 3) return 'minimal';
+  if (pain === 2) return 'gentle_restore';
+  if (exp === 'first_time') return 'restore';
+  return 'reset';
+}
+const FIG_MAP = {
+  head_jaw: ['f-head', 'f-neck'],
+  neck_shoulders: ['f-shoulders', 'f-neck'],
+  mid_back: ['f-midback'],
+  lower_back: ['f-lower'],
+  arms_wrists: ['f-arms-l', 'f-arms-r'],
+  hips_pelvis: ['f-hips'],
+  knees: ['f-knees-l', 'f-knees-r'],
+  feet_ankles: ['f-feet-l', 'f-feet-r']
+};
+function updateFigure() {
+  const fig = document.getElementById('zone-fig');
+  if (!fig) return;
+  fig.querySelectorAll('.on').forEach(el => el.classList.remove('on'));
+  state.zones.forEach(z => (FIG_MAP[z] || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('on');
+  }));
+}
+const MODE_NAMES = { minimal: 'Gentle Care', gentle_restore: 'Gentle Restore', restore: 'Restore', reset: 'Reset' };
+const ZONE_NAMES = { head_jaw: 'Head & jaw', neck_shoulders: 'Neck & shoulders', mid_back: 'Mid-back', lower_back: 'Lower back', arms_wrists: 'Arms & wrists', hips_pelvis: 'Hips & pelvis', knees: 'Knees', feet_ankles: 'Feet & ankles', none: 'General mobility' };
+
+async function saveStep(extra) {
+  if (!uid) return;
+  const data = Object.assign({}, state, extra || {});
+  try {
+    localStorage.setItem('mw_onb', JSON.stringify(data));
+    await setDoc(doc(db, 'users', uid), { onboarding: data, mode: computeMode(data.pain, data.experience) }, { merge: true });
+  } catch (e) { console.log('Save error:', e); }
+}
+
+// ---------- step navigation ----------
+const STEP_SECTIONS = { 1: 'sec-tracker', 2: 'sec-practices', 3: 'sec-body' };
+window.goStep = function(n) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  $(STEP_SECTIONS[n]).classList.add('active');
+  $('progress').style.width = (n * 30) + '%';
+  $('step-label').textContent = 'Step ' + n + ' of 3';
+  window.scrollTo(0, 0);
+};
+
+// ---------- step 1: tracker ----------
+window.pickTracker = function(el) {
+  document.querySelectorAll('#tracker-opts .option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  state.tracker = el.dataset.val;
+  $('btn-s1').disabled = false;
+};
+window.nextFromTracker = function() {
+  saveStep({ step: 1 });
+  goStep(2);
+};
+
+// ---------- step 2: practices ----------
+window.togPractice = function(el) {
+  if (el.classList.contains('soon')) return;
+  el.classList.toggle('sel');
+  const v = el.dataset.val;
+  const i = state.practices.indexOf(v);
+  if (i >= 0) state.practices.splice(i, 1); else state.practices.push(v);
+  $('btn-s2').disabled = state.practices.length === 0;
+};
+window.nextFromPractices = function() {
+  saveStep({ step: 2 });
+  goStep(3);
+};
+
+// ---------- step 3: body ----------
+window.togZone = function(el) {
+  const v = el.dataset.val;
+  if (v === 'none') {
+    document.querySelectorAll('#zone-chips .chip').forEach(c => c.classList.remove('sel'));
+    el.classList.add('sel');
+    state.zones = ['none'];
+  } else {
+    const noneChip = document.querySelector('#zone-chips .chip[data-val="none"]');
+    noneChip.classList.remove('sel');
+    state.zones = state.zones.filter(z => z !== 'none');
+    if (el.classList.contains('sel')) {
+      el.classList.remove('sel');
+      state.zones = state.zones.filter(z => z !== v);
+    } else {
+      if (state.zones.length >= 3) return;
+      el.classList.add('sel');
+      state.zones.push(v);
+    }
+  }
+  updateFigure();
+  updateZonePriorities();
+  checkBodyDone();
+};
+function updateZonePriorities() {
+  document.querySelectorAll('#zone-chips .chip').forEach(c => {
+    const i = state.zones.indexOf(c.dataset.val);
+    const pr = c.querySelector('.pr');
+    if (pr) pr.textContent = i >= 0 ? (i + 1) : '';
+  });
+}
+window.pickOne = function(el, groupId, field) {
+  document.querySelectorAll('#' + groupId + ' .option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  state[field] = field === 'pain' ? parseInt(el.dataset.val, 10) : el.dataset.val;
+  checkBodyDone();
+};
+window.pickLen = function(el) {
+  document.querySelectorAll('#len-chips .chip').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  state.length = parseInt(el.dataset.val, 10);
+  checkBodyDone();
+};
+function checkBodyDone() {
+  $('btn-s3').disabled = !(state.zones.length > 0 && state.pain !== null && state.experience && state.length);
+}
+
+// ---------- finish ----------
+window.finishOnboarding = async function() {
+  $('btn-s3').disabled = true;
+  await saveStep({ step: 3, completedAt: new Date().toISOString() });
+  if (EDIT && oldState) sessionStorage.setItem('mw_diff', JSON.stringify(buildDiff(oldState, state)));
+  if (state.pain === 3) {
+    showSection('sec-care');
+  } else {
+    window.showInterstitial();
+  }
+};
+function buildDiff(a, b) {
+  const out = [];
+  const oldMode = computeMode(a.pain, a.experience), newMode = computeMode(b.pain, b.experience);
+  if (oldMode !== newMode) out.push('Mode: ' + MODE_NAMES[oldMode] + ' \u2192 ' + MODE_NAMES[newMode]);
+  const added = b.zones.filter(z => !(a.zones || []).includes(z) && z !== 'none');
+  const removed = (a.zones || []).filter(z => !b.zones.includes(z) && z !== 'none');
+  if (added.length) out.push('Added focus: ' + added.map(z => ZONE_NAMES[z]).join(', '));
+  if (removed.length) out.push('Removed focus: ' + removed.map(z => ZONE_NAMES[z]).join(', '));
+  if (a.length !== b.length) out.push('Session length: ' + a.length + ' \u2192 ' + b.length + ' min');
+  if (JSON.stringify((a.practices || []).slice().sort()) !== JSON.stringify(b.practices.slice().sort())) out.push('Practices updated');
+  if (!out.length) out.push('Profile saved \u2014 no changes to your program');
+  return out;
+}
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  $(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ---------- interstitial ----------
+window.showInterstitial = function() {
+  showSection('sec-build');
+  $('progress').style.width = '100%';
+  $('step-label').textContent = 'Almost there';
+  const zoneTxt = state.zones.includes('none') || !state.zones.length
+    ? 'Analyzing your movement profile'
+    : 'Focusing on: ' + state.zones.map(z => ZONE_NAMES[z]).join(', ');
+  const mode = computeMode(state.pain, state.experience);
+  const lines = [
+    zoneTxt,
+    'Adjusting for your comfort level',
+    'Selecting your mode: ' + MODE_NAMES[mode],
+    'Building Week 1 \u2014 3 sessions \u00d7 ' + (state.length || 30) + ' min'
+  ];
+  const box = $('build-lines');
+  box.innerHTML = '';
+  lines.forEach((t, i) => {
+    const div = document.createElement('div');
+    div.className = 'build-line';
+    div.innerHTML = '<span class="tick">\u2713</span><span>' + t + '</span>';
+    box.appendChild(div);
+    setTimeout(() => div.classList.add('on'), 350 + i * 550);
+  });
+  setTimeout(() => {
+    window.location.replace('/program?updated=' + (EDIT ? 'profile' : 'new'));
+  }, 350 + lines.length * 550 + 1900);
+};
+
+// ---------- init / resume / edit prefill ----------
+function prefill(onb) {
+  if (onb.tracker) {
+    const el = document.querySelector('#tracker-opts .option[data-val="' + onb.tracker + '"]');
+    if (el) pickTracker(el);
+  }
+  (onb.practices || []).forEach(v => {
+    const el = document.querySelector('#practice-list .prac-item[data-val="' + v + '"]');
+    if (el && !el.classList.contains('sel') && !el.classList.contains('soon')) togPractice(el);
+  });
+  (onb.zones || []).forEach(v => {
+    const el = document.querySelector('#zone-chips .chip[data-val="' + v + '"]');
+    if (el) togZone(el);
+  });
+  if (onb.pain !== null && onb.pain !== undefined) {
+    const el = document.querySelector('#pain-opts .option[data-val="' + onb.pain + '"]');
+    if (el) pickOne(el, 'pain-opts', 'pain');
+  }
+  if (onb.experience) {
+    const el = document.querySelector('#exp-opts .option[data-val="' + onb.experience + '"]');
+    if (el) pickOne(el, 'exp-opts', 'experience');
+  }
+  if (onb.length) {
+    const el = document.querySelector('#len-chips .chip[data-val="' + onb.length + '"]');
+    if (el) pickLen(el);
+  }
+}
+
+window.onMwAuthReady = function(user, profile) {
+  if (ready) return;
+  ready = true;
+  uid = user.uid;
+  const onb = (profile && profile.onboarding) || null;
+
+  if (EDIT) {
+    if (onb) {
+      oldState = JSON.parse(JSON.stringify(onb));
+      prefill(onb);
+    }
+    $('edit-banner').style.display = 'block';
+    return;
+  }
+
+  if (onb && onb.completedAt && !FRESH) {
+    // Onboarding already done — straight to program
+    window.location.replace('/program');
+    return;
+  }
+
+  if (onb && onb.step && !FRESH) {
+    // Resume where they left off
+    prefill(onb);
+    goStep(Math.min(onb.step + 1, 3));
+  }
+};
+</script>
+</body>
+</html>
