@@ -141,7 +141,7 @@ body{font-family:var(--font);background:var(--surface);color:var(--text);min-hei
 </div>
 
 <div class="prog-header" style="position:relative">
-    <a href="#sleep-block" onclick="scrollToSleep(event)" style="position:absolute;top:1.25rem;right:1.25rem;display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);border-radius:20px;padding:6px 13px;font-size:12px;font-weight:600;color:white;text-decoration:none;white-space:nowrap">&#127769; Can&rsquo;t sleep?</a>
+    <a href="#sleep-block" onclick="scrollToSleep(event)" style="position:absolute;top:1.25rem;right:1.25rem;display:inline-flex;align-items:center;gap:5px;background:#0d1f2c;border:1px solid rgba(168,213,184,.4);border-radius:20px;padding:6px 13px;font-size:12px;font-weight:600;color:#A8D5B8;text-decoration:none;white-space:nowrap">&#127769; Can&rsquo;t sleep?</a>
     <div class="prog-label">Your Personal Program · Week 1</div>
     <div class="prog-title">Restore Mode</div>
     <div class="prog-focus">Focus: Strength & Coordination + Joint Mobility</div>
@@ -187,20 +187,8 @@ body{font-family:var(--font);background:var(--surface);color:var(--text);min-hei
         <div class="ci-feel-btn" onclick="ciFeel('r',this)"><span class="ci-ic">🔴</span><span class="ci-lb">Tired</span></div>
       </div>
       <div id="ci-result" style="display:none"></div>
-      <div style="font-size:13px;font-weight:600;margin-bottom:8px">Quick measurements <span style="font-weight:400;color:var(--muted)">(optional &mdash; check your watch)</span></div>
-      <div class="ci-metrics">
-        <div class="ci-metric">
-          <label>Resting pulse</label>
-          <input type="number" id="ci-pulse" placeholder="72" min="40" max="120" oninput="ciUpdate()">
-          <small>bpm &middot; 1 min count</small>
-        </div>
-        <div class="ci-metric">
-          <label>Breath rate</label>
-          <input type="number" id="ci-breath" placeholder="14" min="6" max="30" oninput="ciUpdate()">
-          <small>per min &middot; 1 min count</small>
-        </div>
-      </div>
-      <button id="ci-done-btn" onclick="ciSubmit()" style="display:none;width:100%;padding:13px;background:var(--green);color:white;border:none;border-radius:13px;font-size:14px;font-weight:500;font-family:var(--font);cursor:pointer;margin-bottom:8px">&#10003; Done &mdash; show my program &rarr;</button>
+      
+
       <a href="/journal" id="ci-journal-btn" style="display:none;width:100%;padding:11px;background:var(--gl);border:1.5px solid var(--gb);border-radius:13px;font-size:13px;font-weight:500;color:var(--green);font-family:var(--font);cursor:pointer;text-align:center;text-decoration:none;box-sizing:border-box;margin-bottom:8px">&#128211; View my journal &amp; stats &rarr;</a>
       <a href="/measure" style="display:flex;align-items:center;justify-content:center;gap:6px;background:var(--gl);border:1.5px solid var(--gb);border-radius:12px;padding:10px;font-size:13px;font-weight:500;color:var(--green);text-decoration:none;margin-bottom:8px">&#128200; Measure pulse &amp; breathing first &#8594;</a>
       <button class="ci-skip" onclick="ciSkip()">Skip &mdash; show my program &#8594;</button>
@@ -239,7 +227,7 @@ body{font-family:var(--font);background:var(--surface);color:var(--text);min-hei
     </div>
     <div style="display:flex;gap:10px;margin-bottom:8px">
       <button onclick="openSleep()" style="flex:1;padding:12px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);border-radius:12px;color:white;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font)">&#127769; Start Sleep Reset &#8594;</button>
-      <button onclick="document.getElementById('metro-info-modal').style.display='flex'" style="width:54px;height:54px;background:#FEF9C3;border:1.5px solid #FDE047;border-radius:12px;color:#854D0E;font-size:22px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center">&#127925;</button>
+      <button onclick="document.getElementById('metro-info-modal').style.display='flex'" style="height:54px;padding:0 16px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);border-radius:12px;color:white;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;display:flex;align-items:center;gap:7px;white-space:nowrap;font-family:var(--font)"><span style="color:#FDE047;font-size:18px">&#9833;</span> Metronome</button>
     </div>
   </div>
 
@@ -896,8 +884,8 @@ function ciFeel(val, el) {
   ciUpdate();
 }
 function ciUpdate() {
-  ciState.pulse = parseInt(document.getElementById('ci-pulse').value) || null;
-  ciState.breath = parseInt(document.getElementById('ci-breath').value) || null;
+  ciState.pulse = null;
+  ciState.breath = null;
   var r = document.getElementById('ci-result');
   if (!ciState.feel) {
     r.style.display='none';
