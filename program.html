@@ -237,8 +237,10 @@ body{font-family:var(--font);background:var(--surface);color:var(--text);min-hei
       </div>
       <span style="background:#F59E0B;color:white;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px">NEW</span>
     </div>
-    <button onclick="openSleep()" style="width:100%;padding:12px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);border-radius:12px;color:white;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font);margin-bottom:8px">&#127769; Start Sleep Reset &#8594;</button>
-    <a href="/metronome" style="display:block;text-align:center;padding:9px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:10px;color:rgba(255,255,255,.75);font-size:12px;font-weight:500;text-decoration:none">&#127925; Open metronome separately</a>
+    <div style="display:flex;gap:10px;margin-bottom:8px">
+      <button onclick="openSleep()" style="flex:1;padding:12px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);border-radius:12px;color:white;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font)">&#127769; Start Sleep Reset &#8594;</button>
+      <button onclick="document.getElementById('metro-info-modal').style.display='flex'" style="width:54px;height:54px;background:rgba(255,255,255,.10);border:1.5px solid rgba(255,255,255,.2);border-radius:12px;color:white;font-size:22px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center">&#127925;</button>
+    </div>
   </div>
 
   <!-- SELECTED PRACTICES -->
@@ -465,13 +467,13 @@ body{font-family:var(--font);background:var(--surface);color:var(--text);min-hei
     </div>
     <div id="fp-divider" style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 10px">Your practices — full versions</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem" id="fp-grid">
-      <div class="fp-tile" data-prac="joint" style="background:white;border-radius:12px;padding:.85rem .6rem;text-align:center;border:1.5px solid #E2E6EA;opacity:.55"><div style="font-size:24px;margin-bottom:5px">&#129463;</div><div style="font-size:11px;font-weight:600;color:#1A1A1A;margin-bottom:2px;line-height:1.3">Joint Recovery</div><div style="font-size:10px;color:var(--muted)">Full sequence + equipment</div><div style="margin-top:5px;font-size:14px">&#128274;</div></div>
-      <div class="fp-tile" data-prac="breathwork" style="background:white;border-radius:12px;padding:.85rem .6rem;text-align:center;border:1.5px solid #E2E6EA;opacity:.55"><div style="font-size:24px;margin-bottom:5px">&#127870;</div><div style="font-size:11px;font-weight:600;color:#1A1A1A;margin-bottom:2px;line-height:1.3">Breathwork &amp; Meditation</div><div style="font-size:10px;color:var(--muted)">Impulse + Four Elements</div><div style="margin-top:5px;font-size:14px">&#128274;</div></div>
-      <div class="fp-tile" data-prac="release" style="background:white;border-radius:12px;padding:.85rem .6rem;text-align:center;border:1.5px solid #E2E6EA;opacity:.55"><div style="font-size:24px;margin-bottom:5px">&#128134;</div><div style="font-size:11px;font-weight:600;color:#1A1A1A;margin-bottom:2px;line-height:1.3">Body Release</div><div style="font-size:10px;color:var(--muted)">Myofascial · self-massage</div><div style="margin-top:5px;font-size:14px">&#128274;</div></div>
-      <div class="fp-tile" data-prac="neurogym" style="background:white;border-radius:12px;padding:.85rem .6rem;text-align:center;border:1.5px solid #E2E6EA;opacity:.55"><div style="font-size:24px;margin-bottom:5px">&#129504;</div><div style="font-size:11px;font-weight:600;color:#1A1A1A;margin-bottom:2px;line-height:1.3">Neuro Gym</div><div style="font-size:10px;color:var(--muted)">Brain-body coordination</div><div style="margin-top:5px;font-size:14px">&#128274;</div></div>
-      <div class="fp-tile" data-prac="sbodyoga" style="background:white;border-radius:12px;padding:.85rem .6rem;text-align:center;border:1.5px solid #E2E6EA;opacity:.55"><div style="font-size:24px;margin-bottom:5px">&#128170;</div><div style="font-size:11px;font-weight:600;color:#1A1A1A;margin-bottom:2px;line-height:1.3">Strong Body Yoga</div><div style="font-size:10px;color:var(--muted)">Static holds · tendons</div><div style="margin-top:5px;font-size:14px">&#128274;</div></div>
-      <div style="background:white;border-radius:12px;padding:.85rem .6rem;text-align:center;border:1.5px solid #E2E6EA;opacity:.35"><div style="font-size:24px;margin-bottom:5px">&#129355;</div><div style="font-size:11px;font-weight:600;color:#1A1A1A;margin-bottom:2px;line-height:1.3">Tai Chi &amp; Flow</div><div style="font-size:10px;color:var(--muted)">Balance · awareness</div><div style="margin-top:5px;font-size:14px">&#128274;</div></div>
-      <div style="background:white;border-radius:12px;padding:.85rem .6rem;text-align:center;border:1.5px solid #E2E6EA;opacity:.35"><div style="font-size:24px;margin-bottom:5px">&#128694;</div><div style="font-size:11px;font-weight:600;color:#1A1A1A;margin-bottom:2px;line-height:1.3">Walking Therapy</div><div style="font-size:10px;color:var(--muted)">Gait · posture</div><div style="margin-top:5px;font-size:14px">&#128274;</div></div>
+      <div class="fp-tile" data-prac="joint" style="background:white;border-radius:12px;padding:.85rem .6rem;text-align:center;border:1.5px solid #E2E6EA"><div style="font-size:24px;margin-bottom:5px">&#129463;</div><div style="font-size:11px;font-weight:600;color:#1A1A1A;margin-bottom:2px;line-height:1.3">Joint Recovery</div><div style="font-size:10px;color:var(--muted)">Full sequence + equipment</div><div style="margin-top:5px;font-size:14px">&#128274;</div></div>
+      <div class="fp-tile" data-prac="breathwork" style="background:white;border-radius:12px;padding:.85rem .6rem;text-align:center;border:1.5px solid #E2E6EA"><div style="font-size:24px;margin-bottom:5px">&#127870;</div><div style="font-size:11px;font-weight:600;color:#1A1A1A;margin-bottom:2px;line-height:1.3">Breathwork &amp; Meditation</div><div style="font-size:10px;color:var(--muted)">Impulse + Four Elements</div><div style="margin-top:5px;font-size:14px">&#128274;</div></div>
+      <div class="fp-tile" data-prac="release" style="background:white;border-radius:12px;padding:.85rem .6rem;text-align:center;border:1.5px solid #E2E6EA"><div style="font-size:24px;margin-bottom:5px">&#128134;</div><div style="font-size:11px;font-weight:600;color:#1A1A1A;margin-bottom:2px;line-height:1.3">Body Release</div><div style="font-size:10px;color:var(--muted)">Myofascial · self-massage</div><div style="margin-top:5px;font-size:14px">&#128274;</div></div>
+      <div class="fp-tile" data-prac="neurogym" style="background:white;border-radius:12px;padding:.85rem .6rem;text-align:center;border:1.5px solid #E2E6EA"><div style="font-size:24px;margin-bottom:5px">&#129504;</div><div style="font-size:11px;font-weight:600;color:#1A1A1A;margin-bottom:2px;line-height:1.3">Neuro Gym</div><div style="font-size:10px;color:var(--muted)">Brain-body coordination</div><div style="margin-top:5px;font-size:14px">&#128274;</div></div>
+      <div class="fp-tile" data-prac="sbodyoga" style="background:white;border-radius:12px;padding:.85rem .6rem;text-align:center;border:1.5px solid #E2E6EA"><div style="font-size:24px;margin-bottom:5px">&#128170;</div><div style="font-size:11px;font-weight:600;color:#1A1A1A;margin-bottom:2px;line-height:1.3">Strong Body Yoga</div><div style="font-size:10px;color:var(--muted)">Static holds · tendons</div><div style="margin-top:5px;font-size:14px">&#128274;</div></div>
+      <div style="background:white;border-radius:12px;padding:.85rem .6rem;text-align:center;border:1.5px solid #E2E6EA"><div style="font-size:24px;margin-bottom:5px">&#129355;</div><div style="font-size:11px;font-weight:600;color:#1A1A1A;margin-bottom:2px;line-height:1.3">Tai Chi &amp; Flow</div><div style="font-size:10px;color:var(--muted)">Balance · awareness</div><div style="margin-top:5px;font-size:14px">&#128274;</div></div>
+      <div style="background:white;border-radius:12px;padding:.85rem .6rem;text-align:center;border:1.5px solid #E2E6EA"><div style="font-size:24px;margin-bottom:5px">&#128694;</div><div style="font-size:11px;font-weight:600;color:#1A1A1A;margin-bottom:2px;line-height:1.3">Walking Therapy</div><div style="font-size:10px;color:var(--muted)">Gait · posture</div><div style="margin-top:5px;font-size:14px">&#128274;</div></div>
     </div>
   </div>
 
@@ -844,10 +846,15 @@ function renderFromProfile(profile) {
   // Full program grid: highlight selected practices
   var pracs = (profile.onboarding && profile.onboarding.practices) || [];
   document.querySelectorAll('.fp-tile').forEach(function(tile) {
+    tile.style.opacity = '1';
     if (pracs.indexOf(tile.dataset.prac) >= 0) {
-      tile.style.opacity = '1';
-      tile.style.borderColor = '#A8D5B8';
+      tile.style.borderColor = '#2D7D52';
       tile.style.background = '#E8F5EE';
+      tile.style.boxShadow = '0 0 0 1.5px #2D7D52';
+    } else {
+      tile.style.borderColor = '#E2E6EA';
+      tile.style.background = 'white';
+      tile.style.boxShadow = 'none';
     }
   });
 }
@@ -1026,5 +1033,66 @@ function renderPractices() {
 }
 
 </script>
+<div id="metro-info-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;align-items:flex-end;justify-content:center;padding:0" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:white;border-radius:24px 24px 0 0;width:100%;max-width:560px;max-height:88vh;display:flex;flex-direction:column;overflow:hidden">
+    <div style="width:36px;height:4px;background:var(--border);border-radius:2px;margin:12px auto 4px;flex-shrink:0"></div>
+    <div style="padding:8px 1.25rem 14px;border-bottom:1px solid var(--border);flex-shrink:0;display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:17px;font-weight:600">🎵 Metronome as a practice</div>
+      <button onclick="document.getElementById('metro-info-modal').style.display='none'" style="background:var(--surface);border:none;border-radius:50%;width:30px;height:30px;font-size:16px;cursor:pointer;color:var(--sec);display:flex;align-items:center;justify-content:center">✕</button>
+    </div>
+    <div style="overflow-y:auto;padding:1.25rem;flex:1">
+
+      <p class="m-p">Our body lives in constant rhythms — breathing, heartbeat, steps, sleep cycles. Under stress or emotional overload these rhythms become less organised: thoughts speed up, attention scatters, and the body finds it harder to let go.</p>
+
+      <p class="m-p">A metronome creates a <b>steady, predictable beat</b> that can serve as an external anchor for attention. Instead of chasing an endless stream of thoughts, the mind begins returning, again and again, to a calm repeating sound. Many people notice that after just a few minutes the inner tension eases, breathing settles, and the body begins to relax.</p>
+
+      <div class="m-divider"></div>
+
+      <p style="font-size:13px;font-weight:600;color:#1A1A1A;margin-bottom:10px">Different tempos serve different purposes:</p>
+
+      <div class="bpm-list">
+        <div class="bpm-row">
+          <span class="bpm-num">60 BPM</span>
+          <span class="bpm-desc">A foundational rhythm close to a resting heartbeat. A natural starting point — good for beginners getting used to practising with a metronome.</span>
+        </div>
+        <div class="bpm-row">
+          <span class="bpm-num">50 BPM</span>
+          <span class="bpm-desc">Well suited for breathwork and for breathing practices embedded in exercises such as Strong Body Yoga.</span>
+        </div>
+        <div class="bpm-row">
+          <span class="bpm-num">40 BPM</span>
+          <span class="bpm-desc">Helps reduce inner restlessness and shift into a calmer state.</span>
+        </div>
+        <div class="bpm-row">
+          <span class="bpm-num">30 BPM</span>
+          <span class="bpm-desc">Supports deeper relaxation and a quiet, gathered attention.</span>
+        </div>
+        <div class="bpm-row">
+          <span class="bpm-num">20 BPM</span>
+          <span class="bpm-desc">Many experience this as an almost meditative rhythm — helpful for preparing for sleep or deep relaxation.</span>
+        </div>
+      </div>
+
+      <div style="background:#FEF9EC;border:1.5px solid var(--orange);border-radius:12px;padding:12px 15px;margin-bottom:1rem">
+        <p style="font-size:13px;color:#92400E;line-height:1.7;margin:0">These are reference points, not rules. Trust your own sense of what feels right — 43, 37, 45 BPM are all valid. Experiment and find the tempo that works for you in this moment.</p>
+      </div>
+
+
+
+      <div class="m-divider"></div>
+
+      <p class="m-p">While listening, there is <b>no need to concentrate on each beat</b>. Simply turn it on in the background and let the rhythm gradually become part of the surrounding space. It pairs well with foot massage, head self-massage, calming exercises and evening wind-down rituals.</p>
+
+      <p class="m-p">The metronome does not force the nervous system to relax. It creates a <b>stable external rhythm</b> relative to which the mind finds it easier to organise attention, breathing and inner processes. When the chaos settles, relaxation often arises on its own.</p>
+
+      <p class="m-p" style="margin-bottom:0">Use the metronome as a simple tool for restoring your inner rhythm — a gentle way to move from constant activity into calm, presence and rest.</p>
+
+    </div>
+    <div style="padding:1rem 1.25rem;border-top:1px solid var(--border);flex-shrink:0">
+      <a href="/metronome" style="display:block;text-align:center;padding:14px;background:var(--green);color:white;border-radius:14px;font-size:15px;font-weight:600;text-decoration:none;margin-bottom:8px">Open metronome →</a>
+      <button onclick="document.getElementById('metro-info-modal').style.display='none'" style="width:100%;padding:10px;background:none;border:none;font-size:13px;color:var(--muted);cursor:pointer;font-family:var(--font)">Close</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
