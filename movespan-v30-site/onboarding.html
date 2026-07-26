@@ -135,9 +135,14 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
     <!-- STEP 2 — PRACTICES -->
     <div class="section" id="sec-practices">
       <div class="block-title">Choose your practices</div>
-      <div class="block-sub">Select one or more. Joint Recovery is the foundation of every program.</div>
+      <div class="block-sub">Joint Recovery is always included. Choose up to 2 focus practices.</div>
       <div id="practice-list" style="display:flex;flex-direction:column;gap:8px">
-        <div class="prac-item" data-val="joint" onclick="togPractice(this)"><span class="prac-icon">&#129463;</span><div class="prac-text"><div class="prac-name">Joint Recovery</div><div class="prac-sub">Full-body joint gymnastics &mdash; the core of every program</div></div></div>
+        <div class="prac-item" style="border-color:var(--green);background:var(--gl);cursor:default">
+          <span class="prac-icon" style="background:var(--green);color:white;border-color:var(--green)">&#129463;</span>
+          <div class="prac-text"><div class="prac-name" style="color:var(--green)">Joint Recovery</div><div class="prac-sub">Full-body joint gymnastics &mdash; the core of every program</div></div>
+          <div style="width:22px;height:22px;border-radius:50%;background:var(--green);color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-left:auto">&#10003;</div>
+        </div>
+        <div style="font-size:11px;color:var(--green);font-weight:500;margin:-4px 0 8px 4px">&#10003; Always included in your program</div>
         <div class="prac-item" data-val="release" onclick="togPractice(this)"><span class="prac-icon">&#128134;</span><div class="prac-text"><div class="prac-name">Body Release</div><div class="prac-sub">Myofascial release &middot; self-massage &middot; tension relief</div></div></div>
         <div class="prac-item" data-val="neurogym" onclick="togPractice(this)"><span class="prac-icon">&#129504;</span><div class="prac-text"><div class="prac-name">Neuro Gym</div><div class="prac-sub">Brain-body coordination &middot; sharpen balance &amp; memory</div></div></div>
         <div class="prac-item" data-val="taichi" onclick="togPractice(this)"><span class="prac-icon">&#129355;</span><div class="prac-text"><div class="prac-name">Tai Chi &amp; Flow</div><div class="prac-sub">Slow flowing movement &middot; balance &amp; awareness</div></div></div>
@@ -145,9 +150,10 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
         <div class="prac-item" data-val="breathwork" onclick="togPractice(this)"><span class="prac-icon">&#127870;</span><div class="prac-text"><div class="prac-name">Breathwork &amp; Meditation</div><div class="prac-sub">Reset your nervous system &middot; Svistyelka, Impulse Breathing</div></div></div>
         <div class="prac-item" data-val="sbodyoga" onclick="togPractice(this)"><span class="prac-icon">&#128170;</span><div class="prac-text"><div class="prac-name">Strong Body Yoga</div><div class="prac-sub">Static holds &middot; strengthen joints, tendons &amp; deep muscles</div></div></div>
         <div class="prac-item" data-val="aqua" onclick="togPractice(this)"><span class="prac-icon">&#127754;</span><div class="prac-text"><div class="prac-name">AquaBreath</div><div class="prac-sub">Breath &amp; water practices &middot; deep recovery</div></div></div>
+        <div class="prac-item" data-val="vs" onclick="togPractice(this)"><span class="prac-icon">&#127925;</span><div class="prac-text"><div class="prac-name">Voice &amp; Sound</div><div class="prac-sub">Restore your nervous system through vibration, resonance and conscious voice</div></div></div>
       </div>
       <div class="max-hint" style="margin-top:8px">Practices marked SOON will be added when they launch &mdash; we&rsquo;ll notify you.</div>
-      <div id="prac-limit-note" style="display:none;font-size:12px;color:var(--green);font-weight:500;background:var(--gl);border-radius:8px;padding:8px 12px;margin-top:4px">&#10003; 3 practices selected — tap a selected one to deselect it.</div>
+      <div id="prac-limit-note" style="display:none;font-size:12px;color:var(--green);font-weight:500;background:var(--gl);border-radius:8px;padding:8px 12px;margin-top:4px">&#10003; 2 practices selected — tap a selected one to deselect it.</div>
       <button class="btn-primary" id="btn-s2" disabled onclick="nextFromPractices()">Continue &#8594;</button>
       <button class="btn-back" onclick="goStep(1)">&#8592; Back</button>
     </div>
@@ -313,7 +319,7 @@ window.nextFromTracker = function() {
 };
 
 // ---------- step 2: practices ----------
-const PMAX = 3;
+const PMAX = 2;
 window.togPractice = function(el) {
   const v = el.dataset.val;
   const already = el.classList.contains('sel');
