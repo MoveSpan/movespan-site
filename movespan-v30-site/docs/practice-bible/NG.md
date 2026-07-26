@@ -1,64 +1,13 @@
-# NG — Neuro Gym
-
-**Status:** Draft  
-**Icon:** 🧠  
-
+---
+Practice ID: NG
+Name: Neuro Gym
+Status: Active
+Version: 1.0
+Category: Cognitive Health
+Difficulty: Beginner → Advanced
+Foundation: No
+Mode:
+  - Reset
+  - Expand
 ---
 
-## Purpose
-
-Sharpen brain-body coordination, balance and cognitive function through movement.
-
----
-
-## Description
-
-Dual-task training, proprioception, balance and coordination exercises that activate the prefrontal cortex and cerebellum. Supports cognitive health for 45+.
-
----
-
-## Scientific Basis
-
-*To be added*
-
----
-
-## Core Practices (Level 1)
-
-*To be added*
-
----
-
-## Advanced Practices (Level 2)
-
-*To be added*
-
----
-
-## Future Ideas
-
-*To be added*
-
----
-
-## Contraindications
-
-*To be added*
-
----
-
-## Lesson Library
-
-*To be added*
-
----
-
-## Exercise Library
-
-*To be added*
-
----
-
-## Research Notes
-
-*To be added*

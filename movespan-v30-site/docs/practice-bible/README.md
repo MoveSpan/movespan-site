@@ -4,9 +4,27 @@
 
 ---
 
-## Structure
+## Metadata Standard
 
-Each practice document follows the same standard:
+Every practice file begins with a YAML frontmatter block:
+
+```yaml
+Practice ID: VS
+Name: Voice & Sound
+Status: Active
+Version: 1.0
+Category: Mind-Body
+Difficulty: Beginner → Advanced
+Foundation: No
+Mode:
+  - Restore
+  - Reset
+  - Expand
+```
+
+---
+
+## Standard Structure
 
 1. Purpose
 2. Description
@@ -21,19 +39,19 @@ Each practice document follows the same standard:
 
 ---
 
-## Practices
+## Development Status
 
-| Code | Name | Icon | Status |
-|------|------|------|--------|
-| JR | Joint Recovery | 🦴 | Foundation — always included |
-| BR | Body Release | 🖐️ | Draft |
-| NG | Neuro Gym | 🧠 | Draft |
-| TC | Tai Chi & Flow | 🥋 | Draft |
-| WT | Walking Therapy | 🚶 | Draft |
-| BW | Breathwork & Meditation | 🫁 | Draft |
-| SY | Strong Body Yoga | 💪 | Draft |
-| AQ | AquaBreath | 🌊 | Draft |
-| VS | Voice & Sound | 🎵 | Draft |
+| Practice | Bible | Lessons | Exercises | Videos |
+|----------|:-----:|:-------:|:---------:|:------:|
+| JR — Joint Recovery | ✅ | ⏳ | ⏳ | ⏳ |
+| BR — Body Release | ✅ | ⏳ | ⏳ | ⏳ |
+| NG — Neuro Gym | ✅ | ⏳ | ⏳ | ⏳ |
+| TC — Tai Chi & Flow | ✅ | ⏳ | ⏳ | ⏳ |
+| WT — Walking Therapy | ✅ | ⏳ | ⏳ | ⏳ |
+| BW — Breathwork & Meditation | ✅ | ⏳ | ⏳ | ⏳ |
+| SY — Strong Body Yoga | ✅ | ⏳ | ⏳ | ⏳ |
+| AQ — AquaBreath | ✅ | ⏳ | ⏳ | ⏳ |
+| VS — Voice & Sound | ✅ | ⏳ | ⏳ | ⏳ |
 
 ---
 
@@ -44,19 +62,9 @@ MoveSpan Bible
 │
 ├── 01 Philosophy
 ├── 02 AI Core
-├── 03 Practice Bible  ← you are here
-│      ├── JR — Joint Recovery
-│      ├── BR — Body Release
-│      ├── NG — Neuro Gym
-│      ├── TC — Tai Chi & Flow
-│      ├── WT — Walking Therapy
-│      ├── BW — Breathwork & Meditation
-│      ├── SY — Strong Body Yoga
-│      ├── AQ — AquaBreath
-│      └── VS — Voice & Sound
-│
+├── 03 Practice Bible       ← you are here
 ├── 04 Exercise Library
-├── 05 Content Library
+├── 05 Lesson Library
 ├── 06 Research
 ├── 07 Product Architecture
 └── 08 Brand Guidelines
