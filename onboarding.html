@@ -144,8 +144,10 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
         <div class="prac-item" data-val="walking" onclick="togPractice(this)"><span class="prac-icon">&#128694;</span><div class="prac-text"><div class="prac-name">Walking Therapy</div><div class="prac-sub">Gait &amp; posture reprogramming &middot; daily movement</div></div></div>
         <div class="prac-item" data-val="breathwork" onclick="togPractice(this)"><span class="prac-icon">&#127870;</span><div class="prac-text"><div class="prac-name">Breathwork &amp; Meditation</div><div class="prac-sub">Reset your nervous system &middot; Svistyelka, Impulse Breathing</div></div></div>
         <div class="prac-item" data-val="sbodyoga" onclick="togPractice(this)"><span class="prac-icon">&#128170;</span><div class="prac-text"><div class="prac-name">Strong Body Yoga</div><div class="prac-sub">Static holds &middot; strengthen joints, tendons &amp; deep muscles</div></div></div>
+        <div class="prac-item" data-val="aqua" onclick="togPractice(this)"><span class="prac-icon">&#127754;</span><div class="prac-text"><div class="prac-name">AquaBreath</div><div class="prac-sub">Breath &amp; water practices &middot; deep recovery</div></div></div>
       </div>
       <div class="max-hint" style="margin-top:8px">Practices marked SOON will be added when they launch &mdash; we&rsquo;ll notify you.</div>
+      <div id="prac-limit-note" style="display:none;font-size:12px;color:var(--green);font-weight:500;background:var(--gl);border-radius:8px;padding:8px 12px;margin-top:4px">&#10003; 3 practices selected — tap a selected one to deselect it.</div>
       <button class="btn-primary" id="btn-s2" disabled onclick="nextFromPractices()">Continue &#8594;</button>
       <button class="btn-back" onclick="goStep(1)">&#8592; Back</button>
     </div>
@@ -173,14 +175,15 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
           <path id="f-feet-r" d="M82 240 Q86 260 84 275 L66 275 Q64 258 62 240Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
         </svg>
       <div class="chips" id="zone-chips">
-        <span class="chip" data-val="head_jaw" onclick="togZone(this)"><span class="pr"></span>Head &amp; jaw</span>
-        <span class="chip" data-val="neck_shoulders" onclick="togZone(this)"><span class="pr"></span>Neck &amp; shoulders</span>
-        <span class="chip" data-val="mid_back" onclick="togZone(this)"><span class="pr"></span>Mid-back</span>
+        <span class="chip" data-val="face_eyes" onclick="togZone(this)"><span class="pr"></span>Face &amp; eyes</span>
+        <span class="chip" data-val="neck" onclick="togZone(this)"><span class="pr"></span>Neck</span>
+        <span class="chip" data-val="shoulders" onclick="togZone(this)"><span class="pr"></span>Shoulders</span>
+        <span class="chip" data-val="arms_wrists" onclick="togZone(this)"><span class="pr"></span>Arms &amp; wrists</span>
+        <span class="chip" data-val="mid_back" onclick="togZone(this)"><span class="pr"></span>Mid back</span>
         <span class="chip" data-val="lower_back" onclick="togZone(this)"><span class="pr"></span>Lower back</span>
-        <span class="chip" data-val="arms_wrists" onclick="togZone(this)"><span class="pr"></span>Elbows &amp; wrists</span>
-        <span class="chip" data-val="hips_pelvis" onclick="togZone(this)"><span class="pr"></span>Hips &amp; pelvis</span>
+        <span class="chip" data-val="hips" onclick="togZone(this)"><span class="pr"></span>Hips</span>
         <span class="chip" data-val="knees" onclick="togZone(this)"><span class="pr"></span>Knees</span>
-        <span class="chip" data-val="feet_ankles" onclick="togZone(this)"><span class="pr"></span>Feet &amp; ankles</span>
+        <span class="chip" data-val="feet_toes" onclick="togZone(this)"><span class="pr"></span>Feet &amp; toes</span>
         <span class="chip" data-val="none" onclick="togZone(this)"><span class="pr"></span>No specific areas</span>
       </div>
       </div>
@@ -310,13 +313,22 @@ window.nextFromTracker = function() {
 };
 
 // ---------- step 2: practices ----------
+const PMAX = 3;
 window.togPractice = function(el) {
-  // all practices are now active
-  el.classList.toggle('sel');
   const v = el.dataset.val;
+  const already = el.classList.contains('sel');
+  if (!already && state.practices.length >= PMAX) return;
+  el.classList.toggle('sel');
   const i = state.practices.indexOf(v);
   if (i >= 0) state.practices.splice(i, 1); else state.practices.push(v);
   $('btn-s2').disabled = state.practices.length === 0;
+  // show/hide limit note
+  const note = document.getElementById('prac-limit-note');
+  if (note) note.style.display = state.practices.length >= PMAX ? 'block' : 'none';
+  // neutral cursor when at limit
+  document.querySelectorAll('.prac-item').forEach(function(p) {
+    p.style.cursor = (!p.classList.contains('sel') && state.practices.length >= PMAX) ? 'default' : 'pointer';
+  });
 };
 window.nextFromPractices = function() {
   saveStep({ step: 2 });
