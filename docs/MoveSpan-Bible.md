@@ -38,6 +38,7 @@ The system is built around three principles:
 | BW | Breathwork & Meditation | Nervous system reset · Svistyelka · Impulse Breathing |
 | SY | Strong Body Yoga | Static holds · tendons · deep muscles |
 | AQ | AquaBreath | Breath & water practices · deep recovery |
+| VS | Voice & Sound | Sound healing · voice vibration · nervous system reset |
 
 **Selection limit:** max 3 practices in onboarding (PMAX=3)
 
