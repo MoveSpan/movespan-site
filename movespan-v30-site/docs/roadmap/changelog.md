@@ -9,3 +9,10 @@
 - New slogan: Move better · Feel brighter · Live longer
 - SVG metronome button on Sleep Reset card
 - Metronome accent OFF by default
+
+## Planned: v3.2 Community Hub
+- [ ] Hero subtitle → result-focused copy
+- [ ] "What happens next?" block under CTA button
+- [ ] Why MoveSpan? section with principle cards
+- [ ] Exercise of the Week / Today's Practice block
+- [ ] docs/copy/ for text version history
