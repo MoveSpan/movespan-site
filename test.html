@@ -712,6 +712,7 @@ function skipHrr(type){
 }
 
 function goToZones(){
+  sessionStorage.setItem('ms_new_user', '1');
   window.location.href = '/program';
 }
 
@@ -737,7 +738,7 @@ function renderZones(){
   info.textContent=zsel.size===0?'Nothing selected yet':'Focus: '+Array.from(zsel).map(id=>zlabels[id]).join(' · ');
 }
 function goZones(){scores.zones=Array.from(zsel).join(',');show('s-intro');sp(0);}
-function skipZones(){window.location.href='/program';}
+function skipZones(){sessionStorage.setItem('ms_new_user','1');window.location.href='/program';}
 
 async function showRes(){
   show('s-res'); sp(7);

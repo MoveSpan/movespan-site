@@ -1088,5 +1088,132 @@ function renderPractices() {
     </div>
   </div>
 </div>
+
+<!-- ===== ONBOARDING OVERLAY (shown once after first onboarding) ===== -->
+<div id="ob-overlay" style="display:none;position:fixed;inset:0;background:#fff;z-index:1000;overflow:hidden;font-family:var(--font)">
+
+  <!-- Screen 1: Analysis -->
+  <div id="ob-s1" style="position:absolute;inset:0;display:flex;flex-direction:column;padding:2.5rem 1.5rem 2rem;opacity:1;transition:opacity 0.4s ease">
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:340px;margin:0 auto;width:100%">
+      <h2 style="font-size:22px;font-weight:500;color:#1a1a1a;text-align:center;margin:0 0 4px">Analyzing your body</h2>
+      <p style="font-size:14px;color:#6b7280;text-align:center;margin:0 0 20px">Building your profile</p>
+      <div style="height:3px;background:#f0f0f0;border-radius:3px;margin-bottom:24px">
+        <div id="ob-pbar" style="height:3px;background:#3B6D11;border-radius:3px;width:0%;transition:width 0.3s ease"></div>
+      </div>
+      <div id="ob-checklist" style="display:flex;flex-direction:column;gap:10px">
+        <div class="ob-item" style="display:flex;align-items:center;gap:12px;opacity:0;transition:opacity 0.25s ease"><div style="width:22px;height:22px;border-radius:50%;background:#3B6D11;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="#EAF3DE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:15px;color:#1a1a1a">Joint mobility</span></div>
+        <div class="ob-item" style="display:flex;align-items:center;gap:12px;opacity:0;transition:opacity 0.25s ease"><div style="width:22px;height:22px;border-radius:50%;background:#3B6D11;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="#EAF3DE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:15px;color:#1a1a1a">Balance &amp; stability</span></div>
+        <div class="ob-item" style="display:flex;align-items:center;gap:12px;opacity:0;transition:opacity 0.25s ease"><div style="width:22px;height:22px;border-radius:50%;background:#3B6D11;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="#EAF3DE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:15px;color:#1a1a1a">Breathing mechanics</span></div>
+        <div class="ob-item" style="display:flex;align-items:center;gap:12px;opacity:0;transition:opacity 0.25s ease"><div style="width:22px;height:22px;border-radius:50%;background:#3B6D11;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="#EAF3DE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:15px;color:#1a1a1a">Fascial tension</span></div>
+        <div class="ob-item" style="display:flex;align-items:center;gap:12px;opacity:0;transition:opacity 0.25s ease"><div style="width:22px;height:22px;border-radius:50%;background:#3B6D11;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="#EAF3DE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:15px;color:#1a1a1a">Movement patterns</span></div>
+        <div class="ob-item" style="display:flex;align-items:center;gap:12px;opacity:0;transition:opacity 0.25s ease"><div style="width:22px;height:22px;border-radius:50%;background:#3B6D11;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="#EAF3DE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:15px;color:#1a1a1a">Recovery priorities</span></div>
+        <div class="ob-item" style="display:flex;align-items:center;gap:12px;opacity:0;transition:opacity 0.25s ease"><div style="width:22px;height:22px;border-radius:50%;background:#f3f4f6;border:1.5px solid #e5e7eb;display:flex;align-items:center;justify-content:center;flex-shrink:0"><div style="width:8px;height:8px;border-radius:50%;background:#d1d5db"></div></div><span style="font-size:15px;color:#9ca3af">Building your program…</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 2: Personal Movement Profile -->
+  <div id="ob-s2" style="position:absolute;inset:0;display:flex;flex-direction:column;padding:2.5rem 1.5rem 2rem;opacity:0;pointer-events:none;transition:opacity 0.4s ease">
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:340px;margin:0 auto;width:100%">
+      <h2 style="font-size:22px;font-weight:500;color:#1a1a1a;text-align:center;margin:0 0 4px">Your personal movement profile</h2>
+      <p style="font-size:14px;color:#6b7280;text-align:center;margin:0 0 16px">Based on your answers</p>
+      <!-- Good news card -->
+      <div style="background:#EAF3DE;border-radius:12px;padding:12px 14px;margin-bottom:16px;display:flex;gap:10px;align-items:flex-start">
+        <div style="width:9px;height:9px;border-radius:50%;background:#3B6D11;flex-shrink:0;margin-top:4px"></div>
+        <div>
+          <div style="font-size:14px;font-weight:500;color:#27500A;margin-bottom:2px">Good news.</div>
+          <div style="font-size:13px;color:#3B6D11;line-height:1.5">We've identified the best place to begin.</div>
+        </div>
+      </div>
+      <!-- Priority list — MVP hardcoded, replace with dynamic data in v2 -->
+      <div style="display:flex;flex-direction:column;gap:0;margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0f0f0"><span style="font-size:15px;color:#1a1a1a">Joints &amp; mobility</span><span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:#3B6D11"><span style="width:8px;height:8px;border-radius:50%;background:#3B6D11;display:inline-block"></span>Primary</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0f0f0"><span style="font-size:15px;color:#1a1a1a">Neck &amp; shoulders</span><span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:#3B6D11"><span style="width:8px;height:8px;border-radius:50%;background:#3B6D11;display:inline-block"></span>Primary</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0f0f0"><span style="font-size:15px;color:#1a1a1a">Breathing</span><span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:#BA7517"><span style="width:8px;height:8px;border-radius:50%;background:#BA7517;display:inline-block"></span>Secondary</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0f0f0"><span style="font-size:15px;color:#1a1a1a">Balance</span><span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:#BA7517"><span style="width:8px;height:8px;border-radius:50%;background:#BA7517;display:inline-block"></span>Secondary</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0"><span style="font-size:15px;color:#1a1a1a">Strength</span><span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:#9ca3af"><span style="width:8px;height:8px;border-radius:50%;background:#d1d5db;display:inline-block"></span>Later</span></div>
+      </div>
+      <p style="font-size:13px;color:#6b7280;text-align:center;margin:0 0 20px;line-height:1.6">We've built today's practice around your highest-priority needs.</p>
+      <button onclick="obShowScreen(3)" style="width:100%;padding:14px;background:#3B6D11;color:#EAF3DE;border:none;border-radius:24px;font-size:15px;font-weight:500;font-family:var(--font);cursor:pointer">See today's practice</button>
+    </div>
+  </div>
+
+  <!-- Screen 3: Today's Practice -->
+  <div id="ob-s3" style="position:absolute;inset:0;display:flex;flex-direction:column;padding:2.5rem 1.5rem 2rem;opacity:0;pointer-events:none;transition:opacity 0.4s ease">
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:340px;margin:0 auto;width:100%">
+      <p style="font-size:12px;font-weight:500;color:#3B6D11;text-align:center;letter-spacing:0.06em;text-transform:uppercase;margin:0 0 4px">Today's practice</p>
+      <h2 style="font-size:26px;font-weight:500;color:#1a1a1a;text-align:center;margin:0 0 4px">Joint Recovery</h2>
+      <p style="font-size:14px;font-weight:500;color:#3B6D11;text-align:center;margin:0 0 20px">⏱ 15 min</p>
+      <!-- Goals -->
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px">
+        <div style="display:flex;align-items:center;gap:10px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#3B6D11"/><path d="M5 8L7 10L11 6" stroke="#3B6D11" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:14px;color:#1a1a1a">Restore joint mobility</span></div>
+        <div style="display:flex;align-items:center;gap:10px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#3B6D11"/><path d="M5 8L7 10L11 6" stroke="#3B6D11" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:14px;color:#1a1a1a">Improve posture</span></div>
+        <div style="display:flex;align-items:center;gap:10px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#3B6D11"/><path d="M5 8L7 10L11 6" stroke="#3B6D11" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:14px;color:#1a1a1a">Reduce stiffness</span></div>
+        <div style="display:flex;align-items:center;gap:10px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#3B6D11"/><path d="M5 8L7 10L11 6" stroke="#3B6D11" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:14px;color:#1a1a1a">Increase ankle mobility</span></div>
+      </div>
+      <!-- Divider -->
+      <div style="height:1px;background:#f0f0f0;margin-bottom:14px"></div>
+      <!-- Session structure -->
+      <p style="font-size:12px;font-weight:500;color:#3B6D11;margin:0 0 8px">3 sections · 18 exercises</p>
+      <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:24px">
+        <div style="display:flex;justify-content:space-between;font-size:14px"><span style="color:#1a1a1a">Joint recovery</span><span style="color:#3B6D11">8 min</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:14px"><span style="color:#1a1a1a">Breathing</span><span style="color:#3B6D11">3 min</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:14px"><span style="color:#1a1a1a">Walking focus</span><span style="color:#3B6D11">4 min</span></div>
+      </div>
+      <button onclick="obDismiss()" style="width:100%;padding:14px;background:#3B6D11;color:#EAF3DE;border:none;border-radius:24px;font-size:15px;font-weight:500;font-family:var(--font);cursor:pointer">Start practice</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ===== ONBOARDING OVERLAY LOGIC =====
+(function(){
+  var isNew = sessionStorage.getItem('ms_new_user') === '1';
+  if (!isNew) return;
+  sessionStorage.removeItem('ms_new_user');
+
+  var overlay = document.getElementById('ob-overlay');
+  overlay.style.display = 'block';
+
+  // Animate checklist
+  var items = overlay.querySelectorAll('.ob-item');
+  var progBar = document.getElementById('ob-pbar');
+  var progSteps = [14, 28, 43, 57, 71, 85, 95];
+  var delays = [400, 750, 1100, 1450, 1800, 2150, 2500];
+
+  delays.forEach(function(d, i){
+    setTimeout(function(){
+      items[i].style.opacity = '1';
+      progBar.style.width = progSteps[i] + '%';
+    }, d);
+  });
+
+  // Auto-advance to screen 2 after animation
+  setTimeout(function(){ obShowScreen(2); }, 3800);
+})();
+
+function obShowScreen(n){
+  var s1 = document.getElementById('ob-s1');
+  var s2 = document.getElementById('ob-s2');
+  var s3 = document.getElementById('ob-s3');
+  [s1, s2, s3].forEach(function(s){
+    s.style.opacity = '0';
+    s.style.pointerEvents = 'none';
+  });
+  var target = document.getElementById('ob-s' + n);
+  target.style.opacity = '1';
+  target.style.pointerEvents = 'auto';
+}
+
+function obDismiss(){
+  var overlay = document.getElementById('ob-overlay');
+  overlay.style.opacity = '0';
+  overlay.style.transition = 'opacity 0.4s ease';
+  setTimeout(function(){ overlay.style.display = 'none'; }, 400);
+}
+</script>
+<!-- ===== END ONBOARDING OVERLAY ===== -->
+
 </body>
 </html>
