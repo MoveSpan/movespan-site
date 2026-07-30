@@ -443,7 +443,7 @@ window.showInterstitial = function() {
     setTimeout(() => div.classList.add('on'), 350 + i * 550);
   });
   setTimeout(() => {
-    window.location.replace('/program?updated=' + (EDIT ? 'profile' : 'new'));
+    if (!EDIT) sessionStorage.setItem("ms_new_user","1"); window.location.replace("/program?updated=" + (EDIT ? "profile" : "new"));
   }, 350 + lines.length * 550 + 1900);
 };
 
