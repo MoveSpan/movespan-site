@@ -419,7 +419,7 @@ function showSection(id) {
 }
 
 // ---------- interstitial ----------
-window.showInterstitial = function() {
+window.showInterstitial = function() { if (!EDIT) sessionStorage.setItem("ms_new_user","1"); window.location.replace("/program?updated=" + (EDIT ? "profile" : "new")); return;
   showSection('sec-build');
   $('progress').style.width = '100%';
   $('step-label').textContent = 'Almost there';
