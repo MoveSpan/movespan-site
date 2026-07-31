@@ -96,7 +96,7 @@ input:focus{border-color:var(--green)}
 
   <div id="already-in" style="display:none;background:#E8F5EE;border:1.5px solid #A8D5B8;border-radius:14px;padding:1rem 1.25rem;margin-bottom:1.25rem;text-align:center">
     <div style="font-size:14px;font-weight:600;color:#2D7D52;margin-bottom:8px">Already signed in as <span id="already-name"></span></div>
-    <a href="/program" style="display:inline-block;padding:9px 20px;background:#2D7D52;color:white;border-radius:20px;font-size:13px;font-weight:500;text-decoration:none;margin-bottom:8px">Go to my program &rarr;</a>
+    <a href="/home" style="display:inline-block;padding:9px 20px;background:#2D7D52;color:white;border-radius:20px;font-size:13px;font-weight:500;text-decoration:none;margin-bottom:8px">Go to my home &rarr;</a>
     <div style="font-size:12px;color:#5A6370">or sign in with a different account below</div>
   </div>
   <div class="loading" id="loading">⏳ Loading...</div>
@@ -133,7 +133,7 @@ async function routeAfterAuth(user) {
     const snap = await getDoc(doc(db, 'users', user.uid));
     const profile = snap.exists() ? snap.data() : null;
     if (profile && profile.onboarding && profile.onboarding.completedAt) {
-      window.location.replace('/program');
+      window.location.replace('/home');
       return;
     }
   } catch (e) { console.log('Route check error:', e); }
