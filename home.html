@@ -302,6 +302,89 @@ img{max-width:100%;display:block}
   }
 }
 </style>
+<style id="movespan-practice-composition">
+#practice-hero {
+  position: relative;
+  height: 300px;
+  min-height: 300px;
+  padding-bottom: 104px;
+  overflow: hidden;
+}
+
+#practice-hero .practice-focus {
+  position: absolute;
+  left: 44px;
+  bottom: 88px;
+  width: 54%;
+  z-index: 4;
+}
+
+#practice-hero .practice-focus-label {
+  margin-bottom: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.68);
+}
+
+#practice-hero .practice-focus-text {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: rgba(255,255,255,.92);
+}
+
+#practice-hero .journey-cta {
+  position: absolute;
+  left: 44px;
+  bottom: 28px;
+  width: 56%;
+  margin: 0;
+  z-index: 4;
+}
+
+.practice-person-frame.layout-vertical {
+  width: 38%;
+  height: 94%;
+  right: 2%;
+  bottom: 0;
+}
+
+.practice-person-frame.layout-balanced {
+  width: 43%;
+  height: 88%;
+  right: 1%;
+  bottom: 0;
+}
+
+.practice-person-frame.layout-horizontal {
+  width: 47%;
+  height: 58%;
+  right: 1%;
+  bottom: 5%;
+}
+
+@media (max-width: 390px) {
+  #practice-hero {
+    height: 290px;
+    min-height: 290px;
+  }
+
+  #practice-hero .practice-focus {
+    left: 28px;
+    bottom: 84px;
+    width: 56%;
+  }
+
+  #practice-hero .journey-cta {
+    left: 28px;
+    bottom: 24px;
+    width: 58%;
+  }
+}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -360,7 +443,13 @@ img{max-width:100%;display:block}
       <span class="practice-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6M12 8c-2 0-4 1-4 4v6a2 2 0 0 0 4 0M12 8c2 0 4 1 4 4v6a2 2 0 0 1-4 0"/></svg>Breath</span>
       <span class="practice-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="4" r="2"/><path d="M12 6v6M8 9l4 1 4-1M9 21l3-9 3 9"/></svg>Balance</span>
     </div>
-    <button class="journey-cta" onclick="go('practice-player')">Start practice &rarr;</button>
+    <div class="practice-focus">
+  <div class="practice-focus-label">Practice focus</div>
+  <div class="practice-focus-text">
+    Restore mobility and reduce stiffness
+  </div>
+</div>
+<button class="journey-cta" onclick="go('practice-player')">Start practice &rarr;</button>
   </div>
 
   <!-- DAILY CHECK-IN -->
