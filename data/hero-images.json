@@ -1,4 +1,40 @@
 {
-  "male": [],
-  "female": []
+  "male": [
+    "/images/heroes/male/exec-064fc3a0-1714-4052-a409-635c20b7fdc4.png",
+    "/images/heroes/male/exec-06a4851f-b29a-4160-b112-abb4e1de1564.png",
+    "/images/heroes/male/exec-187a5d6c-5ad1-4fa1-a154-c9480ae8a8b7.png",
+    "/images/heroes/male/exec-1cd05db6-a2ba-4640-90fc-84ce76d6c7fc.png",
+    "/images/heroes/male/exec-2809ab2a-e2ab-4d1f-91d5-b75848958fbe.png",
+    "/images/heroes/male/exec-69f73ad6-86bf-4ff8-bd83-39e6da68166e.png",
+    "/images/heroes/male/exec-72b40ba5-b5b1-4df9-ac25-e2eb3a403561.png",
+    "/images/heroes/male/exec-8d93ef48-af77-46ac-8da3-22f5e7450588.png",
+    "/images/heroes/male/exec-8dc80404-92d9-41da-9cd6-df17d135f6fc.png",
+    "/images/heroes/male/exec-8e8fb24a-6af4-4952-9dbc-9da9a8e82de9.png",
+    "/images/heroes/male/exec-9a5055c2-4b8f-4495-a8e6-3540bb8dc632.png",
+    "/images/heroes/male/exec-b3ce9e05-8a5f-49ce-874d-c0637f6d4057.png",
+    "/images/heroes/male/exec-c2bd573e-249c-4d13-89bd-41cd1c22eca3.png",
+    "/images/heroes/male/exec-c7abce56-b0bb-4e7e-a2d7-3a2419a42389.png",
+    "/images/heroes/male/exec-d6995abd-da8c-43fa-b755-efeda93ea0c6.png",
+    "/images/heroes/male/exec-dc9b4389-3454-49fb-be84-cbfe2a4cbdf3.png",
+    "/images/heroes/male/exec-f4c06e01-f69b-469a-9ccb-5ae6b9b1b6cb.png",
+    "/images/heroes/male/exec-fcdc45e9-e31f-4648-b0de-ac40eaf9e981.png"
+  ],
+  "female": [
+    "/images/heroes/female/exec-2059f2ef-8e41-4248-a2e3-60d6586e86bb.png",
+    "/images/heroes/female/exec-29a1bf44-9dac-4667-93af-df731e0a3aff.png",
+    "/images/heroes/female/exec-29cc8275-d82e-4128-9657-70e70631372f.png",
+    "/images/heroes/female/exec-29e9c9ce-3c02-4da5-9ea9-c15b4631cbf6.png",
+    "/images/heroes/female/exec-2be4b755-b7bd-45bb-ab78-80e8ad300c86.png",
+    "/images/heroes/female/exec-3ab8ecf6-d72e-4b62-8096-7387b102793f.png",
+    "/images/heroes/female/exec-5d5bf303-0eb8-40d0-a523-8a0ce4761a17.png",
+    "/images/heroes/female/exec-678a6d96-690f-4928-b862-4deead4a134c.png",
+    "/images/heroes/female/exec-8d9152e9-0ff1-49a3-a617-81b3e2d9bfe6.png",
+    "/images/heroes/female/exec-93c61536-d730-40bd-aa12-cda6e7245317.png",
+    "/images/heroes/female/exec-abb06ff6-d61e-4f84-ba3a-3097819a4962.png",
+    "/images/heroes/female/exec-ad3b73fd-9eab-4b29-9fa8-b3c500a126ab.png",
+    "/images/heroes/female/exec-bf8bc5f6-4d07-436b-92c3-7e6e52525d5a.png",
+    "/images/heroes/female/exec-d974ef59-16b2-4b62-a901-8ceabd805861.png",
+    "/images/heroes/female/exec-dc23aa7f-f34e-4373-8ce3-cd3639176b2b.png",
+    "/images/heroes/female/exec-f81e25af-af0d-4eaa-a78d-c939a1a4ee6d.png"
+  ]
 }
