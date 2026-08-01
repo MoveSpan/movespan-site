@@ -689,6 +689,193 @@ body.home-sheet-open {
   font-weight: 700;
 }
 </style>
+<style id="practice-note-sheet-final-style">
+/* Старый раскрытый текст внутри серебряной карточки больше не показываем */
+.practice-note-inline-detail {
+  display: none !important;
+}
+
+/* Practice Note всегда остаётся серебряной карточкой */
+.card:has(.pnote) {
+  cursor: pointer;
+}
+
+.card:has(.pnote).practice-note-is-compact,
+.card:has(.pnote).practice-note-is-expanded {
+  min-height: initial !important;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-fig,
+.card:has(.pnote).practice-note-is-compact .pnote-text,
+.card:has(.pnote).practice-note-is-compact .pnote-actions {
+  display: initial;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote {
+  min-height: 130px;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-fig {
+  display: flex;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-actions {
+  display: flex;
+}
+
+.practice-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: rgba(16, 24, 20, .46);
+  opacity: 1;
+  transition: opacity .22s ease;
+}
+
+.practice-sheet-backdrop[hidden] {
+  display: none;
+}
+
+.practice-sheet {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  z-index: 1101;
+  width: min(520px, 100%);
+  max-height: calc(100dvh - 20px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 22px calc(28px + env(safe-area-inset-bottom));
+  border-radius: 28px 28px 0 0;
+  background: #ffffff;
+  color: #1a1a1a;
+  box-shadow: 0 -18px 50px rgba(0, 0, 0, .2);
+  transform: translateX(-50%) translateY(0);
+  transition: transform .25s ease;
+  touch-action: pan-y;
+}
+
+.practice-sheet[hidden] {
+  display: none;
+}
+
+.practice-sheet.is-dragging {
+  transition: none;
+}
+
+.practice-sheet-drag-zone {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 12px 0 10px;
+  background: #ffffff;
+  cursor: grab;
+}
+
+.practice-sheet-handle {
+  width: 44px;
+  height: 5px;
+  margin: 0 auto;
+  border-radius: 999px;
+  background: #d5d9dd;
+}
+
+.practice-sheet-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 4px 0 22px;
+  border-bottom: 1px solid #e7eaed;
+}
+
+.practice-sheet-label {
+  margin-bottom: 7px;
+  color: #2D7D52;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.practice-sheet-header h2 {
+  margin: 0;
+  color: #161616;
+  font-size: 25px;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+}
+
+.practice-sheet-close {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border: 1px solid #dfe3e7;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #5a6370;
+  font-size: 27px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.practice-sheet-content {
+  padding-top: 24px;
+  color: #35404a;
+  font-size: 16px;
+  line-height: 1.68;
+}
+
+.practice-sheet-content p + p {
+  margin-top: 18px;
+}
+
+.practice-sheet-principle {
+  margin: 24px 0;
+  padding: 17px 18px;
+  border-left: 4px solid #2D7D52;
+  border-radius: 0 14px 14px 0;
+  background: #edf7f1;
+  color: #235f3e;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.practice-sheet-primary {
+  width: 100%;
+  margin-top: 26px;
+  padding: 14px 18px;
+  border: 0;
+  border-radius: 13px;
+  background: #2D7D52;
+  color: #ffffff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+body.practice-sheet-open {
+  overflow: hidden;
+}
+
+@media (min-width: 700px) {
+  .practice-sheet {
+    top: 50%;
+    bottom: auto;
+    max-height: calc(100vh - 64px);
+    border-radius: 28px;
+    transform: translate(-50%, -50%);
+  }
+
+  .practice-sheet-drag-zone {
+    display: none;
+  }
+}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -1259,5 +1446,77 @@ applyMockState();
   </nav>
 </section>
 <!-- /MoveSpan Home Sheets -->
+<!-- Practice Note Final Sheet -->
+<div
+  class="practice-sheet-backdrop"
+  id="practice-sheet-backdrop"
+  hidden
+></div>
+
+<section
+  class="practice-sheet"
+  id="practice-sheet"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="practice-sheet-title"
+  hidden
+>
+  <div
+    class="practice-sheet-drag-zone"
+    id="practice-sheet-drag-zone"
+  >
+    <div class="practice-sheet-handle"></div>
+  </div>
+
+  <div class="practice-sheet-header">
+    <div>
+      <div class="practice-sheet-label">Practice note</div>
+
+      <h2 id="practice-sheet-title">
+        Small, regular practice matters
+      </h2>
+    </div>
+
+    <button
+      type="button"
+      class="practice-sheet-close"
+      id="practice-sheet-close"
+      aria-label="Close practice note"
+    >
+      ×
+    </button>
+  </div>
+
+  <div class="practice-sheet-content">
+    <p>
+      More is not always better. The body responds especially well to
+      movement that is regular, manageable and easy to repeat.
+    </p>
+
+    <p>
+      A short daily practice can support mobility, coordination and nervous
+      system regulation more effectively than occasional intense sessions.
+    </p>
+
+    <div class="practice-sheet-principle">
+      Small daily practice beats occasional intensity.
+    </div>
+
+    <p>
+      Move within a comfortable range today. Consistency is more valuable
+      than intensity.
+    </p>
+
+    <button
+      type="button"
+      class="practice-sheet-primary"
+      id="practice-sheet-got-it"
+    >
+      Got it
+    </button>
+  </div>
+</section>
+<!-- /Practice Note Final Sheet -->
+<script src="js/practice-note-sheet.js"></script>
 </body>
 </html>
