@@ -650,6 +650,173 @@ body.player-open {
   overflow: hidden;
 }
 </style>
+<style id="practice-completion-style">
+.completion-screen[hidden] {
+  display: none;
+}
+
+.completion-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background:
+    radial-gradient(
+      circle at 50% 12%,
+      rgba(45, 125, 82, .11),
+      transparent 34%
+    ),
+    #F6F8F9;
+}
+
+.completion-content {
+  width: min(100%, 520px);
+  flex: 1;
+  margin: 0 auto;
+  padding:
+    calc(70px + env(safe-area-inset-top))
+    24px
+    150px;
+  text-align: center;
+}
+
+.completion-check {
+  display: grid;
+  place-items: center;
+  width: 88px;
+  height: 88px;
+  margin: 0 auto 25px;
+  border-radius: 50%;
+  background: #2D7D52;
+  color: #FFFFFF;
+  box-shadow: 0 14px 32px rgba(45, 125, 82, .24);
+}
+
+.completion-check svg {
+  width: 45px;
+  height: 45px;
+}
+
+.completion-eyebrow {
+  margin-bottom: 9px;
+  color: #2D7D52;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.completion-content h1 {
+  margin-bottom: 8px;
+  color: #1A1A1A;
+  font-size: 31px;
+  line-height: 1.15;
+  letter-spacing: -.025em;
+}
+
+.completion-name {
+  color: #5A6370;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.completion-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin: 32px 0;
+  padding: 20px;
+  border: 1px solid #E2E6EA;
+  border-radius: 20px;
+  background: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(25, 42, 32, .05);
+}
+
+.completion-stat {
+  min-width: 90px;
+}
+
+.completion-stat strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #1A1A1A;
+  font-size: 25px;
+}
+
+.completion-stat span {
+  color: #7B848D;
+  font-size: 12px;
+}
+
+.completion-divider {
+  width: 1px;
+  height: 42px;
+  background: #E2E6EA;
+}
+
+.completion-message {
+  max-width: 390px;
+  margin: 0 auto 22px;
+  color: #53606B;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.completion-principle {
+  max-width: 390px;
+  margin: 0 auto;
+  padding: 15px 17px;
+  border-left: 4px solid #2D7D52;
+  border-radius: 0 14px 14px 0;
+  background: #E8F5EE;
+  color: #275E40;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.completion-actions {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 201;
+  display: grid;
+  gap: 10px;
+  padding:
+    14px
+    max(16px, calc((100vw - 520px) / 2 + 16px))
+    calc(14px + env(safe-area-inset-bottom));
+  border-top: 1px solid #E2E6EA;
+  background: rgba(246, 248, 249, .96);
+  backdrop-filter: blur(16px);
+}
+
+.completion-primary,
+.completion-secondary {
+  min-height: 50px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.completion-primary {
+  border: 0;
+  background: #2D7D52;
+  color: #FFFFFF;
+}
+
+.completion-secondary {
+  border: 1px solid #D9DEE3;
+  background: #FFFFFF;
+  color: #2D7D52;
+}
+</style>
 </head>
 
 <body>
@@ -923,6 +1090,76 @@ body.player-open {
   
 
   
+<section
+  class="completion-screen"
+  id="completion-screen"
+  hidden
+>
+  <main class="completion-content">
+    <div class="completion-check" aria-hidden="true">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+      >
+        <path d="m7 12 3 3 7-7"/>
+      </svg>
+    </div>
+
+    <div class="completion-eyebrow">
+      Joint Recovery
+    </div>
+
+    <h1>Practice complete</h1>
+
+    <p class="completion-name">
+      Joint Recovery Starter
+    </p>
+
+    <div class="completion-stats">
+      <div class="completion-stat">
+        <strong>12</strong>
+        <span>minutes</span>
+      </div>
+
+      <div class="completion-divider"></div>
+
+      <div class="completion-stat">
+        <strong>7</strong>
+        <span>exercises</span>
+      </div>
+    </div>
+
+    <p class="completion-message">
+      Notice how your body feels now. Even a short,
+      consistent practice helps restore ease and mobility.
+    </p>
+
+    <div class="completion-principle">
+      Small daily practice beats occasional intensity.
+    </div>
+  </main>
+
+  <footer class="completion-actions">
+    <button
+      class="completion-primary"
+      id="return-home"
+      type="button"
+    >
+      Return to Home
+    </button>
+
+    <button
+      class="completion-secondary"
+      id="practice-again"
+      type="button"
+    >
+      Practice again
+    </button>
+  </footer>
+</section>
+
 <section class="player-screen" id="player-screen" hidden>
   <header class="player-header">
     <button
@@ -1088,6 +1325,15 @@ body.player-open {
   const player =
     document.getElementById("player-screen");
 
+  const completionScreen =
+    document.getElementById("completion-screen");
+
+  const returnHomeButton =
+    document.getElementById("return-home");
+
+  const practiceAgainButton =
+    document.getElementById("practice-again");
+
   const closeButton =
     document.getElementById("player-close");
 
@@ -1193,7 +1439,8 @@ body.player-open {
       id: "joint-recovery-starter",
       completed_at: new Date().toISOString(),
       date: today,
-      duration_minutes: 12
+      duration_minutes: 12,
+      exercises_completed: exercises.length
     };
 
     localStorage.setItem(
@@ -1206,7 +1453,10 @@ body.player-open {
       today
     );
 
-    location.href = "home.html";
+    clearInterval(timerId);
+    player.hidden = true;
+    completionScreen.hidden = false;
+    document.body.classList.add("player-open");
   }
 
   startButton.addEventListener("click", openPlayer);
@@ -1235,6 +1485,17 @@ body.player-open {
     }
 
     index += 1;
+    renderExercise();
+  });
+
+  returnHomeButton.addEventListener("click", function () {
+    location.href = "home.html";
+  });
+
+  practiceAgainButton.addEventListener("click", function () {
+    completionScreen.hidden = true;
+    index = 0;
+    player.hidden = false;
     renderExercise();
   });
 })();
