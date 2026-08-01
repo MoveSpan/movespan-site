@@ -1,8 +1,6 @@
 (function () {
   "use strict";
 
-  const STORAGE_KEY = "movespanPracticeNoteCompactDate";
-
   const sheet = document.getElementById("practice-sheet");
   const backdrop = document.getElementById("practice-sheet-backdrop");
   const closeButton = document.getElementById("practice-sheet-close");
@@ -13,36 +11,18 @@
   let currentY = 0;
   let dragging = false;
 
-  function todayKey() {
-    const now = new Date();
-
-    return [
-      now.getFullYear(),
-      String(now.getMonth() + 1).padStart(2, "0"),
-      String(now.getDate()).padStart(2, "0")
-    ].join("-");
-  }
-
   function getCard() {
     const note = document.querySelector(".pnote");
     return note ? note.closest(".card") : null;
   }
 
-  function renderCardState() {
+  function prepareCard() {
     const card = getCard();
-
     if (!card) return;
 
-    const compact =
-      localStorage.getItem(STORAGE_KEY) === todayKey();
-
     card.hidden = false;
-    card.classList.toggle(
-      "practice-note-card-compact",
-      compact
-    );
-
     card.classList.remove(
+      "practice-note-card-compact",
       "practice-note-is-compact",
       "practice-note-is-expanded",
       "is-compact"
@@ -52,10 +32,50 @@
     card.setAttribute("role", "button");
     card.setAttribute(
       "aria-label",
-      compact
-        ? "Open today’s practice note"
-        : "Read today’s practice note"
+      "Open today’s Practice Note"
     );
+
+    const figure = card.querySelector(".pnote-fig");
+
+    if (figure) {
+      figure.innerHTML = `
+        <span class="practice-note-knowledge-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M4.75 5.5A2.75 2.75 0 0 1 7.5 2.75H11v16.5H7.5a2.75 2.75 0 0 0-2.75 2.75V5.5Z"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M19.25 5.5a2.75 2.75 0 0 0-2.75-2.75H13v16.5h3.5A2.75 2.75 0 0 1 19.25 22V5.5Z"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+      `;
+    }
+
+    if (!card.querySelector(".practice-note-chevron")) {
+      card.insertAdjacentHTML(
+        "beforeend",
+        `
+          <span class="practice-note-chevron" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path
+                d="m9 6 6 6-6 6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+        `
+      );
+    }
   }
 
   function openSheet() {
@@ -64,7 +84,6 @@
     sheet.style.transform = "";
     backdrop.hidden = false;
     sheet.hidden = false;
-
     document.body.classList.add("practice-sheet-open");
 
     requestAnimationFrame(() => {
@@ -79,24 +98,9 @@
     sheet.classList.remove("is-dragging");
     sheet.hidden = true;
     backdrop.hidden = true;
-
     document.body.classList.remove("practice-sheet-open");
   }
 
-  function acknowledgeNote() {
-    localStorage.setItem(
-      STORAGE_KEY,
-      todayKey()
-    );
-
-    closeSheet();
-    renderCardState();
-  }
-
-  /*
-   * Вся серебряная карточка открывает Practice Note.
-   * Capture phase блокирует все старые ссылки и обработчики.
-   */
   document.addEventListener(
     "click",
     function (event) {
@@ -117,12 +121,9 @@
     const card = getCard();
 
     if (
-      card
-      && document.activeElement === card
-      && (
-        event.key === "Enter"
-        || event.key === " "
-      )
+      card &&
+      document.activeElement === card &&
+      (event.key === "Enter" || event.key === " ")
     ) {
       event.preventDefault();
       openSheet();
@@ -130,17 +131,17 @@
     }
 
     if (
-      event.key === "Escape"
-      && sheet
-      && !sheet.hidden
+      event.key === "Escape" &&
+      sheet &&
+      !sheet.hidden
     ) {
       closeSheet();
     }
   });
 
   closeButton?.addEventListener("click", closeSheet);
+  gotItButton?.addEventListener("click", closeSheet);
   backdrop?.addEventListener("click", closeSheet);
-  gotItButton?.addEventListener("click", acknowledgeNote);
 
   function beginDrag(clientY) {
     if (window.innerWidth >= 700) return;
@@ -148,7 +149,6 @@
     dragging = true;
     startY = clientY;
     currentY = clientY;
-
     sheet.classList.add("is-dragging");
   }
 
@@ -157,15 +157,12 @@
 
     currentY = clientY;
 
-    const distance = Math.max(
-      0,
-      currentY - startY
-    );
+    const distance = Math.max(0, currentY - startY);
 
     sheet.style.transform =
-      "translateX(-50%) translateY("
-      + distance
-      + "px)";
+      "translateX(-50%) translateY(" +
+      distance +
+      "px)";
   }
 
   function endDrag() {
@@ -173,10 +170,7 @@
 
     dragging = false;
 
-    const distance = Math.max(
-      0,
-      currentY - startY
-    );
+    const distance = Math.max(0, currentY - startY);
 
     sheet.classList.remove("is-dragging");
 
@@ -189,32 +183,23 @@
       "translateX(-50%) translateY(0)";
   }
 
-  dragZone?.addEventListener(
-    "pointerdown",
-    function (event) {
-      beginDrag(event.clientY);
+  dragZone?.addEventListener("pointerdown", function (event) {
+    beginDrag(event.clientY);
 
-      if (dragging) {
-        dragZone.setPointerCapture(
-          event.pointerId
-        );
-      }
+    if (dragging) {
+      dragZone.setPointerCapture(event.pointerId);
     }
-  );
+  });
 
-  dragZone?.addEventListener(
-    "pointermove",
-    function (event) {
-      moveDrag(event.clientY);
-    }
-  );
+  dragZone?.addEventListener("pointermove", function (event) {
+    moveDrag(event.clientY);
+  });
 
   dragZone?.addEventListener("pointerup", endDrag);
   dragZone?.addEventListener("pointercancel", endDrag);
 
-  localStorage.removeItem(
-    "movespanPracticeNoteDismissedDate"
-  );
+  localStorage.removeItem("movespanPracticeNoteCompactDate");
+  localStorage.removeItem("movespanPracticeNoteDismissedDate");
 
-  renderCardState();
+  prepareCard();
 })();

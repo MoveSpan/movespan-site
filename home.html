@@ -973,6 +973,139 @@ body.practice-sheet-open {
   display: block !important;
 }
 </style>
+<style id="practice-note-clean-compact-style">
+/* Practice Note всегда компактный */
+.card:has(.pnote) {
+  position: relative;
+  min-height: 0 !important;
+  overflow: hidden;
+  cursor: pointer;
+  background: #E9EDF0 !important;
+  border: 1px solid #D9DEE3;
+  border-radius: 18px;
+  box-shadow: 0 4px 14px rgba(31, 47, 39, .07);
+  outline: none;
+  transition:
+    transform .16s ease,
+    box-shadow .16s ease,
+    border-color .16s ease;
+}
+
+/* Полностью убираем серебряную текстуру и переливы */
+.card:has(.pnote).silver,
+.card:has(.pnote) .silver {
+  background: #E9EDF0 !important;
+}
+
+.card:has(.pnote)::before,
+.card:has(.pnote)::after,
+.card:has(.pnote).silver::after {
+  content: none !important;
+  display: none !important;
+}
+
+.card:has(.pnote):hover {
+  transform: translateY(-1px);
+  border-color: #C9D1D7;
+  box-shadow: 0 7px 20px rgba(31, 47, 39, .1);
+}
+
+.card:has(.pnote):active {
+  transform: scale(.995);
+}
+
+.card:has(.pnote):focus-visible {
+  box-shadow:
+    0 0 0 3px rgba(45, 125, 82, .2),
+    0 7px 20px rgba(31, 47, 39, .1);
+}
+
+.card:has(.pnote) .pnote {
+  min-height: 0 !important;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.card:has(.pnote) .pnote-fig {
+  display: flex !important;
+  width: 70px;
+  padding: 16px 10px 16px 16px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.practice-note-knowledge-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  background: rgba(45, 125, 82, .12);
+  color: #2D7D52;
+}
+
+.practice-note-knowledge-icon svg {
+  width: 23px;
+  height: 23px;
+}
+
+.card:has(.pnote) .pnote-body {
+  min-width: 0;
+  padding: 16px 54px 16px 8px;
+}
+
+.card:has(.pnote) .eyebrow {
+  color: #2D7D52;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .09em;
+}
+
+.card:has(.pnote) .pnote-title {
+  margin: 5px 0 0;
+  color: #1A1A1A;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.card:has(.pnote) .pnote-text,
+.card:has(.pnote) .pnote-actions,
+.card:has(.pnote) .practice-note-inline-detail {
+  display: none !important;
+}
+
+.practice-note-chevron {
+  position: absolute;
+  top: 50%;
+  right: 17px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .62);
+  color: #2D7D52;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.practice-note-chevron svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Старые состояния больше не влияют на дизайн */
+.card:has(.pnote).practice-note-card-compact,
+.card:has(.pnote).practice-note-is-compact,
+.card:has(.pnote).practice-note-is-expanded,
+.card:has(.pnote).is-compact {
+  display: block !important;
+  min-height: 0 !important;
+}
+</style>
 </head>
 <body>
 <div class="wrap">
