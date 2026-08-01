@@ -7,7 +7,7 @@ import { getFirestore, doc, getDoc, updateDoc, increment } from 'https://www.gst
 
 const firebaseConfig = {
   apiKey: "AIzaSyAmf3mipVQnucfSfg2gQuhXIyoQrXgywT8",
-  authDomain: "movewell-system.firebaseapp.com",
+  authDomain: "auth.movespan.app",
   projectId: "movewell-system",
   storageBucket: "movewell-system.firebasestorage.app",
   messagingSenderId: "996929311338",
