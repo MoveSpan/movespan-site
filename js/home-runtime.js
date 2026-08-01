@@ -231,11 +231,34 @@
       "home-sheet-backdrop"
     );
 
-    notificationsButton?.addEventListener("click", () => {
+    /*
+     * Старый макет может содержать кнопки внутри ссылок.
+     * Удаляем навигацию, чтобы клик открывал только bottom sheet.
+     */
+    [notificationsButton, menuButton].forEach((button) => {
+      if (!button) return;
+
+      button.setAttribute("type", "button");
+
+      const parentLink = button.closest("a");
+
+      if (parentLink) {
+        parentLink.removeAttribute("href");
+        parentLink.removeAttribute("target");
+        parentLink.removeAttribute("onclick");
+        parentLink.style.cursor = "default";
+      }
+    });
+
+    notificationsButton?.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
       openHomeSheet("notifications-sheet");
     });
 
-    menuButton?.addEventListener("click", () => {
+    menuButton?.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
       openHomeSheet("quick-menu-sheet");
     });
 
