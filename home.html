@@ -1167,6 +1167,34 @@ body.practice-sheet-open {
   }
 }
 </style>
+<style id="today-practice-image-position-fix">
+.today-practice-person {
+  position: absolute !important;
+  right: 24px !important;
+  bottom: 0 !important;
+
+  width: auto !important;
+  height: auto !important;
+
+  max-width: 44% !important;
+  max-height: 72% !important;
+
+  object-fit: contain !important;
+  object-position: center bottom !important;
+
+  transform: translateY(-48px) !important;
+  transform-origin: center bottom;
+}
+
+@media (max-width: 520px) {
+  .today-practice-person {
+    right: 10px !important;
+    max-width: 46% !important;
+    max-height: 70% !important;
+    transform: translateY(-42px) !important;
+  }
+}
+</style>
 </head>
 <body>
 <div class="wrap">
