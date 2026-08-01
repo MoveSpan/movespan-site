@@ -1106,8 +1106,7 @@ body.practice-sheet-open {
   min-height: 0 !important;
 }
 </style>
-<style id="today-practice-final-state-style">
-/* Статус завершения */
+<style id="today-practice-status-style">
 .today-practice-status {
   display: inline-flex;
   align-items: center;
@@ -1129,42 +1128,11 @@ body.practice-sheet-open {
   flex-shrink: 0;
 }
 
-/*
- * Фигура Today's Practice.
- * Явная ширина возвращает прежний крупный размер.
- * Вертикальная позиция корректируется отдельно.
- */
-.today-practice-person {
-  position: absolute !important;
-  right: 14px !important;
-  bottom: 0 !important;
-
-  width: 43% !important;
-  height: auto !important;
-  max-width: none !important;
-  max-height: none !important;
-
-  object-fit: contain !important;
-  object-position: center bottom !important;
-
-  transform: translateY(-34px) !important;
-  transform-origin: center bottom !important;
-}
-
-/* Завершённая практика остаётся доступной */
 .today-practice-completed button,
 .today-practice-completed button:disabled {
   pointer-events: auto !important;
   opacity: 1 !important;
   cursor: pointer !important;
-}
-
-@media (max-width: 520px) {
-  .today-practice-person {
-    right: 5px !important;
-    width: 45% !important;
-    transform: translateY(-30px) !important;
-  }
 }
 </style>
 </head>

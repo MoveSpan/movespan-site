@@ -90,16 +90,6 @@
     heading.insertAdjacentElement("afterend", status);
   }
 
-  function positionPracticeImage(card) {
-    if (!card) return;
-
-    const image = card.querySelector("img");
-
-    if (!image) return;
-
-    image.classList.add("today-practice-person");
-  }
-
   function updateProgressValues() {
     document.querySelectorAll(".prog-slabel").forEach((label) => {
       const normalized = label.textContent
@@ -128,8 +118,6 @@
 
     const button = findPracticeButton();
     const card = findTodayPracticeCard(button);
-
-    positionPracticeImage(card);
 
     if (!completed || !button) {
       return;
