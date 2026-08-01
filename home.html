@@ -588,6 +588,39 @@ body.home-sheet-open {
   }
 }
 </style>
+<style id="practice-note-definitive-style">
+.card:has(.pnote).practice-note-is-compact {
+  min-height: 0;
+  cursor: pointer;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote {
+  min-height: 0;
+  align-items: center;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-fig {
+  display: none;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-body {
+  padding: 15px 18px;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-text,
+.card:has(.pnote).practice-note-is-compact .pnote-actions {
+  display: none;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-title {
+  margin: 4px 0 0;
+  font-size: 14px;
+}
+
+.card:has(.pnote).practice-note-is-compact .eyebrow {
+  font-size: 10px;
+}
+</style>
 </head>
 <body>
 <div class="wrap">

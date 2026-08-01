@@ -347,3 +347,171 @@
     initializeHeaderActions();
   }
 })();
+
+/* MoveSpan Practice Note — definitive interaction fix */
+(function () {
+  "use strict";
+
+  const STORAGE_KEY = "movespanPracticeNoteCompactDate";
+
+  function dateKey() {
+    const now = new Date();
+
+    return [
+      now.getFullYear(),
+      String(now.getMonth() + 1).padStart(2, "0"),
+      String(now.getDate()).padStart(2, "0")
+    ].join("-");
+  }
+
+  function getCard() {
+    const note = document.querySelector(".pnote");
+    return note ? note.closest(".card") : null;
+  }
+
+  function getNoteSheet() {
+    return document.getElementById("practice-note-sheet");
+  }
+
+  function openNoteSheet() {
+    const sheet = getNoteSheet();
+    const backdrop = document.getElementById("home-sheet-backdrop");
+
+    if (!sheet || !backdrop) {
+      console.error("Practice Note sheet was not found.");
+      return;
+    }
+
+    document.querySelectorAll(".home-sheet").forEach((item) => {
+      item.hidden = true;
+    });
+
+    backdrop.hidden = false;
+    sheet.hidden = false;
+    document.body.classList.add("home-sheet-open");
+  }
+
+  function applyState() {
+    const card = getCard();
+    if (!card) return;
+
+    const compact =
+      localStorage.getItem(STORAGE_KEY) === dateKey();
+
+    card.classList.toggle(
+      "practice-note-is-compact",
+      compact
+    );
+
+    card.setAttribute(
+      "aria-label",
+      compact
+        ? "Open today’s practice note"
+        : "Today’s practice note"
+    );
+
+    card.tabIndex = compact ? 0 : -1;
+  }
+
+  function makeCompact() {
+    localStorage.setItem(STORAGE_KEY, dateKey());
+
+    document.querySelectorAll(".home-sheet").forEach((item) => {
+      item.hidden = true;
+    });
+
+    const backdrop = document.getElementById(
+      "home-sheet-backdrop"
+    );
+
+    if (backdrop) {
+      backdrop.hidden = true;
+    }
+
+    document.body.classList.remove("home-sheet-open");
+    applyState();
+  }
+
+  /*
+   * Capture phase prevents legacy links from navigating
+   * before their old handlers can run.
+   */
+  document.addEventListener(
+    "click",
+    function (event) {
+      const card = getCard();
+      if (!card) return;
+
+      const target = event.target;
+      const actionable = target.closest("a, button");
+
+      if (
+        card.classList.contains("practice-note-is-compact") &&
+        card.contains(target)
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        openNoteSheet();
+        return;
+      }
+
+      if (actionable && card.contains(actionable)) {
+        const label = actionable.textContent
+          .replace(/\s+/g, " ")
+          .trim()
+          .toLowerCase();
+
+        if (label.includes("read more")) {
+          event.preventDefault();
+          event.stopPropagation();
+          event.stopImmediatePropagation();
+          openNoteSheet();
+          return;
+        }
+
+        if (label.includes("got it")) {
+          event.preventDefault();
+          event.stopPropagation();
+          event.stopImmediatePropagation();
+          makeCompact();
+          return;
+        }
+      }
+
+      const detailGotIt = target.closest(
+        "#practice-note-detail-got-it"
+      );
+
+      if (detailGotIt) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        makeCompact();
+      }
+    },
+    true
+  );
+
+  document.addEventListener("keydown", function (event) {
+    const card = getCard();
+
+    if (
+      card &&
+      card.classList.contains("practice-note-is-compact") &&
+      document.activeElement === card &&
+      (event.key === "Enter" || event.key === " ")
+    ) {
+      event.preventDefault();
+      openNoteSheet();
+    }
+  });
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", applyState, {
+      once: true
+    });
+  } else {
+    applyState();
+  }
+})();
