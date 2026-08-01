@@ -557,6 +557,37 @@ body.home-sheet-open {
   color: #a83232;
 }
 </style>
+<style id="movespan-home-sheet-responsive-fix">
+/* Desktop: centered modal */
+@media (min-width: 700px) {
+  .home-sheet {
+    left: 50%;
+    top: 50%;
+    bottom: auto;
+    width: min(520px, calc(100vw - 48px));
+    max-height: min(720px, calc(100vh - 64px));
+    padding: 14px 24px 28px;
+    border-radius: 26px;
+    transform: translate(-50%, -50%);
+  }
+
+  .home-sheet-handle {
+    display: none;
+  }
+}
+
+/* Mobile: bottom sheet fully visible and scrollable */
+@media (max-width: 699px) {
+  .home-sheet {
+    top: auto;
+    bottom: 0;
+    max-height: calc(100dvh - 24px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-bottom: calc(28px + env(safe-area-inset-bottom));
+  }
+}
+</style>
 </head>
 <body>
 <div class="wrap">
