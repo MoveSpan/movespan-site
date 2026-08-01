@@ -876,6 +876,103 @@ body.practice-sheet-open {
   }
 }
 </style>
+<style id="practice-note-card-final-style">
+/* Внутренний раскрываемый текст больше не используется */
+.practice-note-inline-detail {
+  display: none !important;
+}
+
+/* Убираем старые кнопки Got it / Read more на Home */
+.card:has(.pnote) .pnote-actions {
+  display: none !important;
+}
+
+/* Вся карточка становится понятным кликабельным элементом */
+.card:has(.pnote) {
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  transition:
+    transform .16s ease,
+    box-shadow .16s ease;
+}
+
+.card:has(.pnote)::after {
+  content: "›";
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  z-index: 4;
+  color: #2D7D52;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+.card:has(.pnote):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 7px 20px rgba(28, 56, 42, .1);
+}
+
+.card:has(.pnote):focus-visible {
+  box-shadow:
+    0 0 0 3px rgba(45, 125, 82, .24),
+    0 7px 20px rgba(28, 56, 42, .1);
+}
+
+.card:has(.pnote) .pnote-body {
+  padding-right: 54px;
+}
+
+/* Возвращаем нормальное полное teaser-состояние */
+.card:has(.pnote):not(.practice-note-card-compact) .pnote {
+  min-height: 130px;
+}
+
+.card:has(.pnote):not(.practice-note-card-compact) .pnote-fig {
+  display: flex !important;
+}
+
+.card:has(.pnote):not(.practice-note-card-compact) .pnote-text {
+  display: block !important;
+}
+
+/* Компактное состояние после Got it в белом окне */
+.card:has(.pnote).practice-note-card-compact .pnote {
+  min-height: 0 !important;
+  align-items: center;
+}
+
+.card:has(.pnote).practice-note-card-compact .pnote-fig {
+  display: none !important;
+}
+
+.card:has(.pnote).practice-note-card-compact .pnote-body {
+  min-height: 0;
+  padding: 15px 54px 15px 18px;
+}
+
+.card:has(.pnote).practice-note-card-compact .pnote-text {
+  display: none !important;
+}
+
+.card:has(.pnote).practice-note-card-compact .pnote-title {
+  margin: 4px 0 0;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.card:has(.pnote).practice-note-card-compact .eyebrow {
+  font-size: 10px;
+}
+
+/* Не даём старым классам снова менять карточку */
+.card:has(.pnote).practice-note-is-compact,
+.card:has(.pnote).is-compact {
+  display: block !important;
+}
+</style>
 </head>
 <body>
 <div class="wrap">

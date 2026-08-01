@@ -1,6 +1,8 @@
 (function () {
   "use strict";
 
+  const STORAGE_KEY = "movespanPracticeNoteCompactDate";
+
   const sheet = document.getElementById("practice-sheet");
   const backdrop = document.getElementById("practice-sheet-backdrop");
   const closeButton = document.getElementById("practice-sheet-close");
@@ -11,59 +13,58 @@
   let currentY = 0;
   let dragging = false;
 
+  function todayKey() {
+    const now = new Date();
+
+    return [
+      now.getFullYear(),
+      String(now.getMonth() + 1).padStart(2, "0"),
+      String(now.getDate()).padStart(2, "0")
+    ].join("-");
+  }
+
   function getCard() {
     const note = document.querySelector(".pnote");
     return note ? note.closest(".card") : null;
   }
 
-  function resetLegacyState() {
+  function renderCardState() {
     const card = getCard();
-
-    localStorage.removeItem("movespanPracticeNoteCompactDate");
-    localStorage.removeItem("movespanPracticeNoteDismissedDate");
 
     if (!card) return;
 
+    const compact =
+      localStorage.getItem(STORAGE_KEY) === todayKey();
+
     card.hidden = false;
+    card.classList.toggle(
+      "practice-note-card-compact",
+      compact
+    );
+
     card.classList.remove(
       "practice-note-is-compact",
       "practice-note-is-expanded",
       "is-compact"
     );
 
-    const detail = document.getElementById(
-      "practice-note-inline-detail"
+    card.tabIndex = 0;
+    card.setAttribute("role", "button");
+    card.setAttribute(
+      "aria-label",
+      compact
+        ? "Open today’s practice note"
+        : "Read today’s practice note"
     );
-
-    if (detail) {
-      detail.hidden = true;
-    }
-
-    const actions = card.querySelectorAll("a, button");
-
-    actions.forEach((element) => {
-      const label = element.textContent
-        .replace(/\s+/g, " ")
-        .trim()
-        .toLowerCase();
-
-      if (
-        label.includes("read less")
-        || label.includes("read more")
-      ) {
-        element.textContent = "Read more →";
-      }
-    });
   }
 
   function openSheet() {
     if (!sheet || !backdrop) return;
 
-    resetLegacyState();
-
     sheet.style.transform = "";
     backdrop.hidden = false;
     sheet.hidden = false;
+
     document.body.classList.add("practice-sheet-open");
 
     requestAnimationFrame(() => {
@@ -78,14 +79,23 @@
     sheet.classList.remove("is-dragging");
     sheet.hidden = true;
     backdrop.hidden = true;
+
     document.body.classList.remove("practice-sheet-open");
   }
 
+  function acknowledgeNote() {
+    localStorage.setItem(
+      STORAGE_KEY,
+      todayKey()
+    );
+
+    closeSheet();
+    renderCardState();
+  }
+
   /*
-   * Перехватываем клик раньше старых обработчиков.
-   * Клик по карточке или Read more открывает белый sheet.
-   * Got it на серебряной карточке также открывает sheet:
-   * старое скрытие карточки больше не используется.
+   * Вся серебряная карточка открывает Practice Note.
+   * Capture phase блокирует все старые ссылки и обработчики.
    */
   document.addEventListener(
     "click",
@@ -103,15 +113,34 @@
     true
   );
 
-  closeButton?.addEventListener("click", closeSheet);
-  gotItButton?.addEventListener("click", closeSheet);
-  backdrop?.addEventListener("click", closeSheet);
-
   document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape" && sheet && !sheet.hidden) {
+    const card = getCard();
+
+    if (
+      card
+      && document.activeElement === card
+      && (
+        event.key === "Enter"
+        || event.key === " "
+      )
+    ) {
+      event.preventDefault();
+      openSheet();
+      return;
+    }
+
+    if (
+      event.key === "Escape"
+      && sheet
+      && !sheet.hidden
+    ) {
       closeSheet();
     }
   });
+
+  closeButton?.addEventListener("click", closeSheet);
+  backdrop?.addEventListener("click", closeSheet);
+  gotItButton?.addEventListener("click", acknowledgeNote);
 
   function beginDrag(clientY) {
     if (window.innerWidth >= 700) return;
@@ -128,10 +157,15 @@
 
     currentY = clientY;
 
-    const distance = Math.max(0, currentY - startY);
+    const distance = Math.max(
+      0,
+      currentY - startY
+    );
 
     sheet.style.transform =
-      "translateX(-50%) translateY(" + distance + "px)";
+      "translateX(-50%) translateY("
+      + distance
+      + "px)";
   }
 
   function endDrag() {
@@ -139,7 +173,10 @@
 
     dragging = false;
 
-    const distance = Math.max(0, currentY - startY);
+    const distance = Math.max(
+      0,
+      currentY - startY
+    );
 
     sheet.classList.remove("is-dragging");
 
@@ -152,20 +189,32 @@
       "translateX(-50%) translateY(0)";
   }
 
-  dragZone?.addEventListener("pointerdown", function (event) {
-    beginDrag(event.clientY);
+  dragZone?.addEventListener(
+    "pointerdown",
+    function (event) {
+      beginDrag(event.clientY);
 
-    if (dragging) {
-      dragZone.setPointerCapture(event.pointerId);
+      if (dragging) {
+        dragZone.setPointerCapture(
+          event.pointerId
+        );
+      }
     }
-  });
+  );
 
-  dragZone?.addEventListener("pointermove", function (event) {
-    moveDrag(event.clientY);
-  });
+  dragZone?.addEventListener(
+    "pointermove",
+    function (event) {
+      moveDrag(event.clientY);
+    }
+  );
 
   dragZone?.addEventListener("pointerup", endDrag);
   dragZone?.addEventListener("pointercancel", endDrag);
 
-  resetLegacyState();
+  localStorage.removeItem(
+    "movespanPracticeNoteDismissedDate"
+  );
+
+  renderCardState();
 })();
