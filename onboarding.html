@@ -63,6 +63,25 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
 .edit-banner { display: none; background: var(--orange-light); border: 1.5px solid var(--orange);
   border-radius: var(--radius); padding: 10px 14px; font-size: 13px; color: #92400E; margin-bottom: 1.25rem; line-height: 1.5; }
 .err { background: var(--red-light); color: var(--red); border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-top: 12px; display: none; }
+/* GENDER & AGE SCREEN */
+.osec-label { font-size: 12px; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 12px; }
+.grow { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.75rem; }
+.gcard { border: 2px solid var(--border); border-radius: 18px; padding: 0 0 14px; display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: .15s; overflow: hidden; }
+.gcard:hover { border-color: var(--green-border); }
+.gcard.sel { border-color: var(--green); }
+.gcard-photo { width: 100%; height: 170px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; background: linear-gradient(150deg, #2D7D52 0%, #276945 55%, #1F5C3B 100%); }
+.gcard-photo img { height: 132px; width: auto; object-fit: contain; position: relative; z-index: 2; }
+.gcard-label { font-size: 16px; font-weight: 600; color: var(--text); margin-top: 12px; }
+.gcard.sel .gcard-label { color: var(--green); }
+.wheel-wrap { position: relative; height: 150px; overflow: hidden; border-radius: 16px; background: var(--surface); margin-bottom: .5rem; }
+.wheel-sel { position: absolute; top: 50%; left: 12px; right: 12px; height: 44px; transform: translateY(-50%); border-top: 1.5px solid var(--green-border); border-bottom: 1.5px solid var(--green-border); background: rgba(45,125,82,.05); border-radius: 10px; pointer-events: none; z-index: 2; }
+.wheel { height: 100%; overflow-y: scroll; scroll-snap-type: y mandatory; scrollbar-width: none; text-align: center; position: relative; z-index: 1; }
+.wheel::-webkit-scrollbar { display: none; }
+.wheel-pad { height: 53px; }
+.wheel-item { height: 44px; line-height: 44px; font-size: 22px; color: var(--text-muted); scroll-snap-align: center; font-weight: 500; }
+.wheel-item.active { color: var(--green); font-size: 26px; font-weight: 700; }
+.oage-hint { font-size: 12px; color: var(--text-muted); text-align: center; margin-bottom: 1.5rem; }
+.owhy { padding: 14px 16px; background: var(--surface); border-radius: 14px; font-size: 13px; color: var(--text-sec); line-height: 1.6; margin-bottom: 1.5rem; border-left: 3px solid var(--green); }
 /* INTERSTITIAL */
 .build-wrap { text-align: center; padding: 1.5rem 0 .5rem; }
 .build-spin { width: 46px; height: 46px; margin: 0 auto 1.25rem; border-radius: 50%;
@@ -115,21 +134,26 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
 
   <div class="card">
 
-    <!-- STEP 1 — TRACKER -->
-    <div class="section active" id="sec-tracker">
-      <div class="block-title">Do you use a fitness tracker?</div>
-      <div class="block-sub">We&rsquo;ll adapt your program to your recovery data. Manual entry for now &mdash; automatic sync is coming.</div>
-      <div class="options" id="tracker-opts">
-        <button class="option" data-val="whoop" onclick="pickTracker(this)"><span class="opt-ic">&#8986;</span> WHOOP</button>
-        <button class="option" data-val="apple" onclick="pickTracker(this)"><span class="opt-ic">&#127822;</span> Apple Watch</button>
-        <button class="option" data-val="oura" onclick="pickTracker(this)"><span class="opt-ic">&#128141;</span> Oura Ring</button>
-        <button class="option" data-val="garmin" onclick="pickTracker(this)"><span class="opt-ic">&#8986;</span> Garmin</button>
-        <button class="option" data-val="none" onclick="pickTracker(this)"><span class="opt-ic">&#9995;</span> I don&rsquo;t use any</button>
+    <!-- STEP 1 — GENDER & AGE -->
+    <div class="section active" id="sec-gender">
+      <div class="block-title">Tell us about you</div>
+      <div class="block-sub">This helps us personalize your program and calculate your results accurately.</div>
+      <div class="osec-label">Your gender</div>
+      <div class="grow" id="gender-opts">
+        <div class="gcard" data-val="male" onclick="pickGender(this)">
+          <div class="gcard-photo"><img src="images/onboarding-male.png" alt="Male"></div>
+          <div class="gcard-label">Male</div>
+        </div>
+        <div class="gcard" data-val="female" onclick="pickGender(this)">
+          <div class="gcard-photo"><img src="images/onboarding-female.png" alt="Female"></div>
+          <div class="gcard-label">Female</div>
+        </div>
       </div>
-      <div style="margin-top:6px;padding:12px 14px;background:#FEF9EC;border-radius:10px;border-left:3px solid var(--orange);font-size:13px;color:#92400E;line-height:1.6">
-        <b>MoveSpan System works with your tracker.</b><br>Your recovery score, HRV and sleep data help the system choose the right practice for you each day.
-      </div>
-      <button class="btn-primary" id="btn-s1" disabled onclick="nextFromTracker()">Continue &#8594;</button>
+      <div class="osec-label">Your age</div>
+      <div class="wheel-wrap"><div class="wheel-sel"></div><div class="wheel" id="ageWheel"></div></div>
+      <div class="oage-hint">Scroll to select &middot; <span id="ageVal">55</span> years</div>
+      <div class="owhy">Men and women have different reference ranges. Your age lets us compare your movement with your chronological age &mdash; the basis of your <b>Functional Age</b>.</div>
+      <button class="btn-primary" id="btn-s1" disabled onclick="nextFromGender()">Continue &#8594;</button>
     </div>
 
     <!-- STEP 2 — PRACTICES -->
@@ -252,7 +276,7 @@ import { doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-
 const params = new URLSearchParams(window.location.search);
 const EDIT = params.get('edit') === '1';
 const FRESH = params.get('fresh') === '1'; // test param: run onboarding from scratch
-let state = { tracker: null, practices: [], zones: [], pain: null, experience: null, length: null };
+let state = { gender: null, age: 55, practices: [], zones: [], pain: null, experience: null, length: null };
 let oldState = null;
 let uid = null;
 let ready = false;
@@ -297,7 +321,7 @@ async function saveStep(extra) {
 }
 
 // ---------- step navigation ----------
-const STEP_SECTIONS = { 1: 'sec-tracker', 2: 'sec-practices', 3: 'sec-body' };
+const STEP_SECTIONS = { 1: 'sec-gender', 2: 'sec-practices', 3: 'sec-body' };
 window.goStep = function(n) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   $(STEP_SECTIONS[n]).classList.add('active');
@@ -306,14 +330,48 @@ window.goStep = function(n) {
   window.scrollTo(0, 0);
 };
 
-// ---------- step 1: tracker ----------
-window.pickTracker = function(el) {
-  document.querySelectorAll('#tracker-opts .option').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-  state.tracker = el.dataset.val;
+// ---------- step 1: gender & age ----------
+window.pickGender = function(el) {
+  document.querySelectorAll('#gender-opts .gcard').forEach(o => o.classList.remove('sel'));
+  el.classList.add('sel');
+  state.gender = el.dataset.val;
   $('btn-s1').disabled = false;
 };
-window.nextFromTracker = function() {
+let ageWheelItems = [];
+function updateAgeWheel() {
+  const wheel = $('ageWheel');
+  const center = wheel.scrollTop + wheel.clientHeight / 2;
+  let best = null, bestDist = Infinity;
+  ageWheelItems.forEach(it => {
+    it.classList.remove('active');
+    const itemCenter = it.offsetTop + it.offsetHeight / 2;
+    const dist = Math.abs(itemCenter - center);
+    if (dist < bestDist) { bestDist = dist; best = it; }
+  });
+  if (best) {
+    best.classList.add('active');
+    state.age = parseInt(best.dataset.age, 10);
+    $('ageVal').textContent = best.dataset.age;
+  }
+}
+function setAgeWheel(age) {
+  const wheel = $('ageWheel');
+  const item = wheel.querySelector('.wheel-item[data-age="' + age + '"]');
+  if (!item) return;
+  wheel.scrollTop = item.offsetTop - wheel.clientHeight / 2 + item.offsetHeight / 2;
+  updateAgeWheel();
+}
+(function initAgeWheel() {
+  const wheel = $('ageWheel');
+  let html = '<div class="wheel-pad"></div>';
+  for (let a = 20; a <= 100; a++) html += '<div class="wheel-item" data-age="' + a + '">' + a + '</div>';
+  html += '<div class="wheel-pad"></div>';
+  wheel.innerHTML = html;
+  ageWheelItems = Array.prototype.slice.call(wheel.querySelectorAll('.wheel-item'));
+  wheel.addEventListener('scroll', () => { clearTimeout(wheel._t); wheel._t = setTimeout(updateAgeWheel, 20); });
+  setTimeout(() => setAgeWheel(state.age), 50);
+})();
+window.nextFromGender = function() {
   saveStep({ step: 1 });
   goStep(2);
 };
@@ -449,9 +507,12 @@ window.showInterstitial = function() { if (!EDIT) sessionStorage.setItem("ms_new
 
 // ---------- init / resume / edit prefill ----------
 function prefill(onb) {
-  if (onb.tracker) {
-    const el = document.querySelector('#tracker-opts .option[data-val="' + onb.tracker + '"]');
-    if (el) pickTracker(el);
+  if (onb.gender) {
+    const el = document.querySelector('#gender-opts .gcard[data-val="' + onb.gender + '"]');
+    if (el) pickGender(el);
+  }
+  if (onb.age) {
+    setAgeWheel(onb.age);
   }
   (onb.practices || []).forEach(v => {
     const el = document.querySelector('#practice-list .prac-item[data-val="' + v + '"]');
