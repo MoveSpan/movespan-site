@@ -1135,6 +1135,43 @@ body.practice-sheet-open {
   cursor: pointer !important;
 }
 </style>
+<style id="movespan-hero-visual-safe-area">
+/*
+ * MoveSpan Hero Visual Safe Area Standard
+ *
+ * Размер и пропорции изображения определяются существующим
+ * responsive-алгоритмом. Этот класс регулирует только
+ * оптическое положение изображения внутри карточки.
+ */
+.movespan-hero-visual {
+  --movespan-hero-shift-x: 0px;
+  --movespan-hero-shift-y: 0px;
+
+  translate:
+    var(--movespan-hero-shift-x)
+    var(--movespan-hero-shift-y) !important;
+}
+
+/* Сидящая или низкая поза: немного поднимаем фигуру */
+.movespan-hero-visual[data-visual-anchor="low-pose"] {
+  --movespan-hero-shift-y: -18px;
+}
+
+/* Стандартные варианты для будущих изображений */
+.movespan-hero-visual[data-visual-anchor="center"] {
+  --movespan-hero-shift-y: 0px;
+}
+
+.movespan-hero-visual[data-visual-anchor="high-pose"] {
+  --movespan-hero-shift-y: 12px;
+}
+
+@media (max-width: 520px) {
+  .movespan-hero-visual[data-visual-anchor="low-pose"] {
+    --movespan-hero-shift-y: -14px;
+  }
+}
+</style>
 </head>
 <body>
 <div class="wrap">

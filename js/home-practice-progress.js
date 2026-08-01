@@ -90,6 +90,18 @@
     heading.insertAdjacentElement("afterend", status);
   }
 
+
+  function applyHeroVisualStandard(card) {
+    if (!card) return;
+
+    const image = card.querySelector("img");
+
+    if (!image) return;
+
+    image.classList.add("movespan-hero-visual");
+    image.dataset.visualAnchor = "low-pose";
+  }
+
   function updateProgressValues() {
     document.querySelectorAll(".prog-slabel").forEach((label) => {
       const normalized = label.textContent
@@ -118,6 +130,8 @@
 
     const button = findPracticeButton();
     const card = findTodayPracticeCard(button);
+
+    applyHeroVisualStandard(card);
 
     if (!completed || !button) {
       return;
