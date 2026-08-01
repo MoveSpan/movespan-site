@@ -1106,6 +1106,67 @@ body.practice-sheet-open {
   min-height: 0 !important;
 }
 </style>
+<style id="today-practice-completed-fix">
+/*
+ * Today's Practice image:
+ * preserve proportions and keep the visual center above the CTA.
+ */
+.today-practice-person {
+  position: absolute !important;
+  right: 22px !important;
+  bottom: 34px !important;
+  width: auto !important;
+  max-width: 43% !important;
+  height: 68% !important;
+  max-height: 390px !important;
+  object-fit: contain !important;
+  object-position: center bottom !important;
+  transform: translateY(-14px) !important;
+  transform-origin: center bottom;
+}
+
+/*
+ * Completion is shown as a separate status.
+ * The CTA remains available for replay.
+ */
+.today-practice-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 10px;
+  padding: 5px 10px;
+  border: 1px solid rgba(255, 255, 255, .26);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .12);
+  color: rgba(255, 255, 255, .92);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  vertical-align: middle;
+}
+
+.today-practice-status svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.today-practice-completed button {
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  cursor: pointer !important;
+}
+
+@media (max-width: 520px) {
+  .today-practice-person {
+    right: 8px !important;
+    bottom: 30px !important;
+    max-width: 46% !important;
+    height: 64% !important;
+    transform: translateY(-10px) !important;
+  }
+}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -1748,6 +1809,7 @@ applyMockState();
 </section>
 <!-- /Practice Note Final Sheet -->
 <script src="js/practice-note-sheet.js"></script>
+
 <script src="js/home-practice-progress.js"></script>
 </body>
 </html>
