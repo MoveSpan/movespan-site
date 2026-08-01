@@ -104,13 +104,17 @@ img{max-width:100%;display:block}
 .hs-cta{width:100%;padding:13px;background:var(--green);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font);margin-top:12px}
 
 /* Connect device */
-.dev{display:flex;align-items:center;gap:14px;padding:1.05rem 1.15rem}
-.dev-icon{width:60px;height:60px;border-radius:13px;background:var(--gl);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
-.dev-icon svg{width:52px;height:52px}
-.dev-body{flex:1;min-width:0}
-.dev-title{font-size:12px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
-.dev-text{font-size:13px;color:#4A5560;line-height:1.45}
-.dev-cta{background:var(--green);color:#fff;border:none;border-radius:11px;padding:11px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);white-space:nowrap;flex-shrink:0}
+.dcard{display:flex;border-radius:18px;overflow:hidden;min-height:150px;box-shadow:0 1px 4px rgba(0,0,0,.04);margin-bottom:14px}
+.dcard-left{flex:1;padding:1.15rem 1.25rem;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2;
+  background:
+    repeating-linear-gradient(112deg, rgba(255,255,255,.55) 0px, rgba(255,255,255,.55) 1px, transparent 1px, transparent 3px),
+    repeating-linear-gradient(112deg, rgba(120,128,138,.18) 0px, rgba(120,128,138,.18) 1px, transparent 1px, transparent 2px),
+    linear-gradient(118deg, #E2E5E9 0%, #C6CBD2 22%, #AEB4BD 44%, #C9CED5 56%, #A7ADB6 78%, #BEC3CB 100%);}
+.dcard-right{width:150px;flex-shrink:0;background:radial-gradient(circle at 30% 25%, #43A171 0%, #2D7D52 45%, #1C5537 100%);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.dcard-right img{height:110px;width:auto;object-fit:contain;position:relative;z-index:2}
+.dtitle{font-size:12px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.dtext{font-size:13px;color:#3A4550;line-height:1.45;margin-bottom:14px}
+.dcta{background:var(--green);color:#fff;border:none;border-radius:11px;padding:11px 18px;font-size:13px;font-weight:600;cursor:pointer;align-self:flex-start;font-family:var(--font)}
 
 /* Two-up row */
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;align-items:stretch}
@@ -506,36 +510,13 @@ img{max-width:100%;display:block}
   </div>
 
   <!-- CONNECT DEVICE (conditional) -->
-  <div class="card silver" id="device-card">
-    <div class="dev">
-      <div class="dev-icon">
-        <svg viewBox="0 0 56 56" fill="none">
-          <defs>
-            <linearGradient id="watchBand" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#3A3A3C"/><stop offset="1" stop-color="#1C1C1E"/>
-            </linearGradient>
-            <linearGradient id="watchBody" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#48484A"/><stop offset="1" stop-color="#1C1C1E"/>
-            </linearGradient>
-            <linearGradient id="watchFace" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#2C2C2E"/><stop offset="1" stop-color="#0A0A0A"/>
-            </linearGradient>
-          </defs>
-          <rect x="20" y="4" width="16" height="14" rx="4" fill="url(#watchBand)"/>
-          <rect x="20" y="38" width="16" height="14" rx="4" fill="url(#watchBand)"/>
-          <rect x="14" y="13" width="28" height="30" rx="9" fill="url(#watchBody)"/>
-          <rect x="17" y="16" width="22" height="24" rx="6" fill="url(#watchFace)"/>
-          <rect x="42" y="22" width="2.5" height="7" rx="1.2" fill="#48484A"/>
-          <circle cx="28" cy="28" r="6.5" fill="none" stroke="#E8B84B" stroke-width="1.4" opacity="0.9"/>
-          <path d="M28 24.5v3.5l2.2 1.3" stroke="#F5F5F7" stroke-width="1.3" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <div class="dev-body">
-        <div class="dev-title">Connect your health device</div>
-        <div class="dev-text">Apple Health, WHOOP, Fitbit, Garmin and Oura are supported in this MVP.</div>
-      </div>
-      <button class="dev-cta" onclick="go('device')">Connect a device &rarr;</button>
+  <div class="dcard" id="device-card">
+    <div class="dcard-left">
+      <div class="dtitle">Connect your health device</div>
+      <div class="dtext">Apple Health, WHOOP, Fitbit, Garmin and Oura are supported in this MVP.</div>
+      <button class="dcta" onclick="go('device')">Connect a device &rarr;</button>
     </div>
+    <div class="dcard-right"><img src="images/connect-device-woman.png" alt="Connect your device"></div>
   </div>
 
   <!-- TODAY'S JOURNEY (regular card) -->
@@ -646,7 +627,7 @@ var mockState = {
 
 // ===== CONDITIONAL VISIBILITY =====
 function applyMockState(){
-  document.getElementById('device-card').style.display = mockState.deviceConnected ? 'none' : 'block';
+  document.getElementById('device-card').style.display = mockState.deviceConnected ? 'none' : 'flex';
   document.getElementById('reset-card').style.display = mockState.showQuickReset ? 'block' : 'none';
 }
 
