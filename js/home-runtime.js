@@ -348,13 +348,14 @@
   }
 })();
 
-/* MoveSpan Practice Note — definitive interaction fix */
+
+/* MoveSpan Practice Note — inline final behavior */
 (function () {
   "use strict";
 
   const STORAGE_KEY = "movespanPracticeNoteCompactDate";
 
-  function dateKey() {
+  function todayKey() {
     const now = new Date();
 
     return [
@@ -369,149 +370,223 @@
     return note ? note.closest(".card") : null;
   }
 
-  function getNoteSheet() {
-    return document.getElementById("practice-note-sheet");
-  }
-
-  function openNoteSheet() {
-    const sheet = getNoteSheet();
-    const backdrop = document.getElementById("home-sheet-backdrop");
-
-    if (!sheet || !backdrop) {
-      console.error("Practice Note sheet was not found.");
-      return;
-    }
-
-    document.querySelectorAll(".home-sheet").forEach((item) => {
-      item.hidden = true;
-    });
-
-    backdrop.hidden = false;
-    sheet.hidden = false;
-    document.body.classList.add("home-sheet-open");
-  }
-
-  function applyState() {
+  function findAction(label) {
     const card = getCard();
+    if (!card) return null;
+
+    return [...card.querySelectorAll("a, button")].find((element) => {
+      return element.textContent
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLowerCase()
+        .includes(label);
+    }) || null;
+  }
+
+  function getDetail() {
+    return document.getElementById(
+      "practice-note-inline-detail"
+    );
+  }
+
+  function renderState() {
+    const card = getCard();
+    const detail = getDetail();
+    const readMore = findAction("read more")
+      || findAction("read less");
+
     if (!card) return;
 
     const compact =
-      localStorage.getItem(STORAGE_KEY) === dateKey();
+      localStorage.getItem(STORAGE_KEY) === todayKey();
 
     card.classList.toggle(
       "practice-note-is-compact",
       compact
     );
 
-    card.setAttribute(
-      "aria-label",
-      compact
-        ? "Open today’s practice note"
-        : "Today’s practice note"
+    if (compact) {
+      card.classList.remove(
+        "practice-note-is-expanded"
+      );
+
+      if (detail) detail.hidden = true;
+
+      if (readMore) {
+        readMore.textContent = "Read more →";
+      }
+
+      card.tabIndex = 0;
+      card.setAttribute(
+        "aria-label",
+        "Expand today’s practice note"
+      );
+    } else {
+      card.tabIndex = -1;
+      card.removeAttribute("aria-label");
+    }
+  }
+
+  function expandCompactCard() {
+    const card = getCard();
+
+    if (!card) return;
+
+    localStorage.removeItem(STORAGE_KEY);
+
+    card.classList.remove(
+      "practice-note-is-compact"
     );
 
-    card.tabIndex = compact ? 0 : -1;
+    card.tabIndex = -1;
+    card.removeAttribute("aria-label");
+  }
+
+  function toggleReadMore() {
+    const card = getCard();
+    const detail = getDetail();
+    const readMore = findAction("read more")
+      || findAction("read less");
+
+    if (!card || !detail) return;
+
+    const expanded = !detail.hidden;
+
+    detail.hidden = expanded;
+
+    card.classList.toggle(
+      "practice-note-is-expanded",
+      !expanded
+    );
+
+    if (readMore) {
+      readMore.textContent = expanded
+        ? "Read more →"
+        : "Read less ↑";
+    }
   }
 
   function makeCompact() {
-    localStorage.setItem(STORAGE_KEY, dateKey());
+    const card = getCard();
+    const detail = getDetail();
 
-    document.querySelectorAll(".home-sheet").forEach((item) => {
-      item.hidden = true;
-    });
+    if (!card) return;
 
-    const backdrop = document.getElementById(
-      "home-sheet-backdrop"
+    localStorage.setItem(
+      STORAGE_KEY,
+      todayKey()
     );
 
-    if (backdrop) {
-      backdrop.hidden = true;
+    card.classList.add(
+      "practice-note-is-compact"
+    );
+
+    card.classList.remove(
+      "practice-note-is-expanded"
+    );
+
+    if (detail) detail.hidden = true;
+
+    const readMore = findAction("read more")
+      || findAction("read less");
+
+    if (readMore) {
+      readMore.textContent = "Read more →";
     }
 
-    document.body.classList.remove("home-sheet-open");
-    applyState();
+    card.tabIndex = 0;
   }
 
-  /*
-   * Capture phase prevents legacy links from navigating
-   * before their old handlers can run.
-   */
   document.addEventListener(
     "click",
     function (event) {
       const card = getCard();
+
       if (!card) return;
 
-      const target = event.target;
-      const actionable = target.closest("a, button");
-
+      /*
+       * Компактная карточка:
+       * клик в любом месте возвращает полный вид.
+       */
       if (
-        card.classList.contains("practice-note-is-compact") &&
-        card.contains(target)
+        card.classList.contains(
+          "practice-note-is-compact"
+        )
+        && card.contains(event.target)
       ) {
         event.preventDefault();
         event.stopPropagation();
         event.stopImmediatePropagation();
-        openNoteSheet();
+
+        expandCompactCard();
         return;
       }
 
-      if (actionable && card.contains(actionable)) {
-        const label = actionable.textContent
-          .replace(/\s+/g, " ")
-          .trim()
-          .toLowerCase();
-
-        if (label.includes("read more")) {
-          event.preventDefault();
-          event.stopPropagation();
-          event.stopImmediatePropagation();
-          openNoteSheet();
-          return;
-        }
-
-        if (label.includes("got it")) {
-          event.preventDefault();
-          event.stopPropagation();
-          event.stopImmediatePropagation();
-          makeCompact();
-          return;
-        }
-      }
-
-      const detailGotIt = target.closest(
-        "#practice-note-detail-got-it"
+      const action = event.target.closest(
+        "a, button"
       );
 
-      if (detailGotIt) {
+      if (!action || !card.contains(action)) {
+        return;
+      }
+
+      const label = action.textContent
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLowerCase();
+
+      if (
+        label.includes("read more")
+        || label.includes("read less")
+      ) {
         event.preventDefault();
         event.stopPropagation();
         event.stopImmediatePropagation();
+
+        toggleReadMore();
+        return;
+      }
+
+      if (label.includes("got it")) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+
         makeCompact();
       }
     },
     true
   );
 
-  document.addEventListener("keydown", function (event) {
-    const card = getCard();
+  document.addEventListener(
+    "keydown",
+    function (event) {
+      const card = getCard();
 
-    if (
-      card &&
-      card.classList.contains("practice-note-is-compact") &&
-      document.activeElement === card &&
-      (event.key === "Enter" || event.key === " ")
-    ) {
-      event.preventDefault();
-      openNoteSheet();
+      if (
+        card
+        && card.classList.contains(
+          "practice-note-is-compact"
+        )
+        && document.activeElement === card
+        && (
+          event.key === "Enter"
+          || event.key === " "
+        )
+      ) {
+        event.preventDefault();
+        expandCompactCard();
+      }
     }
-  });
+  );
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", applyState, {
-      once: true
-    });
+    document.addEventListener(
+      "DOMContentLoaded",
+      renderState,
+      { once: true }
+    );
   } else {
-    applyState();
+    renderState();
   }
 })();

@@ -621,6 +621,74 @@ body.home-sheet-open {
   font-size: 10px;
 }
 </style>
+<style id="practice-note-final-behavior">
+.practice-note-inline-detail[hidden] {
+  display: none;
+}
+
+.practice-note-inline-detail {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #e2e6ea;
+  color: #4a5560;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.practice-note-inline-detail p + p {
+  margin-top: 10px;
+}
+
+.practice-note-inline-principle {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-left: 3px solid #2D7D52;
+  border-radius: 0 10px 10px 0;
+  background: #e8f5ee;
+  color: #1f5c3b;
+  font-weight: 700;
+}
+
+/* Компактное состояние */
+.card:has(.pnote).practice-note-is-compact {
+  min-height: 0;
+  cursor: pointer;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote {
+  min-height: 0;
+  align-items: center;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-fig {
+  display: none;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-body {
+  padding: 15px 18px;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-text,
+.card:has(.pnote).practice-note-is-compact .pnote-actions,
+.card:has(.pnote).practice-note-is-compact .practice-note-inline-detail {
+  display: none;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-title {
+  margin: 4px 0 0;
+  font-size: 14px;
+}
+
+.card:has(.pnote).practice-note-is-compact .eyebrow {
+  font-size: 10px;
+}
+
+/* Read more меняется на Read less */
+.card:has(.pnote).practice-note-is-expanded
+#practice-note-read-more {
+  font-weight: 700;
+}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -646,7 +714,23 @@ body.home-sheet-open {
     <div class="pnote">
       <div class="pnote-body">
         <span class="eyebrow">Practice Note</span>
-        <div class="pnote-title">Small, regular practice matters</div>
+        <div class="pnote-title">Small, regular practice matters
+<div class="practice-note-inline-detail" id="practice-note-inline-detail" hidden>
+  <p>
+    More is not always better. The body responds especially well to
+    movement that is regular, manageable and easy to repeat.
+  </p>
+
+  <p>
+    A short daily practice can support mobility, coordination and nervous
+    system regulation more effectively than occasional intense sessions.
+  </p>
+
+  <div class="practice-note-inline-principle">
+    Small daily practice beats occasional intensity.
+  </div>
+</div>
+</div>
         <div class="pnote-text">Move within a comfortable range today. Consistency is more valuable than intensity.</div>
         <div class="pnote-actions">
           <button class="pnote-link" onclick="dismissNote()">Got it</button>
