@@ -112,8 +112,8 @@
     const firstName = getUserFirstName();
 
     greetingElement.textContent = firstName
-      ? `${greeting}, ${firstName}`
-      : greeting;
+      ? `${greeting}, ${firstName}!`
+      : `${greeting}!`;
 
     greetingElement.dataset.period = greeting
       .replace("Good ", "")
