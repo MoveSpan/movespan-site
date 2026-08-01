@@ -218,6 +218,33 @@
     closeButton?.focus();
   }
 
+
+  /* MoveSpan Header Capture Fix */
+  document.addEventListener("click", function (event) {
+    const notificationsTarget = event.target.closest(
+      "#home-notifications-button"
+    );
+
+    const menuTarget = event.target.closest(
+      "#home-menu-button"
+    );
+
+    if (!notificationsTarget && !menuTarget) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+
+    if (notificationsTarget) {
+      openHomeSheet("notifications-sheet");
+      return;
+    }
+
+    openHomeSheet("quick-menu-sheet");
+  }, true);
+
   function initializeHeaderActions() {
     const notificationsButton = document.getElementById(
       "home-notifications-button"
@@ -248,18 +275,6 @@
         parentLink.removeAttribute("onclick");
         parentLink.style.cursor = "default";
       }
-    });
-
-    notificationsButton?.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      openHomeSheet("notifications-sheet");
-    });
-
-    menuButton?.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      openHomeSheet("quick-menu-sheet");
     });
 
     backdrop?.addEventListener("click", closeHomeSheets);
