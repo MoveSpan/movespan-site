@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+  <title>Joint Recovery Starter — MoveSpan</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --green: #2D7D52;
+      --green-dark: #1F5C3B;
+      --green-light: #E8F5EE;
+      --text: #1A1A1A;
+      --secondary: #5A6370;
+      --muted: #929BA5;
+      --border: #E2E6EA;
+      --surface: #F6F8F9;
+      --white: #FFFFFF;
+      --font: "Inter", system-ui, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--surface);
+      color: var(--text);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    .page {
+      width: min(100%, 520px);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 18px 16px 120px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .icon-button {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: var(--white);
+      color: var(--secondary);
+      cursor: pointer;
+      box-shadow: 0 2px 7px rgba(25, 42, 32, .05);
+    }
+
+    .icon-button svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .topbar-title {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .topbar-placeholder {
+      width: 44px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 16px;
+      padding: 24px 22px;
+      border-radius: 24px;
+      background:
+        radial-gradient(
+          circle at 92% 8%,
+          rgba(255, 255, 255, .18),
+          transparent 32%
+        ),
+        linear-gradient(
+          145deg,
+          #347F59 0%,
+          #2D7D52 55%,
+          #205E3D 100%
+        );
+      color: var(--white);
+      box-shadow: 0 10px 28px rgba(31, 92, 59, .18);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -35px;
+      bottom: -50px;
+      width: 170px;
+      height: 170px;
+      border: 1px solid rgba(255, 255, 255, .13);
+      border-radius: 50%;
+    }
+
+    .eyebrow {
+      margin-bottom: 8px;
+      color: rgba(255, 255, 255, .72);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      max-width: 330px;
+      margin-bottom: 10px;
+      font-size: 29px;
+      line-height: 1.15;
+      letter-spacing: -.025em;
+    }
+
+    .hero-description {
+      max-width: 360px;
+      margin-bottom: 20px;
+      color: rgba(255, 255, 255, .84);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 34px;
+      padding: 8px 11px;
+      border: 1px solid rgba(255, 255, 255, .16);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .11);
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 600;
+      backdrop-filter: blur(8px);
+    }
+
+    .meta-pill svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .card {
+      margin-bottom: 14px;
+      padding: 19px;
+      border: 1px solid var(--border);
+      border-radius: 19px;
+      background: var(--white);
+      box-shadow: 0 2px 8px rgba(25, 42, 32, .04);
+    }
+
+    .section-label {
+      margin-bottom: 13px;
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .focus-row {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .focus-icon {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      border-radius: 14px;
+      background: var(--green-light);
+      color: var(--green);
+    }
+
+    .focus-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .focus-title {
+      margin-bottom: 4px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .focus-text {
+      color: var(--secondary);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .exercise-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .exercise {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-height: 64px;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: #FBFCFC;
+    }
+
+    .exercise-number {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      border-radius: 12px;
+      background: var(--green-light);
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .exercise-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .exercise-title {
+      margin-bottom: 3px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .exercise-meta {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .exercise-check {
+      color: #C2C8CD;
+    }
+
+    .exercise-check svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .note {
+      display: flex;
+      gap: 12px;
+      padding: 15px;
+      border-radius: 15px;
+      background: #F1F6F3;
+      color: #3E5147;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .note svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: var(--green);
+    }
+
+    .bottom-action {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 20;
+      padding:
+        14px
+        max(16px, calc((100vw - 520px) / 2 + 16px))
+        calc(14px + env(safe-area-inset-bottom));
+      border-top: 1px solid rgba(226, 230, 234, .9);
+      background: rgba(246, 248, 249, .94);
+      backdrop-filter: blur(18px);
+    }
+
+    .start-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      width: min(100%, 488px);
+      min-height: 52px;
+      margin: 0 auto;
+      border: 0;
+      border-radius: 15px;
+      background: var(--green);
+      color: var(--white);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 7px 18px rgba(45, 125, 82, .2);
+    }
+
+    .start-button svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    .start-button:active {
+      transform: scale(.995);
+    }
+
+    .prototype-sheet-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      background: rgba(15, 25, 19, .48);
+    }
+
+    .prototype-sheet {
+      position: fixed;
+      left: 50%;
+      bottom: 0;
+      z-index: 31;
+      width: min(520px, 100%);
+      padding: 13px 22px calc(26px + env(safe-area-inset-bottom));
+      border-radius: 26px 26px 0 0;
+      background: var(--white);
+      transform: translateX(-50%);
+      box-shadow: 0 -16px 42px rgba(0, 0, 0, .2);
+    }
+
+    .prototype-sheet-backdrop[hidden],
+    .prototype-sheet[hidden] {
+      display: none;
+    }
+
+    .sheet-handle {
+      width: 42px;
+      height: 5px;
+      margin: 0 auto 20px;
+      border-radius: 999px;
+      background: #D7DCE0;
+    }
+
+    .sheet-icon {
+      display: grid;
+      place-items: center;
+      width: 56px;
+      height: 56px;
+      margin-bottom: 15px;
+      border-radius: 17px;
+      background: var(--green-light);
+      color: var(--green);
+    }
+
+    .sheet-icon svg {
+      width: 27px;
+      height: 27px;
+    }
+
+    .prototype-sheet h2 {
+      margin-bottom: 8px;
+      font-size: 22px;
+    }
+
+    .prototype-sheet p {
+      margin-bottom: 21px;
+      color: var(--secondary);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .sheet-button {
+      width: 100%;
+      min-height: 49px;
+      border: 0;
+      border-radius: 14px;
+      background: var(--green);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    @media (min-width: 700px) {
+      .prototype-sheet {
+        top: 50%;
+        bottom: auto;
+        border-radius: 26px;
+        transform: translate(-50%, -50%);
+      }
+
+      .sheet-handle {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header class="topbar">
+      <button
+        class="icon-button"
+        type="button"
+        aria-label="Back to Home"
+        onclick="location.href='home.html'"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+      </button>
+
+      <div class="topbar-title">Today’s Practice</div>
+      <div class="topbar-placeholder"></div>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">Joint Recovery</div>
+
+      <h1>Joint Recovery Starter</h1>
+
+      <p class="hero-description">
+        A gentle full-body sequence to restore mobility,
+        reduce stiffness and prepare your body for the day.
+      </p>
+
+      <div class="hero-meta">
+        <span class="meta-pill">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7v5l3 2"/>
+          </svg>
+          12 min
+        </span>
+
+        <span class="meta-pill">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M4 12h16"/>
+            <path d="m14 6 6 6-6 6"/>
+          </svg>
+          7 exercises
+        </span>
+
+        <span class="meta-pill">Beginner</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-label">Practice focus</div>
+
+      <div class="focus-row">
+        <div class="focus-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 2v4"/>
+            <path d="M12 18v4"/>
+            <path d="M4.93 4.93l2.83 2.83"/>
+            <path d="M16.24 16.24l2.83 2.83"/>
+            <path d="M2 12h4"/>
+            <path d="M18 12h4"/>
+          </svg>
+        </div>
+
+        <div>
+          <div class="focus-title">
+            Restore mobility and reduce stiffness
+          </div>
+
+          <div class="focus-text">
+            Move slowly, breathe naturally and stay within
+            a comfortable range.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-label">Practice sequence</div>
+
+      <div class="exercise-list">
+        <div class="exercise">
+          <div class="exercise-number">1</div>
+          <div class="exercise-body">
+            <div class="exercise-title">Grounding and breathing</div>
+            <div class="exercise-meta">1 min · Standing</div>
+          </div>
+          <div class="exercise-check">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="9"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="exercise">
+          <div class="exercise-number">2</div>
+          <div class="exercise-body">
+            <div class="exercise-title">Foot and ankle activation</div>
+            <div class="exercise-meta">2 min · Standing</div>
+          </div>
+          <div class="exercise-check">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="9"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="exercise">
+          <div class="exercise-number">3</div>
+          <div class="exercise-body">
+            <div class="exercise-title">Knee circles</div>
+            <div class="exercise-meta">1 min · Standing</div>
+          </div>
+          <div class="exercise-check">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="9"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="exercise">
+          <div class="exercise-number">4</div>
+          <div class="exercise-body">
+            <div class="exercise-title">Hip mobility</div>
+            <div class="exercise-meta">2 min · Standing</div>
+          </div>
+          <div class="exercise-check">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="9"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="exercise">
+          <div class="exercise-number">5</div>
+          <div class="exercise-body">
+            <div class="exercise-title">Spinal rotation</div>
+            <div class="exercise-meta">2 min · Standing</div>
+          </div>
+          <div class="exercise-check">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="9"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="exercise">
+          <div class="exercise-number">6</div>
+          <div class="exercise-body">
+            <div class="exercise-title">Shoulder and arm release</div>
+            <div class="exercise-meta">2 min · Standing</div>
+          </div>
+          <div class="exercise-check">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="9"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="exercise">
+          <div class="exercise-number">7</div>
+          <div class="exercise-body">
+            <div class="exercise-title">Closing integration</div>
+            <div class="exercise-meta">2 min · Standing</div>
+          </div>
+          <div class="exercise-check">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="9"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="note">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 11v5"/>
+          <path d="M12 8h.01"/>
+        </svg>
+
+        <div>
+          Stop or reduce the range if you feel sharp pain.
+          Comfortable stiffness is acceptable; pain is not the goal.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="bottom-action">
+    <button
+      class="start-button"
+      id="start-practice"
+      type="button"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+
+      Start practice
+    </button>
+  </div>
+
+  <div
+    class="prototype-sheet-backdrop"
+    id="prototype-backdrop"
+    hidden
+  ></div>
+
+  <section
+    class="prototype-sheet"
+    id="prototype-sheet"
+    role="dialog"
+    aria-modal="true"
+    hidden
+  >
+    <div class="sheet-handle"></div>
+
+    <div class="sheet-icon">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+    </div>
+
+    <h2>Practice player comes next</h2>
+
+    <p>
+      This prototype currently checks the practice overview,
+      exercise sequence and start interaction. The next step is
+      the actual exercise player.
+    </p>
+
+    <button
+      class="sheet-button"
+      id="close-prototype-sheet"
+      type="button"
+    >
+      Got it
+    </button>
+  </section>
+
+  <script>
+    const startButton =
+      document.getElementById("start-practice");
+
+    const sheet =
+      document.getElementById("prototype-sheet");
+
+    const backdrop =
+      document.getElementById("prototype-backdrop");
+
+    const closeButton =
+      document.getElementById("close-prototype-sheet");
+
+    function openSheet() {
+      sheet.hidden = false;
+      backdrop.hidden = false;
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeSheet() {
+      sheet.hidden = true;
+      backdrop.hidden = true;
+      document.body.style.overflow = "";
+    }
+
+    startButton.addEventListener("click", openSheet);
+    closeButton.addEventListener("click", closeSheet);
+    backdrop.addEventListener("click", closeSheet);
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        closeSheet();
+      }
+    });
+  </script>
+</body>
+</html>
