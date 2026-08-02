@@ -1172,6 +1172,217 @@ body.practice-sheet-open {
   }
 }
 </style>
+<style id="daily-checkin-functional-style">
+.mood {
+  cursor: pointer;
+  user-select: none;
+  --mood-color: #2D7D52;
+}
+
+.mood-face {
+  transition:
+    transform .2s ease,
+    border-color .2s ease,
+    background-color .2s ease,
+    box-shadow .2s ease,
+    opacity .2s ease;
+}
+
+.mood:hover .mood-face {
+  transform: translateY(-2px);
+}
+
+.mood:active .mood-face {
+  transform: scale(.96);
+}
+
+.mood:focus-visible {
+  outline: none;
+}
+
+.mood:focus-visible .mood-face {
+  box-shadow:
+    0 0 0 3px rgba(45, 125, 82, .18);
+}
+
+.mood.daily-checkin-selected .mood-face,
+.mood.sel .mood-face {
+  transform: translateY(-5px) scale(1.1);
+  background: var(--mood-color);
+  border-color: var(--mood-color);
+  box-shadow:
+    0 9px 22px color-mix(
+      in srgb,
+      var(--mood-color) 30%,
+      transparent
+    );
+}
+
+.mood.daily-checkin-selected .mood-face svg,
+.mood.sel .mood-face svg {
+  color: #FFFFFF;
+}
+
+.mood.daily-checkin-selected .mood-label,
+.mood.sel .mood-label {
+  color: var(--mood-color);
+  font-weight: 750;
+}
+
+.daily-checkin-scale {
+  --checkin-position: 50%;
+  --checkin-color: #C8A445;
+
+  margin-top: 20px;
+  padding: 3px 2px 0;
+  touch-action: none;
+  user-select: none;
+}
+
+.daily-checkin-scale:focus-visible {
+  outline: none;
+}
+
+.daily-checkin-scale:focus-visible
+.daily-checkin-track {
+  box-shadow:
+    0 0 0 3px rgba(45, 125, 82, .16);
+}
+
+.daily-checkin-track {
+  position: relative;
+  height: 12px;
+  border-radius: 999px;
+  cursor: pointer;
+
+  background:
+    linear-gradient(
+      90deg,
+      #C96A64 0%,
+      #D98A52 25%,
+      #C8A445 50%,
+      #6FAE78 75%,
+      #2D7D52 100%
+    );
+
+  box-shadow:
+    inset 0 0 0 1px rgba(34, 49, 40, .08);
+}
+
+.daily-checkin-track::before {
+  content: "";
+  position: absolute;
+  inset: 3px 6px;
+  border-radius: 999px;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent calc(25% - 1px),
+      rgba(255, 255, 255, .55) calc(25% - 1px),
+      rgba(255, 255, 255, .55) 25%
+    );
+}
+
+.daily-checkin-track-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--checkin-position);
+  border-radius: inherit;
+}
+
+.daily-checkin-thumb {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: var(--checkin-position);
+
+  width: 25px;
+  height: 25px;
+
+  border: 4px solid #FFFFFF;
+  border-radius: 50%;
+
+  background: var(--checkin-color);
+
+  box-shadow:
+    0 3px 10px rgba(34, 49, 40, .24);
+
+  transform:
+    translate(-50%, -50%);
+
+  transition:
+    left .2s ease,
+    background-color .2s ease,
+    transform .2s ease;
+}
+
+.daily-checkin-just-saved
+.daily-checkin-thumb {
+  transform:
+    translate(-50%, -50%)
+    scale(1.17);
+}
+
+.daily-checkin-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: 17px;
+  min-height: 28px;
+
+  color: #66746C;
+  font-size: 12px;
+}
+
+.daily-checkin-summary[hidden] {
+  display: none;
+}
+
+.daily-checkin-summary-label strong {
+  margin-left: 3px;
+  color: var(--checkin-color);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.daily-checkin-summary-check {
+  display: grid;
+  place-items: center;
+
+  width: 25px;
+  height: 25px;
+
+  border-radius: 50%;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--checkin-color) 13%,
+      white
+    );
+
+  color: var(--checkin-color);
+}
+
+.daily-checkin-summary-check svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 520px) {
+  .daily-checkin-scale {
+    margin-top: 18px;
+  }
+
+  .mood.daily-checkin-selected .mood-face,
+  .mood.sel .mood-face {
+    transform: translateY(-4px) scale(1.07);
+  }
+}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -1268,7 +1479,7 @@ body.practice-sheet-open {
     <div class="moods" id="moods">
       <button class="mood sel" data-mood="great" onclick="pickMood(this)">
         <div class="mood-face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
-        <span class="mood-label">Great</span>
+        <span class="mood-label">Amazing</span>
       </button>
       <button class="mood" data-mood="good" onclick="pickMood(this)">
         <div class="mood-face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 13s1.5 1.5 4 1.5 4-1.5 4-1.5"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
@@ -1276,15 +1487,15 @@ body.practice-sheet-open {
       </button>
       <button class="mood" data-mood="okay" onclick="pickMood(this)">
         <div class="mood-face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="8" y1="15" x2="16" y2="15"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
-        <span class="mood-label">Okay</span>
+        <span class="mood-label">Steady</span>
       </button>
       <button class="mood" data-mood="notgood" onclick="pickMood(this)">
         <div class="mood-face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
-        <span class="mood-label">Not so good</span>
+        <span class="mood-label">Not great</span>
       </button>
       <button class="mood" data-mood="poor" onclick="pickMood(this)">
         <div class="mood-face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 17s-1.5-3-4-3-4 3-4 3"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
-        <span class="mood-label">Poor</span>
+        <span class="mood-label">Bad</span>
       </button>
     </div>
   </div>
@@ -1816,5 +2027,7 @@ applyMockState();
 <script src="js/practice-note-sheet.js"></script>
 
 <script src="js/home-practice-progress.js"></script>
+
+<script src="js/home-checkin.js"></script>
 </body>
 </html>
