@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+  <title>Assessment Complete — MoveSpan</title>
+
+  <style>
+    :root{
+      --green:#2D7D52;
+      --green-soft:#EAF4EE;
+      --text:#183126;
+      --secondary:#5F7067;
+      --muted:#8A9891;
+      --border:#DDE6E1;
+      --surface:#F5F8F6;
+      --font:-apple-system,BlinkMacSystemFont,"SF Pro Display",
+        "Segoe UI",sans-serif;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html,
+    body{
+      min-height:100%;
+      margin:0;
+    }
+
+    body{
+      display:flex;
+      justify-content:center;
+      background:#F6F8F7;
+      color:var(--text);
+      font-family:var(--font);
+      -webkit-font-smoothing:antialiased;
+    }
+
+    .app{
+      width:min(100%,430px);
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      padding:
+        calc(22px + env(safe-area-inset-top))
+        20px
+        calc(24px + env(safe-area-inset-bottom));
+      background:white;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .brand img{
+      width:38px;
+      height:38px;
+      display:block;
+      object-fit:contain;
+    }
+
+    .brand-name{
+      color:var(--green);
+      font-size:20px;
+      font-weight:700;
+      letter-spacing:-.03em;
+    }
+
+    .content{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      padding:42px 0 36px;
+      text-align:center;
+    }
+
+    .status-animation{
+      position:relative;
+      width:104px;
+      height:104px;
+      margin:0 auto 30px;
+    }
+
+    .pulse{
+      position:absolute;
+      inset:0;
+      border-radius:34px;
+      background:var(--green-soft);
+      animation:pulse 1.8s ease-out infinite;
+    }
+
+    .status-icon{
+      position:absolute;
+      inset:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:27px;
+      background:var(--green);
+      color:white;
+      font-size:42px;
+      font-weight:600;
+      box-shadow:0 12px 30px rgba(45,125,82,.2);
+      animation:iconIn .55s ease-out both;
+    }
+
+    @keyframes pulse{
+      0%{
+        transform:scale(.84);
+        opacity:.9;
+      }
+      75%{
+        transform:scale(1.18);
+        opacity:0;
+      }
+      100%{
+        transform:scale(1.18);
+        opacity:0;
+      }
+    }
+
+    @keyframes iconIn{
+      from{
+        transform:scale(.7);
+        opacity:0;
+      }
+      to{
+        transform:scale(1);
+        opacity:1;
+      }
+    }
+
+    h1{
+      margin:0 0 14px;
+      font-size:30px;
+      line-height:1.12;
+      letter-spacing:-.04em;
+    }
+
+    .lead{
+      max-width:360px;
+      margin:0 auto;
+      color:var(--secondary);
+      font-size:16px;
+      line-height:1.55;
+    }
+
+    .update-card{
+      margin-top:28px;
+      padding:17px;
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:var(--surface);
+      text-align:left;
+    }
+
+    .update-label{
+      margin-bottom:7px;
+      color:var(--green);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+    }
+
+    .update-text{
+      color:var(--secondary);
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .actions{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .primary,
+    .secondary{
+      min-height:54px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:13px 18px;
+      border-radius:15px;
+      font-size:16px;
+      font-weight:650;
+      text-decoration:none;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    .primary{
+      background:var(--green);
+      color:white;
+      box-shadow:0 8px 20px rgba(45,125,82,.16);
+    }
+
+    .secondary{
+      border:1px solid var(--border);
+      background:white;
+      color:var(--green);
+    }
+
+    .secondary[hidden]{
+      display:none;
+    }
+
+    .note{
+      margin:6px 12px 0;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.45;
+      text-align:center;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+    <header class="brand">
+      <img
+        src="/images/brand/movespan-symbol-official.png?v=10"
+        alt="MoveSpan"
+      >
+      <span class="brand-name">MoveSpan</span>
+    </header>
+
+    <section class="content">
+      <div class="status-animation" aria-hidden="true">
+        <div class="pulse"></div>
+        <div class="status-icon">✓</div>
+      </div>
+
+      <h1>Your assessment is complete</h1>
+
+      <p class="lead">
+        Your observations have been saved and are now being used to
+        personalize your MoveSpan program.
+      </p>
+
+      <div class="update-card">
+        <div class="update-label">Program updated</div>
+
+        <div class="update-text">
+          Your posture, alignment and movement patterns will be considered
+          when MoveSpan selects the focus of your current and future practices.
+        </div>
+      </div>
+    </section>
+
+    <footer class="actions">
+      <a class="primary" href="/home.html">
+        Go to Today’s Practice
+        <span aria-hidden="true">→</span>
+      </a>
+
+      <a
+        class="secondary"
+        id="functional-age-link"
+        href="/test.html"
+        hidden
+      >
+        Complete Functional Age Test
+      </a>
+
+      <p class="note" id="completion-note">
+        Your assessment data has been added to your personal profile.
+      </p>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      let functionalAgeValue = null;
+
+      try {
+        const savedValue =
+          localStorage.getItem("ms_functional_age_value");
+
+        if (savedValue !== null && savedValue !== "") {
+          const parsedValue = Number(savedValue);
+
+          if (Number.isFinite(parsedValue)) {
+            functionalAgeValue = Math.round(parsedValue);
+          }
+        }
+      } catch (error) {}
+
+      const functionalLink =
+        document.getElementById("functional-age-link");
+
+      const completionNote =
+        document.getElementById("completion-note");
+
+      if (!functionalLink || !completionNote) {
+        return;
+      }
+
+      functionalLink.hidden = false;
+      functionalLink.href = "/test.html";
+
+      const resultCard = document.createElement("div");
+      resultCard.id = "functional-age-summary";
+      resultCard.style.cssText = [
+        "width:100%",
+        "box-sizing:border-box",
+        "margin:0 0 14px",
+        "padding:16px",
+        "border:1px solid #DDE6E1",
+        "border-radius:16px",
+        "background:#F5FAF7",
+        "text-align:center"
+      ].join(";");
+
+      if (functionalAgeValue !== null) {
+        resultCard.innerHTML =
+          '<div style="font-size:13px;font-weight:600;color:#5F6B65;margin-bottom:4px">' +
+          'Your Functional Age' +
+          '</div>' +
+          '<div style="font-size:32px;font-weight:700;color:#2D7D52;line-height:1.15">' +
+          functionalAgeValue +
+          '</div>' +
+          '<div style="font-size:12px;color:#7A8580;margin-top:4px">' +
+          'Based on your most recent test' +
+          '</div>';
+
+        functionalLink.textContent =
+          "Retake Functional Age Test";
+
+        completionNote.textContent =
+          "Your Body Assessment results have been added to your profile. Retake the Functional Age Test whenever you want to update your result.";
+      } else {
+        resultCard.innerHTML =
+          '<div style="font-size:15px;font-weight:650;color:#1F2A25;margin-bottom:5px">' +
+          'Complete your Functional Age Test' +
+          '</div>' +
+          '<div style="font-size:13px;line-height:1.45;color:#68736E">' +
+          'Add a functional baseline so MoveSpan can build a fuller picture of how your body currently functions.' +
+          '</div>';
+
+        functionalLink.textContent =
+          "Complete Functional Age Test";
+
+        completionNote.textContent =
+          "Your Body Assessment results have been added to your personal profile.";
+      }
+
+      functionalLink.parentNode.insertBefore(
+        resultCard,
+        functionalLink
+      );
+    })();
+  </script>
+</body>
+</html>
