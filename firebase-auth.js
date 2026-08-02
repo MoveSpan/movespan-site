@@ -28,7 +28,7 @@ function requireAuth() {
   onAuthStateChanged(auth, async (user) => {
     if (!user && !isPublic) {
       sessionStorage.setItem('mw_redirect', path + window.location.search);
-      window.location.href = '/auth';
+      window.location.href = '/auth.html';
       return;
     }
     if (user) {
