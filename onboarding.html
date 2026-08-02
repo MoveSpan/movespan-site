@@ -32,25 +32,6 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
 .section.active { display: block; animation: fadeIn .25s ease; }
 .block-title { font-size: 22px; font-weight: 600; color: var(--text); margin-bottom: 6px; letter-spacing: -.02em; line-height: 1.3; }
 .block-sub { font-size: 14px; color: var(--text-sec); margin-bottom: 1.5rem; line-height: 1.6; }
-.q-label { font-size: 13px; font-weight: 600; color: var(--text); margin: 1.1rem 0 8px; display: block; }
-.q-label:first-of-type { margin-top: 0; }
-.options { display: flex; flex-direction: column; gap: 10px; margin-bottom: .5rem; }
-.option { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius);
-  padding: 13px 16px; font-size: 15px; color: var(--text-sec); cursor: pointer;
-  transition: all .15s; text-align: left; font-family: var(--font); user-select: none; }
-.option:hover { border-color: var(--green-border); color: var(--text); }
-.option.selected { border-color: var(--green); background: var(--green-light); color: var(--green); font-weight: 500; }
-.option .opt-ic { font-size: 19px; margin-right: 10px; display: inline-block; width: 24px; text-align: center; vertical-align: -2px; }
-.option small { display: block; font-size: 12px; color: var(--text-muted); margin-top: 2px; font-weight: 400; }
-.option.selected small { color: var(--green); opacity: .8; }
-.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: .25rem; }
-.chip { background: var(--surface); border: 1.5px solid var(--border); border-radius: 40px;
-  padding: 9px 16px; font-size: 14px; font-family: var(--font); color: var(--text-sec);
-  cursor: pointer; transition: all .15s; user-select: none; }
-.chip:hover:not(.disabled) { border-color: var(--green-border); color: var(--text); }
-.chip.sel { background: var(--green-light); color: var(--green); border-color: var(--green-border); font-weight: 500; }
-.chip.disabled { opacity: .35; cursor: not-allowed; }
-.chip .soon { font-size: 10px; color: var(--orange); font-weight: 600; margin-left: 4px; }
 .max-hint { font-size: 12px; color: var(--text-muted); margin: 6px 0 0; }
 .btn-primary { width: 100%; padding: 14px; background: var(--green); color: white; border: none;
   border-radius: var(--radius); font-size: 15px; font-weight: 500; font-family: var(--font);
@@ -62,7 +43,6 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
 .btn-back:hover { color: var(--text-sec); }
 .edit-banner { display: none; background: var(--orange-light); border: 1.5px solid var(--orange);
   border-radius: var(--radius); padding: 10px 14px; font-size: 13px; color: #92400E; margin-bottom: 1.25rem; line-height: 1.5; }
-.err { background: var(--red-light); color: var(--red); border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-top: 12px; display: none; }
 /* GENDER & AGE SCREEN */
 .osec-label { font-size: 12px; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 12px; }
 .grow { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.75rem; }
@@ -94,27 +74,68 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
 .build-line .tick { color: var(--green); font-weight: 600; }
 /* CARE SCREEN (pain 3) */
 .care { text-align: center; padding: .5rem 0; }
-.care-emoji { font-size: 48px; display: block; margin-bottom: 1rem; }
-.care-title { font-size: 21px; font-weight: 600; letter-spacing: -.02em; margin-bottom: 10px; }
-.care-text { font-size: 14px; color: var(--text-sec); line-height: 1.7; margin-bottom: 12px; text-align: left; }
-.care-note { background: var(--orange-light); border-radius: var(--radius); padding: 12px 16px; font-size: 13px;
-  color: #92400E; line-height: 1.6; text-align: left; margin-bottom: .5rem; }
-#zone-fig .on { fill: #2D7D52 !important; stroke: #1F5A3A !important; }
-.prac-item { display:flex; align-items:flex-start; gap:12px; background:var(--surface); border:1.5px solid var(--border); border-radius:14px; padding:12px 14px; cursor:pointer; transition:all .15s; user-select:none; }
-.prac-item:hover:not(.soon) { border-color:var(--green-border); }
-.prac-item.sel { background:var(--green-light); border-color:var(--green); }
-.prac-item.sel .prac-name { color:var(--green); font-weight:500; }
-.prac-item.sel .prac-sub { color:var(--green); opacity:.8; }
-.prac-item.soon { opacity:.55; cursor:default; }
-.prac-icon { font-size:22px; flex-shrink:0; width:28px; text-align:center; margin-top:1px; }
-.prac-name { font-size:14px; font-weight:600; color:var(--text); margin-bottom:2px; }
-.prac-sub { font-size:12px; color:var(--text-sec); line-height:1.45; }
-.soon-badge { font-size:10px; font-weight:600; color:var(--orange); background:#FEF3C7; border-radius:20px; padding:2px 7px; margin-left:5px; }
-.chip { position:relative; }
-.chip .pr { display:none; position:absolute; left:8px; top:50%; transform:translateY(-50%); width:17px; height:17px; border-radius:50%; background:var(--green); color:white; font-size:10px; font-weight:700; line-height:17px; text-align:center; }
-.chip.sel { padding-left:32px; }
-.chip.sel .pr { display:block; }
-#zone-fig circle, #zone-fig rect, #zone-fig path { transition: fill .2s, stroke .2s; }
+.care-emoji { font-size: 44px; display: block; margin-bottom: 14px; }
+.care-title { font-size: 24px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 14px; color: var(--text); }
+.care-text { font-size: 14px; color: var(--text-sec); line-height: 1.6; margin-bottom: 18px; text-align: center; }
+.care-note { background: #FEF9EC; border-radius: 14px; padding: 14px 16px; font-size: 13px;
+  color: #92400E; line-height: 1.55; text-align: left; margin-bottom: 20px; border-left: 3px solid var(--orange); }
+/* PRACTICES */
+.prac-item { display:flex; align-items:center; gap:13px; background:#F5FAF7; border:2px solid #E4EFE9; border-radius:16px; padding:14px; cursor:pointer; transition:.15s; }
+.prac-item:hover { border-color:#A8D5B8; }
+.prac-item.sel { background:#E8F5EE; border-color:#2D7D52; box-shadow:0 0 0 1px #2D7D52; }
+.prac-item.sel .prac-name { color:#2D7D52; }
+.prac-item.sel .prac-sub { color:#3A6B52; }
+.prac-item.core { background:#E8F5EE; border-color:#2D7D52; box-shadow:0 0 0 1px #2D7D52; cursor:default; }
+.prac-item.core .prac-name { color:#2D7D52; }
+.prac-item.core .prac-sub { color:#3A6B52; }
+.prac-item.soon { cursor:default; }
+.prac-item.soon:hover { border-color:#E4EFE9; }
+.prac-item.soon .prac-check { border-style:dashed; }
+.prac-ic { width:44px; height:44px; border-radius:12px; background:#E8F5EE; display:flex; align-items:center; justify-content:center; flex-shrink:0; color:#2D7D52; }
+.prac-item.sel .prac-ic, .prac-item.core .prac-ic { background:#2D7D52; color:#fff; }
+.prac-item.soon .prac-ic { background:#E8F5EE; color:#2D7D52; }
+.prac-ic svg { width:24px; height:24px; }
+.prac-text { flex:1; min-width:0; }
+.prac-name { font-size:15px; font-weight:600; color:#1A1A1A; display:flex; align-items:center; gap:7px; margin-bottom:2px; }
+.prac-sub { font-size:12px; color:#6A7480; line-height:1.35; }
+.prac-check { width:24px; height:24px; border-radius:50%; border:2px solid #C5CBD2; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:#fff; font-size:13px; font-weight:700; transition:.15s; }
+.prac-item.sel .prac-check, .prac-item.core .prac-check { background:#2D7D52; border-color:#2D7D52; border-style:solid; }
+.soon-badge { font-size:9px; background:#F59E0B; color:#fff; padding:2px 8px; border-radius:20px; font-weight:700; letter-spacing:.04em; }
+.core-badge { font-size:9px; background:#2D7D52; color:#fff; padding:2px 8px; border-radius:20px; font-weight:700; letter-spacing:.04em; }
+/* BODY ZONES */
+.zbody { display:flex; gap:18px; align-items:flex-start; }
+.zfig { flex-shrink:0; }
+#zfig .on { fill:#2D7D52 !important; stroke:#1F5A3A !important; }
+#zfig circle, #zfig rect, #zfig path { transition:fill .2s, stroke .2s; }
+.zq { font-size:17px; font-weight:600; color:#1A1A1A; margin-bottom:5px; line-height:1.3; }
+.zq span { color:#9AA3AD; font-weight:400; font-size:14px; }
+.zprimary { font-size:12px; color:#2D7D52; margin-bottom:18px; font-weight:500; }
+.zprimary b { font-weight:700; }
+.zchips { display:flex; flex-wrap:wrap; gap:8px; align-content:flex-start; flex:1; }
+.zchip { border:2px solid #E4EFE9; background:#F5FAF7; border-radius:20px; padding:8px 14px; font-size:13px; color:#1A1A1A; cursor:pointer; transition:.15s; display:flex; align-items:center; gap:6px; font-weight:500; }
+.zchip:hover { border-color:#A8D5B8; }
+.zchip .pr { display:none; }
+.zchip.sel { background:#E8F5EE; border-color:#2D7D52; color:#2D7D52; box-shadow:0 0 0 1px #2D7D52; }
+.zchip.primary { background:#2D7D52; border-color:#2D7D52; color:#fff; }
+.zchip.primary .pr { display:inline; font-size:9px; background:rgba(255,255,255,.25); padding:1px 6px; border-radius:10px; font-weight:700; }
+/* DETAILS */
+.dq { font-size:16px; font-weight:600; color:#1A1A1A; margin:22px 0 10px; }
+.dq:first-of-type { margin-top:0; }
+.dopts { display:flex; flex-direction:column; gap:9px; }
+.dopt { border:2px solid #E4EFE9; background:#F5FAF7; border-radius:14px; padding:14px 16px; font-size:15px; color:#1A1A1A; cursor:pointer; transition:.15s; text-align:left; font-family:inherit; font-weight:500; display:flex; align-items:center; gap:12px; width:100%; }
+.dopt:hover { border-color:#A8D5B8; }
+.dopt-txt { flex:1; }
+.dopt-txt small { display:block; font-size:12px; color:#8A94A0; font-weight:400; margin-top:2px; }
+.dcheck { width:24px; height:24px; border-radius:50%; border:2px solid #C5CBD2; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:#fff; font-size:13px; font-weight:700; transition:.15s; }
+.dopt.sel { background:#E8F5EE; border-color:#2D7D52; box-shadow:0 0 0 1px #2D7D52; color:#2D7D52; }
+.dopt.sel .dopt-txt small { color:#3A6B52; }
+.dopt.sel .dcheck { background:#2D7D52; border-color:#2D7D52; }
+.dchips { display:flex; gap:10px; }
+.dchip2 { flex:1; border:2px solid #E4EFE9; background:#F5FAF7; border-radius:14px; padding:14px 10px; font-size:15px; color:#1A1A1A; cursor:pointer; transition:.15s; text-align:center; font-family:inherit; font-weight:600; position:relative; }
+.dchip2:hover { border-color:#A8D5B8; }
+.dchip2.sel { background:#E8F5EE; border-color:#2D7D52; box-shadow:0 0 0 1px #2D7D52; color:#2D7D52; }
+.dchip2 .cc { position:absolute; top:6px; right:6px; width:18px; height:18px; border-radius:50%; background:#2D7D52; color:#fff; font-size:10px; display:none; align-items:center; justify-content:center; font-weight:700; }
+.dchip2.sel .cc { display:flex; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes spin { to { transform: rotate(360deg); } }
 </style>
@@ -126,7 +147,7 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
     <span class="logo-name">MoveSpan System</span>
   </div>
   <div class="progress-wrap"><div class="progress" id="progress" style="width:8%"></div></div>
-  <div class="step-label" id="step-label">Step 1 of 3</div>
+  <div class="step-label" id="step-label">Step 1 of 4</div>
 
   <div class="edit-banner" id="edit-banner">
     &#9998; <b>Editing your profile.</b> Your current answers are pre-filled — change anything and your program will be rebuilt.
@@ -160,37 +181,78 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
     <div class="section" id="sec-practices">
       <div class="block-title">Choose your practices</div>
       <div class="block-sub">Joint Recovery is always included. Choose up to 2 focus practices.</div>
-      <div id="practice-list" style="display:flex;flex-direction:column;gap:8px">
-        <div class="prac-item" style="border-color:var(--green);background:var(--gl);cursor:default">
-          <span class="prac-icon" style="background:var(--green);color:white;border-color:var(--green)">&#129463;</span>
-          <div class="prac-text"><div class="prac-name" style="color:var(--green)">Joint Recovery</div><div class="prac-sub">Full-body joint gymnastics &mdash; the core of every program</div></div>
-          <div style="width:22px;height:22px;border-radius:50%;background:var(--green);color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-left:auto">&#10003;</div>
+      <div id="practice-list" style="display:flex;flex-direction:column;gap:10px">
+
+        <!-- CORE — Joint Recovery -->
+        <div class="prac-item core">
+          <span class="prac-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="2.5"/><path d="M12 7.5V14M8 10h8M9 21l3-7 3 7"/></svg></span>
+          <div class="prac-text"><div class="prac-name">Joint Recovery <span class="core-badge">CORE</span></div><div class="prac-sub">Full-body joint gymnastics &mdash; the core of every program</div></div>
+          <div class="prac-check">&#10003;</div>
         </div>
-        <div style="font-size:11px;color:var(--green);font-weight:500;margin:-4px 0 8px 4px">&#10003; Always included in your program</div>
-        <div class="prac-item soon" data-val="release"><span class="prac-icon">&#128134;</span><div class="prac-text"><div class="prac-name">Body Release <span style="font-size:10px;background:#F3F4F6;color:#9AA3AD;padding:2px 7px;border-radius:20px;font-weight:600;letter-spacing:.04em">SOON</span></div><div class="prac-sub">Myofascial release &middot; self-massage &middot; tension relief</div></div></div>
-        <div class="prac-item" data-val="neurogym" onclick="togPractice(this)"><span class="prac-icon">&#129504;</span><div class="prac-text"><div class="prac-name">Neuro Gym</div><div class="prac-sub">Brain-body coordination &middot; sharpen balance &amp; memory</div></div></div>
-        <div class="prac-item soon" data-val="taichi"><span class="prac-icon">&#129355;</span><div class="prac-text"><div class="prac-name">Tai Chi &amp; Flow <span style="font-size:10px;background:#F3F4F6;color:#9AA3AD;padding:2px 7px;border-radius:20px;font-weight:600;letter-spacing:.04em">SOON</span></div><div class="prac-sub">Slow flowing movement &middot; balance &amp; awareness</div></div></div>
-        <div class="prac-item soon" data-val="walking"><span class="prac-icon">&#128694;</span><div class="prac-text"><div class="prac-name">Walking Therapy <span style="font-size:10px;background:#F3F4F6;color:#9AA3AD;padding:2px 7px;border-radius:20px;font-weight:600;letter-spacing:.04em">SOON</span></div><div class="prac-sub">Gait &amp; posture reprogramming &middot; daily movement</div></div></div>
-        <div class="prac-item" data-val="breathwork" onclick="togPractice(this)"><span class="prac-icon">&#127870;</span><div class="prac-text"><div class="prac-name">Breathwork &amp; Meditation</div><div class="prac-sub">Reset your nervous system &middot; Svistyelka, Impulse Breathing</div></div></div>
-        <div class="prac-item" data-val="sbodyoga" onclick="togPractice(this)"><span class="prac-icon">&#128170;</span><div class="prac-text"><div class="prac-name">Strong Body Yoga</div><div class="prac-sub">Static holds &middot; strengthen joints, tendons &amp; deep muscles</div></div></div>
-        <div class="prac-item soon" data-val="aqua"><span class="prac-icon">&#127754;</span><div class="prac-text"><div class="prac-name">AquaBreath <span style="font-size:10px;background:#F3F4F6;color:#9AA3AD;padding:2px 7px;border-radius:20px;font-weight:600;letter-spacing:.04em">SOON</span></div><div class="prac-sub">Breath &amp; water practices &middot; deep recovery</div></div></div>
-        <div class="prac-item soon" data-val="vs"><span class="prac-icon">&#127925;</span><div class="prac-text"><div class="prac-name">Voice &amp; Sound <span style="font-size:10px;background:#F3F4F6;color:#9AA3AD;padding:2px 7px;border-radius:20px;font-weight:600;letter-spacing:.04em">SOON</span></div><div class="prac-sub">Restore your nervous system through vibration, resonance and conscious voice</div></div></div>
+
+        <div class="prac-item soon" data-val="release">
+          <span class="prac-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3c-3 0-5 2-5 5 0 2 1 3 1 5s-1 3-1 5M12 3c3 0 5 2 5 5 0 2-1 3-1 5s1 3 1 5"/><path d="M7 13h10"/></svg></span>
+          <div class="prac-text"><div class="prac-name">Body Release <span class="soon-badge">SOON</span></div><div class="prac-sub">Myofascial release &middot; self-massage &middot; tension relief</div></div>
+          <div class="prac-check"></div>
+        </div>
+
+        <div class="prac-item" data-val="neurogym" onclick="togPractice(this)">
+          <span class="prac-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3a4 4 0 0 0-4 4c0 1-1 1.5-1 3s1 2 1 3-1 1-1 2.5A2.5 2.5 0 0 0 9 21V3z"/><path d="M15 3a4 4 0 0 1 4 4c0 1 1 1.5 1 3s-1 2-1 3 1 1 1 2.5A2.5 2.5 0 0 1 15 21V3z"/></svg></span>
+          <div class="prac-text"><div class="prac-name">Neuro Gym</div><div class="prac-sub">Brain-body coordination &middot; sharpen balance &amp; memory</div></div>
+          <div class="prac-check"></div>
+        </div>
+
+        <div class="prac-item soon" data-val="taichi">
+          <span class="prac-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12c3-4 6-4 8 0s5 4 8 0"/><path d="M4 17c3-4 6-4 8 0s5 4 8 0"/></svg></span>
+          <div class="prac-text"><div class="prac-name">Tai Chi &amp; Flow <span class="soon-badge">SOON</span></div><div class="prac-sub">Slow flowing movement &middot; balance &amp; awareness</div></div>
+          <div class="prac-check"></div>
+        </div>
+
+        <div class="prac-item soon" data-val="walking">
+          <span class="prac-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13" cy="4" r="2"/><path d="M13 6v5l4 3M13 11l-4 2-2 8M9 13l3 3"/></svg></span>
+          <div class="prac-text"><div class="prac-name">Walking Therapy <span class="soon-badge">SOON</span></div><div class="prac-sub">Gait &amp; posture reprogramming &middot; daily movement</div></div>
+          <div class="prac-check"></div>
+        </div>
+
+        <div class="prac-item" data-val="breathwork" onclick="togPractice(this)">
+          <span class="prac-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v6M12 9c-2.5 0-4.5 1.5-4.5 4.5V18a2 2 0 0 0 4.5 0M12 9c2.5 0 4.5 1.5 4.5 4.5V18a2 2 0 0 1-4.5 0"/></svg></span>
+          <div class="prac-text"><div class="prac-name">Breathwork &amp; Meditation</div><div class="prac-sub">Reset your nervous system &middot; Svistyelka, Impulse Breathing</div></div>
+          <div class="prac-check"></div>
+        </div>
+
+        <div class="prac-item" data-val="sbodyoga" onclick="togPractice(this)">
+          <span class="prac-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 21V9a2 2 0 0 1 2-2h1V5a3 3 0 0 1 6 0v2h1a2 2 0 0 1 2 2v12"/><path d="M9 7h6"/></svg></span>
+          <div class="prac-text"><div class="prac-name">Strong Body Yoga</div><div class="prac-sub">Static holds &middot; strengthen joints, tendons &amp; deep muscles</div></div>
+          <div class="prac-check"></div>
+        </div>
+
+        <div class="prac-item soon" data-val="aqua">
+          <span class="prac-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14c2-3 4-3 6 0s4 3 6 0 4-3 4 0"/><path d="M3 19c2-3 4-3 6 0s4 3 6 0 4-3 6 0"/><circle cx="12" cy="6" r="2"/></svg></span>
+          <div class="prac-text"><div class="prac-name">AquaBreath <span class="soon-badge">SOON</span></div><div class="prac-sub">Breath &amp; water practices &middot; deep recovery</div></div>
+          <div class="prac-check"></div>
+        </div>
+
+        <div class="prac-item soon" data-val="vs">
+          <span class="prac-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M8 7v10M16 7v10M4 10v4M20 10v4"/></svg></span>
+          <div class="prac-text"><div class="prac-name">Voice &amp; Sound <span class="soon-badge">SOON</span></div><div class="prac-sub">Restore your nervous system through vibration, resonance and conscious voice</div></div>
+          <div class="prac-check"></div>
+        </div>
+
       </div>
-      <div class="max-hint" style="margin-top:8px">Practices marked SOON will be added when they launch &mdash; we&rsquo;ll notify you.</div>
-      <div id="prac-limit-note" style="display:none;font-size:12px;color:var(--green);font-weight:500;background:var(--gl);border-radius:8px;padding:8px 12px;margin-top:4px">&#10003; 2 practices selected — tap a selected one to deselect it.</div>
-      <button class="btn-primary" id="btn-s2" disabled onclick="nextFromPractices()">Continue &#8594;</button>
+      <div class="max-hint" style="margin-top:12px">Practices marked SOON will be added when they launch &mdash; we&rsquo;ll notify you.</div>
+      <div id="prac-limit-note" style="display:none;font-size:12px;color:#2D7D52;font-weight:500;background:#E8F5EE;border-radius:8px;padding:8px 12px;margin-top:8px">&#10003; 2 practices selected — tap a selected one to deselect it.</div>
+      <button class="btn-primary" id="btn-s2" onclick="nextFromPractices()">Continue &#8594;</button>
       <button class="btn-back" onclick="goStep(1)">&#8592; Back</button>
     </div>
 
-    <!-- STEP 3 — ABOUT YOUR BODY -->
+    <!-- STEP 3 — BODY ZONES -->
     <div class="section" id="sec-body">
       <div class="block-title">About your body</div>
-      <div class="block-sub">This is enough to build your first program. You can refine it with tests later.</div>
+      <div class="zq">Where do you feel the most discomfort? <span>(up to 3)</span></div>
+      <div class="zprimary">Your <b>first choice</b> becomes the primary focus of your program</div>
 
-      <span class="q-label">Where do you feel the most discomfort? <span style="color:var(--text-muted);font-weight:400">(up to 3)</span></span>
-    <div style="font-size:12px;color:var(--green);margin-bottom:10px">Your <strong>first choice</strong> becomes the primary focus of your program</div>
-      <div style="display:flex;gap:16px;align-items:flex-start">
-        <svg id="zone-fig" width="96" height="245" viewBox="0 0 110 280" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+      <div class="zbody">
+        <svg class="zfig" id="zfig" width="96" height="255" viewBox="0 0 110 290" xmlns="http://www.w3.org/2000/svg">
           <circle id="f-head" cx="55" cy="28" r="22" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
           <rect id="f-neck" x="47" y="49" width="16" height="14" rx="4" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
           <path id="f-shoulders" d="M15 75 Q15 62 30 62 L80 62 Q95 62 95 75 L95 85 L15 85 Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
@@ -198,51 +260,60 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
           <rect id="f-lower" x="28" y="128" width="54" height="35" rx="4" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
           <path id="f-arms-l" d="M28 65 Q12 70 8 90 L8 145 Q8 152 15 152 L22 152 L25 95 L28 85Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
           <path id="f-arms-r" d="M82 65 Q98 70 102 90 L102 145 Q102 152 95 152 L88 152 L85 95 L82 85Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
-          <path id="f-hips" d="M25 163 Q25 155 55 155 Q85 155 85 163 L88 195 L22 195 Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
-          <path id="f-knees-l" d="M22 195 L28 240 L48 240 L52 195Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
-          <path id="f-knees-r" d="M88 195 L82 240 L62 240 L58 195Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
-          <path id="f-feet-l" d="M28 240 Q24 260 26 275 L44 275 Q46 258 48 240Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
-          <path id="f-feet-r" d="M82 240 Q86 260 84 275 L66 275 Q64 258 62 240Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
+          <path id="f-hips" d="M25 163 Q25 155 55 155 Q85 155 85 163 L88 195 L82 232 L60 232 L57 200 Q55 197 53 200 L50 232 L28 232 L22 195 Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
+          <path id="f-knee-l" d="M28 232 L29 258 L49 258 L50 232 Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
+          <path id="f-knee-r" d="M82 232 L81 258 L61 258 L60 232 Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
+          <path id="f-foot-l" d="M29 258 Q26 278 28 287 L46 287 Q48 272 49 258 Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
+          <path id="f-foot-r" d="M81 258 Q84 278 82 287 L64 287 Q62 272 61 258 Z" fill="#E8F5EE" stroke="#2D7D52" stroke-width="1.5"/>
         </svg>
-      <div class="chips" id="zone-chips">
-        <span class="chip" data-val="face_eyes" onclick="togZone(this)"><span class="pr"></span>Face &amp; eyes</span>
-        <span class="chip" data-val="neck" onclick="togZone(this)"><span class="pr"></span>Neck</span>
-        <span class="chip" data-val="shoulders" onclick="togZone(this)"><span class="pr"></span>Shoulders</span>
-        <span class="chip" data-val="arms_wrists" onclick="togZone(this)"><span class="pr"></span>Arms &amp; wrists</span>
-        <span class="chip" data-val="mid_back" onclick="togZone(this)"><span class="pr"></span>Mid back</span>
-        <span class="chip" data-val="lower_back" onclick="togZone(this)"><span class="pr"></span>Lower back</span>
-        <span class="chip" data-val="hips" onclick="togZone(this)"><span class="pr"></span>Hips</span>
-        <span class="chip" data-val="knees" onclick="togZone(this)"><span class="pr"></span>Knees</span>
-        <span class="chip" data-val="feet_toes" onclick="togZone(this)"><span class="pr"></span>Feet &amp; toes</span>
-        <span class="chip" data-val="none" onclick="togZone(this)"><span class="pr"></span>No specific areas</span>
-      </div>
+
+        <div class="zchips" id="zone-chips">
+          <span class="zchip" data-val="face_eyes" onclick="togZone(this)"><span class="pr">1st</span>Face &amp; eyes</span>
+          <span class="zchip" data-val="neck" onclick="togZone(this)"><span class="pr">1st</span>Neck</span>
+          <span class="zchip" data-val="shoulders" onclick="togZone(this)"><span class="pr">1st</span>Shoulders</span>
+          <span class="zchip" data-val="arms_wrists" onclick="togZone(this)"><span class="pr">1st</span>Arms &amp; wrists</span>
+          <span class="zchip" data-val="mid_back" onclick="togZone(this)"><span class="pr">1st</span>Mid back</span>
+          <span class="zchip" data-val="lower_back" onclick="togZone(this)"><span class="pr">1st</span>Lower back</span>
+          <span class="zchip" data-val="hips" onclick="togZone(this)"><span class="pr">1st</span>Hips</span>
+          <span class="zchip" data-val="knees" onclick="togZone(this)"><span class="pr">1st</span>Knees</span>
+          <span class="zchip" data-val="feet_toes" onclick="togZone(this)"><span class="pr">1st</span>Feet &amp; toes</span>
+          <span class="zchip" data-val="none" onclick="togZone(this)"><span class="pr">1st</span>No specific areas</span>
+        </div>
       </div>
 
-      <span class="q-label">Pain level right now</span>
-      <div class="options" id="pain-opts">
-        <button class="option" data-val="0" onclick="pickOne(this,'pain-opts','pain')">No pain <small>I just want to move better</small></button>
-        <button class="option" data-val="1" onclick="pickOne(this,'pain-opts','pain')">Mild discomfort <small>Stiffness, tension</small></button>
-        <button class="option" data-val="2" onclick="pickOne(this,'pain-opts','pain')">Moderate pain <small>It affects my daily activities</small></button>
-        <button class="option" data-val="3" onclick="pickOne(this,'pain-opts','pain')">Acute pain <small>I need to be very careful</small></button>
-      </div>
-
-      <span class="q-label">Your experience with body practices</span>
-      <div class="options" id="exp-opts">
-        <button class="option" data-val="first_time" onclick="pickOne(this,'exp-opts','experience')">First time</button>
-        <button class="option" data-val="tried_before" onclick="pickOne(this,'exp-opts','experience')">Tried before</button>
-        <button class="option" data-val="regular" onclick="pickOne(this,'exp-opts','experience')">Practice regularly</button>
-      </div>
-
-      <span class="q-label">Session length</span>
-      <div class="chips" id="len-chips">
-        <span class="chip" data-val="15" onclick="pickLen(this)">15 min</span>
-        <span class="chip" data-val="30" onclick="pickLen(this)">30 min</span>
-        <span class="chip" data-val="60" onclick="pickLen(this)">60 min</span>
-      </div>
-
-      <div class="err" id="body-err"></div>
-      <button class="btn-primary" id="btn-s3" disabled onclick="finishOnboarding()">Build my program &#8594;</button>
+      <button class="btn-primary" id="btn-s3" disabled onclick="goStep(4)">Continue &#8594;</button>
       <button class="btn-back" onclick="goStep(2)">&#8592; Back</button>
+    </div>
+
+    <!-- STEP 4 — DETAILS -->
+    <div class="section" id="sec-details">
+      <div class="block-title">A few more details</div>
+      <div class="block-sub">This helps us set the right intensity and length for your program.</div>
+
+      <div class="dq">Pain level right now</div>
+      <div class="dopts" id="pain-opts">
+        <button class="dopt" data-val="0" onclick="pickOne(this,'pain-opts','pain')"><span class="dopt-txt">No pain <small>I just want to move better</small></span><span class="dcheck">&#10003;</span></button>
+        <button class="dopt" data-val="1" onclick="pickOne(this,'pain-opts','pain')"><span class="dopt-txt">Mild discomfort <small>Stiffness, tension</small></span><span class="dcheck">&#10003;</span></button>
+        <button class="dopt" data-val="2" onclick="pickOne(this,'pain-opts','pain')"><span class="dopt-txt">Moderate pain <small>It affects my daily activities</small></span><span class="dcheck">&#10003;</span></button>
+        <button class="dopt" data-val="3" onclick="pickOne(this,'pain-opts','pain')"><span class="dopt-txt">Acute pain <small>I need to be very careful</small></span><span class="dcheck">&#10003;</span></button>
+      </div>
+
+      <div class="dq">Your experience with body practices</div>
+      <div class="dopts" id="exp-opts">
+        <button class="dopt" data-val="first_time" onclick="pickOne(this,'exp-opts','experience')"><span class="dopt-txt">First time</span><span class="dcheck">&#10003;</span></button>
+        <button class="dopt" data-val="tried" onclick="pickOne(this,'exp-opts','experience')"><span class="dopt-txt">Tried before</span><span class="dcheck">&#10003;</span></button>
+        <button class="dopt" data-val="regular" onclick="pickOne(this,'exp-opts','experience')"><span class="dopt-txt">Practice regularly</span><span class="dcheck">&#10003;</span></button>
+      </div>
+
+      <div class="dq">Session length</div>
+      <div class="dchips" id="len-chips">
+        <button class="dchip2" data-val="15" onclick="pickLen(this)">15 min<span class="cc">&#10003;</span></button>
+        <button class="dchip2" data-val="30" onclick="pickLen(this)">30 min<span class="cc">&#10003;</span></button>
+        <button class="dchip2" data-val="60" onclick="pickLen(this)">60 min<span class="cc">&#10003;</span></button>
+      </div>
+
+      <button class="btn-primary" id="btn-s4" disabled onclick="finishOnboarding()">Build my program &#8594;</button>
+      <button class="btn-back" onclick="goStep(3)">&#8592; Back</button>
     </div>
 
     <!-- CARE SCREEN (pain = 3) -->
@@ -290,17 +361,19 @@ function computeMode(pain, exp) {
   return 'reset';
 }
 const FIG_MAP = {
-  head_jaw: ['f-head', 'f-neck'],
-  neck_shoulders: ['f-shoulders', 'f-neck'],
+  face_eyes: ['f-head'],
+  neck: ['f-neck'],
+  shoulders: ['f-shoulders'],
+  arms_wrists: ['f-arms-l', 'f-arms-r'],
   mid_back: ['f-midback'],
   lower_back: ['f-lower'],
-  arms_wrists: ['f-arms-l', 'f-arms-r'],
-  hips_pelvis: ['f-hips'],
-  knees: ['f-knees-l', 'f-knees-r'],
-  feet_ankles: ['f-feet-l', 'f-feet-r']
+  hips: ['f-hips'],
+  knees: ['f-knee-l', 'f-knee-r'],
+  feet_toes: ['f-foot-l', 'f-foot-r'],
+  none: []
 };
 function updateFigure() {
-  const fig = document.getElementById('zone-fig');
+  const fig = document.getElementById('zfig');
   if (!fig) return;
   fig.querySelectorAll('.on').forEach(el => el.classList.remove('on'));
   state.zones.forEach(z => (FIG_MAP[z] || []).forEach(id => {
@@ -309,7 +382,7 @@ function updateFigure() {
   }));
 }
 const MODE_NAMES = { minimal: 'Gentle Care', gentle_restore: 'Gentle Restore', restore: 'Restore', reset: 'Reset' };
-const ZONE_NAMES = { head_jaw: 'Head & jaw', neck_shoulders: 'Neck & shoulders', mid_back: 'Mid-back', lower_back: 'Lower back', arms_wrists: 'Arms & wrists', hips_pelvis: 'Hips & pelvis', knees: 'Knees', feet_ankles: 'Feet & ankles', none: 'General mobility' };
+const ZONE_NAMES = { face_eyes: 'Face & eyes', neck: 'Neck', shoulders: 'Shoulders', arms_wrists: 'Arms & wrists', mid_back: 'Mid-back', lower_back: 'Lower back', hips: 'Hips', knees: 'Knees', feet_toes: 'Feet & toes', none: 'General mobility' };
 
 async function saveStep(extra) {
   if (!uid) return;
@@ -321,12 +394,12 @@ async function saveStep(extra) {
 }
 
 // ---------- step navigation ----------
-const STEP_SECTIONS = { 1: 'sec-gender', 2: 'sec-practices', 3: 'sec-body' };
+const STEP_SECTIONS = { 1: 'sec-gender', 2: 'sec-practices', 3: 'sec-body', 4: 'sec-details' };
 window.goStep = function(n) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   $(STEP_SECTIONS[n]).classList.add('active');
-  $('progress').style.width = (n * 30) + '%';
-  $('step-label').textContent = 'Step ' + n + ' of 3';
+  $('progress').style.width = (n * 25) + '%';
+  $('step-label').textContent = 'Step ' + n + ' of 4';
   window.scrollTo(0, 0);
 };
 
@@ -377,7 +450,7 @@ window.nextFromGender = function() {
 };
 
 // ---------- step 2: practices ----------
-const PMAX = 3;
+const PMAX = 2;
 window.togPractice = function(el) {
   const v = el.dataset.val;
   const already = el.classList.contains('sel');
@@ -385,12 +458,11 @@ window.togPractice = function(el) {
   el.classList.toggle('sel');
   const i = state.practices.indexOf(v);
   if (i >= 0) state.practices.splice(i, 1); else state.practices.push(v);
-  $('btn-s2').disabled = state.practices.length === 0;
   // show/hide limit note
   const note = document.getElementById('prac-limit-note');
   if (note) note.style.display = state.practices.length >= PMAX ? 'block' : 'none';
   // neutral cursor when at limit
-  document.querySelectorAll('.prac-item').forEach(function(p) {
+  document.querySelectorAll('.prac-item:not(.soon):not(.core)').forEach(function(p) {
     p.style.cursor = (!p.classList.contains('sel') && state.practices.length >= PMAX) ? 'default' : 'pointer';
   });
 };
@@ -399,18 +471,18 @@ window.nextFromPractices = function() {
   goStep(3);
 };
 
-// ---------- step 3: body ----------
+// ---------- step 3: body zones ----------
 window.togZone = function(el) {
   const v = el.dataset.val;
   if (v === 'none') {
-    document.querySelectorAll('#zone-chips .chip').forEach(c => c.classList.remove('sel'));
+    document.querySelectorAll('#zone-chips .zchip').forEach(c => c.classList.remove('sel'));
     el.classList.add('sel');
     state.zones = ['none'];
   } else {
-    const noneChip = document.querySelector('#zone-chips .chip[data-val="none"]');
+    const noneChip = document.querySelector('#zone-chips .zchip[data-val="none"]');
     noneChip.classList.remove('sel');
     state.zones = state.zones.filter(z => z !== 'none');
-    if (el.classList.contains('sel')) {
+    if (state.zones.includes(v)) {
       el.classList.remove('sel');
       state.zones = state.zones.filter(z => z !== v);
     } else {
@@ -421,34 +493,37 @@ window.togZone = function(el) {
   }
   updateFigure();
   updateZonePriorities();
-  checkBodyDone();
+  checkZonesDone();
 };
 function updateZonePriorities() {
-  document.querySelectorAll('#zone-chips .chip').forEach(c => {
-    const i = state.zones.indexOf(c.dataset.val);
-    const pr = c.querySelector('.pr');
-    if (pr) pr.textContent = i >= 0 ? (i + 1) : '';
-  });
+  document.querySelectorAll('#zone-chips .zchip').forEach(function(c) { c.classList.remove('primary'); });
+  if (state.zones.length && state.zones[0] !== 'none') {
+    const first = document.querySelector('#zone-chips .zchip[data-val="' + state.zones[0] + '"]');
+    if (first) { first.classList.add('primary'); first.classList.remove('sel'); }
+  }
 }
 window.pickOne = function(el, groupId, field) {
-  document.querySelectorAll('#' + groupId + ' .option').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
+  document.querySelectorAll('#' + groupId + ' .dopt').forEach(o => o.classList.remove('sel'));
+  el.classList.add('sel');
   state[field] = field === 'pain' ? parseInt(el.dataset.val, 10) : el.dataset.val;
-  checkBodyDone();
+  checkDetailsDone();
 };
 window.pickLen = function(el) {
-  document.querySelectorAll('#len-chips .chip').forEach(c => c.classList.remove('sel'));
+  document.querySelectorAll('#len-chips .dchip2').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
   state.length = parseInt(el.dataset.val, 10);
-  checkBodyDone();
+  checkDetailsDone();
 };
-function checkBodyDone() {
-  $('btn-s3').disabled = !(state.zones.length > 0 && state.pain !== null && state.experience && state.length);
+function checkZonesDone() {
+  $('btn-s3').disabled = !(state.zones.length > 0);
+}
+function checkDetailsDone() {
+  $('btn-s4').disabled = !(state.pain !== null && state.experience && state.length);
 }
 
 // ---------- finish ----------
 window.finishOnboarding = async function() {
-  $('btn-s3').disabled = true;
+  $('btn-s4').disabled = true;
   await saveStep({ step: 3, completedAt: new Date().toISOString() });
   if (EDIT && oldState) sessionStorage.setItem('mw_diff', JSON.stringify(buildDiff(oldState, state)));
   if (state.pain === 3) {
@@ -519,19 +594,19 @@ function prefill(onb) {
     if (el && !el.classList.contains('sel') && !el.classList.contains('soon')) togPractice(el);
   });
   (onb.zones || []).forEach(v => {
-    const el = document.querySelector('#zone-chips .chip[data-val="' + v + '"]');
+    const el = document.querySelector('#zone-chips .zchip[data-val="' + v + '"]');
     if (el) togZone(el);
   });
   if (onb.pain !== null && onb.pain !== undefined) {
-    const el = document.querySelector('#pain-opts .option[data-val="' + onb.pain + '"]');
+    const el = document.querySelector('#pain-opts .dopt[data-val="' + onb.pain + '"]');
     if (el) pickOne(el, 'pain-opts', 'pain');
   }
   if (onb.experience) {
-    const el = document.querySelector('#exp-opts .option[data-val="' + onb.experience + '"]');
+    const el = document.querySelector('#exp-opts .dopt[data-val="' + onb.experience + '"]');
     if (el) pickOne(el, 'exp-opts', 'experience');
   }
   if (onb.length) {
-    const el = document.querySelector('#len-chips .chip[data-val="' + onb.length + '"]');
+    const el = document.querySelector('#len-chips .dchip2[data-val="' + onb.length + '"]');
     if (el) pickLen(el);
   }
 }
@@ -560,7 +635,7 @@ window.onMwAuthReady = function(user, profile) {
   if (onb && onb.step && !FRESH) {
     // Resume where they left off
     prefill(onb);
-    goStep(Math.min(onb.step + 1, 3));
+    goStep(Math.min(onb.step + 1, 4));
   }
 };
 </script>
