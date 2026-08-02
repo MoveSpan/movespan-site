@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Functional Age & Body Assessments — MoveSpan</title>
+
+<style>
+:root{
+  --green:#2D7D52;
+  --green-light:#EAF4EE;
+  --green-border:#D4E8DB;
+  --text:#1D1D1F;
+  --secondary:#667085;
+  --muted:#98A2B3;
+  --border:#E4E7EC;
+  --surface:#F6F7F8;
+  --white:#FFFFFF;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:var(--surface);
+  color:var(--text);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+.page{
+  width:min(100%,430px);
+  margin:0 auto;
+  padding:24px 18px 48px;
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:30px;
+}
+
+.back{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  color:var(--green);
+  text-decoration:none;
+  font-size:14px;
+  font-weight:600;
+  outline:none;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.back:focus{
+  outline:none;
+}
+
+.back:focus-visible{
+  outline:2px solid var(--green);
+  outline-offset:3px;
+  border-radius:6px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.brand-logo{
+  width:32px;
+  height:32px;
+  display:block;
+  object-fit:contain;
+  border-radius:8px;
+  flex:0 0 auto;
+}
+
+.brand-name{
+  color:#2D7D52;
+  font-size:16px;
+  line-height:1;
+  font-weight:700;
+  letter-spacing:-.02em;
+}
+
+.hero{
+  margin-bottom:26px;
+}
+
+.eyebrow{
+  color:var(--green);
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+
+h1{
+  margin:0 0 12px;
+  font-size:31px;
+  line-height:1.12;
+  letter-spacing:-.035em;
+}
+
+.subtitle{
+  margin:0;
+  color:var(--secondary);
+  font-size:17px;
+  line-height:1.55;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+}
+
+.card{
+  display:block;
+  padding:22px;
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:22px;
+  text-decoration:none;
+  color:inherit;
+  box-shadow:0 8px 24px rgba(16,24,40,.05);
+  transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+
+.card:hover{
+  transform:translateY(-2px);
+  border-color:var(--green-border);
+  box-shadow:0 12px 28px rgba(16,24,40,.08);
+}
+
+.card-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:20px;
+}
+
+.icon{
+  width:54px;
+  height:54px;
+  border-radius:16px;
+  background:var(--green-light);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:27px;
+}
+
+.arrow{
+  color:var(--green);
+  font-size:22px;
+  line-height:1;
+}
+
+.card h2{
+  margin:0 0 8px;
+  font-size:22px;
+  letter-spacing:-.02em;
+}
+
+.card p{
+  margin:0 0 18px;
+  color:var(--secondary);
+  font-size:15px;
+  line-height:1.55;
+}
+
+.meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.tag{
+  padding:7px 10px;
+  border-radius:999px;
+  background:var(--surface);
+  color:var(--secondary);
+  font-size:12px;
+  font-weight:600;
+}
+
+.note{
+  margin-top:22px;
+  padding:16px 18px;
+  border-radius:16px;
+  background:var(--green-light);
+  color:#365F49;
+  font-size:14px;
+  line-height:1.5;
+}
+
+
+
+  .cards{
+    grid-template-columns:1fr 1fr;
+  }
+
+  h1{
+    font-size:40px;
+  }
+}
+
+/* MoveSpan mobile assessment selector */
+.back-icon{
+  width:44px;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-left:-10px;
+  color:var(--green);
+  border-radius:50%;
+  outline:none;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.back-icon svg{
+  width:25px;
+  height:25px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2.25;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.back-icon:focus{
+  outline:none;
+}
+
+.back-icon:focus-visible{
+  background:var(--green-light);
+}
+
+.assessment-choice{
+  margin-top:24px;
+}
+
+.choice-description{
+  margin-bottom:20px;
+  color:var(--secondary);
+  font-size:15px;
+  line-height:1.55;
+}
+
+.assessment-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.assessment-tile{
+  aspect-ratio:1 / 1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:17px;
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:22px;
+  color:var(--text);
+  text-decoration:none;
+  box-shadow:0 8px 24px rgba(16,24,40,.05);
+  outline:none;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.assessment-tile:active{
+  transform:scale(.985);
+}
+
+.assessment-tile:focus{
+  outline:none;
+}
+
+.assessment-tile:focus-visible{
+  border-color:var(--green);
+}
+
+.tile-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:8px;
+}
+
+.tile-icon{
+  width:48px;
+  height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:15px;
+  background:var(--green-light);
+  font-size:24px;
+}
+
+.tile-arrow{
+  color:var(--green);
+  font-size:24px;
+  line-height:1;
+}
+
+.tile-title{
+  font-size:20px;
+  line-height:1.08;
+  font-weight:700;
+  letter-spacing:-.025em;
+}
+
+.tile-meta{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:600;
+}
+
+
+.assessment-option{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.option-description{
+  margin:0;
+  padding:0 2px;
+  color:var(--secondary);
+  font-size:13px;
+  line-height:1.5;
+}
+
+</style>
+</head>
+
+<body>
+<main class="page">
+
+  <div class="topbar">
+    <a class="back back-icon" href="/home.html" aria-label="Back">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M15 18l-6-6 6-6"/>
+      </svg>
+    </a>
+
+    <div class="brand">
+      <img
+        class="brand-logo"
+        src="/images/brand/movespan-symbol-official.png?v=4"
+        alt="MoveSpan"
+      >
+      <span class="brand-name">MoveSpan</span>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="eyebrow">Assessments</div>
+
+    <h1>Functional Age &amp; Body Assessments</h1>
+
+    <p class="subtitle">
+      Understand how your body functions today and identify the areas
+      that need the most attention.
+    </p>
+  </section>
+
+  <section class="assessment-choice">
+
+    <div class="assessment-grid">
+
+      <div class="assessment-option">
+        <a class="assessment-tile" href="/test.html" aria-label="Open Functional Age Test">
+          <div class="tile-top">
+            <div class="tile-icon">🧬</div>
+            <div class="tile-arrow">→</div>
+          </div>
+
+          <div class="tile-title">Functional<br>Age</div>
+          <div class="tile-meta">5–7 min</div>
+        </a>
+
+        <p class="option-description">
+          Complete six simple functional measurements and receive an estimate
+          of your current functional age.
+        </p>
+      </div>
+
+      <div class="assessment-option">
+        <a class="assessment-tile" href="/visual.html" aria-label="Open Body Assessments">
+          <div class="tile-top">
+            <div class="tile-icon">🪞</div>
+            <div class="tile-arrow">→</div>
+          </div>
+
+          <div class="tile-title">Body<br>Assessments</div>
+          <div class="tile-meta">Visual check</div>
+        </a>
+
+        <p class="option-description">
+          Observe your posture, alignment and visible asymmetries to understand
+          where your body may need restoration.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <div class="note">
+    These assessments are reference points. They help MoveSpan personalize
+    your practice and track meaningful changes over time.
+  </div>
+
+</main>
+</body>
+</html>
