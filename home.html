@@ -389,32 +389,999 @@ img{max-width:100%;display:block}
   }
 }
 </style>
-<style id="movespan-home-panels">
-.hdr-btn{outline:none;-webkit-tap-highlight-color:transparent}
-.hdr-btn:focus{outline:none}
-.hdr-btn:focus-visible{box-shadow:0 0 0 3px rgba(45,125,82,.18)}
-body.panel-open{overflow:hidden}
-.home-panel{display:none;position:fixed;inset:0;background:rgba(17,24,39,.42);z-index:200;align-items:flex-end;justify-content:center;padding:12px}
-.home-panel.open{display:flex}
-.home-sheet{width:min(100%,456px);max-height:min(82vh,720px);overflow:auto;background:#fff;border:1px solid var(--border);border-radius:24px;padding:20px;box-shadow:0 18px 60px rgba(17,24,39,.22);animation:sheet-in .2s ease-out}
-.home-sheet-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
-.home-sheet-title{font-size:20px;font-weight:700;color:var(--text)}
-.home-sheet-close{width:36px;height:36px;border:0;border-radius:50%;background:var(--surface);color:var(--sec);font-size:22px;line-height:1;cursor:pointer}
-.home-sheet-text{font-size:14px;line-height:1.6;color:var(--sec)}
-.home-sheet-note{padding:14px;border-radius:14px;background:var(--gl);color:var(--green);font-size:14px;line-height:1.55}
-.home-action{width:100%;border:1.5px solid var(--green);border-radius:14px;background:#fff;color:var(--green);padding:13px 16px;font:600 15px var(--font);cursor:pointer;text-decoration:none;display:flex;align-items:center;justify-content:center;margin-top:12px}
-.home-action.primary{background:var(--green);color:#fff}
-.home-action.quiet{border-color:var(--border);color:var(--sec)}
-.home-action[disabled]{opacity:.55;cursor:not-allowed}
-.apps-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.app-tile{border:1px solid var(--border);border-radius:16px;background:#fff;padding:16px 12px;text-align:left;color:var(--text);font:600 14px var(--font);cursor:pointer}
-.app-tile span{display:block;font-size:12px;font-weight:400;color:var(--muted);margin-top:4px}
-.practice-lines{display:grid;gap:8px;margin:16px 0}
-.practice-line{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px;color:var(--text)}
-.practice-line:last-child{border-bottom:0}
-.practice-line span:last-child{color:var(--green);font-weight:600}
-@keyframes sheet-in{from{transform:translateY(18px);opacity:.6}to{transform:translateY(0);opacity:1}}
-@media(min-width:700px){.home-panel{align-items:center}.home-sheet{border-radius:26px}}
+<style id="movespan-home-sheets-style">
+body.home-sheet-open {
+  overflow: hidden;
+}
+
+.home-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 998;
+  background: rgba(16, 24, 20, .42);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.home-sheet {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  z-index: 999;
+  width: min(480px, 100%);
+  max-height: 84vh;
+  padding: 10px 20px calc(24px + env(safe-area-inset-bottom));
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 26px 26px 0 0;
+  box-shadow: 0 -12px 40px rgba(0,0,0,.16);
+  transform: translateX(-50%);
+}
+
+.home-sheet[hidden],
+.home-sheet-backdrop[hidden] {
+  display: none;
+}
+
+.home-sheet-handle {
+  width: 42px;
+  height: 5px;
+  margin: 0 auto 18px;
+  border-radius: 10px;
+  background: #d7dce0;
+}
+
+.home-sheet-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.home-sheet-header h2 {
+  margin-top: 4px;
+  font-size: 23px;
+  line-height: 1.2;
+}
+
+.home-sheet-eyebrow {
+  color: #2D7D52;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.home-sheet-close {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #e2e6ea;
+  border-radius: 50%;
+  background: #fff;
+  color: #5a6370;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.home-empty-state {
+  padding: 30px 12px 36px;
+  text-align: center;
+}
+
+.home-empty-icon {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: #e8f5ee;
+  color: #2D7D52;
+  font-size: 27px;
+  font-weight: 700;
+}
+
+.home-empty-state h3 {
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.home-empty-state p {
+  max-width: 320px;
+  margin: 0 auto;
+  color: #5a6370;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.home-account-summary {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 18px;
+  padding: 14px;
+  border-radius: 15px;
+  background: #f7f9fb;
+}
+
+.home-account-avatar {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #2D7D52;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.home-account-name {
+  color: #1a1a1a;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.home-account-email {
+  margin-top: 3px;
+  color: #7a838d;
+  font-size: 12px;
+}
+
+.home-menu-list {
+  display: grid;
+  gap: 8px;
+}
+
+.home-menu-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 15px 16px;
+  border: 1px solid #e2e6ea;
+  border-radius: 13px;
+  background: #fff;
+  color: #1a1a1a;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.home-menu-row-danger {
+  color: #a83232;
+}
+</style>
+<style id="movespan-home-sheet-responsive-fix">
+/* Desktop: centered modal */
+@media (min-width: 700px) {
+  .home-sheet {
+    left: 50%;
+    top: 50%;
+    bottom: auto;
+    width: min(520px, calc(100vw - 48px));
+    max-height: min(720px, calc(100vh - 64px));
+    padding: 14px 24px 28px;
+    border-radius: 26px;
+    transform: translate(-50%, -50%);
+  }
+
+  .home-sheet-handle {
+    display: none;
+  }
+}
+
+/* Mobile: bottom sheet fully visible and scrollable */
+@media (max-width: 699px) {
+  .home-sheet {
+    top: auto;
+    bottom: 0;
+    max-height: calc(100dvh - 24px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-bottom: calc(28px + env(safe-area-inset-bottom));
+  }
+}
+</style>
+<style id="practice-note-definitive-style">
+.card:has(.pnote).practice-note-is-compact {
+  min-height: 0;
+  cursor: pointer;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote {
+  min-height: 0;
+  align-items: center;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-fig {
+  display: none;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-body {
+  padding: 15px 18px;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-text,
+.card:has(.pnote).practice-note-is-compact .pnote-actions {
+  display: none;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-title {
+  margin: 4px 0 0;
+  font-size: 14px;
+}
+
+.card:has(.pnote).practice-note-is-compact .eyebrow {
+  font-size: 10px;
+}
+</style>
+<style id="practice-note-final-behavior">
+.practice-note-inline-detail[hidden] {
+  display: none;
+}
+
+.practice-note-inline-detail {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #e2e6ea;
+  color: #4a5560;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.practice-note-inline-detail p + p {
+  margin-top: 10px;
+}
+
+.practice-note-inline-principle {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-left: 3px solid #2D7D52;
+  border-radius: 0 10px 10px 0;
+  background: #e8f5ee;
+  color: #1f5c3b;
+  font-weight: 700;
+}
+
+/* Компактное состояние */
+.card:has(.pnote).practice-note-is-compact {
+  min-height: 0;
+  cursor: pointer;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote {
+  min-height: 0;
+  align-items: center;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-fig {
+  display: none;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-body {
+  padding: 15px 18px;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-text,
+.card:has(.pnote).practice-note-is-compact .pnote-actions,
+.card:has(.pnote).practice-note-is-compact .practice-note-inline-detail {
+  display: none;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-title {
+  margin: 4px 0 0;
+  font-size: 14px;
+}
+
+.card:has(.pnote).practice-note-is-compact .eyebrow {
+  font-size: 10px;
+}
+
+/* Read more меняется на Read less */
+.card:has(.pnote).practice-note-is-expanded
+#practice-note-read-more {
+  font-weight: 700;
+}
+</style>
+<style id="practice-note-sheet-final-style">
+/* Старый раскрытый текст внутри серебряной карточки больше не показываем */
+.practice-note-inline-detail {
+  display: none !important;
+}
+
+/* Practice Note всегда остаётся серебряной карточкой */
+.card:has(.pnote) {
+  cursor: pointer;
+}
+
+.card:has(.pnote).practice-note-is-compact,
+.card:has(.pnote).practice-note-is-expanded {
+  min-height: initial !important;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-fig,
+.card:has(.pnote).practice-note-is-compact .pnote-text,
+.card:has(.pnote).practice-note-is-compact .pnote-actions {
+  display: initial;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote {
+  min-height: 130px;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-fig {
+  display: flex;
+}
+
+.card:has(.pnote).practice-note-is-compact .pnote-actions {
+  display: flex;
+}
+
+.practice-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: rgba(16, 24, 20, .46);
+  opacity: 1;
+  transition: opacity .22s ease;
+}
+
+.practice-sheet-backdrop[hidden] {
+  display: none;
+}
+
+.practice-sheet {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  z-index: 1101;
+  width: min(520px, 100%);
+  max-height: calc(100dvh - 20px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 22px calc(28px + env(safe-area-inset-bottom));
+  border-radius: 28px 28px 0 0;
+  background: #ffffff;
+  color: #1a1a1a;
+  box-shadow: 0 -18px 50px rgba(0, 0, 0, .2);
+  transform: translateX(-50%) translateY(0);
+  transition: transform .25s ease;
+  touch-action: pan-y;
+}
+
+.practice-sheet[hidden] {
+  display: none;
+}
+
+.practice-sheet.is-dragging {
+  transition: none;
+}
+
+.practice-sheet-drag-zone {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 12px 0 10px;
+  background: #ffffff;
+  cursor: grab;
+}
+
+.practice-sheet-handle {
+  width: 44px;
+  height: 5px;
+  margin: 0 auto;
+  border-radius: 999px;
+  background: #d5d9dd;
+}
+
+.practice-sheet-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 4px 0 22px;
+  border-bottom: 1px solid #e7eaed;
+}
+
+.practice-sheet-label {
+  margin-bottom: 7px;
+  color: #2D7D52;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.practice-sheet-header h2 {
+  margin: 0;
+  color: #161616;
+  font-size: 25px;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+}
+
+.practice-sheet-close {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border: 1px solid #dfe3e7;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #5a6370;
+  font-size: 27px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.practice-sheet-content {
+  padding-top: 24px;
+  color: #35404a;
+  font-size: 16px;
+  line-height: 1.68;
+}
+
+.practice-sheet-content p + p {
+  margin-top: 18px;
+}
+
+.practice-sheet-principle {
+  margin: 24px 0;
+  padding: 17px 18px;
+  border-left: 4px solid #2D7D52;
+  border-radius: 0 14px 14px 0;
+  background: #edf7f1;
+  color: #235f3e;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.practice-sheet-primary {
+  width: 100%;
+  margin-top: 26px;
+  padding: 14px 18px;
+  border: 0;
+  border-radius: 13px;
+  background: #2D7D52;
+  color: #ffffff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+body.practice-sheet-open {
+  overflow: hidden;
+}
+
+@media (min-width: 700px) {
+  .practice-sheet {
+    top: 50%;
+    bottom: auto;
+    max-height: calc(100vh - 64px);
+    border-radius: 28px;
+    transform: translate(-50%, -50%);
+  }
+
+  .practice-sheet-drag-zone {
+    display: none;
+  }
+}
+</style>
+<style id="practice-note-card-final-style">
+/* Внутренний раскрываемый текст больше не используется */
+.practice-note-inline-detail {
+  display: none !important;
+}
+
+/* Убираем старые кнопки Got it / Read more на Home */
+.card:has(.pnote) .pnote-actions {
+  display: none !important;
+}
+
+/* Вся карточка становится понятным кликабельным элементом */
+.card:has(.pnote) {
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  transition:
+    transform .16s ease,
+    box-shadow .16s ease;
+}
+
+.card:has(.pnote)::after {
+  content: "›";
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  z-index: 4;
+  color: #2D7D52;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+.card:has(.pnote):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 7px 20px rgba(28, 56, 42, .1);
+}
+
+.card:has(.pnote):focus-visible {
+  box-shadow:
+    0 0 0 3px rgba(45, 125, 82, .24),
+    0 7px 20px rgba(28, 56, 42, .1);
+}
+
+.card:has(.pnote) .pnote-body {
+  padding-right: 54px;
+}
+
+/* Возвращаем нормальное полное teaser-состояние */
+.card:has(.pnote):not(.practice-note-card-compact) .pnote {
+  min-height: 130px;
+}
+
+.card:has(.pnote):not(.practice-note-card-compact) .pnote-fig {
+  display: flex !important;
+}
+
+.card:has(.pnote):not(.practice-note-card-compact) .pnote-text {
+  display: block !important;
+}
+
+/* Компактное состояние после Got it в белом окне */
+.card:has(.pnote).practice-note-card-compact .pnote {
+  min-height: 0 !important;
+  align-items: center;
+}
+
+.card:has(.pnote).practice-note-card-compact .pnote-fig {
+  display: none !important;
+}
+
+.card:has(.pnote).practice-note-card-compact .pnote-body {
+  min-height: 0;
+  padding: 15px 54px 15px 18px;
+}
+
+.card:has(.pnote).practice-note-card-compact .pnote-text {
+  display: none !important;
+}
+
+.card:has(.pnote).practice-note-card-compact .pnote-title {
+  margin: 4px 0 0;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.card:has(.pnote).practice-note-card-compact .eyebrow {
+  font-size: 10px;
+}
+
+/* Не даём старым классам снова менять карточку */
+.card:has(.pnote).practice-note-is-compact,
+.card:has(.pnote).is-compact {
+  display: block !important;
+}
+</style>
+<style id="practice-note-clean-compact-style">
+/* Practice Note всегда компактный */
+.card:has(.pnote) {
+  position: relative;
+  min-height: 0 !important;
+  overflow: hidden;
+  cursor: pointer;
+  background: #E9EDF0 !important;
+  border: 1px solid #D9DEE3;
+  border-radius: 18px;
+  box-shadow: 0 4px 14px rgba(31, 47, 39, .07);
+  outline: none;
+  transition:
+    transform .16s ease,
+    box-shadow .16s ease,
+    border-color .16s ease;
+}
+
+/* Полностью убираем серебряную текстуру и переливы */
+.card:has(.pnote).silver,
+.card:has(.pnote) .silver {
+  background: #E9EDF0 !important;
+}
+
+.card:has(.pnote)::before,
+.card:has(.pnote)::after,
+.card:has(.pnote).silver::after {
+  content: none !important;
+  display: none !important;
+}
+
+.card:has(.pnote):hover {
+  transform: translateY(-1px);
+  border-color: #C9D1D7;
+  box-shadow: 0 7px 20px rgba(31, 47, 39, .1);
+}
+
+.card:has(.pnote):active {
+  transform: scale(.995);
+}
+
+.card:has(.pnote):focus-visible {
+  box-shadow:
+    0 0 0 3px rgba(45, 125, 82, .2),
+    0 7px 20px rgba(31, 47, 39, .1);
+}
+
+.card:has(.pnote) .pnote {
+  min-height: 0 !important;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.card:has(.pnote) .pnote-fig {
+  display: flex !important;
+  width: 70px;
+  padding: 16px 10px 16px 16px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.practice-note-knowledge-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  background: rgba(45, 125, 82, .12);
+  color: #2D7D52;
+}
+
+.practice-note-knowledge-icon svg {
+  width: 23px;
+  height: 23px;
+}
+
+.card:has(.pnote) .pnote-body {
+  min-width: 0;
+  padding: 16px 54px 16px 8px;
+}
+
+.card:has(.pnote) .eyebrow {
+  color: #2D7D52;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .09em;
+}
+
+.card:has(.pnote) .pnote-title {
+  margin: 5px 0 0;
+  color: #1A1A1A;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.card:has(.pnote) .pnote-text,
+.card:has(.pnote) .pnote-actions,
+.card:has(.pnote) .practice-note-inline-detail {
+  display: none !important;
+}
+
+.practice-note-chevron {
+  position: absolute;
+  top: 50%;
+  right: 17px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .62);
+  color: #2D7D52;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.practice-note-chevron svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Старые состояния больше не влияют на дизайн */
+.card:has(.pnote).practice-note-card-compact,
+.card:has(.pnote).practice-note-is-compact,
+.card:has(.pnote).practice-note-is-expanded,
+.card:has(.pnote).is-compact {
+  display: block !important;
+  min-height: 0 !important;
+}
+</style>
+<style id="today-practice-status-style">
+.today-practice-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 10px;
+  padding: 5px 11px;
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .12);
+  color: rgba(255, 255, 255, .94);
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.today-practice-status svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.today-practice-completed button,
+.today-practice-completed button:disabled {
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  cursor: pointer !important;
+}
+</style>
+<style id="movespan-hero-visual-safe-area">
+/*
+ * MoveSpan Hero Visual Safe Area Standard
+ *
+ * Размер и пропорции изображения определяются существующим
+ * responsive-алгоритмом. Этот класс регулирует только
+ * оптическое положение изображения внутри карточки.
+ */
+.movespan-hero-visual {
+  --movespan-hero-shift-x: 0px;
+  --movespan-hero-shift-y: 0px;
+
+  translate:
+    var(--movespan-hero-shift-x)
+    var(--movespan-hero-shift-y) !important;
+}
+
+/* Сидящая или низкая поза: немного поднимаем фигуру */
+.movespan-hero-visual[data-visual-anchor="low-pose"] {
+  --movespan-hero-shift-y: -18px;
+}
+
+/* Стандартные варианты для будущих изображений */
+.movespan-hero-visual[data-visual-anchor="center"] {
+  --movespan-hero-shift-y: 0px;
+}
+
+.movespan-hero-visual[data-visual-anchor="high-pose"] {
+  --movespan-hero-shift-y: 12px;
+}
+
+@media (max-width: 520px) {
+  .movespan-hero-visual[data-visual-anchor="low-pose"] {
+    --movespan-hero-shift-y: -14px;
+  }
+}
+</style>
+<style id="daily-checkin-functional-style">
+.mood {
+  cursor: pointer;
+  user-select: none;
+  --mood-color: #2D7D52;
+}
+
+.mood-face {
+  transition:
+    transform .2s ease,
+    border-color .2s ease,
+    background-color .2s ease,
+    box-shadow .2s ease,
+    opacity .2s ease;
+}
+
+.mood:hover .mood-face {
+  transform: translateY(-2px);
+}
+
+.mood:active .mood-face {
+  transform: scale(.96);
+}
+
+.mood:focus-visible {
+  outline: none;
+}
+
+.mood:focus-visible .mood-face {
+  box-shadow:
+    0 0 0 3px rgba(45, 125, 82, .18);
+}
+
+.mood.daily-checkin-selected .mood-face,
+.mood.sel .mood-face {
+  transform: translateY(-5px) scale(1.1);
+  background: var(--mood-color);
+  border-color: var(--mood-color);
+  box-shadow:
+    0 9px 22px color-mix(
+      in srgb,
+      var(--mood-color) 30%,
+      transparent
+    );
+}
+
+.mood.daily-checkin-selected .mood-face svg,
+.mood.sel .mood-face svg {
+  color: #FFFFFF;
+}
+
+.mood.daily-checkin-selected .mood-label,
+.mood.sel .mood-label {
+  color: var(--mood-color);
+  font-weight: 750;
+}
+
+.daily-checkin-scale {
+  --checkin-position: 50%;
+  --checkin-color: #C8A445;
+
+  margin-top: 20px;
+  padding: 3px 2px 0;
+  touch-action: none;
+  user-select: none;
+}
+
+.daily-checkin-scale:focus-visible {
+  outline: none;
+}
+
+.daily-checkin-scale:focus-visible
+.daily-checkin-track {
+  box-shadow:
+    0 0 0 3px rgba(45, 125, 82, .16);
+}
+
+.daily-checkin-track {
+  position: relative;
+  height: 12px;
+  border-radius: 999px;
+  cursor: pointer;
+
+  background:
+    linear-gradient(
+      90deg,
+      #C96A64 0%,
+      #D98A52 25%,
+      #C8A445 50%,
+      #6FAE78 75%,
+      #2D7D52 100%
+    );
+
+  box-shadow:
+    inset 0 0 0 1px rgba(34, 49, 40, .08);
+}
+
+.daily-checkin-track::before {
+  content: "";
+  position: absolute;
+  inset: 3px 6px;
+  border-radius: 999px;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent calc(25% - 1px),
+      rgba(255, 255, 255, .55) calc(25% - 1px),
+      rgba(255, 255, 255, .55) 25%
+    );
+}
+
+.daily-checkin-track-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--checkin-position);
+  border-radius: inherit;
+}
+
+.daily-checkin-thumb {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: var(--checkin-position);
+
+  width: 25px;
+  height: 25px;
+
+  border: 4px solid #FFFFFF;
+  border-radius: 50%;
+
+  background: var(--checkin-color);
+
+  box-shadow:
+    0 3px 10px rgba(34, 49, 40, .24);
+
+  transform:
+    translate(-50%, -50%);
+
+  transition:
+    left .2s ease,
+    background-color .2s ease,
+    transform .2s ease;
+}
+
+.daily-checkin-just-saved
+.daily-checkin-thumb {
+  transform:
+    translate(-50%, -50%)
+    scale(1.17);
+}
+
+.daily-checkin-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: 17px;
+  min-height: 28px;
+
+  color: #66746C;
+  font-size: 12px;
+}
+
+.daily-checkin-summary[hidden] {
+  display: none;
+}
+
+.daily-checkin-summary-label strong {
+  margin-left: 3px;
+  color: var(--checkin-color);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.daily-checkin-summary-check {
+  display: grid;
+  place-items: center;
+
+  width: 25px;
+  height: 25px;
+
+  border-radius: 50%;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--checkin-color) 13%,
+      white
+    );
+
+  color: var(--checkin-color);
+}
+
+.daily-checkin-summary-check svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 520px) {
+  .daily-checkin-scale {
+    margin-top: 18px;
+  }
+
+  .mood.daily-checkin-selected .mood-face,
+  .mood.sel .mood-face {
+    transform: translateY(-4px) scale(1.07);
+  }
+}
 </style>
 </head>
 <body>
@@ -427,21 +1394,37 @@ body.panel-open{overflow:hidden}
       <span class="hdr-logo-name">MoveSpan</span>
     </div>
     <div class="hdr-actions">
-      <button class="hdr-btn" onclick="go('notifications')" aria-label="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button>
-      <button class="hdr-btn" onclick="go('apps')" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button>
+      <button class="hdr-btn" onclick="go('notifications')" aria-label="Notifications" id="home-notifications-button" aria-label="home-notifications-button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button>
+      <button class="hdr-btn" onclick="go('apps')" aria-label="Menu" id="home-menu-button" aria-label="home-menu-button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button>
       <button class="hdr-btn" onclick="go('settings')" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
     </div>
   </div>
 
-  <h1 class="greet">Good morning, Dmitry! &#128075;</h1>
+  <h1 class="greet" id="home-greeting">Good morning, Dmitry! &#128075;</h1>
   <p class="greet-sub">Let's take a good step for your body and mind today.</p>
 
   <!-- PRACTICE NOTE (silver) -->
-  <div class="card silver" id="practice-note-card">
+  <div class="card silver">
     <div class="pnote">
       <div class="pnote-body">
         <span class="eyebrow">Practice Note</span>
-        <div class="pnote-title">Small, regular practice matters</div>
+        <div class="pnote-title">Small, regular practice matters
+<div class="practice-note-inline-detail" id="practice-note-inline-detail" hidden>
+  <p>
+    More is not always better. The body responds especially well to
+    movement that is regular, manageable and easy to repeat.
+  </p>
+
+  <p>
+    A short daily practice can support mobility, coordination and nervous
+    system regulation more effectively than occasional intense sessions.
+  </p>
+
+  <div class="practice-note-inline-principle">
+    Small daily practice beats occasional intensity.
+  </div>
+</div>
+</div>
         <div class="pnote-text">Move within a comfortable range today. Consistency is more valuable than intensity.</div>
         <div class="pnote-actions">
           <button class="pnote-link" onclick="dismissNote()">Got it</button>
@@ -480,7 +1463,7 @@ body.panel-open{overflow:hidden}
     Restore mobility and reduce stiffness
   </div>
 </div>
-<button class="journey-cta" onclick="go('practice-player')">Start practice &rarr;</button>
+<button class="journey-cta" onclick="location.href='practice-player.html'">Start practice &rarr;</button>
   </div>
 
   <!-- DAILY CHECK-IN -->
@@ -496,7 +1479,7 @@ body.panel-open{overflow:hidden}
     <div class="moods" id="moods">
       <button class="mood sel" data-mood="great" onclick="pickMood(this)">
         <div class="mood-face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
-        <span class="mood-label">Great</span>
+        <span class="mood-label">Amazing</span>
       </button>
       <button class="mood" data-mood="good" onclick="pickMood(this)">
         <div class="mood-face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 13s1.5 1.5 4 1.5 4-1.5 4-1.5"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
@@ -504,15 +1487,15 @@ body.panel-open{overflow:hidden}
       </button>
       <button class="mood" data-mood="okay" onclick="pickMood(this)">
         <div class="mood-face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="8" y1="15" x2="16" y2="15"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
-        <span class="mood-label">Okay</span>
+        <span class="mood-label">Steady</span>
       </button>
       <button class="mood" data-mood="notgood" onclick="pickMood(this)">
         <div class="mood-face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
-        <span class="mood-label">Not so good</span>
+        <span class="mood-label">Not great</span>
       </button>
       <button class="mood" data-mood="poor" onclick="pickMood(this)">
         <div class="mood-face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 17s-1.5-3-4-3-4 3-4 3"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
-        <span class="mood-label">Poor</span>
+        <span class="mood-label">Bad</span>
       </button>
     </div>
   </div>
@@ -642,61 +1625,6 @@ body.panel-open{overflow:hidden}
   <button class="bnav-item" onclick="go('ai')"><span class="bnav-ai-icon"><img src="data:image/png;base64,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" alt="AI"></span><span class="bnav-label">AI</span></button>
 </nav>
 
-<!-- HOME ACTION PANELS -->
-<div class="home-panel" id="notifications-panel" role="dialog" aria-modal="true" aria-labelledby="notifications-title" onclick="panelBackdrop(event)">
-  <div class="home-sheet">
-    <div class="home-sheet-head"><div class="home-sheet-title" id="notifications-title">Notifications</div><button class="home-sheet-close" onclick="closePanel()" aria-label="Close">&times;</button></div>
-    <div class="home-sheet-note">You are all caught up. New practice reminders and MoveSpan updates will appear here.</div>
-    <button class="home-action quiet" onclick="closePanel()">Done</button>
-  </div>
-</div>
-
-<div class="home-panel" id="apps-panel" role="dialog" aria-modal="true" aria-labelledby="apps-title" onclick="panelBackdrop(event)">
-  <div class="home-sheet">
-    <div class="home-sheet-head"><div class="home-sheet-title" id="apps-title">MoveSpan</div><button class="home-sheet-close" onclick="closePanel()" aria-label="Close">&times;</button></div>
-    <div class="apps-grid">
-      <button class="app-tile" onclick="go('practice')">Practice<span>Today’s guided session</span></button>
-      <button class="app-tile" onclick="go('health')">Health<span>Measurements and body age</span></button>
-      <button class="app-tile" onclick="go('reset')">Quick Reset<span>Short recovery break</span></button>
-      <button class="app-tile" onclick="go('journal')">Journal<span>Notes and progress</span></button>
-      <button class="app-tile" onclick="go('assessments')">Assessments<span>Personalize your plan</span></button>
-      <button class="app-tile" onclick="go('ai')">AI Coach<span>Guidance and insights</span></button>
-    </div>
-  </div>
-</div>
-
-<div class="home-panel" id="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title" onclick="panelBackdrop(event)">
-  <div class="home-sheet">
-    <div class="home-sheet-head"><div class="home-sheet-title" id="settings-title">Settings</div><button class="home-sheet-close" onclick="closePanel()" aria-label="Close">&times;</button></div>
-    <div class="home-sheet-text">Update the answers that personalize your MoveSpan experience.</div>
-    <a class="home-action" href="/onboarding?mode=edit">Edit My Profile</a>
-    <button class="home-action quiet" onclick="freshStart()">Fresh Start</button>
-  </div>
-</div>
-
-<div class="home-panel" id="practice-note-panel" role="dialog" aria-modal="true" aria-labelledby="practice-note-title" onclick="panelBackdrop(event)">
-  <div class="home-sheet">
-    <div class="home-sheet-head"><div class="home-sheet-title" id="practice-note-title">Practice Note</div><button class="home-sheet-close" onclick="closePanel()" aria-label="Close">&times;</button></div>
-    <div class="home-sheet-note"><strong>Small, regular practice matters.</strong><br><br>Move within a comfortable range today. Let the breath guide the movement, and stop before effort turns into strain. Consistency is more valuable than intensity.</div>
-    <button class="home-action primary" onclick="closePanel()">Got it</button>
-  </div>
-</div>
-
-<div class="home-panel" id="practice-panel" role="dialog" aria-modal="true" aria-labelledby="practice-title" onclick="panelBackdrop(event)">
-  <div class="home-sheet">
-    <div class="home-sheet-head"><div><div class="eyebrow">Today’s Practice</div><div class="home-sheet-title" id="practice-title" style="margin-top:4px">Joint Recovery</div></div><button class="home-sheet-close" onclick="closePanel()" aria-label="Close">&times;</button></div>
-    <div class="home-sheet-note">Restore joint mobility, improve posture and reduce stiffness.</div>
-    <div class="practice-lines">
-      <div class="practice-line"><span>Joint recovery</span><span>8 min</span></div>
-      <div class="practice-line"><span>Breathing</span><span>3 min</span></div>
-      <div class="practice-line"><span>Walking focus</span><span>4 min</span></div>
-    </div>
-    <div class="home-sheet-text">3 sections · 18 exercises</div>
-    <button class="home-action primary" disabled title="The player file was not included in the recovery archives">Practice player — source file required</button>
-    <button class="home-action quiet" onclick="closePanel()">Back to Home</button>
-  </div>
-</div>
-
 <script>
 // ===== MOCK STATE =====
 var mockState = {
@@ -720,55 +1648,21 @@ function pickMood(el){
   mockState.dailyMood = el.getAttribute('data-mood');
 }
 function dismissNote(){
-  var note = document.getElementById('practice-note-card');
+  var note = document.querySelector('.silver');
   if(note){ note.style.display='none'; }
 }
-var activePanel = null;
-function openPanel(name){
-  closePanel();
-  var panel = document.getElementById(name + '-panel');
-  if(!panel) return;
-  activePanel = panel;
-  panel.classList.add('open');
-  document.body.classList.add('panel-open');
-  var closeButton = panel.querySelector('.home-sheet-close');
-  if(closeButton) closeButton.focus();
-}
-function closePanel(){
-  if(activePanel) activePanel.classList.remove('open');
-  activePanel = null;
-  document.body.classList.remove('panel-open');
-}
-function panelBackdrop(event){
-  if(event.target.classList.contains('home-panel')) closePanel();
-}
-function freshStart(){
-  if(!window.confirm('Start onboarding again? Your current answers will remain available until you save new ones.')) return;
-  sessionStorage.setItem('ms_fresh_start', '1');
-  window.location.href = '/onboarding?fresh=1';
-}
 function go(dest){
-  if(dest === 'notifications' || dest === 'apps' || dest === 'settings' || dest === 'practice-note'){
-    openPanel(dest);
-    return;
-  }
-  if(dest === 'practice' || dest === 'practice-player'){
-    openPanel('practice');
-    return;
-  }
+  // Placeholder navigation — safe stubs for screens not yet built
   var routes = {
-    home:'/home', health:'/measure', progress:'/journal',
-    journal:'/journal', ai:'/home', journey:'/home', assessments:'/test',
-    device:'/home', reset:'/reset',
+    home:'/home', practice:'/program', health:'/measure', progress:'/journal',
+    journal:'/journal.html', ai:'/home', journey:'/home', assessments:'/test',
+    device:'/home', settings:'/home', notifications:'/home', apps:'/home',
+    'practice-note':'/home', 'practice-player':'/program', reset:'/reset.html',
     'assessments-info':'/home'
   };
   var url = routes[dest] || '/home';
   window.location.href = url;
 }
-
-document.addEventListener('keydown', function(event){
-  if(event.key === 'Escape') closePanel();
-});
 
 applyMockState();
 </script>
@@ -958,5 +1852,182 @@ applyMockState();
   }
 })();
 </script>
+<script src="js/home-runtime.js"></script>
+<!-- MoveSpan Home Sheets -->
+<div class="home-sheet-backdrop" id="home-sheet-backdrop" hidden></div>
+
+<section
+  class="home-sheet"
+  id="notifications-sheet"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="notifications-sheet-title"
+  hidden
+>
+  <div class="home-sheet-handle"></div>
+
+  <div class="home-sheet-header">
+    <div>
+      <div class="home-sheet-eyebrow">MoveSpan</div>
+      <h2 id="notifications-sheet-title">Notifications</h2>
+    </div>
+
+    <button
+      class="home-sheet-close"
+      type="button"
+      data-close-home-sheet
+      aria-label="Close notifications"
+    >
+      ×
+    </button>
+  </div>
+
+  <div class="home-empty-state">
+    <div class="home-empty-icon">✓</div>
+    <h3>You’re all caught up</h3>
+    <p>Practice reminders and important MoveSpan updates will appear here.</p>
+  </div>
+</section>
+
+<section
+  class="home-sheet"
+  id="quick-menu-sheet"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="quick-menu-title"
+  hidden
+>
+  <div class="home-sheet-handle"></div>
+
+  <div class="home-sheet-header">
+    <div>
+      <div class="home-sheet-eyebrow">Account</div>
+      <h2 id="quick-menu-title">Quick menu</h2>
+    </div>
+
+    <button
+      class="home-sheet-close"
+      type="button"
+      data-close-home-sheet
+      aria-label="Close menu"
+    >
+      ×
+    </button>
+  </div>
+
+  <div class="home-account-summary">
+    <div class="home-account-avatar" id="home-account-avatar">M</div>
+
+    <div>
+      <div class="home-account-name" id="home-account-name">MoveSpan Member</div>
+      <div class="home-account-email" id="home-account-email">
+        Complete your profile
+      </div>
+    </div>
+  </div>
+
+  <nav class="home-menu-list" aria-label="Account menu">
+    <button type="button" class="home-menu-row" data-home-menu-action="profile">
+      <span>Profile</span>
+      <span aria-hidden="true">›</span>
+    </button>
+
+    <button type="button" class="home-menu-row" data-home-menu-action="settings">
+      <span>Settings</span>
+      <span aria-hidden="true">›</span>
+    </button>
+
+    <button type="button" class="home-menu-row" data-home-menu-action="help">
+      <span>Help & support</span>
+      <span aria-hidden="true">›</span>
+    </button>
+
+    <button
+      type="button"
+      class="home-menu-row home-menu-row-danger"
+      data-home-menu-action="signout"
+    >
+      <span>Sign out</span>
+      <span aria-hidden="true">›</span>
+    </button>
+  </nav>
+</section>
+<!-- /MoveSpan Home Sheets -->
+<!-- Practice Note Final Sheet -->
+<div
+  class="practice-sheet-backdrop"
+  id="practice-sheet-backdrop"
+  hidden
+></div>
+
+<section
+  class="practice-sheet"
+  id="practice-sheet"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="practice-sheet-title"
+  hidden
+>
+  <div
+    class="practice-sheet-drag-zone"
+    id="practice-sheet-drag-zone"
+  >
+    <div class="practice-sheet-handle"></div>
+  </div>
+
+  <div class="practice-sheet-header">
+    <div>
+      <div class="practice-sheet-label">Practice note</div>
+
+      <h2 id="practice-sheet-title">
+        Small, regular practice matters
+      </h2>
+    </div>
+
+    <button
+      type="button"
+      class="practice-sheet-close"
+      id="practice-sheet-close"
+      aria-label="Close practice note"
+    >
+      ×
+    </button>
+  </div>
+
+  <div class="practice-sheet-content">
+    <p>
+      More is not always better. The body responds especially well to
+      movement that is regular, manageable and easy to repeat.
+    </p>
+
+    <p>
+      A short daily practice can support mobility, coordination and nervous
+      system regulation more effectively than occasional intense sessions.
+    </p>
+
+    <div class="practice-sheet-principle">
+      Small daily practice beats occasional intensity.
+    </div>
+
+    <p>
+      Move within a comfortable range today. Consistency is more valuable
+      than intensity.
+    </p>
+
+    <button
+      type="button"
+      class="practice-sheet-primary"
+      id="practice-sheet-got-it"
+    >
+      Got it
+    </button>
+  </div>
+</section>
+<!-- /Practice Note Final Sheet -->
+<script src="js/practice-note-sheet.js"></script>
+
+<script src="js/home-practice-progress.js"></script>
+
+<script src="js/home-checkin.js"></script>
 </body>
 </html>
