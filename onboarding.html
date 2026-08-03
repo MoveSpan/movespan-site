@@ -463,7 +463,7 @@ function updateFigure() {
 const MODE_NAMES = { minimal: 'Gentle Care', gentle_restore: 'Gentle Restore', restore: 'Restore', reset: 'Reset' };
 const ZONE_NAMES = { face_eyes: 'Face & eyes', neck: 'Neck', shoulders: 'Shoulders', arms_wrists: 'Arms & wrists', mid_back: 'Mid-back', lower_back: 'Lower back', hips: 'Hips', knees: 'Knees', feet_toes: 'Feet & toes', none: 'General mobility' };
 
-async function saveStep(extra) {
+window.saveStep = async function saveStep(extra) {
   if (!uid) return;
   const data = Object.assign({}, state, extra || {});
   try {
