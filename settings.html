@@ -158,6 +158,106 @@
       line-height: 1.35;
     }
 
+
+    .profile-metrics {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 14px;
+      margin: -8px 0 28px;
+    }
+
+    .profile-metric {
+      position: relative;
+      min-height: 190px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 20px 14px 18px;
+      border: 0;
+      border-radius: var(--radius-card);
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: var(--shadow);
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .profile-metric:active {
+      transform: scale(.985);
+    }
+
+    .metric-chevron {
+      position: absolute;
+      top: 13px;
+      right: 14px;
+      color: #9BA59E;
+      font-size: 27px;
+      line-height: 1;
+    }
+
+    .metric-visual {
+      width: 78px;
+      height: 78px;
+      display: grid;
+      place-items: center;
+      margin-top: 4px;
+      border-radius: 24px;
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    .metric-visual.level {
+      border-radius: 22px;
+      font-size: 32px;
+      font-weight: 800;
+    }
+
+    .metric-visual.age {
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 28%, #55B77C 0, #2D7D52 45%, #185C3A 100%);
+      color: #FFFFFF;
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.18),
+        0 8px 24px rgba(45,125,82,.18);
+      font-size: 25px;
+      font-weight: 780;
+    }
+
+    .metric-title {
+      font-size: 15px;
+      line-height: 1.25;
+      font-weight: 760;
+      letter-spacing: .045em;
+      text-transform: uppercase;
+    }
+
+    .metric-value {
+      margin-top: 5px;
+      color: var(--secondary);
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .metric-value strong {
+      color: var(--text);
+      font-size: 17px;
+    }
+
+    @media (max-width: 370px) {
+      .profile-metrics {
+        gap: 10px;
+      }
+
+      .profile-metric {
+        min-height: 178px;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+    }
+
     .section {
       margin-top: 24px;
     }
@@ -455,6 +555,47 @@
         <div class="profile-name" id="profileName">MoveSpan Member</div>
         <div class="profile-meta">Your personal movement profile</div>
       </div>
+    </section>
+
+
+    <section class="profile-metrics" aria-label="Profile progress">
+      <button
+        class="profile-metric"
+        type="button"
+        onclick="window.location.href='/level.html'"
+        aria-label="Open MoveSpan Level"
+      >
+        <span class="metric-chevron" aria-hidden="true">›</span>
+
+        <span class="metric-visual level" id="levelVisual">1</span>
+
+        <span>
+          <span class="metric-title">MoveSpan Level</span>
+          <span class="metric-value" id="levelSummary">
+            <strong>Level 1</strong><br>
+            0 points
+          </span>
+        </span>
+      </button>
+
+      <button
+        class="profile-metric"
+        type="button"
+        onclick="openFunctionalAge()"
+        aria-label="Open Functional Age assessments"
+      >
+        <span class="metric-chevron" aria-hidden="true">›</span>
+
+        <span class="metric-visual age" id="functionalAgeVisual">—</span>
+
+        <span>
+          <span class="metric-title">Functional Age</span>
+          <span class="metric-value" id="functionalAgeSummary">
+            Not measured<br>
+            Take assessment
+          </span>
+        </span>
+      </button>
     </section>
 
     <section class="section">
@@ -1117,6 +1258,163 @@
       loadProfile();
     };
 
+
+    function readLevelState() {
+      const defaults = {
+        level: 1,
+        points: 0,
+        nextLevelPoints: 100
+      };
+
+      try {
+        const saved = JSON.parse(
+          localStorage.getItem("movespan_level_state") || "{}"
+        );
+
+        return {
+          level: Number(saved.level) || defaults.level,
+          points: Number(saved.points) || 0,
+          nextLevelPoints:
+            Number(saved.nextLevelPoints) ||
+            defaults.nextLevelPoints
+        };
+      } catch (_) {
+        return defaults;
+      }
+    }
+
+    function renderLevelCard() {
+      const state = readLevelState();
+
+      document.getElementById("levelVisual").textContent =
+        String(state.level);
+
+      document.getElementById("levelSummary").innerHTML =
+        "<strong>Level " + state.level + "</strong><br>" +
+        state.points + " points";
+    }
+
+    function findFunctionalAgeInObject(value, depth = 0) {
+      if (!value || depth > 5) return null;
+
+      if (typeof value === "number") {
+        return value > 10 && value < 120 ? value : null;
+      }
+
+      if (typeof value !== "object") return null;
+
+      const preferredKeys = [
+        "functionalAge",
+        "functional_age",
+        "functionalAgeResult",
+        "functional_age_result",
+        "bodyAge",
+        "body_age",
+        "calculatedAge",
+        "resultAge"
+      ];
+
+      for (const key of preferredKeys) {
+        if (value[key] !== undefined && value[key] !== null) {
+          const numeric = Number(value[key]);
+
+          if (
+            Number.isFinite(numeric) &&
+            numeric > 10 &&
+            numeric < 120
+          ) {
+            return numeric;
+          }
+        }
+      }
+
+      for (const nested of Object.values(value)) {
+        const found = findFunctionalAgeInObject(nested, depth + 1);
+        if (found !== null) return found;
+      }
+
+      return null;
+    }
+
+    function readFunctionalAge() {
+      const directKeys = [
+        "movespan_functional_age",
+        "functionalAge",
+        "functional_age",
+        "mwFunctionalAge",
+        "bodyAge",
+        "movespan_assessment_result",
+        "movespan_assessment_results",
+        "assessmentResult",
+        "assessmentResults"
+      ];
+
+      for (const key of directKeys) {
+        const raw = localStorage.getItem(key);
+        if (!raw) continue;
+
+        const directNumber = Number(raw);
+
+        if (
+          Number.isFinite(directNumber) &&
+          directNumber > 10 &&
+          directNumber < 120
+        ) {
+          return directNumber;
+        }
+
+        try {
+          const found = findFunctionalAgeInObject(JSON.parse(raw));
+          if (found !== null) return found;
+        } catch (_) {}
+      }
+
+      for (let index = 0; index < localStorage.length; index++) {
+        const key = localStorage.key(index) || "";
+
+        if (!/age|assessment|functional/i.test(key)) continue;
+
+        const raw = localStorage.getItem(key);
+        if (!raw) continue;
+
+        try {
+          const found = findFunctionalAgeInObject(JSON.parse(raw));
+          if (found !== null) return found;
+        } catch (_) {}
+      }
+
+      const profileAge = findFunctionalAgeInObject(
+        window.mwProfile || collectProfile()
+      );
+
+      return profileAge;
+    }
+
+    function renderFunctionalAgeCard() {
+      const age = readFunctionalAge();
+      const visual = document.getElementById("functionalAgeVisual");
+      const summary = document.getElementById("functionalAgeSummary");
+
+      if (age === null) {
+        visual.textContent = "—";
+        summary.innerHTML =
+          "Not measured<br>Take assessment";
+        return;
+      }
+
+      const rounded =
+        Math.round(Number(age) * 10) / 10;
+
+      visual.textContent = String(rounded);
+      summary.innerHTML =
+        "<strong>" + rounded + " years</strong><br>View results";
+    }
+
+    function openFunctionalAge() {
+      window.location.href = "/assessments.html";
+    }
+
+
     function initializeSettings() {
       const notifications =
         localStorage.getItem(SETTINGS_KEYS.notifications) !== "false";
@@ -1139,6 +1437,8 @@
 
       applyAppearance(appearance);
       loadProfile();
+      renderLevelCard();
+      renderFunctionalAgeCard();
     }
 
     document.addEventListener("keydown", event => {

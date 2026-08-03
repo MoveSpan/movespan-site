@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1,viewport-fit=cover"
+  >
+  <meta name="theme-color" content="#F5F7F4">
+  <title>MoveSpan Level</title>
+
+  <style>
+    :root {
+      --primary: #2D7D52;
+      --primary-soft: #E9F3ED;
+      --background: #F5F7F4;
+      --surface: #FFFFFF;
+      --text: #18211B;
+      --secondary: #6D7971;
+      --border: #E4E9E5;
+      --shadow: 0 8px 28px rgba(24,33,27,.055);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--background);
+      color: var(--text);
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button { font: inherit; }
+
+    .page {
+      width: min(100%, 560px);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding:
+        calc(env(safe-area-inset-top) + 10px)
+        18px
+        calc(env(safe-area-inset-bottom) + 40px);
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: 48px 1fr 48px;
+      align-items: center;
+      min-height: 62px;
+      margin: 0 -18px 18px;
+      padding: 0 18px;
+      background: rgba(245,247,244,.94);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .back {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .back svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    h1 {
+      margin: 0;
+      text-align: center;
+      font-size: 21px;
+      font-weight: 720;
+      letter-spacing: -.025em;
+    }
+
+    .hero {
+      padding: 30px 22px 25px;
+      border-radius: 26px;
+      background:
+        linear-gradient(
+          145deg,
+          #EAF4ED 0%,
+          #FFFFFF 58%,
+          #F2F7F3 100%
+        );
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .level-badge {
+      width: 112px;
+      height: 112px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto;
+      border-radius: 32px;
+      background: var(--primary);
+      color: #FFFFFF;
+      box-shadow: 0 14px 36px rgba(45,125,82,.22);
+      font-size: 47px;
+      font-weight: 820;
+    }
+
+    .level-title {
+      margin-top: 19px;
+      font-size: 27px;
+      font-weight: 760;
+    }
+
+    .points {
+      margin-top: 7px;
+      color: var(--secondary);
+      font-size: 16px;
+    }
+
+    .progress {
+      height: 12px;
+      margin-top: 23px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #DCE5DF;
+    }
+
+    .progress-fill {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--primary);
+      transition: width .3s ease;
+    }
+
+    .progress-copy {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 9px;
+      color: var(--secondary);
+      font-size: 13px;
+    }
+
+    .section {
+      margin-top: 26px;
+    }
+
+    .section-title {
+      margin: 0 4px 10px;
+      font-size: 21px;
+      font-weight: 730;
+    }
+
+    .card {
+      overflow: hidden;
+      border-radius: 22px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 17px;
+    }
+
+    .row + .row {
+      border-top: 1px solid var(--border);
+    }
+
+    .icon {
+      flex: 0 0 auto;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 20px;
+    }
+
+    .copy {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .name {
+      font-size: 16px;
+      font-weight: 680;
+    }
+
+    .description {
+      margin-top: 4px;
+      color: var(--secondary);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .notice {
+      margin-top: 22px;
+      padding: 16px 17px;
+      border-radius: 18px;
+      background: #EEF4F0;
+      color: #42604D;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header class="header">
+      <button class="back" type="button" onclick="goBack()" aria-label="Back">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+
+      <h1>MoveSpan Level</h1>
+      <span></span>
+    </header>
+
+    <section class="hero">
+      <div class="level-badge" id="levelBadge">1</div>
+      <div class="level-title" id="levelTitle">Level 1</div>
+      <div class="points" id="pointsText">0 points earned</div>
+
+      <div class="progress" aria-label="Progress to next level">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <div class="progress-copy">
+        <span id="currentPoints">0 points</span>
+        <span id="nextLevelPoints">100 points</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">How to earn points</h2>
+
+      <div class="card">
+        <div class="row">
+          <div class="icon">✓</div>
+          <div class="copy">
+            <div class="name">Complete practices</div>
+            <div class="description">
+              Daily practices and longer sessions will contribute to your level.
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="icon">◎</div>
+          <div class="copy">
+            <div class="name">Complete assessments</div>
+            <div class="description">
+              Functional Age and Body Assessments help unlock progress.
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="icon">↻</div>
+          <div class="copy">
+            <div class="name">Build consistency</div>
+            <div class="description">
+              Regular practice and streak milestones will earn additional points.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Future rewards</h2>
+
+      <div class="card">
+        <div class="row">
+          <div class="icon">★</div>
+          <div class="copy">
+            <div class="name">Free sessions and consultations</div>
+            <div class="description">
+              Selected levels may unlock individual sessions or consultations.
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="icon">%</div>
+          <div class="copy">
+            <div class="name">Member discounts</div>
+            <div class="description">
+              Progress may unlock discounts for MoveSpan programs and services.
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="icon">◆</div>
+          <div class="copy">
+            <div class="name">Special achievements</div>
+            <div class="description">
+              Consistency, recovery and assessment milestones will be recognized.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="notice">
+      The Level system is now prepared structurally. Point-awarding rules and
+      reward thresholds will be connected to real MoveSpan activity data.
+    </div>
+  </main>
+
+  <script>
+    function readLevelState() {
+      const defaults = {
+        level: 1,
+        points: 0,
+        nextLevelPoints: 100
+      };
+
+      try {
+        const saved = JSON.parse(
+          localStorage.getItem("movespan_level_state") || "{}"
+        );
+
+        return {
+          level: Number(saved.level) || defaults.level,
+          points: Number(saved.points) || 0,
+          nextLevelPoints:
+            Number(saved.nextLevelPoints) ||
+            defaults.nextLevelPoints
+        };
+      } catch (_) {
+        return defaults;
+      }
+    }
+
+    function render() {
+      const state = readLevelState();
+
+      const percentage = Math.max(
+        0,
+        Math.min(
+          100,
+          state.nextLevelPoints > 0
+            ? (state.points / state.nextLevelPoints) * 100
+            : 0
+        )
+      );
+
+      document.getElementById("levelBadge").textContent =
+        state.level;
+
+      document.getElementById("levelTitle").textContent =
+        "Level " + state.level;
+
+      document.getElementById("pointsText").textContent =
+        state.points + " points earned";
+
+      document.getElementById("currentPoints").textContent =
+        state.points + " points";
+
+      document.getElementById("nextLevelPoints").textContent =
+        state.nextLevelPoints + " points";
+
+      document.getElementById("progressFill").style.width =
+        percentage + "%";
+    }
+
+    function goBack() {
+      if (history.length > 1) {
+        history.back();
+      } else {
+        window.location.href = "/settings.html";
+      }
+    }
+
+    render();
+  </script>
+</body>
+</html>
