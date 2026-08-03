@@ -1555,7 +1555,7 @@ body.practice-sheet-open {
         </div>
       </div>
       <div class="tp-desc">A short reset is recommended after extended sitting.</div>
-      <button class="mini-cta" onclick="go('reset')">Start Reset &rarr;</button>
+      <button class="mini-cta" type="button" onclick="window.location.href='/reset.html'">Start Reset Break &rarr;</button>
     </div>
     <div class="card card-pad journal-card">
       <div class="mini-head"><span class="eyebrow">Journal</span><span class="mini-time">7-day streak</span></div>
@@ -1566,7 +1566,7 @@ body.practice-sheet-open {
         </div>
       </div>
       <div class="tp-desc">Note how each practice felt and watch your progress over time.</div>
-      <button class="mini-cta" onclick="go('journal')">Open Journal &rarr;</button>
+      <button class="mini-cta" type="button" onclick="window.location.href='/journal.html'">Open Journal &rarr;</button>
     </div>
   </div>
 
@@ -1579,7 +1579,7 @@ body.practice-sheet-open {
         <div class="assess-title">Improve your program with additional measurements</div>
         <div class="assess-text">Assessments help us understand your body better and personalize your journey.</div>
       </div>
-      <button class="assess-cta" onclick="go('assessments')">Take Assessments &rarr;</button>
+      <button class="assess-cta" type="button" onclick="window.location.href='/test.html'">Take Assessments &rarr;</button>
     </div>
   </div>
 
@@ -1715,6 +1715,8 @@ applyMockState();
     if (direct) return direct;
 
     const possibleKeys = [
+      "mw_onb",
+      "movespan_onboarding",
       "userProfile",
       "movespanUser",
       "movespanProfile",
