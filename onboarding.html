@@ -477,7 +477,7 @@ function showSection(id) {
 }
 
 // ---------- interstitial ----------
-window.showInterstitial = function() { if (!EDIT) sessionStorage.setItem("ms_new_user","1"); window.location.replace("/program?updated=" + (EDIT ? "profile" : "new")); return;
+window.showInterstitial = function() { if (!EDIT) sessionStorage.setItem("ms_new_user","1"); window.location.replace("/home?updated=" + (EDIT ? "profile" : "new")); return;
   showSection('sec-build');
   $('progress').style.width = '100%';
   $('step-label').textContent = 'Almost there';
@@ -501,7 +501,7 @@ window.showInterstitial = function() { if (!EDIT) sessionStorage.setItem("ms_new
     setTimeout(() => div.classList.add('on'), 350 + i * 550);
   });
   setTimeout(() => {
-    if (!EDIT) sessionStorage.setItem("ms_new_user","1"); window.location.replace("/program?updated=" + (EDIT ? "profile" : "new"));
+    if (!EDIT) sessionStorage.setItem("ms_new_user","1"); window.location.replace("/home?updated=" + (EDIT ? "profile" : "new"));
   }, 350 + lines.length * 550 + 1900);
 };
 
@@ -552,8 +552,8 @@ window.onMwAuthReady = function(user, profile) {
   }
 
   if (onb && onb.completedAt && !FRESH) {
-    // Onboarding already done — straight to program
-    window.location.replace('/program');
+    // Onboarding already done — straight to Home
+    window.location.replace('/home');
     return;
   }
 
