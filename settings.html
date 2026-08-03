@@ -461,10 +461,11 @@
       <h2 class="section-label">Profile</h2>
 
       <div class="settings-card">
-        <button
+        
+<button
           class="settings-row"
           type="button"
-          onclick="editProfile()"
+          onclick="openPersonalDetails()"
         >
           <span class="row-icon">
             <svg
@@ -483,12 +484,84 @@
           </span>
 
           <span class="row-copy">
-            <span class="row-title">Edit Profile</span>
+            <span class="row-title">Personal Details</span>
             <span class="row-description">
-              Update goals, body zones, pain and practice preferences
+              Name, birthday, country, city and account information
             </span>
           </span>
 
+          <span class="row-chevron">›</span>
+        </button>
+
+        <button
+          class="settings-row"
+          type="button"
+          onclick="openMovementProfile()"
+        >
+          <span class="row-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M4 19c4-1 5-5 5-9"/>
+              <path d="M9 10c2 3 5 5 9 5"/>
+              <circle cx="9" cy="6" r="2"/>
+              <path d="M15 4v4"/>
+              <path d="M13 6h4"/>
+            </svg>
+          </span>
+
+          <span class="row-copy">
+            <span class="row-title">Movement Profile</span>
+            <span class="row-description">
+              Goals, body zones, limitations and practice preferences
+            </span>
+          </span>
+
+          <span class="row-chevron">›</span>
+        </button>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <h2 class="section-label">Membership</h2>
+
+      <div class="settings-card">
+        <button
+          class="settings-row"
+          type="button"
+          onclick="showMessage('MoveSpan Premium will be available soon.')"
+        >
+          <span class="row-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M4 7l4 5 4-8 4 8 4-5-2 12H6z"/>
+            </svg>
+          </span>
+
+          <span class="row-copy">
+            <span class="row-title">MoveSpan Free</span>
+            <span class="row-description">
+              Current membership plan
+            </span>
+          </span>
+
+          <span class="row-value" style="color:var(--primary);font-weight:700">
+            Upgrade
+          </span>
           <span class="row-chevron">›</span>
         </button>
       </div>
@@ -789,31 +862,70 @@
       }
     }
 
-    function editProfile() {
+    function openPersonalDetails() {
+      window.location.href = "/personal-details.html";
+    }
+
+    function openMovementProfile() {
       window.location.href =
         "/onboarding.html?mode=edit-profile&lock_identity=1";
     }
 
-    function loadProfile() {
-      let profile = {};
-
+    function readJson(key) {
       try {
-        profile = JSON.parse(
-          localStorage.getItem("movespan_profile") ||
-          localStorage.getItem("mwProfile") ||
-          "{}"
-        );
-      } catch (_) {}
-
-      if (window.mwProfile && typeof window.mwProfile === "object") {
-        profile = { ...profile, ...window.mwProfile };
+        return JSON.parse(localStorage.getItem(key) || "{}");
+      } catch (_) {
+        return {};
       }
+    }
 
-      const name =
-        profile.name ||
-        profile.firstName ||
+    function collectProfile() {
+      const sources = [
+        readJson("movespan_profile"),
+        readJson("mwProfile"),
+        readJson("movespanProfile"),
+        readJson("onboardingProfile"),
+        readJson("userProfile"),
+        readJson("mwUser"),
+        window.mwProfile || {},
+        window.currentUser || {},
+        window.mwAuth?.currentUser || {}
+      ];
+
+      return Object.assign({}, ...sources.filter(
+        item => item && typeof item === "object"
+      ));
+    }
+
+    function resolveName(profile) {
+      const full =
+        profile.fullName ||
         profile.displayName ||
-        "MoveSpan Member";
+        profile.name ||
+        profile.userName ||
+        "";
+
+      if (String(full).trim()) return String(full).trim();
+
+      const first =
+        profile.firstName ||
+        profile.firstname ||
+        profile.first_name ||
+        profile.givenName ||
+        "";
+
+      const last =
+        profile.lastName ||
+        profile.lastname ||
+        profile.last_name ||
+        profile.familyName ||
+        "";
+
+      return [first, last].filter(Boolean).join(" ").trim();
+    }
+
+    function renderProfile(profile) {
+      const name = resolveName(profile) || "MoveSpan Member";
 
       const initials = name
         .trim()
@@ -824,6 +936,10 @@
 
       document.getElementById("profileName").textContent = name;
       document.getElementById("profileAvatar").textContent = initials;
+    }
+
+    function loadProfile() {
+      renderProfile(collectProfile());
     }
 
     function toggleNotifications() {
@@ -975,6 +1091,31 @@
         toast.classList.remove("visible");
       }, 2200);
     }
+
+
+    const previousSettingsAuthReady = window.onMwAuthReady;
+
+    window.onMwAuthReady = function(user, profile) {
+      if (typeof previousSettingsAuthReady === "function") {
+        try {
+          previousSettingsAuthReady(user, profile);
+        } catch (_) {}
+      }
+
+      if (profile && typeof profile === "object") {
+        window.mwProfile = profile;
+
+        try {
+          localStorage.setItem("mwProfile", JSON.stringify(profile));
+        } catch (_) {}
+      }
+
+      if (user && typeof user === "object") {
+        window.currentUser = user;
+      }
+
+      loadProfile();
+    };
 
     function initializeSettings() {
       const notifications =

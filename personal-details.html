@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1,viewport-fit=cover"
+  >
+  <meta name="theme-color" content="#F5F7F4">
+  <title>Personal Details — MoveSpan</title>
+
+  <style>
+    :root{
+      --primary:#2D7D52;
+      --primary-soft:#E9F3ED;
+      --background:#F5F7F4;
+      --surface:#FFFFFF;
+      --text:#18211B;
+      --secondary:#6D7971;
+      --border:#E3E9E4;
+      --shadow:0 8px 28px rgba(24,33,27,.055);
+      --radius:20px;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      min-height:100vh;
+      background:var(--background);
+      color:var(--text);
+      font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    button,input{font:inherit}
+
+    .page{
+      width:min(100%,560px);
+      min-height:100vh;
+      margin:0 auto;
+      padding:
+        calc(env(safe-area-inset-top) + 10px)
+        18px
+        calc(env(safe-area-inset-bottom) + 38px);
+    }
+
+    .header{
+      position:sticky;
+      top:0;
+      z-index:10;
+      display:grid;
+      grid-template-columns:48px 1fr 48px;
+      align-items:center;
+      min-height:62px;
+      margin:0 -18px 22px;
+      padding:0 18px;
+      background:rgba(245,247,244,.94);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+    }
+
+    .back{
+      width:46px;
+      height:46px;
+      display:grid;
+      place-items:center;
+      border:0;
+      border-radius:50%;
+      background:transparent;
+      color:var(--text);
+      cursor:pointer;
+    }
+
+    .back svg{width:28px;height:28px}
+
+    h1{
+      margin:0;
+      text-align:center;
+      font-size:21px;
+      font-weight:720;
+      letter-spacing:-.025em;
+    }
+
+    .identity{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      margin:12px 0 30px;
+    }
+
+    .avatar{
+      width:82px;
+      height:82px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:var(--primary-soft);
+      color:var(--primary);
+      font-size:27px;
+      font-weight:760;
+    }
+
+    .display-name{
+      margin-top:14px;
+      font-size:25px;
+      font-weight:720;
+      text-align:center;
+    }
+
+    .form-card{
+      padding:20px;
+      background:var(--surface);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .field + .field{margin-top:19px}
+
+    label{
+      display:block;
+      margin:0 2px 8px;
+      color:var(--secondary);
+      font-size:12px;
+      font-weight:720;
+      letter-spacing:.07em;
+      text-transform:uppercase;
+    }
+
+    input{
+      width:100%;
+      min-height:58px;
+      padding:0 16px;
+      border:1px solid var(--border);
+      border-radius:16px;
+      outline:none;
+      background:#FAFBFA;
+      color:var(--text);
+      font-size:17px;
+    }
+
+    input:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 0 3px rgba(45,125,82,.10);
+    }
+
+    input[readonly]{
+      color:var(--secondary);
+      background:#F1F4F1;
+    }
+
+    .hint{
+      margin:7px 2px 0;
+      color:var(--secondary);
+      font-size:12px;
+      line-height:1.45;
+    }
+
+    .save{
+      width:100%;
+      min-height:58px;
+      margin-top:22px;
+      border:0;
+      border-radius:18px;
+      background:var(--primary);
+      color:#fff;
+      font-size:17px;
+      font-weight:720;
+      cursor:pointer;
+    }
+
+    .save:active{transform:scale(.99)}
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:calc(env(safe-area-inset-bottom) + 24px);
+      padding:12px 17px;
+      border-radius:14px;
+      background:#1F2922;
+      color:#fff;
+      font-size:14px;
+      opacity:0;
+      pointer-events:none;
+      transform:translate(-50%,12px);
+      transition:.18s ease;
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translate(-50%,0);
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header class="header">
+      <button class="back" type="button" onclick="goBack()" aria-label="Back">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+
+      <h1>Personal Details</h1>
+      <span></span>
+    </header>
+
+    <section class="identity">
+      <div class="avatar" id="avatar">MS</div>
+      <div class="display-name" id="displayName">MoveSpan Member</div>
+    </section>
+
+    <form class="form-card" onsubmit="saveDetails(event)">
+      <div class="field">
+        <label for="firstName">First name</label>
+        <input id="firstName" autocomplete="given-name">
+      </div>
+
+      <div class="field">
+        <label for="lastName">Last name</label>
+        <input id="lastName" autocomplete="family-name">
+      </div>
+
+      <div class="field">
+        <label for="birthDate">Birthday</label>
+        <input id="birthDate" type="date">
+        <p class="hint">
+          Your age is calculated automatically from your birthday.
+        </p>
+      </div>
+
+      <div class="field">
+        <label for="country">Country</label>
+        <input id="country" autocomplete="country-name">
+      </div>
+
+      <div class="field">
+        <label for="city">City</label>
+        <input id="city" autocomplete="address-level2">
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" readonly>
+        <p class="hint">
+          Email changes will later require account verification.
+        </p>
+      </div>
+
+      <button class="save" type="submit">Save Changes</button>
+    </form>
+  </main>
+
+  <div class="toast" id="toast">Saved</div>
+
+  <script>
+    function readJson(key) {
+      try {
+        return JSON.parse(localStorage.getItem(key) || "{}");
+      } catch (_) {
+        return {};
+      }
+    }
+
+    function collectProfile() {
+      return Object.assign(
+        {},
+        readJson("movespan_profile"),
+        readJson("mwProfile"),
+        readJson("movespanProfile"),
+        readJson("onboardingProfile"),
+        readJson("userProfile"),
+        readJson("mwUser"),
+        window.mwProfile || {},
+        window.currentUser || {},
+        window.mwAuth?.currentUser || {}
+      );
+    }
+
+    function firstValue(profile, keys) {
+      for (const key of keys) {
+        if (profile[key] !== undefined && profile[key] !== null) {
+          const value = String(profile[key]).trim();
+          if (value) return value;
+        }
+      }
+      return "";
+    }
+
+    function splitName(profile) {
+      let first = firstValue(profile, [
+        "firstName", "firstname", "first_name", "givenName"
+      ]);
+
+      let last = firstValue(profile, [
+        "lastName", "lastname", "last_name", "familyName"
+      ]);
+
+      if (!first && !last) {
+        const full = firstValue(profile, [
+          "fullName", "displayName", "name", "userName"
+        ]);
+
+        const parts = full.split(/\s+/).filter(Boolean);
+        first = parts.shift() || "";
+        last = parts.join(" ");
+      }
+
+      return { first, last };
+    }
+
+    function render(profile) {
+      const { first, last } = splitName(profile);
+      const fullName = [first, last].filter(Boolean).join(" ");
+
+      document.getElementById("firstName").value = first;
+      document.getElementById("lastName").value = last;
+      document.getElementById("birthDate").value = firstValue(profile, [
+        "birthDate", "birthday", "dateOfBirth", "dob"
+      ]).slice(0, 10);
+      document.getElementById("country").value = firstValue(profile, [
+        "country", "countryName"
+      ]);
+      document.getElementById("city").value = firstValue(profile, [
+        "city", "locationCity"
+      ]);
+      document.getElementById("email").value = firstValue(profile, [
+        "email", "userEmail"
+      ]);
+
+      const display = fullName || "MoveSpan Member";
+      document.getElementById("displayName").textContent = display;
+
+      document.getElementById("avatar").textContent = display
+        .split(/\s+/)
+        .slice(0, 2)
+        .map(part => part.charAt(0).toUpperCase())
+        .join("") || "MS";
+    }
+
+    function saveDetails(event) {
+      event.preventDefault();
+
+      const existing = collectProfile();
+
+      const updated = {
+        ...existing,
+        firstName: document.getElementById("firstName").value.trim(),
+        lastName: document.getElementById("lastName").value.trim(),
+        birthDate: document.getElementById("birthDate").value,
+        country: document.getElementById("country").value.trim(),
+        city: document.getElementById("city").value.trim()
+      };
+
+      updated.fullName = [
+        updated.firstName,
+        updated.lastName
+      ].filter(Boolean).join(" ");
+
+      localStorage.setItem("mwProfile", JSON.stringify(updated));
+      localStorage.setItem("movespan_profile", JSON.stringify(updated));
+
+      window.mwProfile = updated;
+      render(updated);
+
+      const toast = document.getElementById("toast");
+      toast.classList.add("show");
+
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 1800);
+    }
+
+    function goBack() {
+      if (history.length > 1) {
+        history.back();
+      } else {
+        window.location.href = "/settings.html";
+      }
+    }
+
+    const previousPersonalAuthReady = window.onMwAuthReady;
+
+    window.onMwAuthReady = function(user, profile) {
+      if (typeof previousPersonalAuthReady === "function") {
+        try {
+          previousPersonalAuthReady(user, profile);
+        } catch (_) {}
+      }
+
+      if (profile && typeof profile === "object") {
+        window.mwProfile = profile;
+        localStorage.setItem("mwProfile", JSON.stringify(profile));
+      }
+
+      if (user && typeof user === "object") {
+        window.currentUser = user;
+      }
+
+      render(collectProfile());
+    };
+
+    render(collectProfile());
+  </script>
+</body>
+</html>
