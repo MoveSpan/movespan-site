@@ -1,0 +1,4161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1,viewport-fit=cover"
+  >
+
+  <meta name="theme-color" content="#F5F7F4">
+
+  <title>Health Snapshot Mockup v3 — MoveSpan</title>
+
+  <style>
+    :root {
+      --green: #2D7D52;
+      --green-dark: #1F6240;
+      --green-soft: #EAF3ED;
+      --green-soft-2: #F1F7F3;
+
+      --background: #F4F6F3;
+      --surface: #FFFFFF;
+      --surface-alt: #F8FAF8;
+
+      --text: #18211B;
+      --secondary: #6D7871;
+      --muted: #929C95;
+
+      --border: #E2E7E3;
+
+      --warning: #9B6D16;
+      --warning-bg: #FFF8E8;
+
+      --shadow: 0 8px 28px rgba(24, 33, 27, .055);
+
+      --radius-large: 26px;
+      --radius-card: 22px;
+      --radius-control: 17px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--background);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--background);
+      color: var(--text);
+
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button {
+      font: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .app-page {
+      width: min(100%, 560px);
+      min-height: 100vh;
+      margin: 0 auto;
+
+      padding:
+        calc(env(safe-area-inset-top) + 10px)
+        18px
+        calc(env(safe-area-inset-bottom) + 40px);
+    }
+
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+
+      display: grid;
+      grid-template-columns: 48px 1fr 48px;
+      align-items: center;
+
+      min-height: 62px;
+
+      margin: 0 -18px 18px;
+      padding: 0 18px;
+
+      background: rgba(244, 246, 243, .94);
+
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .back-button {
+      width: 46px;
+      height: 46px;
+
+      display: grid;
+      place-items: center;
+
+      border: 0;
+      border-radius: 50%;
+
+      background: transparent;
+      color: var(--text);
+
+      cursor: pointer;
+    }
+
+    .back-button:active {
+      background: rgba(45, 125, 82, .08);
+    }
+
+    .back-button svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .page-title {
+      margin: 0;
+
+      text-align: center;
+
+      font-size: 21px;
+      line-height: 1.2;
+      font-weight: 730;
+      letter-spacing: -.025em;
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      padding: 19px;
+
+      background: var(--surface);
+      border-radius: var(--radius-large);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-icon {
+      flex: 0 0 auto;
+
+      width: 58px;
+      height: 58px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 18px;
+
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .hero-icon svg {
+      width: 31px;
+      height: 31px;
+    }
+
+    .hero-copy {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .hero-title {
+      font-size: 22px;
+      line-height: 1.2;
+      font-weight: 760;
+      letter-spacing: -.02em;
+    }
+
+    .hero-subtitle {
+      margin-top: 5px;
+
+      color: var(--secondary);
+
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .section {
+      margin-top: 22px;
+    }
+
+    .section-title {
+      margin: 0 4px 10px;
+
+      font-size: 19px;
+      line-height: 1.3;
+      font-weight: 730;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 11px;
+    }
+
+    .metric-card {
+      min-height: 148px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      padding: 16px 13px;
+
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 4px 18px rgba(24, 33, 27, .035);
+    }
+
+    .metric-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+
+      color: var(--secondary);
+
+      font-size: 13px;
+      line-height: 1.25;
+      font-weight: 620;
+    }
+
+    .metric-label svg {
+      flex: 0 0 auto;
+
+      width: 18px;
+      height: 18px;
+    }
+
+    .metric-main {
+      margin-top: 16px;
+    }
+
+    .metric-value {
+      font-size: 31px;
+      line-height: 1;
+      font-weight: 760;
+      letter-spacing: -.04em;
+    }
+
+    .metric-unit {
+      margin-top: 6px;
+
+      color: var(--secondary);
+
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .metric-status {
+      margin-top: 12px;
+
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      color: var(--secondary);
+
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+
+      border-radius: 50%;
+
+      background: var(--green);
+    }
+
+    .pattern-value {
+      font-size: 19px;
+      line-height: 1.15;
+      font-weight: 720;
+    }
+
+    .insight-card {
+      padding: 20px;
+
+      background:
+        linear-gradient(
+          145deg,
+          #F1F7F3 0%,
+          #FFFFFF 100%
+        );
+
+      border: 1px solid #DDE9E1;
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow);
+    }
+
+    .insight-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      color: var(--green);
+
+      font-size: 17px;
+      font-weight: 740;
+    }
+
+    .insight-icon {
+      width: 36px;
+      height: 36px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 12px;
+
+      background: var(--green-soft);
+    }
+
+    .insight-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .insight-main {
+      margin-top: 15px;
+
+      font-size: 17px;
+      line-height: 1.45;
+      font-weight: 670;
+    }
+
+    .insight-description {
+      margin-top: 9px;
+
+      color: var(--secondary);
+
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+
+    .insight-card {
+      position: relative;
+    }
+
+    .insight-info-button {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+
+      width: 42px;
+      height: 42px;
+
+      display: grid;
+      place-items: center;
+
+      border: 0;
+      border-radius: 50%;
+
+      background: transparent;
+      color: var(--green);
+
+      cursor: pointer;
+    }
+
+    .insight-info-button:active {
+      background: rgba(45, 125, 82, .10);
+    }
+
+    .insight-info-button svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .insight-card .insight-header {
+      padding-right: 40px;
+    }
+
+    .insight-education {
+      display: none;
+
+      margin-top: 14px;
+      padding: 19px;
+
+      border: 1px solid #DDE9E1;
+      border-radius: 20px;
+
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .insight-education.visible {
+      display: block;
+    }
+
+    .insight-education-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .insight-education-eyebrow {
+      color: var(--green);
+
+      font-size: 12px;
+      line-height: 1.3;
+      font-weight: 760;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .insight-education-title {
+      margin-top: 4px;
+
+      font-size: 20px;
+      line-height: 1.3;
+      font-weight: 750;
+    }
+
+    .insight-education-close {
+      flex: 0 0 auto;
+
+      width: 38px;
+      height: 38px;
+
+      display: grid;
+      place-items: center;
+
+      border: 0;
+      border-radius: 50%;
+
+      background: var(--green-soft);
+      color: var(--text);
+
+      font-size: 23px;
+      line-height: 1;
+
+      cursor: pointer;
+    }
+
+    .insight-education-copy {
+      margin-top: 15px;
+
+      color: var(--secondary);
+
+      font-size: 14px;
+      line-height: 1.58;
+    }
+
+    .insight-fact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 9px;
+
+      margin-top: 16px;
+    }
+
+    .insight-fact {
+      min-height: 105px;
+
+      padding: 13px 11px;
+
+      border-radius: 16px;
+
+      background: var(--green-soft-2);
+    }
+
+    .insight-fact-title {
+      color: var(--green);
+
+      font-size: 13px;
+      line-height: 1.3;
+      font-weight: 730;
+    }
+
+    .insight-fact-copy {
+      margin-top: 7px;
+
+      color: var(--secondary);
+
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .insight-note {
+      margin-top: 15px;
+      padding: 13px 14px;
+
+      border-radius: 15px;
+
+      background: #F6F7F5;
+      color: var(--secondary);
+
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .insight-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px;
+
+      margin-top: 14px;
+    }
+
+    .insight-action-card {
+      position: relative;
+
+      aspect-ratio: 1 / 1;
+      min-height: 170px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      padding: 18px;
+
+      border: 0;
+      border-radius: 23px;
+
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: var(--shadow);
+
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .insight-action-card:active {
+      transform: scale(.985);
+    }
+
+    .insight-action-arrow {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+
+      color: var(--muted);
+
+      font-size: 25px;
+      line-height: 1;
+    }
+
+    .insight-action-icon {
+      width: 48px;
+      height: 48px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 15px;
+
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .insight-action-icon svg {
+      width: 25px;
+      height: 25px;
+    }
+
+    .insight-action-title {
+      display: block;
+
+      font-size: 17px;
+      line-height: 1.25;
+      font-weight: 720;
+    }
+
+    .insight-action-description {
+      display: block;
+
+      margin-top: 7px;
+
+      color: var(--secondary);
+
+      font-size: 13px;
+      line-height: 1.42;
+    }
+
+    .recommended-practice-standalone {
+      margin-top: 14px;
+    }
+
+    @media (max-width: 420px) {
+      .insight-fact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .insight-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .insight-action-card {
+        aspect-ratio: auto;
+        min-height: 158px;
+      }
+    }
+
+    .pattern-card {
+      padding: 20px;
+
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow);
+    }
+
+    .pattern-intro {
+      color: var(--secondary);
+
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .pattern-options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 11px;
+      margin-top: 17px;
+    }
+
+    .pattern-option {
+      position: relative;
+      min-height: 112px;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      background: var(--surface-alt);
+      transition:
+        border-color .18s ease,
+        background .18s ease,
+        box-shadow .18s ease,
+        transform .12s ease;
+    }
+
+    .pattern-option.selected {
+      border-color: var(--green);
+      background: var(--green-soft-2);
+      box-shadow: 0 0 0 3px rgba(45, 125, 82, .08);
+    }
+
+    .pattern-select {
+      width: 100%;
+      min-height: 112px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 14px 48px 14px 14px;
+      border: 0;
+      background: transparent;
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .pattern-select:active {
+      transform: scale(.985);
+    }
+
+    .pattern-info-button {
+      position: absolute;
+      top: 10px;
+      right: 9px;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: var(--green);
+      cursor: pointer;
+    }
+
+    .pattern-info-button:active {
+      background: rgba(45, 125, 82, .10);
+    }
+
+    .pattern-info-button svg {
+      width: 21px;
+      height: 21px;
+    }
+
+    .pattern-check {
+      position: absolute;
+      right: 12px;
+      bottom: 11px;
+      width: 23px;
+      height: 23px;
+      display: none;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--green);
+      color: #FFFFFF;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .pattern-option.selected .pattern-check {
+      display: grid;
+    }
+
+    .pattern-option-icon {
+      width: 35px;
+      height: 35px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .pattern-option-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .pattern-option-name {
+      margin-top: 12px;
+      font-size: 15px;
+      line-height: 1.25;
+      font-weight: 680;
+    }
+
+    .pattern-education {
+      display: none;
+      margin-top: 16px;
+      padding: 18px;
+      border: 1px solid #DDE9E1;
+      border-radius: 19px;
+      background:
+        linear-gradient(
+          145deg,
+          #F1F7F3 0%,
+          #FFFFFF 100%
+        );
+    }
+
+    .pattern-education.visible {
+      display: block;
+    }
+
+    .education-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .education-eyebrow {
+      color: var(--green);
+      font-size: 12px;
+      line-height: 1.3;
+      font-weight: 760;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .education-title {
+      margin-top: 4px;
+      font-size: 19px;
+      line-height: 1.3;
+      font-weight: 750;
+    }
+
+    .education-close {
+      flex: 0 0 auto;
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: var(--green-soft);
+      color: var(--text);
+      font-size: 23px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .education-section {
+      margin-top: 17px;
+    }
+
+    .education-label {
+      color: var(--secondary);
+      font-size: 12px;
+      line-height: 1.3;
+      font-weight: 740;
+      letter-spacing: .055em;
+      text-transform: uppercase;
+    }
+
+    .education-copy {
+      margin-top: 6px;
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .education-select {
+      width: 100%;
+      min-height: 54px;
+      margin-top: 18px;
+      padding: 13px 17px;
+      border: 0;
+      border-radius: 17px;
+      background: var(--green);
+      color: #FFFFFF;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .education-select:active {
+      background: var(--green-dark);
+      transform: scale(.99);
+    }
+
+    .pattern-result {
+      display: none;
+      margin-top: 16px;
+      padding: 17px;
+      background: var(--warning-bg);
+      border: 1px solid #F1DFC0;
+      border-radius: 18px;
+    }
+
+    .pattern-result.visible {
+      display: block;
+    }
+
+    .pattern-result-title {
+      color: var(--warning);
+      font-size: 16px;
+      font-weight: 740;
+    }
+
+    .pattern-result-copy {
+      margin-top: 8px;
+      color: #675C48;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .recommendations {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .recommendation-chip {
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .7);
+      color: #675C48;
+      font-size: 12px;
+      font-weight: 620;
+    }
+
+    .primary-action {
+      width: 100%;
+      min-height: 62px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 13px;
+
+      margin-top: 17px;
+      padding: 14px 18px;
+
+      border: 0;
+      border-radius: 19px;
+
+      background: var(--green);
+      color: #FFFFFF;
+
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .primary-action:active {
+      background: var(--green-dark);
+      transform: scale(.99);
+    }
+
+    .primary-action-icon {
+      flex: 0 0 auto;
+
+      width: 32px;
+      height: 32px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 11px;
+
+      background: rgba(255, 255, 255, .14);
+    }
+
+    .primary-action-copy {
+      min-width: 0;
+    }
+
+    .primary-action-title {
+      display: block;
+
+      font-size: 16px;
+      line-height: 1.25;
+      font-weight: 740;
+    }
+
+    .primary-action-subtitle {
+      display: block;
+
+      margin-top: 3px;
+
+      color: rgba(255, 255, 255, .8);
+
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .navigation-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .navigation-card {
+      position: relative;
+
+      aspect-ratio: 1 / 1;
+
+      min-height: 170px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      padding: 18px;
+
+      border: 0;
+      border-radius: 23px;
+
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: var(--shadow);
+
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .navigation-card:active {
+      transform: scale(.985);
+    }
+
+    .navigation-arrow {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+
+      color: var(--muted);
+
+      font-size: 25px;
+      line-height: 1;
+    }
+
+    .navigation-icon {
+      width: 48px;
+      height: 48px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 15px;
+
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .navigation-icon svg {
+      width: 25px;
+      height: 25px;
+    }
+
+    .navigation-title {
+      font-size: 17px;
+      line-height: 1.25;
+      font-weight: 720;
+    }
+
+    .navigation-description {
+      margin-top: 7px;
+
+      color: var(--secondary);
+
+      font-size: 13px;
+      line-height: 1.42;
+    }
+
+    .disclaimer {
+      margin-top: 22px;
+      padding: 15px 17px;
+
+      border: 1px solid var(--border);
+      border-radius: 18px;
+
+      background: rgba(255, 255, 255, .58);
+
+      color: var(--secondary);
+
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(env(safe-area-inset-bottom) + 24px);
+      z-index: 100;
+
+      max-width: calc(100vw - 36px);
+
+      padding: 12px 17px;
+
+      border-radius: 14px;
+
+      background: #1F2922;
+      color: #FFFFFF;
+
+      font-size: 14px;
+      line-height: 1.35;
+      text-align: center;
+
+      opacity: 0;
+      pointer-events: none;
+
+      transform: translate(-50%, 12px);
+
+      transition:
+        opacity .18s ease,
+        transform .18s ease;
+    }
+
+    .toast.visible {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @media (max-width: 420px) {
+      .metrics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .metric-card:last-child {
+        grid-column: 1 / -1;
+        min-height: 120px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .navigation-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .navigation-card {
+        aspect-ratio: auto;
+        min-height: 158px;
+      }
+
+      .pattern-options {
+        grid-template-columns: 1fr;
+      }
+    }
+  
+/* ===== HEALTH SNAPSHOT V3 LAYOUT ===== */
+
+.health-action-section {
+  margin-top: 22px;
+}
+
+.learn-wide-card {
+  width: 100%;
+  min-height: 104px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 18px;
+  border: 0;
+  border-radius: 22px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  text-align: left;
+  cursor: pointer;
+}
+
+.learn-wide-card:active {
+  transform: scale(.99);
+}
+
+.learn-wide-icon {
+  flex: 0 0 auto;
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.learn-wide-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.learn-wide-copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.learn-wide-title {
+  display: block;
+  font-size: 17px;
+  line-height: 1.3;
+  font-weight: 730;
+}
+
+.learn-wide-description {
+  display: block;
+  margin-top: 5px;
+  color: var(--secondary);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.learn-wide-arrow {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: 28px;
+  line-height: 1;
+}
+
+.health-action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+  margin-top: 14px;
+}
+
+.health-square-action {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  min-height: 170px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18px;
+  border: 0;
+  border-radius: 23px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  text-align: left;
+  cursor: pointer;
+}
+
+.health-square-action:active {
+  transform: scale(.985);
+}
+
+.health-square-arrow {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  color: var(--muted);
+  font-size: 25px;
+  line-height: 1;
+}
+
+.health-square-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.health-square-icon svg {
+  width: 25px;
+  height: 25px;
+}
+
+.health-square-title {
+  display: block;
+  font-size: 17px;
+  line-height: 1.25;
+  font-weight: 720;
+}
+
+.health-square-description {
+  display: block;
+  margin-top: 7px;
+  color: var(--secondary);
+  font-size: 13px;
+  line-height: 1.42;
+}
+
+.health-square-action.recommended {
+  background: var(--green);
+  color: #FFFFFF;
+}
+
+.health-square-action.recommended .health-square-icon {
+  background: rgba(255, 255, 255, .16);
+  color: #FFFFFF;
+}
+
+.health-square-action.recommended .health-square-arrow,
+.health-square-action.recommended .health-square-description {
+  color: rgba(255, 255, 255, .78);
+}
+
+@media (max-width: 360px) {
+  .health-action-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .health-square-action {
+    aspect-ratio: auto;
+    min-height: 158px;
+  }
+}
+
+
+/* ===== WHOOP-STYLE MOVESPAN INSIGHT ===== */
+
+.whoop-insight {
+  margin-top: 18px;
+  padding: 20px;
+  border-radius: 24px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.whoop-insight-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.whoop-insight-icon {
+  flex: 0 0 auto;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.whoop-insight-title {
+  flex: 1;
+  font-size: 18px;
+  line-height: 1.25;
+  font-weight: 760;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+
+.whoop-insight-arrow {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: 30px;
+  line-height: 1;
+  transition: transform .2s ease;
+}
+
+.whoop-insight.expanded .whoop-insight-arrow {
+  transform: rotate(90deg);
+}
+
+.whoop-insight-main {
+  margin-top: 18px;
+  font-size: 21px;
+  line-height: 1.42;
+  font-weight: 720;
+}
+
+.whoop-insight-description {
+  margin-top: 10px;
+  color: var(--secondary);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.whoop-focus-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 18px;
+}
+
+.whoop-focus-tag {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 13px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: var(--surface-alt);
+  color: var(--secondary);
+  font-size: 13px;
+  line-height: 1.3;
+  font-weight: 630;
+}
+
+.whoop-focus-more {
+  background: var(--green-soft);
+  color: var(--green);
+  border-color: transparent;
+}
+
+.whoop-insight-details {
+  display: none;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+.whoop-insight.expanded .whoop-insight-details {
+  display: block;
+}
+
+.whoop-detail-title {
+  font-size: 16px;
+  line-height: 1.3;
+  font-weight: 730;
+}
+
+.whoop-detail-copy {
+  margin-top: 8px;
+  color: var(--secondary);
+  font-size: 14px;
+  line-height: 1.58;
+}
+
+.whoop-detail-note {
+  margin-top: 15px;
+  padding: 13px 14px;
+  border-radius: 15px;
+  background: var(--surface-alt);
+  color: var(--secondary);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.whoop-learn-button {
+  width: 100%;
+  min-height: 58px;
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 14px 16px;
+  border: 0;
+  border-radius: 18px;
+  background: var(--green-soft);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.whoop-learn-button-icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: var(--surface);
+  color: var(--green);
+}
+
+.whoop-learn-button-copy {
+  flex: 1;
+}
+
+.whoop-learn-button-title {
+  display: block;
+  font-size: 15px;
+  line-height: 1.3;
+  font-weight: 720;
+}
+
+.whoop-learn-button-description {
+  display: block;
+  margin-top: 3px;
+  color: var(--secondary);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.whoop-learn-button-arrow {
+  color: var(--muted);
+  font-size: 25px;
+}
+
+
+/* ===== RESTORE EDUCATION + MATCH ACTION COLORS ===== */
+
+.health-square-action,
+.health-square-action.recommended {
+  background: #EEF4F0 !important;
+  color: var(--text) !important;
+}
+
+.health-square-action .health-square-icon,
+.health-square-action.recommended .health-square-icon {
+  background: #DDEBE2 !important;
+  color: var(--green) !important;
+}
+
+.health-square-action .health-square-arrow,
+.health-square-action.recommended .health-square-arrow {
+  color: var(--muted) !important;
+}
+
+.health-square-action .health-square-description,
+.health-square-action.recommended .health-square-description {
+  color: var(--secondary) !important;
+}
+
+
+/* ===== DISTINCT ACTION GROUP COLORS ===== */
+
+/* First row: Breathwork + Recommended Practice */
+.health-action-grid .health-square-action:nth-child(1),
+.health-action-grid .health-square-action:nth-child(2) {
+  background: #E7F0EA !important;
+  color: var(--text) !important;
+}
+
+.health-action-grid .health-square-action:nth-child(1) .health-square-icon,
+.health-action-grid .health-square-action:nth-child(2) .health-square-icon {
+  background: #D4E5DA !important;
+  color: var(--green) !important;
+}
+
+/* Second row: Dashboard + Measurements */
+.health-action-grid .health-square-action:nth-child(3),
+.health-action-grid .health-square-action:nth-child(4) {
+  background: #F4F1EB !important;
+  color: var(--text) !important;
+}
+
+.health-action-grid .health-square-action:nth-child(3) .health-square-icon,
+.health-action-grid .health-square-action:nth-child(4) .health-square-icon {
+  background: #E9E4DA !important;
+  color: #667069 !important;
+}
+
+.health-action-grid .health-square-action:nth-child(3) .health-square-arrow,
+.health-action-grid .health-square-action:nth-child(4) .health-square-arrow {
+  color: #929890 !important;
+}
+
+
+/* ===== EXPAND PERSONAL FOCUS TAGS ===== */
+
+.whoop-focus-hidden {
+  display: none;
+}
+
+.whoop-focus-tags.show-all .whoop-focus-hidden {
+  display: inline-flex;
+}
+
+.whoop-focus-more {
+  border: 0;
+  cursor: pointer;
+}
+
+.whoop-focus-more:active {
+  transform: scale(.97);
+}
+
+
+/* ===== FULL INSIGHT / EDUCATION SEPARATION ===== */
+
+.movespan-personal-insight-section,
+.movespan-education-section {
+  width: 100%;
+  margin-top: 18px;
+}
+
+.movespan-education-section .learn-wide-card {
+  margin: 0;
+}
+
+.movespan-education-section .insight-education {
+  margin-top: 14px;
+}
+
+/* Insight contains only personal information */
+.whoop-insight .insight-education {
+  display: none !important;
+}
+
+
+/* ===== DEFINITIVE SEPARATE EDUCATION BLOCK ===== */
+
+#standaloneWhyItMatters {
+  width: 100%;
+  margin-top: 18px;
+}
+
+.standalone-why-card {
+  width: 100%;
+  min-height: 106px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 18px;
+  border: 0;
+  border-radius: 22px;
+  background: #F4F1EB;
+  color: var(--text);
+  box-shadow: var(--shadow);
+  text-align: left;
+  cursor: pointer;
+}
+
+.standalone-why-icon {
+  flex: 0 0 auto;
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: #E9E4DA;
+  color: var(--green);
+}
+
+.standalone-why-copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.standalone-why-title {
+  display: block;
+  font-size: 17px;
+  line-height: 1.3;
+  font-weight: 730;
+}
+
+.standalone-why-description {
+  display: block;
+  margin-top: 5px;
+  color: var(--secondary);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.standalone-why-arrow {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: 28px;
+}
+
+.standalone-why-content {
+  display: none;
+  margin-top: 14px;
+  padding: 20px;
+  border: 1px solid #DDE9E1;
+  border-radius: 22px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.standalone-why-content.visible {
+  display: block;
+}
+
+.standalone-why-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.standalone-why-eyebrow {
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 760;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.standalone-why-heading {
+  margin-top: 5px;
+  font-size: 21px;
+  line-height: 1.3;
+  font-weight: 750;
+}
+
+.standalone-why-close {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--green-soft);
+  color: var(--text);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.standalone-why-text {
+  margin-top: 16px;
+  color: var(--secondary);
+  font-size: 14px;
+  line-height: 1.58;
+}
+
+.standalone-why-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 17px;
+}
+
+.standalone-why-fact {
+  padding: 14px;
+  border-radius: 17px;
+  background: var(--green-soft-2);
+}
+
+.standalone-why-fact strong {
+  display: block;
+  color: var(--green);
+  font-size: 13px;
+}
+
+.standalone-why-fact span {
+  display: block;
+  margin-top: 7px;
+  color: var(--secondary);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.standalone-why-note {
+  margin-top: 17px;
+  padding: 14px;
+  border-radius: 16px;
+  background: #F6F7F5;
+  color: var(--secondary);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+@media (max-width: 420px) {
+  .standalone-why-facts {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ===== MOBILE HEALTH SNAPSHOT ===== */
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@media (max-width: 600px) {
+  body {
+    min-width: 0;
+  }
+
+  .app,
+  .page,
+  .shell,
+  .container,
+  main {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .page,
+  main {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .section {
+    margin-top: 22px;
+  }
+
+  .section-title {
+    font-size: 24px;
+    line-height: 1.2;
+  }
+
+  .summary-grid,
+  .snapshot-grid,
+  .metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .whoop-insight,
+  .pattern-card,
+  .insight-education,
+  .standalone-why-content {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  .whoop-insight-main {
+    font-size: 19px;
+    line-height: 1.4;
+  }
+
+  .whoop-insight-description,
+  .pattern-description {
+    font-size: 14px;
+    line-height: 1.52;
+  }
+
+  .pattern-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .pattern-option,
+  .pattern-select {
+    min-height: 132px;
+  }
+
+  .pattern-select {
+    padding: 14px 44px 14px 14px;
+  }
+
+  .pattern-option-name {
+    font-size: 16px;
+  }
+
+  .standalone-why-card,
+  .learn-wide-card {
+    min-height: 94px;
+    padding: 15px;
+    border-radius: 20px;
+  }
+
+  .standalone-why-title,
+  .learn-wide-title {
+    font-size: 16px;
+  }
+
+  .standalone-why-description,
+  .learn-wide-description {
+    font-size: 12px;
+  }
+
+  .standalone-why-facts,
+  .insight-fact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .health-action-grid,
+  .insight-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .health-square-action,
+  .insight-action-card {
+    min-width: 0;
+    min-height: 170px;
+    padding: 15px;
+    border-radius: 20px;
+  }
+
+  .health-square-title,
+  .insight-action-title {
+    font-size: 16px;
+  }
+
+  .health-square-description,
+  .insight-action-description {
+    font-size: 12px;
+  }
+
+  .whoop-focus-tags {
+    gap: 8px;
+  }
+
+  .whoop-focus-tag {
+    min-height: 40px;
+    padding: 8px 11px;
+    font-size: 12px;
+  }
+
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@media (max-width: 360px) {
+  .page,
+  main {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .pattern-options,
+  .health-action-grid,
+  .insight-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .pattern-option,
+  .pattern-select {
+    min-height: 104px;
+  }
+
+  .health-square-action,
+  .insight-action-card {
+    aspect-ratio: auto;
+    min-height: 150px;
+  }
+}
+
+
+/* ===== TRUE MOBILE APP FRAME ===== */
+
+html {
+  background: #E9ECEB;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  background: #E9ECEB;
+}
+
+body > .app,
+body > .page,
+body > .shell,
+body > main,
+body > .container {
+  width: min(100%, 430px);
+  min-height: 100vh;
+  margin: 0 auto;
+  background: var(--background, #F7F8F6);
+  box-shadow: 0 0 32px rgba(32, 42, 36, .10);
+}
+
+@media (min-width: 431px) {
+  body > .app,
+  body > .page,
+  body > .shell,
+  body > main,
+  body > .container {
+    border-left: 1px solid rgba(45, 60, 51, .08);
+    border-right: 1px solid rgba(45, 60, 51, .08);
+  }
+}
+
+@media (max-width: 430px) {
+  html,
+  body {
+    background: var(--background, #F7F8F6);
+  }
+
+  body > .app,
+  body > .page,
+  body > .shell,
+  body > main,
+  body > .container {
+    width: 100%;
+    max-width: none;
+    box-shadow: none;
+    border: 0;
+  }
+}
+
+</style>
+</head>
+
+<body>
+  <main class="app-page">
+    <header class="app-header">
+      <button
+        class="back-button"
+        type="button"
+        onclick="history.back()"
+        aria-label="Back"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+
+      <h1 class="page-title">Health Snapshot</h1>
+
+      <span></span>
+    </header>
+
+    <section class="hero">
+      <div class="hero-icon">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M3 12h4l2-6 4 12 2-6h6"/>
+        </svg>
+      </div>
+
+      <div class="hero-copy">
+        <div class="hero-title">Your health today</div>
+
+        <div class="hero-subtitle">
+          Pulse, breathing and personalized MoveSpan guidance
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Current snapshot</h2>
+
+      <div class="metrics-grid">
+        <article class="metric-card">
+          <div class="metric-label">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/>
+            </svg>
+
+            Pulse
+          </div>
+
+          <div class="metric-main">
+            <div class="metric-value">68</div>
+            <div class="metric-unit">bpm</div>
+          </div>
+
+          <div class="metric-status">
+            <span class="status-dot"></span>
+            Within usual range
+          </div>
+        </article>
+
+        <article class="metric-card">
+          <div class="metric-label">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M3 12h4l2-6 4 12 2-6h6"/>
+            </svg>
+
+            Breathing rate
+          </div>
+
+          <div class="metric-main">
+            <div class="metric-value">14</div>
+            <div class="metric-unit">breaths/min</div>
+          </div>
+
+          <div class="metric-status">
+            <span class="status-dot"></span>
+            Calm range
+          </div>
+        </article>
+
+        <article class="metric-card">
+          <div class="metric-label">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M12 3v18"/>
+              <path d="M5 8c2-2 4-3 7-3s5 1 7 3"/>
+              <path d="M4 14c2 3 4 5 8 5s6-2 8-5"/>
+            </svg>
+
+            Last pattern
+          </div>
+
+          <div class="metric-main">
+            <div class="pattern-value" id="lastPatternValue">
+              Upper chest
+            </div>
+          </div>
+
+          <div class="metric-status">
+            Last checked today
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <article class="insight-card">
+        <button
+          class="insight-info-button"
+          type="button"
+          onclick="toggleInsightEducation()"
+          aria-label="Learn why breathing matters"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </button>
+
+        <div class="insight-header">
+          <span class="insight-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 2a7 7 0 0 0-4 12.7V18h8v-3.3A7 7 0 0 0 12 2z"/>
+              <path d="M9 22h6"/>
+              <path d="M9 18h6"/>
+            </svg>
+          </span>
+
+          MoveSpan Insight
+        </div>
+
+        <div class="insight-main" id="insightMain">
+          Your breathing rate is calm, but your last check showed mainly
+          upper-chest movement.
+        </div>
+
+        <div class="insight-description" id="insightDescription">
+          A short diaphragm and lower-rib practice may help your breathing
+          become quieter, easier and more relaxed.
+        </div>
+      </article>
+
+      <section
+        class="insight-education"
+        id="insightEducation"
+        aria-live="polite"
+      >
+        <div class="insight-education-header">
+          <div>
+            <div class="insight-education-eyebrow">
+              Why this matters
+            </div>
+
+            <div class="insight-education-title">
+              Efficient breathing supports the brain and body
+            </div>
+          </div>
+
+          <button
+            class="insight-education-close"
+            type="button"
+            onclick="toggleInsightEducation(false)"
+            aria-label="Close explanation"
+          >×</button>
+        </div>
+
+        <div class="insight-education-copy">
+          When breathing becomes faster or deeper than the body currently
+          needs, ventilation may exceed metabolic demand. This may reduce
+          carbon dioxide levels. Carbon dioxide helps regulate cerebral blood
+          flow and supports the release of oxygen from hemoglobin into tissues.
+        </div>
+
+        <div class="insight-fact-grid">
+          <div class="insight-fact">
+            <div class="insight-fact-title">Brain circulation</div>
+
+            <div class="insight-fact-copy">
+              CO₂ helps regulate the diameter of blood vessels supplying
+              the brain.
+            </div>
+          </div>
+
+          <div class="insight-fact">
+            <div class="insight-fact-title">Oxygen delivery</div>
+
+            <div class="insight-fact-copy">
+              CO₂ participates in the release of oxygen from hemoglobin
+              into active tissues.
+            </div>
+          </div>
+
+          <div class="insight-fact">
+            <div class="insight-fact-title">Calm regulation</div>
+
+            <div class="insight-fact-copy">
+              Quieter breathing can support relaxation and reduce
+              unnecessary respiratory effort.
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-education-copy">
+          The MoveSpan goal is not to take the deepest possible breath.
+          It is to develop quiet, comfortable belly breathing with freer
+          diaphragm movement, softer exhalation and less unnecessary tension
+          in the upper chest, neck and shoulders.
+        </div>
+
+        <div class="insight-note">
+          Breathing rate and movement pattern alone do not diagnose
+          hyperventilation or low CO₂. MoveSpan uses them as wellness
+          observations for personalizing practices.
+        </div>
+      </section>
+
+      <div class="insight-actions">
+        <button
+          class="insight-action-card"
+          type="button"
+          onclick="showToast('Breathwork & Meditation library will open here')"
+        >
+          <span class="insight-action-arrow">›</span>
+
+          <span class="insight-action-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 3v18"/>
+              <path d="M5 8c2-2 4-3 7-3s5 1 7 3"/>
+              <path d="M6 16c2 2 4 3 6 3s4-1 6-3"/>
+            </svg>
+          </span>
+
+          <span>
+            <span class="insight-action-title">
+              Breathwork &amp; Meditation
+            </span>
+
+            <span class="insight-action-description">
+              Open your personalized breathing practice library
+            </span>
+          </span>
+        </button>
+
+        <button
+          class="insight-action-card"
+          type="button"
+          onclick="toggleInsightEducation(true)"
+        >
+          <span class="insight-action-arrow">›</span>
+
+          <span class="insight-action-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 11v5"/>
+              <path d="M12 8h.01"/>
+            </svg>
+          </span>
+
+          <span>
+            <span class="insight-action-title">
+              Learn Why It Matters
+            </span>
+
+            <span class="insight-action-description">
+              CO₂, oxygen delivery and brain health
+            </span>
+          </span>
+        </button>
+      </div>
+
+      <button
+        class="primary-action recommended-practice-standalone"
+        type="button"
+        onclick="showToast('Recommended practice will open here')"
+      >
+        <span class="primary-action-icon">
+          <svg
+            viewBox="0 0 24 24"
+            width="19"
+            height="19"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M20 4c-8 0-14 4-16 12 4 0 8-1 11-4"/>
+            <path d="M4 20c4-6 8-10 16-16"/>
+          </svg>
+        </span>
+
+        <span class="primary-action-copy">
+          <span class="primary-action-title">
+            Start Recommended Practice
+          </span>
+
+          <span class="primary-action-subtitle">
+            5–10 min · Diaphragm &amp; Relaxation
+          </span>
+        </span>
+      </button>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Breathing Pattern Check</h2>
+
+      <article class="pattern-card">
+        <div class="pattern-intro">
+          Breathe naturally for several cycles. Notice where the movement is
+          most visible or easiest to feel.
+        </div>
+
+        <div class="pattern-options">
+
+          <article class="pattern-option" data-pattern-card="upper">
+            <button
+              class="pattern-select"
+              type="button"
+              onclick="selectPattern('upper')"
+              aria-label="Select Upper chest"
+            >
+              <span class="pattern-option-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M12 3v18"/>
+                  <path d="M5 8c2-2 4-3 7-3s5 1 7 3"/>
+                </svg>
+              </span>
+
+              <span class="pattern-option-name">Upper chest</span>
+            </button>
+
+            <button
+              class="pattern-info-button"
+              type="button"
+              onclick="openPatternInfo(event, 'upper')"
+              aria-label="Learn about Upper chest breathing"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 18l6-6-6-6"/>
+              </svg>
+            </button>
+
+            <span class="pattern-check" aria-hidden="true">✓</span>
+          </article>
+
+          <article class="pattern-option" data-pattern-card="ribs">
+            <button
+              class="pattern-select"
+              type="button"
+              onclick="selectPattern('ribs')"
+              aria-label="Select Rib cage"
+            >
+              <span class="pattern-option-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M8 4c-3 2-4 5-4 8s1 6 4 8"/>
+                  <path d="M16 4c3 2 4 5 4 8s-1 6-4 8"/>
+                  <path d="M8 7h8"/>
+                  <path d="M7 12h10"/>
+                  <path d="M8 17h8"/>
+                </svg>
+              </span>
+
+              <span class="pattern-option-name">Rib cage</span>
+            </button>
+
+            <button
+              class="pattern-info-button"
+              type="button"
+              onclick="openPatternInfo(event, 'ribs')"
+              aria-label="Learn about Rib cage breathing"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 18l6-6-6-6"/>
+              </svg>
+            </button>
+
+            <span class="pattern-check" aria-hidden="true">✓</span>
+          </article>
+
+          <article class="pattern-option" data-pattern-card="belly">
+            <button
+              class="pattern-select"
+              type="button"
+              onclick="selectPattern('belly')"
+              aria-label="Select Belly breathing"
+            >
+              <span class="pattern-option-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M8 4c-2 3-3 6-3 9 0 5 3 8 7 8s7-3 7-8c0-3-1-6-3-9"/>
+                  <path d="M8 15c2 1 6 1 8 0"/>
+                </svg>
+              </span>
+
+              <span class="pattern-option-name">Belly</span>
+            </button>
+
+            <button
+              class="pattern-info-button"
+              type="button"
+              onclick="openPatternInfo(event, 'belly')"
+              aria-label="Learn about Belly breathing"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 18l6-6-6-6"/>
+              </svg>
+            </button>
+
+            <span class="pattern-check" aria-hidden="true">✓</span>
+          </article>
+
+          <article class="pattern-option" data-pattern-card="lowBelly">
+            <button
+              class="pattern-select"
+              type="button"
+              onclick="selectPattern('lowBelly')"
+              aria-label="Select Low belly breathing"
+            >
+              <span class="pattern-option-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M8 4c-2 3-3 6-3 9 0 5 3 8 7 8s7-3 7-8c0-3-1-6-3-9"/>
+                  <path d="M8 17c2 2 6 2 8 0"/>
+                  <path d="M12 13v6"/>
+                </svg>
+              </span>
+
+              <span class="pattern-option-name">Low belly</span>
+            </button>
+
+            <button
+              class="pattern-info-button"
+              type="button"
+              onclick="openPatternInfo(event, 'lowBelly')"
+              aria-label="Learn about Low belly breathing"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 18l6-6-6-6"/>
+              </svg>
+            </button>
+
+            <span class="pattern-check" aria-hidden="true">✓</span>
+          </article>
+        </div>
+
+        <section
+          class="pattern-education"
+          id="patternEducation"
+          aria-live="polite"
+        >
+          <div class="education-header">
+            <div>
+              <div class="education-eyebrow">About this pattern</div>
+              <div class="education-title" id="educationTitle"></div>
+            </div>
+
+            <button
+              class="education-close"
+              type="button"
+              onclick="closePatternInfo()"
+              aria-label="Close description"
+            >×</button>
+          </div>
+
+          <div class="education-section">
+            <div class="education-label">What you may notice</div>
+            <div class="education-copy" id="educationObservation"></div>
+          </div>
+
+          <div class="education-section">
+            <div class="education-label">What it may mean</div>
+            <div class="education-copy" id="educationMeaning"></div>
+          </div>
+
+          <div class="education-section">
+            <div class="education-label">MoveSpan focus</div>
+            <div class="education-copy" id="educationFocus"></div>
+          </div>
+
+          <button
+            class="education-select"
+            id="educationSelectButton"
+            type="button"
+          >
+            Select this pattern
+          </button>
+        </section>
+
+        <div class="pattern-result" id="patternResult">
+          <div class="pattern-result-title" id="patternResultTitle"></div>
+
+          <div class="pattern-result-copy" id="patternResultCopy"></div>
+
+          <div class="recommendations" id="recommendations"></div>
+        </div>
+
+
+      </article>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Health tools</h2>
+
+      <div class="navigation-grid">
+        <button
+          class="navigation-card"
+          type="button"
+          onclick="showToast('Health Dashboard will open here')"
+        >
+          <span class="navigation-arrow">›</span>
+
+          <span class="navigation-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M4 20V10"/>
+              <path d="M10 20V4"/>
+              <path d="M16 20v-7"/>
+              <path d="M22 20V7"/>
+            </svg>
+          </span>
+
+          <span>
+            <span class="navigation-title">
+              Open Health Dashboard
+            </span>
+
+            <span class="navigation-description">
+              Trends, connected devices and health history
+            </span>
+          </span>
+        </button>
+
+        <button
+          class="navigation-card"
+          type="button"
+          onclick="showToast('Measurement flow will open here')"
+        >
+          <span class="navigation-arrow">›</span>
+
+          <span class="navigation-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M9 5h6"/>
+              <path d="M9 3h6v4H9z"/>
+              <rect x="5" y="5" width="14" height="16" rx="2"/>
+              <path d="M8 11h8"/>
+              <path d="M8 15h5"/>
+            </svg>
+          </span>
+
+          <span>
+            <span class="navigation-title">
+              Update Measurements
+            </span>
+
+            <span class="navigation-description">
+              Measure pulse and breathing rate again
+            </span>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <div class="disclaimer">
+      MoveSpan provides wellness and educational guidance. It does not diagnose
+      medical conditions or replace professional medical care.
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+
+    function toggleInsightEducation(forceState) {
+      const panel = document.getElementById("insightEducation");
+      if (!panel) return;
+
+      const shouldOpen =
+        typeof forceState === "boolean"
+          ? forceState
+          : !panel.classList.contains("visible");
+
+      panel.classList.toggle("visible", shouldOpen);
+
+      if (shouldOpen) {
+        requestAnimationFrame(() => {
+          panel.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest"
+          });
+        });
+      }
+    }
+
+    const patternContent = {
+      upper: {
+        label: "Upper chest",
+        title: "Upper-chest breathing",
+
+        observation:
+          "The upper part of the chest rises more noticeably than the abdomen. The collarbones or shoulders may also move.",
+
+        meaning:
+          "The neck, shoulders and upper-chest muscles may be doing more breathing work. This pattern may become more noticeable during tension, stress, fatigue or effort.",
+
+        focus:
+          "Relax the neck, shoulders and upper chest, improve diaphragm movement and gradually encourage calmer belly breathing.",
+
+        insight:
+          "Your last check showed mainly upper-chest movement.",
+
+        insightDescription:
+          "A short diaphragm, chest-release and relaxation practice may help your breathing become quieter and less effortful.",
+
+        selectedDescription:
+          "Most movement was concentrated in the upper chest. MoveSpan will focus on reducing unnecessary upper-body tension and improving diaphragm participation.",
+
+        recommendations: [
+          "Neck and shoulder release",
+          "Chest release",
+          "Diaphragm mobility",
+          "Longer exhalation"
+        ],
+
+        practice:
+          "5–10 min · Diaphragm & Relaxation"
+      },
+
+      ribs: {
+        label: "Rib cage",
+        title: "Rib-cage breathing",
+
+        observation:
+          "Most movement is felt around the middle or lower ribs. The abdomen moves less noticeably.",
+
+        meaning:
+          "The ribs are participating in breathing, but movement through the diaphragm and abdomen may feel restricted or less coordinated.",
+
+        focus:
+          "Improve thoracic and lower-rib mobility, relax the intercostal muscles and connect rib movement with calm belly breathing.",
+
+        insight:
+          "Your last check showed breathing movement mainly around the rib cage.",
+
+        insightDescription:
+          "Lower-rib mobility and diaphragm practice may help distribute the movement more naturally toward the abdomen.",
+
+        selectedDescription:
+          "Breathing movement was concentrated around the ribs. MoveSpan will focus on rib mobility and coordination with the diaphragm.",
+
+        recommendations: [
+          "Lower-rib mobility",
+          "Side-rib expansion",
+          "Thoracic release",
+          "Diaphragm coordination"
+        ],
+
+        practice:
+          "5–8 min · Rib Mobility"
+      },
+
+      belly: {
+        label: "Belly",
+        title: "Belly breathing",
+
+        observation:
+          "The abdomen expands softly during inhalation and returns naturally during exhalation. The lower ribs may also open slightly.",
+
+        meaning:
+          "In the MoveSpan system, this is the main reference for calm diaphragmatic breathing. The movement should remain comfortable and unforced.",
+
+        focus:
+          "Maintain natural belly breathing, avoid forcing the inhale and use a soft, slightly longer exhalation for relaxation and recovery.",
+
+        insight:
+          "Your last check showed calm belly breathing.",
+
+        insightDescription:
+          "This is the main MoveSpan reference for relaxed diaphragmatic breathing. Keep the movement soft and natural.",
+
+        selectedDescription:
+          "The abdomen moved naturally with the breath. Continue without pushing the belly outward or forcing a deeper inhale.",
+
+        recommendations: [
+          "Quiet belly breathing",
+          "Slow nasal breathing",
+          "Soft exhalation",
+          "Breath awareness"
+        ],
+
+        practice:
+          "5 min · Calm Belly Breathing"
+      },
+
+      lowBelly: {
+        label: "Low belly",
+        title: "Low-belly breathing",
+
+        observation:
+          "Breathing movement is felt most clearly below the navel, sometimes with a soft sense of expansion toward the pelvis.",
+
+        meaning:
+          "You may have good awareness of the lower abdominal movement. It is still important that the upper abdomen and lower ribs are not held rigidly.",
+
+        focus:
+          "Connect the low belly with the movement of the whole diaphragm, relax the lower abdomen and pelvic floor, and avoid artificially pushing the abdomen outward.",
+
+        insight:
+          "Your last check showed movement mainly in the low belly.",
+
+        insightDescription:
+          "MoveSpan will help connect the lower abdominal movement with the diaphragm and lower ribs.",
+
+        selectedDescription:
+          "Movement was felt mainly below the navel. The practice will focus on whole-diaphragm coordination and deep relaxation.",
+
+        recommendations: [
+          "Low-belly awareness",
+          "Pelvic-floor relaxation",
+          "Diaphragm coordination",
+          "Lower-rib release"
+        ],
+
+        practice:
+          "6–10 min · Low Belly & Diaphragm"
+      }
+    };
+
+    let selectedPattern = null;
+    let educationPattern = null;
+
+    function selectPattern(pattern) {
+      const data = patternContent[pattern];
+      if (!data) return;
+
+      selectedPattern = pattern;
+
+      document.querySelectorAll("[data-pattern-card]").forEach(card => {
+        card.classList.toggle(
+          "selected",
+          card.dataset.patternCard === pattern
+        );
+      });
+
+      document.getElementById("lastPatternValue").textContent =
+        data.label;
+
+      document.getElementById("insightMain").textContent =
+        data.insight;
+
+      document.getElementById("insightDescription").textContent =
+        data.insightDescription;
+
+      document.getElementById("patternResultTitle").textContent =
+        data.title + " selected";
+
+      document.getElementById("patternResultCopy").textContent =
+        data.selectedDescription;
+
+      document.getElementById("recommendations").innerHTML =
+        data.recommendations
+          .map(item =>
+            `<span class="recommendation-chip">${item}</span>`
+          )
+          .join("");
+
+      document.querySelector(
+        ".primary-action-subtitle"
+      ).textContent = data.practice;
+
+      document.getElementById("patternResult")
+        .classList.add("visible");
+
+      localStorage.setItem(
+        "movespan_breathing_pattern_mockup_v2",
+        pattern
+      );
+
+      showToast(data.label + " saved");
+    }
+
+    function openPatternInfo(event, pattern) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const data = patternContent[pattern];
+      if (!data) return;
+
+      educationPattern = pattern;
+
+      document.getElementById("educationTitle").textContent =
+        data.title;
+
+      document.getElementById("educationObservation").textContent =
+        data.observation;
+
+      document.getElementById("educationMeaning").textContent =
+        data.meaning;
+
+      document.getElementById("educationFocus").textContent =
+        data.focus;
+
+      const selectButton =
+        document.getElementById("educationSelectButton");
+
+      selectButton.textContent =
+        "Select " + data.label;
+
+      selectButton.onclick = function() {
+        selectPattern(pattern);
+      };
+
+      const education =
+        document.getElementById("patternEducation");
+
+      education.classList.add("visible");
+
+      requestAnimationFrame(() => {
+        education.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest"
+        });
+      });
+    }
+
+    function closePatternInfo() {
+      educationPattern = null;
+
+      document.getElementById("patternEducation")
+        .classList.remove("visible");
+    }
+
+    let toastTimer;
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+
+      toast.textContent = message;
+      toast.classList.add("visible");
+
+      clearTimeout(toastTimer);
+
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("visible");
+      }, 2100);
+    }
+
+    const savedPattern =
+      localStorage.getItem(
+        "movespan_breathing_pattern_mockup_v2"
+      );
+
+    if (savedPattern && patternContent[savedPattern]) {
+      selectPattern(savedPattern);
+    }
+  </script>
+
+<script>
+(function buildHealthSnapshotV3() {
+  function findSectionByTitle(title) {
+    return Array.from(document.querySelectorAll("section.section"))
+      .find(section => {
+        const heading = section.querySelector(".section-title");
+        return heading &&
+          heading.textContent.trim().toLowerCase() === title.toLowerCase();
+      });
+  }
+
+  function squareCard({
+    title,
+    description,
+    icon,
+    action,
+    recommended = false
+  }) {
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className =
+      "health-square-action" + (recommended ? " recommended" : "");
+
+    button.onclick = action;
+
+    button.innerHTML = `
+      <span class="health-square-arrow" aria-hidden="true">›</span>
+
+      <span class="health-square-icon" aria-hidden="true">
+        ${icon}
+      </span>
+
+      <span>
+        <span class="health-square-title">${title}</span>
+        <span class="health-square-description">${description}</span>
+      </span>
+    `;
+
+    return button;
+  }
+
+  function initialize() {
+    const patternSection =
+      findSectionByTitle("Breathing Pattern Check");
+
+    const healthToolsSection =
+      findSectionByTitle("Health tools");
+
+    const insightCard =
+      document.querySelector(".insight-card");
+
+    const insightSection =
+      insightCard ? insightCard.closest("section.section") : null;
+
+    const insightEducation =
+      document.getElementById("insightEducation");
+
+    if (
+      !patternSection ||
+      !healthToolsSection ||
+      !insightSection ||
+      !insightEducation
+    ) {
+      console.warn("MoveSpan v3: required mockup sections not found");
+      return;
+    }
+
+    /*
+     * Correct order:
+     * Insight → Pattern Check → Education/actions
+     */
+    insightSection.insertAdjacentElement("afterend", patternSection);
+
+    const actionSection = document.createElement("section");
+    actionSection.className = "health-action-section";
+
+    const learnButton = document.createElement("button");
+    learnButton.type = "button";
+    learnButton.className = "learn-wide-card";
+    learnButton.onclick = () => toggleInsightEducation(true);
+
+    learnButton.innerHTML = `
+      <span class="learn-wide-icon" aria-hidden="true">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 11v5"/>
+          <path d="M12 8h.01"/>
+        </svg>
+      </span>
+
+      <span class="learn-wide-copy">
+        <span class="learn-wide-title">Learn Why It Matters</span>
+        <span class="learn-wide-description">
+          CO₂, oxygen delivery, brain circulation and efficient breathing
+        </span>
+      </span>
+
+      <span class="learn-wide-arrow" aria-hidden="true">›</span>
+    `;
+
+    const grid = document.createElement("div");
+    grid.className = "health-action-grid";
+
+    const breathwork = squareCard({
+      title: "Breathwork & Meditation",
+      description: "Open your personalized breathing practice library",
+      action: () =>
+        showToast("Breathwork & Meditation library will open here"),
+      icon: `
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M12 3v18"/>
+          <path d="M5 8c2-2 4-3 7-3s5 1 7 3"/>
+          <path d="M6 16c2 2 4 3 6 3s4-1 6-3"/>
+        </svg>
+      `
+    });
+
+    const recommended = squareCard({
+      title: "Start Recommended Practice",
+      description: "5–10 min · Diaphragm & Relaxation",
+      recommended: true,
+      action: () =>
+        showToast("Recommended practice will open here"),
+      icon: `
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M20 4c-8 0-14 4-16 12 4 0 8-1 11-4"/>
+          <path d="M4 20c4-6 8-10 16-16"/>
+        </svg>
+      `
+    });
+
+    const dashboard = squareCard({
+      title: "Open Health Dashboard",
+      description: "Trends, connected devices and health history",
+      action: () =>
+        showToast("Health Dashboard will open here"),
+      icon: `
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M4 20V10"/>
+          <path d="M10 20V4"/>
+          <path d="M16 20v-7"/>
+          <path d="M22 20V7"/>
+        </svg>
+      `
+    });
+
+    const measurements = squareCard({
+      title: "Update Measurements",
+      description: "Measure pulse and breathing rate again",
+      action: () =>
+        showToast("Measurement flow will open here"),
+      icon: `
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M9 5h6"/>
+          <path d="M9 3h6v4H9z"/>
+          <rect x="5" y="5" width="14" height="16" rx="2"/>
+          <path d="M8 11h8"/>
+          <path d="M8 15h5"/>
+        </svg>
+      `
+    });
+
+    grid.append(
+      breathwork,
+      recommended,
+      dashboard,
+      measurements
+    );
+
+    actionSection.append(learnButton, insightEducation, grid);
+
+    patternSection.insertAdjacentElement("afterend", actionSection);
+
+    /*
+     * Remove previous duplicated action layouts.
+     */
+    document
+      .querySelectorAll(
+        ".insight-actions, .recommended-practice-standalone"
+      )
+      .forEach(element => element.remove());
+
+    healthToolsSection.remove();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initialize);
+  } else {
+    initialize();
+  }
+})();
+</script>
+
+
+<script>
+(function buildWhoopStyleInsight() {
+  function init() {
+    if (document.querySelector(".whoop-insight")) return;
+
+    const originalInsight =
+      document.querySelector(".insight-card");
+
+    if (!originalInsight) {
+      console.warn("MoveSpan: original insight card not found");
+      return;
+    }
+
+    const oldMain =
+      document.getElementById("insightMain");
+
+    const oldDescription =
+      document.getElementById("insightDescription");
+
+    const insightSection =
+      originalInsight.closest("section.section");
+
+    const patternSection =
+      Array.from(document.querySelectorAll("section.section"))
+        .find(section => {
+          const title = section.querySelector(".section-title");
+          return title &&
+            title.textContent.trim() === "Breathing Pattern Check";
+        });
+
+    const card = document.createElement("article");
+    card.className = "whoop-insight";
+
+    card.innerHTML = `
+      <button
+        class="whoop-insight-header"
+        type="button"
+        aria-expanded="false"
+      >
+        <span class="whoop-insight-icon" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M9 18h6"/>
+            <path d="M10 22h4"/>
+            <path d="M8 14c-2-1.3-3-3.2-3-5.5A7 7 0 0 1 19 8.5c0 2.3-1 4.2-3 5.5-.7.5-1 1.1-1 2H9c0-.9-.3-1.5-1-2Z"/>
+          </svg>
+        </span>
+
+        <span class="whoop-insight-title">
+          MoveSpan Insight
+        </span>
+
+        <span class="whoop-insight-arrow" aria-hidden="true">›</span>
+      </button>
+
+      <div class="whoop-insight-main" id="whoopInsightMain">
+        Your breathing rate is calm, but your last check showed
+        mainly upper-chest movement.
+      </div>
+
+      <div class="whoop-insight-description" id="whoopInsightDescription">
+        A short diaphragm and lower-rib practice may help your breathing
+        become quieter, easier and more relaxed.
+      </div>
+
+      <div class="whoop-focus-tags">
+        <span class="whoop-focus-tag">Upper-chest tension</span>
+        <span class="whoop-focus-tag">Diaphragm mobility</span>
+        <span class="whoop-focus-tag">Lower-rib expansion</span>
+        <span class="whoop-focus-tag whoop-focus-more">+2 more</span>
+      </div>
+
+      <div class="whoop-insight-details">
+        <div class="whoop-detail-title">Why this matters</div>
+
+        <div class="whoop-detail-copy">
+          When breathing becomes faster or deeper than the body currently
+          needs, ventilation may exceed metabolic demand. This may reduce
+          carbon dioxide levels. CO₂ helps regulate cerebral blood flow and
+          supports the release of oxygen from hemoglobin into tissues,
+          including the brain.
+        </div>
+
+        <div class="whoop-detail-title" style="margin-top:18px">
+          MoveSpan focus
+        </div>
+
+        <div class="whoop-focus-tags">
+          <span class="whoop-focus-tag">Reduce upper-chest effort</span>
+          <span class="whoop-focus-tag">Restore diaphragm movement</span>
+          <span class="whoop-focus-tag">Improve lower-rib mobility</span>
+          <span class="whoop-focus-tag">Quiet belly breathing</span>
+          <span class="whoop-focus-tag">Soft, longer exhalation</span>
+        </div>
+
+        <div class="whoop-detail-note">
+          Breathing rate and movement pattern alone do not diagnose
+          hyperventilation or low CO₂. MoveSpan uses these observations
+          to personalize wellness practices and attention cues.
+        </div>
+
+        <button
+          class="whoop-learn-button"
+          type="button"
+          onclick="showToast('Breathing education will open here')"
+        >
+          <span class="whoop-learn-button-icon" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              width="22"
+              height="22"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 11v5"/>
+              <path d="M12 8h.01"/>
+            </svg>
+          </span>
+
+          <span class="whoop-learn-button-copy">
+            <span class="whoop-learn-button-title">
+              Learn Why It Matters
+            </span>
+
+            <span class="whoop-learn-button-description">
+              CO₂, oxygen delivery and brain health
+            </span>
+          </span>
+
+          <span class="whoop-learn-button-arrow">›</span>
+        </button>
+      </div>
+    `;
+
+    const header = card.querySelector(".whoop-insight-header");
+
+    header.addEventListener("click", () => {
+      const expanded = card.classList.toggle("expanded");
+      header.setAttribute("aria-expanded", String(expanded));
+    });
+
+    originalInsight.replaceWith(card);
+
+    if (patternSection && insightSection) {
+      insightSection.insertAdjacentElement("beforebegin", patternSection);
+    }
+
+    document
+      .querySelectorAll(".learn-wide-card")
+      .forEach(element => element.remove());
+
+    const observer = new MutationObserver(() => {
+      if (oldMain) {
+        document.getElementById("whoopInsightMain").textContent =
+          oldMain.textContent;
+      }
+
+      if (oldDescription) {
+        document.getElementById(
+          "whoopInsightDescription"
+        ).textContent = oldDescription.textContent;
+      }
+    });
+
+    if (oldMain) {
+      observer.observe(oldMain, {
+        childList: true,
+        characterData: true,
+        subtree: true
+      });
+    }
+
+    if (oldDescription) {
+      observer.observe(oldDescription, {
+        childList: true,
+        characterData: true,
+        subtree: true
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(init, 100);
+    });
+  } else {
+    setTimeout(init, 100);
+  }
+})();
+</script>
+
+
+<script>
+(function restoreInsightEducation() {
+  function init() {
+    const insight =
+      document.querySelector(".whoop-insight");
+
+    const education =
+      document.getElementById("insightEducation");
+
+    if (!insight || !education) return;
+
+    /*
+     * Keep the full Why This Matters block directly after the Insight card.
+     */
+    insight.insertAdjacentElement("afterend", education);
+
+    /*
+     * Hide it initially.
+     */
+    education.classList.remove("visible");
+
+    /*
+     * Replace the Insight arrow behavior:
+     * clicking the header opens the full education block.
+     */
+    const header =
+      insight.querySelector(".whoop-insight-header");
+
+    if (header) {
+      const cleanHeader = header.cloneNode(true);
+      header.replaceWith(cleanHeader);
+
+      cleanHeader.addEventListener("click", () => {
+        const isOpen =
+          education.classList.toggle("visible");
+
+        cleanHeader.setAttribute(
+          "aria-expanded",
+          String(isOpen)
+        );
+
+        if (isOpen) {
+          requestAnimationFrame(() => {
+            education.scrollIntoView({
+              behavior: "smooth",
+              block: "nearest"
+            });
+          });
+        }
+      });
+    }
+
+    /*
+     * The close button inside Why This Matters still works.
+     */
+    const closeButton =
+      education.querySelector(
+        ".insight-education-close"
+      );
+
+    if (closeButton) {
+      closeButton.onclick = () => {
+        education.classList.remove("visible");
+
+        const activeHeader =
+          insight.querySelector(".whoop-insight-header");
+
+        if (activeHeader) {
+          activeHeader.setAttribute(
+            "aria-expanded",
+            "false"
+          );
+        }
+      };
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(init, 150);
+    });
+  } else {
+    setTimeout(init, 150);
+  }
+})();
+</script>
+
+
+<script>
+(function separateInsightAndEducation() {
+  function init() {
+    const insight = document.querySelector(".whoop-insight");
+    const insightHeader = insight?.querySelector(".whoop-insight-header");
+    const insightDetails = insight?.querySelector(".whoop-insight-details");
+
+    const education = document.getElementById("insightEducation");
+    const learnCard = document.querySelector(".learn-wide-card");
+
+    if (!insight || !insightHeader || !insightDetails || !education) {
+      console.warn("MoveSpan: insight or education block not found");
+      return;
+    }
+
+    /*
+     * 1. MoveSpan Insight:
+     * opens only personal recommendations and focus details.
+     */
+    const cleanInsightHeader = insightHeader.cloneNode(true);
+    insightHeader.replaceWith(cleanInsightHeader);
+
+    cleanInsightHeader.addEventListener("click", () => {
+      const expanded = insight.classList.toggle("expanded");
+
+      cleanInsightHeader.setAttribute(
+        "aria-expanded",
+        String(expanded)
+      );
+    });
+
+    /*
+     * 2. Learn Why It Matters:
+     * opens the separate full educational block.
+     */
+    education.classList.remove("visible");
+
+    if (learnCard) {
+      const cleanLearnCard = learnCard.cloneNode(true);
+      learnCard.replaceWith(cleanLearnCard);
+
+      cleanLearnCard.addEventListener("click", () => {
+        education.classList.add("visible");
+
+        requestAnimationFrame(() => {
+          education.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest"
+          });
+        });
+      });
+    }
+
+    /*
+     * 3. Restore close button for education.
+     */
+    const closeButton =
+      education.querySelector(".insight-education-close");
+
+    if (closeButton) {
+      closeButton.onclick = () => {
+        education.classList.remove("visible");
+      };
+    }
+
+    /*
+     * 4. Place education directly after Learn Why It Matters.
+     */
+    const activeLearnCard =
+      document.querySelector(".learn-wide-card");
+
+    if (activeLearnCard) {
+      activeLearnCard.insertAdjacentElement(
+        "afterend",
+        education
+      );
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(init, 200);
+    });
+  } else {
+    setTimeout(init, 200);
+  }
+})();
+</script>
+
+
+<script>
+(function enableMoreFocusTags() {
+  function init() {
+    const insight = document.querySelector(".whoop-insight");
+    if (!insight) return;
+
+    const tagGroups = insight.querySelectorAll(".whoop-focus-tags");
+    if (!tagGroups.length) return;
+
+    const mainTags = tagGroups[0];
+
+    let moreButton =
+      mainTags.querySelector(".whoop-focus-more");
+
+    if (!moreButton) return;
+
+    if (!mainTags.querySelector(".whoop-focus-hidden")) {
+      const neckTag = document.createElement("span");
+      neckTag.className = "whoop-focus-tag whoop-focus-hidden";
+      neckTag.textContent = "Relax neck and shoulders";
+
+      const exhaleTag = document.createElement("span");
+      exhaleTag.className = "whoop-focus-tag whoop-focus-hidden";
+      exhaleTag.textContent = "Soft, longer exhalation";
+
+      mainTags.insertBefore(neckTag, moreButton);
+      mainTags.insertBefore(exhaleTag, moreButton);
+    }
+
+    const cleanButton = document.createElement("button");
+    cleanButton.type = "button";
+    cleanButton.className =
+      "whoop-focus-tag whoop-focus-more";
+    cleanButton.textContent = "+2 more";
+    cleanButton.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+    moreButton.replaceWith(cleanButton);
+    moreButton = cleanButton;
+
+    moreButton.addEventListener("click", event => {
+      event.stopPropagation();
+
+      const expanded =
+        mainTags.classList.toggle("show-all");
+
+      moreButton.textContent =
+        expanded ? "Show less" : "+2 more";
+
+      moreButton.setAttribute(
+        "aria-expanded",
+        String(expanded)
+      );
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(init, 250);
+    });
+  } else {
+    setTimeout(init, 250);
+  }
+})();
+</script>
+
+
+<script>
+(function finalSeparateInsightAndWhyItMatters() {
+  function init() {
+    const insight = document.querySelector(".whoop-insight");
+    const insightHeader = insight?.querySelector(".whoop-insight-header");
+    const learnCard = document.querySelector(".learn-wide-card");
+    const education = document.getElementById("insightEducation");
+    const closeBtn = education?.querySelector(".insight-education-close");
+
+    if (!insight || !insightHeader || !learnCard || !education) {
+      console.warn("FINAL FIX: required blocks not found");
+      return;
+    }
+
+    /* 1. Start clean */
+    insight.classList.remove("expanded");
+    education.classList.remove("visible");
+
+    /* 2. Put education directly after Learn Why It Matters */
+    learnCard.insertAdjacentElement("afterend", education);
+
+    /* 3. Rebind Insight header — only personal insight details */
+    const newInsightHeader = insightHeader.cloneNode(true);
+    insightHeader.replaceWith(newInsightHeader);
+
+    newInsightHeader.setAttribute("aria-expanded", "false");
+
+    newInsightHeader.addEventListener("click", function () {
+      const expanded = insight.classList.toggle("expanded");
+      newInsightHeader.setAttribute("aria-expanded", String(expanded));
+    });
+
+    /* 4. Rebind Learn card — only education block */
+    const newLearnCard = learnCard.cloneNode(true);
+    learnCard.replaceWith(newLearnCard);
+
+    newLearnCard.addEventListener("click", function () {
+      const isVisible = education.classList.toggle("visible");
+
+      if (isVisible) {
+        requestAnimationFrame(() => {
+          education.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest"
+          });
+        });
+      }
+    });
+
+    /* 5. Close button closes only education */
+    if (closeBtn) {
+      const newCloseBtn = closeBtn.cloneNode(true);
+      closeBtn.replaceWith(newCloseBtn);
+
+      newCloseBtn.addEventListener("click", function () {
+        education.classList.remove("visible");
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(init, 250);
+    });
+  } else {
+    setTimeout(init, 250);
+  }
+})();
+</script>
+
+
+<script>
+(function fullySeparateInsightAndEducation() {
+  function init() {
+    const patternSection = Array.from(
+      document.querySelectorAll("section.section")
+    ).find(section => {
+      const heading = section.querySelector(".section-title");
+      return heading &&
+        heading.textContent.trim() === "Breathing Pattern Check";
+    });
+
+    const insight = document.querySelector(".whoop-insight");
+    const learnCard = document.querySelector(".learn-wide-card");
+    const education = document.getElementById("insightEducation");
+
+    if (!patternSection || !insight || !learnCard || !education) {
+      console.warn("MoveSpan: separation elements not found");
+      return;
+    }
+
+    /*
+     * Create two physically separate sections.
+     */
+    let personalSection =
+      document.querySelector(".movespan-personal-insight-section");
+
+    if (!personalSection) {
+      personalSection = document.createElement("section");
+      personalSection.className =
+        "movespan-personal-insight-section";
+    }
+
+    let educationSection =
+      document.querySelector(".movespan-education-section");
+
+    if (!educationSection) {
+      educationSection = document.createElement("section");
+      educationSection.className =
+        "movespan-education-section";
+    }
+
+    /*
+     * Personal section contains only MoveSpan Insight.
+     */
+    personalSection.appendChild(insight);
+
+    /*
+     * Education section contains only Learn Why It Matters
+     * and its educational content.
+     */
+    educationSection.appendChild(learnCard);
+    educationSection.appendChild(education);
+
+    education.classList.remove("visible");
+
+    /*
+     * Final page order:
+     * Pattern Check → Personal Insight → Education.
+     */
+    patternSection.insertAdjacentElement(
+      "afterend",
+      personalSection
+    );
+
+    personalSection.insertAdjacentElement(
+      "afterend",
+      educationSection
+    );
+
+    /*
+     * MoveSpan Insight controls only its personal details.
+     */
+    const oldInsightHeader =
+      insight.querySelector(".whoop-insight-header");
+
+    if (oldInsightHeader) {
+      const newInsightHeader =
+        oldInsightHeader.cloneNode(true);
+
+      oldInsightHeader.replaceWith(newInsightHeader);
+
+      newInsightHeader.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+      newInsightHeader.addEventListener("click", () => {
+        const expanded =
+          insight.classList.toggle("expanded");
+
+        newInsightHeader.setAttribute(
+          "aria-expanded",
+          String(expanded)
+        );
+      });
+    }
+
+    /*
+     * Learn Why It Matters controls only education.
+     */
+    const currentLearnCard =
+      educationSection.querySelector(".learn-wide-card");
+
+    if (currentLearnCard) {
+      const newLearnCard =
+        currentLearnCard.cloneNode(true);
+
+      currentLearnCard.replaceWith(newLearnCard);
+
+      newLearnCard.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+      newLearnCard.addEventListener("click", () => {
+        const visible =
+          education.classList.toggle("visible");
+
+        newLearnCard.setAttribute(
+          "aria-expanded",
+          String(visible)
+        );
+
+        if (visible) {
+          requestAnimationFrame(() => {
+            education.scrollIntoView({
+              behavior: "smooth",
+              block: "nearest"
+            });
+          });
+        }
+      });
+    }
+
+    /*
+     * Close button affects only education.
+     */
+    const oldClose =
+      education.querySelector(".insight-education-close");
+
+    if (oldClose) {
+      const newClose = oldClose.cloneNode(true);
+      oldClose.replaceWith(newClose);
+
+      newClose.addEventListener("click", event => {
+        event.stopPropagation();
+        education.classList.remove("visible");
+
+        const activeLearnCard =
+          educationSection.querySelector(".learn-wide-card");
+
+        activeLearnCard?.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+      });
+    }
+  }
+
+  /*
+   * Run after earlier mockup builders have finished.
+   */
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(init, 600);
+    });
+  } else {
+    setTimeout(init, 600);
+  }
+})();
+</script>
+
+
+<script>
+(function hardSeparateInsightAndEducation() {
+  function apply() {
+    const insight = document.querySelector(".whoop-insight");
+    const learnCard = document.querySelector(".learn-wide-card");
+    const education = document.getElementById("insightEducation");
+
+    if (!insight || !learnCard || !education) {
+      console.warn("MoveSpan: required blocks not found");
+      return;
+    }
+
+    /* Create two independent containers without deleting content. */
+    let insightBlock = document.getElementById("personalInsightBlock");
+    let educationBlock = document.getElementById("breathingEducationBlock");
+
+    if (!insightBlock) {
+      insightBlock = document.createElement("section");
+      insightBlock.id = "personalInsightBlock";
+      insightBlock.style.marginTop = "18px";
+    }
+
+    if (!educationBlock) {
+      educationBlock = document.createElement("section");
+      educationBlock.id = "breathingEducationBlock";
+      educationBlock.style.marginTop = "18px";
+    }
+
+    /* Insight stays completely separate. */
+    insight.parentNode.insertBefore(insightBlock, insight);
+    insightBlock.appendChild(insight);
+
+    /* Education card and full reference text stay together. */
+    insightBlock.insertAdjacentElement("afterend", educationBlock);
+    educationBlock.appendChild(learnCard);
+    educationBlock.appendChild(education);
+
+    /* Closed by default, but content is preserved. */
+    education.classList.remove("visible");
+
+    /* Insight arrow controls only personal Insight details. */
+    const oldInsightHeader =
+      insight.querySelector(".whoop-insight-header");
+
+    if (oldInsightHeader) {
+      const insightHeader = oldInsightHeader.cloneNode(true);
+      oldInsightHeader.replaceWith(insightHeader);
+
+      insightHeader.setAttribute("aria-expanded", "false");
+
+      insightHeader.addEventListener("click", () => {
+        const expanded = insight.classList.toggle("expanded");
+        insightHeader.setAttribute(
+          "aria-expanded",
+          String(expanded)
+        );
+      });
+    }
+
+    /* Learn Why It Matters controls only the educational reference. */
+    const oldLearnCard =
+      educationBlock.querySelector(".learn-wide-card");
+
+    if (oldLearnCard) {
+      const newLearnCard = oldLearnCard.cloneNode(true);
+      oldLearnCard.replaceWith(newLearnCard);
+
+      newLearnCard.setAttribute("aria-expanded", "false");
+
+      newLearnCard.addEventListener("click", () => {
+        const opened = education.classList.toggle("visible");
+
+        newLearnCard.setAttribute(
+          "aria-expanded",
+          String(opened)
+        );
+
+        if (opened) {
+          requestAnimationFrame(() => {
+            education.scrollIntoView({
+              behavior: "smooth",
+              block: "nearest"
+            });
+          });
+        }
+      });
+    }
+
+    /* X closes only the educational reference. */
+    const oldClose =
+      education.querySelector(".insight-education-close");
+
+    if (oldClose) {
+      const newClose = oldClose.cloneNode(true);
+      oldClose.replaceWith(newClose);
+
+      newClose.addEventListener("click", event => {
+        event.stopPropagation();
+        education.classList.remove("visible");
+
+        educationBlock
+          .querySelector(".learn-wide-card")
+          ?.setAttribute("aria-expanded", "false");
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(apply, 900);
+    });
+  } else {
+    setTimeout(apply, 900);
+  }
+})();
+</script>
+
+
+<script>
+(function createStandaloneWhyItMatters() {
+  function init() {
+    if (document.getElementById("standaloneWhyItMatters")) return;
+
+    const insight = document.querySelector(".whoop-insight");
+    if (!insight) {
+      console.warn("MoveSpan: personal Insight not found");
+      return;
+    }
+
+    const insightContainer =
+      insight.closest("#personalInsightBlock") ||
+      insight.closest(".movespan-personal-insight-section") ||
+      insight.parentElement;
+
+    const section = document.createElement("section");
+    section.id = "standaloneWhyItMatters";
+
+    section.innerHTML = `
+      <button
+        class="standalone-why-card"
+        id="standaloneWhyButton"
+        type="button"
+        aria-expanded="false"
+      >
+        <span class="standalone-why-icon">
+          <svg
+            viewBox="0 0 24 24"
+            width="25"
+            height="25"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 11v5"/>
+            <path d="M12 8h.01"/>
+          </svg>
+        </span>
+
+        <span class="standalone-why-copy">
+          <span class="standalone-why-title">
+            Learn Why It Matters
+          </span>
+
+          <span class="standalone-why-description">
+            CO₂, oxygen delivery, brain circulation and efficient breathing
+          </span>
+        </span>
+
+        <span class="standalone-why-arrow">›</span>
+      </button>
+
+      <article
+        class="standalone-why-content"
+        id="standaloneWhyContent"
+      >
+        <div class="standalone-why-header">
+          <div>
+            <div class="standalone-why-eyebrow">
+              Why this matters
+            </div>
+
+            <div class="standalone-why-heading">
+              Efficient breathing supports the brain and body
+            </div>
+          </div>
+
+          <button
+            class="standalone-why-close"
+            id="standaloneWhyClose"
+            type="button"
+            aria-label="Close explanation"
+          >×</button>
+        </div>
+
+        <div class="standalone-why-text">
+          When breathing becomes faster or deeper than the body currently
+          needs, ventilation may exceed metabolic demand. This may reduce
+          carbon dioxide levels. Carbon dioxide helps regulate cerebral
+          blood flow and supports the release of oxygen from hemoglobin
+          into tissues.
+        </div>
+
+        <div class="standalone-why-facts">
+          <div class="standalone-why-fact">
+            <strong>Brain circulation</strong>
+            <span>
+              CO₂ helps regulate the diameter of blood vessels supplying
+              the brain.
+            </span>
+          </div>
+
+          <div class="standalone-why-fact">
+            <strong>Oxygen delivery</strong>
+            <span>
+              CO₂ participates in the release of oxygen from hemoglobin
+              into active tissues.
+            </span>
+          </div>
+
+          <div class="standalone-why-fact">
+            <strong>Calm regulation</strong>
+            <span>
+              Quieter breathing can support relaxation and reduce
+              unnecessary respiratory effort.
+            </span>
+          </div>
+        </div>
+
+        <div class="standalone-why-text">
+          The MoveSpan goal is not to take the deepest possible breath.
+          It is to develop quiet, comfortable belly breathing with freer
+          diaphragm movement, softer exhalation and less unnecessary
+          tension in the upper chest, neck and shoulders.
+        </div>
+
+        <div class="standalone-why-note">
+          Breathing rate and movement pattern alone do not diagnose
+          hyperventilation or low CO₂. MoveSpan uses them as wellness
+          observations for personalizing practices.
+        </div>
+      </article>
+    `;
+
+    insightContainer.insertAdjacentElement("afterend", section);
+
+    const button =
+      document.getElementById("standaloneWhyButton");
+
+    const content =
+      document.getElementById("standaloneWhyContent");
+
+    const close =
+      document.getElementById("standaloneWhyClose");
+
+    button.addEventListener("click", () => {
+      const visible = content.classList.toggle("visible");
+
+      button.setAttribute(
+        "aria-expanded",
+        String(visible)
+      );
+
+      if (visible) {
+        requestAnimationFrame(() => {
+          content.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest"
+          });
+        });
+      }
+    });
+
+    close.addEventListener("click", event => {
+      event.stopPropagation();
+      content.classList.remove("visible");
+      button.setAttribute("aria-expanded", "false");
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(init, 1200);
+    });
+  } else {
+    setTimeout(init, 1200);
+  }
+})();
+</script>
+
+
+<script>
+(function moveWhyUnderCurrentSnapshot() {
+  function apply() {
+    const whyBlock =
+      document.getElementById("standaloneWhyItMatters");
+
+    if (!whyBlock) {
+      console.warn("MoveSpan: Why It Matters block not found");
+      return;
+    }
+
+    const headings = Array.from(
+      document.querySelectorAll(
+        "h1, h2, h3, .section-title, .card-title"
+      )
+    );
+
+    const snapshotHeading = headings.find(element => {
+      const value = element.textContent
+        .trim()
+        .toLowerCase();
+
+      return (
+        value === "current snapshot" ||
+        value === "current snapshots"
+      );
+    });
+
+    if (!snapshotHeading) {
+      console.warn("MoveSpan: Current Snapshot heading not found");
+      return;
+    }
+
+    const snapshotBlock =
+      snapshotHeading.closest(
+        "section, article, .section, .card, .snapshot-section"
+      );
+
+    if (!snapshotBlock) {
+      console.warn("MoveSpan: Current Snapshot block not found");
+      return;
+    }
+
+    snapshotBlock.insertAdjacentElement(
+      "afterend",
+      whyBlock
+    );
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(apply, 1400);
+    });
+  } else {
+    setTimeout(apply, 1400);
+  }
+})();
+</script>
+
+</body>
+</html>
