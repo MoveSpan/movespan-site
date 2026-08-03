@@ -1654,13 +1654,13 @@ function dismissNote(){
 function go(dest){
   // Placeholder navigation — safe stubs for screens not yet built
   var routes = {
-    home:'/home.html', practice:'/program', health:'/measure', progress:'/journal',
-    journal:'/journal.html', ai:'/home.html', journey:'/home.html', assessments:'/test',
-    device:'/home.html', settings:'/home.html', notifications:'/home.html', apps:'/home.html',
-    'practice-note':'/home.html', 'practice-player':'/program', reset:'/reset.html',
-    'assessments-info':'/home.html'
+    home:'/home', practice:'/program', health:'/measure', progress:'/journal',
+    journal:'/journal.html', ai:'/home', journey:'/home', assessments:'/test',
+    device:'/home', settings:'/home', notifications:'/home', apps:'/home',
+    'practice-note':'/home', 'practice-player':'/program', reset:'/reset.html',
+    'assessments-info':'/home'
   };
-  var url = routes[dest] || '/home.html';
+  var url = routes[dest] || '/home';
   window.location.href = url;
 }
 
