@@ -1708,6 +1708,12 @@ applyMockState();
   }
 
   function getGender() {
+    const firebaseGender = findGenderInObject(
+      window.mwProfile
+    );
+
+    if (firebaseGender) return firebaseGender;
+
     const direct = normalizeGender(
       localStorage.getItem("gender")
     );
@@ -1842,6 +1848,32 @@ applyMockState();
       );
     }
   }
+
+  const previousAuthReady = window.onMwAuthReady;
+
+  window.onMwAuthReady = function (user, profile) {
+    if (typeof previousAuthReady === "function") {
+      previousAuthReady(user, profile);
+    }
+
+    if (profile && typeof profile === "object") {
+      window.mwProfile = profile;
+
+      try {
+        localStorage.setItem(
+          "movespanProfile",
+          JSON.stringify(profile)
+        );
+      } catch (error) {
+        console.warn(
+          "MoveSpan: profile could not be cached.",
+          error
+        );
+      }
+    }
+
+    loadHero();
+  };
 
   if (document.readyState === "loading") {
     document.addEventListener(
