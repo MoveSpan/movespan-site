@@ -1,18 +1,3 @@
 /__/auth/*      https://movewell-system.firebaseapp.com/__/auth/:splat      200
 
-/home           /home.html           200
-/reset          /reset.html          200
-/journal        /journal.html        200
-/assessments    /test.html           200
-/test           /test.html           200
-/measure        /measure.html        200
-/program        /program.html        200
-/onboarding     /onboarding.html     200
-/auth           /auth.html           200
-/sleep          /sleep.html          200
-/visual         /visual.html         200
-/zones          /zones.html          200
-/inventory      /inventory.html      200
-/metronome      /metronome.html      200
-
 /*              /index.html          200
