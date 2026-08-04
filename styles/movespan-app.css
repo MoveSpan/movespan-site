@@ -1,0 +1,332 @@
+/*
+  MoveSpan App Design System
+  Base standard: Settings + Health Snapshot
+*/
+
+:root {
+  /* Brand */
+  --ms-green: #2D7D52;
+  --ms-green-dark: #1F5C3B;
+  --ms-green-soft: #EAF4EE;
+  --ms-green-soft-2: #F2F7F4;
+  --ms-green-border: #D4E8DB;
+
+  /* Text */
+  --ms-text: #18211C;
+  --ms-text-secondary: #66716B;
+  --ms-text-muted: #96A09A;
+
+  /* Surfaces */
+  --ms-background: #F5F7F6;
+  --ms-background-outer: #E7EBE9;
+  --ms-surface: #FFFFFF;
+  --ms-surface-alt: #F0F3F0;
+  --ms-border: #DDE3DF;
+
+  /* Feedback */
+  --ms-warning: #F59E0B;
+  --ms-warning-soft: #FEF3C7;
+  --ms-danger: #B33B3B;
+  --ms-danger-soft: #FDECEC;
+
+  /* Layout */
+  --ms-app-width: 430px;
+  --ms-page-padding: 16px;
+
+  /* Radius */
+  --ms-radius-card: 22px;
+  --ms-radius-large: 24px;
+  --ms-radius-control: 16px;
+  --ms-radius-button: 14px;
+  --ms-radius-small: 12px;
+
+  /* Shadows */
+  --ms-shadow-card: 0 8px 24px rgba(32, 47, 39, 0.07);
+  --ms-shadow-soft: 0 4px 16px rgba(32, 47, 39, 0.05);
+  --ms-shadow-app: 0 0 32px rgba(32, 47, 39, 0.10);
+
+  /* Typography */
+  --ms-font:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  --ms-title-page: 20px;
+  --ms-title-card: 18px;
+  --ms-text-body: 14px;
+  --ms-text-small: 12px;
+
+  /* Controls */
+  --ms-control-height: 48px;
+  --ms-button-height: 52px;
+
+  /* Motion */
+  --ms-transition: 150ms ease;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--ms-background-outer);
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: var(--ms-background-outer);
+  color: var(--ms-text);
+  font-family: var(--ms-font);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ms-app {
+  width: min(100%, var(--ms-app-width));
+  min-height: 100vh;
+  margin: 0 auto;
+  background: var(--ms-background);
+  box-shadow: var(--ms-shadow-app);
+}
+
+.ms-page {
+  padding:
+    max(10px, env(safe-area-inset-top))
+    var(--ms-page-padding)
+    calc(40px + env(safe-area-inset-bottom));
+}
+
+.ms-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  min-height: 64px;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  align-items: center;
+  margin: 0 calc(var(--ms-page-padding) * -1) 16px;
+  padding: 0 var(--ms-page-padding);
+  background: rgba(245, 247, 246, 0.94);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.ms-header-title {
+  margin: 0;
+  overflow: hidden;
+  color: var(--ms-text);
+  font-size: var(--ms-title-page);
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ms-icon-button {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ms-text);
+  cursor: pointer;
+  transition:
+    background var(--ms-transition),
+    transform var(--ms-transition);
+}
+
+.ms-icon-button:active {
+  background: rgba(45, 125, 82, 0.08);
+  transform: scale(0.97);
+}
+
+.ms-icon-button svg {
+  width: 24px;
+  height: 24px;
+}
+
+.ms-card {
+  background: var(--ms-surface);
+  border: 1px solid rgba(221, 227, 223, 0.8);
+  border-radius: var(--ms-radius-card);
+  box-shadow: var(--ms-shadow-card);
+}
+
+.ms-card-pad {
+  padding: 18px;
+}
+
+.ms-section {
+  margin-bottom: 18px;
+}
+
+.ms-section-title {
+  margin: 0 0 6px;
+  color: var(--ms-text);
+  font-size: var(--ms-title-card);
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.ms-section-text {
+  margin: 0;
+  color: var(--ms-text-secondary);
+  font-size: var(--ms-text-body);
+  line-height: 1.55;
+}
+
+.ms-eyebrow {
+  margin: 0 0 8px;
+  color: var(--ms-green);
+  font-size: 11px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.ms-button {
+  min-height: var(--ms-button-height);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: var(--ms-radius-button);
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    opacity var(--ms-transition),
+    transform var(--ms-transition),
+    background var(--ms-transition);
+}
+
+.ms-button:active {
+  transform: scale(0.985);
+}
+
+.ms-button-primary {
+  background: var(--ms-green);
+  color: #FFFFFF;
+}
+
+.ms-button-primary:hover {
+  opacity: 0.92;
+}
+
+.ms-button-secondary {
+  border: 1.5px solid var(--ms-border);
+  background: var(--ms-surface);
+  color: var(--ms-green);
+}
+
+.ms-control {
+  min-height: var(--ms-control-height);
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--ms-border);
+  border-radius: var(--ms-radius-control);
+  background: var(--ms-surface);
+  color: var(--ms-text);
+  outline: none;
+  transition:
+    border-color var(--ms-transition),
+    box-shadow var(--ms-transition);
+}
+
+.ms-control:focus {
+  border-color: var(--ms-green);
+  box-shadow: 0 0 0 3px rgba(45, 125, 82, 0.10);
+}
+
+.ms-choice {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 13px 15px;
+  border: 1.5px solid var(--ms-border);
+  border-radius: var(--ms-radius-control);
+  background: var(--ms-surface);
+  color: var(--ms-text);
+  cursor: pointer;
+  transition:
+    border-color var(--ms-transition),
+    background var(--ms-transition),
+    transform var(--ms-transition);
+}
+
+.ms-choice:active {
+  transform: scale(0.99);
+}
+
+.ms-choice.is-selected {
+  border-color: var(--ms-green);
+  background: var(--ms-green-soft);
+  color: var(--ms-green);
+}
+
+.ms-icon-tile {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 18px;
+  background: var(--ms-green-soft);
+  color: var(--ms-green);
+}
+
+.ms-divider {
+  height: 1px;
+  border: 0;
+  background: var(--ms-border);
+}
+
+.ms-muted {
+  color: var(--ms-text-muted);
+}
+
+.ms-hidden {
+  display: none !important;
+}
+
+@media (max-width: 370px) {
+  :root {
+    --ms-page-padding: 14px;
+  }
+
+  .ms-card-pad {
+    padding: 16px;
+  }
+}
