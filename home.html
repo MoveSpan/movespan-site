@@ -1526,6 +1526,102 @@ body.practice-sheet-open {
   }
 }
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style id="onboarding-today-practice-focus-style">
+.practice-focus-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  background: rgba(15, 23, 19, 0.60);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.practice-focus-overlay.is-visible {
+  opacity: 1;
+}
+
+/* Яркое постоянное выделение */
+#practice-hero.practice-focus-target {
+  position: relative;
+  z-index: 9992 !important;
+  outline: 5px solid #ffffff;
+  outline-offset: 8px;
+  box-shadow:
+    0 0 0 15px rgba(45, 125, 82, 0.72),
+    0 0 34px 12px rgba(45, 125, 82, 0.38),
+    0 24px 65px rgba(0, 0, 0, 0.34);
+}
+
+/* Пульсация только при первом переходе из onboarding */
+#practice-hero.practice-focus-animated {
+  animation: practiceCardPulse 1.3s ease-in-out infinite;
+}
+
+#practice-hero.practice-focus-animated .journey-cta {
+  position: relative;
+  z-index: 9993;
+  animation: practiceButtonPulse 0.9s ease-in-out infinite;
+}
+
+/* После анимации и при возврате из Practice Player */
+#practice-hero.practice-focus-static .journey-cta {
+  position: relative;
+  z-index: 9993;
+  outline: 3px solid rgba(255, 255, 255, 0.92);
+  outline-offset: 4px;
+  box-shadow:
+    0 0 0 7px rgba(255, 255, 255, 0.18),
+    0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+@keyframes practiceCardPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.012);
+  }
+}
+
+@keyframes practiceButtonPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+
+  50% {
+    transform: scale(1.035);
+    box-shadow: 0 0 0 9px rgba(255, 255, 255, 0.28);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #practice-hero.practice-focus-animated,
+  #practice-hero.practice-focus-animated .journey-cta {
+    animation: none;
+  }
+
+  .practice-focus-overlay {
+    transition: none;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="wrap">
@@ -2350,6 +2446,147 @@ applyMockState();
     document.addEventListener("DOMContentLoaded", initialize);
   } else {
     initialize();
+  }
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="onboarding-today-practice-focus-script">
+(function () {
+  const INTRO_SHOWN_KEY = 'ms_today_practice_intro_shown';
+  const ONBOARDING_FOCUS_KEY = 'ms_focus_todays_practice';
+
+  function cleanFocusParameter() {
+    const url = new URL(window.location.href);
+
+    if (!url.searchParams.has('focus')) {
+      return;
+    }
+
+    url.searchParams.delete('focus');
+
+    window.history.replaceState(
+      {},
+      '',
+      url.pathname +
+        (url.searchParams.toString()
+          ? '?' + url.searchParams.toString()
+          : '') +
+        url.hash
+    );
+  }
+
+  function activateTodaysPractice(attempt) {
+    const hero = document.getElementById('practice-hero');
+    const button = hero
+      ? hero.querySelector('.journey-cta')
+      : null;
+
+    if ((!hero || !button) && attempt < 20) {
+      window.setTimeout(function () {
+        activateTodaysPractice(attempt + 1);
+      }, 150);
+      return;
+    }
+
+    if (!hero || !button) {
+      return;
+    }
+
+    const cameFromOnboarding =
+      new URLSearchParams(window.location.search).get('focus') === 'today' ||
+      sessionStorage.getItem(ONBOARDING_FOCUS_KEY) === '1';
+
+    const introAlreadyShown =
+      sessionStorage.getItem(INTRO_SHOWN_KEY) === '1';
+
+    const shouldAnimate =
+      cameFromOnboarding && !introAlreadyShown;
+
+    hero.scrollIntoView({
+      behavior: 'auto',
+      block: 'center'
+    });
+
+    hero.classList.add('practice-focus-target');
+
+    if (shouldAnimate) {
+      const overlay = document.createElement('div');
+      overlay.className = 'practice-focus-overlay';
+      document.body.appendChild(overlay);
+
+      hero.classList.add('practice-focus-animated');
+
+      requestAnimationFrame(function () {
+        overlay.classList.add('is-visible');
+      });
+
+      sessionStorage.setItem(INTRO_SHOWN_KEY, '1');
+
+      window.setTimeout(function () {
+        overlay.classList.remove('is-visible');
+
+        hero.classList.remove('practice-focus-animated');
+        hero.classList.add('practice-focus-static');
+
+        window.setTimeout(function () {
+          overlay.remove();
+        }, 300);
+      }, 7000);
+    } else {
+      /* При возврате с практики — сразу статичное выделение */
+      hero.classList.add('practice-focus-static');
+    }
+
+    button.addEventListener(
+      'click',
+      function () {
+        /*
+         * Убираем выделение перед переходом, но сохраняем информацию,
+         * что вводная пульсация уже была показана.
+         */
+        hero.classList.remove(
+          'practice-focus-target',
+          'practice-focus-animated',
+          'practice-focus-static'
+        );
+      },
+      { once: true }
+    );
+
+    cleanFocusParameter();
+    sessionStorage.removeItem(ONBOARDING_FOCUS_KEY);
+  }
+
+  function start() {
+    window.setTimeout(function () {
+      activateTodaysPractice(0);
+    }, 300);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener(
+      'DOMContentLoaded',
+      start,
+      { once: true }
+    );
+  } else {
+    start();
   }
 })();
 </script>

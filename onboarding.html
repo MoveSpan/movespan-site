@@ -155,6 +155,97 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
 .zfig-center{text-align:center;margin-bottom:14px}
 .zgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px}
 .zchip-full{grid-column:1/-1}
+
+.ready-icon {
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--green);
+  color: white;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.ready-card {
+  margin: 22px 0;
+  padding: 4px 16px;
+  background: var(--surface);
+  border-radius: 16px;
+  text-align: left;
+}
+
+.ready-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.ready-row:last-child {
+  border-bottom: none;
+}
+
+.ready-row span {
+  color: var(--text-sec);
+}
+
+.ready-row strong {
+  color: var(--text);
+  text-align: right;
+}
+
+
+/* ===== ONBOARDING: NO TOP BRAND ===== */
+.brand,
+.logo,
+.onboarding-brand,
+.header-brand {
+  display: none !important;
+}
+
+
+
+
+
+/* ===== EXPERIENCE SCREEN — FIXED VISIBLE GAP ===== */
+#sec-exp .experience-section-gap {
+  display: block;
+  width: 100%;
+  height: 48px;
+  min-height: 48px;
+  flex: 0 0 48px;
+}
+
+/* ===== BODY ZONES — CENTER 'NO SPECIFIC AREAS' ===== */
+#sec-body .no-specific-areas-center{
+  justify-content:center !important;
+  text-align:center !important;
+  padding-left:24px !important;
+  padding-right:24px !important;
+}
+
+#sec-body .no-specific-areas-center > *{
+  text-align:center !important;
+}
+
+#sec-body .no-specific-areas-center .rank,
+#sec-body .no-specific-areas-center .chip-rank,
+#sec-body .no-specific-areas-center .order-badge{
+  position:static !important;
+  margin-right:10px;
+}
+
+/* ===== CENTER FULL-WIDTH BODY ZONE OPTION ===== */
+#zone-chips .zchip-full {
+  justify-content: center !important;
+  text-align: center !important;
+}
 </style>
 </head>
 <body>
@@ -191,7 +282,7 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
       <div class="wheel-wrap"><div class="wheel-sel"></div><div class="wheel" id="ageWheel"></div></div>
       <div class="oage-hint">Scroll to select &middot; <span id="ageVal">55</span> years</div>
       <div class="owhy">Men and women have different reference ranges. Your age lets us compare your movement with your chronological age &mdash; the basis of your <b>Functional Age</b>.</div>
-      <button class="btn-primary" id="btn-s1" disabled onclick="nextFromGender()">Continue &#8594;</button>
+      <button class="btn-primary no-specific-areas-center" id="btn-s1" disabled onclick="nextFromGender()">Continue &#8594;</button>
     </div>
 
     <!-- STEP 2 — GOALS -->
@@ -302,7 +393,9 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
         <button class="dopt" data-val="regular" onclick="pickOne(this,'exp-opts','experience')"><span class="dopt-txt">Practice regularly</span><span class="dcheck">&#10003;</span></button>
       </div>
 
-      <div class="dq">How long would you like each session?</div>
+      <div class="experience-section-gap" aria-hidden="true"></div>
+
+      <div class="dq session-length-heading">How long would you like each session?</div>
       <div class="dchips" id="len-chips">
         <button class="dchip2" data-val="15" onclick="pickLen(this)">15 min<span class="cc">&#10003;</span></button>
         <button class="dchip2" data-val="30" onclick="pickLen(this)">30 min<span class="cc">&#10003;</span></button>
@@ -363,6 +456,43 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
         <div class="build-spin"></div>
         <div class="build-title" id="build-title">Building your program&hellip;</div>
         <div class="build-lines" id="build-lines"></div>
+      </div>
+    </div>
+
+    <div class="section" id="sec-ready">
+      <div class="build-wrap">
+        <div class="ready-icon">&#10003;</div>
+        <div class="build-title" id="ready-title">Your program is ready</div>
+
+        <div class="ready-card">
+          <div class="ready-row">
+            <span>Mode</span>
+            <strong id="ready-mode">Restore</strong>
+          </div>
+
+          <div class="ready-row">
+            <span>Main focus</span>
+            <strong id="ready-focus">General mobility</strong>
+          </div>
+
+          <div class="ready-row">
+            <span>Session length</span>
+            <strong id="ready-length">30 minutes</strong>
+          </div>
+
+          <div class="ready-row">
+            <span>This week</span>
+            <strong>3 guided practices</strong>
+          </div>
+        </div>
+
+        <button class="btn-primary" type="button" onclick="startMyPractice()">
+          Start my practice &#8594;
+        </button>
+
+        <button class="btn-back" type="button" onclick="goToHome()">
+          Go to Home
+        </button>
       </div>
     </div>
 
@@ -609,32 +739,86 @@ function showSection(id) {
 }
 
 // ---------- interstitial ----------
-window.showInterstitial = function() { if (!EDIT) sessionStorage.setItem("ms_new_user","1"); window.location.replace("/home?updated=" + (EDIT ? "profile" : "new")); return;
+window.showInterstitial = function() {
   showSection('sec-build');
+
   $('progress').style.width = '100%';
   $('step-label').textContent = 'Almost there';
-  const zoneTxt = state.zones.includes('none') || !state.zones.length
-    ? 'Analyzing your movement profile'
-    : 'Focusing on: ' + state.zones.map(z => ZONE_NAMES[z]).join(', ');
+
+  const zoneTxt =
+    state.zones.includes('none') || !state.zones.length
+      ? 'Analyzing your movement profile'
+      : 'Focusing on: ' +
+        state.zones.map(z => ZONE_NAMES[z]).join(', ');
+
   const mode = computeMode(state.pain, state.experience);
+
   const lines = [
     zoneTxt,
     'Adjusting for your comfort level',
     'Selecting your mode: ' + MODE_NAMES[mode],
-    'Building Week 1 \u2014 3 sessions \u00d7 ' + (state.length || 30) + ' min'
+    'Building Week 1 — 3 sessions × ' + (state.length || 30) + ' min'
   ];
+
   const box = $('build-lines');
   box.innerHTML = '';
-  lines.forEach((t, i) => {
-    const div = document.createElement('div');
-    div.className = 'build-line';
-    div.innerHTML = '<span class="tick">\u2713</span><span>' + t + '</span>';
-    box.appendChild(div);
-    setTimeout(() => div.classList.add('on'), 350 + i * 550);
+
+  lines.forEach((text, index) => {
+    const line = document.createElement('div');
+    line.className = 'build-line';
+    line.innerHTML =
+      '<span class="tick">✓</span><span>' + text + '</span>';
+
+    box.appendChild(line);
+
+    setTimeout(() => {
+      line.classList.add('on');
+    }, 350 + index * 550);
   });
+
   setTimeout(() => {
-    if (!EDIT) sessionStorage.setItem("ms_new_user","1"); window.location.replace("/home?updated=" + (EDIT ? "profile" : "new"));
-  }, 350 + lines.length * 550 + 1900);
+    showProgramReady();
+  }, 350 + lines.length * 550 + 1200);
+};
+
+function showProgramReady() {
+  const mode = computeMode(state.pain, state.experience);
+
+  const focus =
+    state.zones.includes('none') || !state.zones.length
+      ? 'General mobility'
+      : state.zones
+          .map(z => ZONE_NAMES[z] || z)
+          .join(', ');
+
+  $('ready-title').textContent =
+    EDIT ? 'Your program has been updated' : 'Your program is ready';
+
+  $('ready-mode').textContent = MODE_NAMES[mode];
+  $('ready-focus').textContent = focus;
+  $('ready-length').textContent = (state.length || 30) + ' minutes';
+
+  showSection('sec-ready');
+  $('step-label').textContent = 'Program ready';
+}
+
+window.startMyPractice = function() {
+  if (!EDIT) {
+    sessionStorage.setItem('ms_new_user', '1');
+  }
+
+  // One-time signal for Home Screen.
+  sessionStorage.setItem('ms_focus_todays_practice', '1');
+
+  window.location.href =
+    '/home.html?focus=today&updated=' +
+    (EDIT ? 'profile' : 'new');
+};
+
+window.goToHome = function() {
+  window.location.href =
+    '/home.html?updated=' +
+    (EDIT ? 'profile' : 'new');
 };
 
 // ---------- init / resume / edit prefill ----------
@@ -680,8 +864,50 @@ window.onMwAuthReady = function(user, profile) {
   if (ready) return;
   ready = true;
   uid = user.uid;
+
   const onb = (profile && profile.onboarding) || null;
-  if (onb) prefill(onb);
+
+  // Start every onboarding/edit session with clean answers.
+  // Preserve only the previously saved age.
+  state = {
+    gender: null,
+    age: onb && onb.age ? Number(onb.age) : 55,
+    goals: [],
+    mainGoal: '',
+    practices: [],
+    zones: [],
+    pain: null,
+    experience: null,
+    length: null,
+    obstacle: ''
+  };
+
+  document.querySelectorAll(
+    '.gcard, .goal-item, .zchip, .dopt, .dchip2'
+  ).forEach(function(el) {
+    el.classList.remove('sel', 'main', 'primary');
+  });
+
+  setAgeWheel(state.age);
+
+  const firstButton = $('btn-s1');
+  if (firstButton) firstButton.disabled = true;
+
+  const goalsButton = $('btn-s2');
+  if (goalsButton) goalsButton.disabled = true;
+
+  const bodyButton = $('btn-s3');
+  if (bodyButton) bodyButton.disabled = true;
+
+  const experienceButton = $('btn-s4');
+  if (experienceButton) experienceButton.disabled = true;
+
+  const painButton = $('btn-s6');
+  if (painButton) painButton.disabled = true;
+
+  updateFigure();
+  goStep(1);
+
   return; // always show step 1
   console.log("EDIT mode:", EDIT, "FRESH:", FRESH, "onb:", JSON.stringify(onb));
   if (EDIT) {

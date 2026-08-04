@@ -970,11 +970,6 @@ window.onMwAuthReady = function(user, profile) {
     renderFromProfile(profile);
     renderPractices();
   }
-  // Show reset button for admin only
-  if (user && user.email === 'guy2be@gmail.com') {
-    var rb = document.getElementById('btn-reset-profile');
-    if (rb) rb.style.display = 'block';
-  }
   showCheckin(profile);
   renderPractices();
   showUpdateToast();
