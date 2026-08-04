@@ -208,6 +208,44 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
 .header-brand {
   display: none !important;
 }
+
+
+
+
+
+/* ===== EXPERIENCE SCREEN — FIXED VISIBLE GAP ===== */
+#sec-exp .experience-section-gap {
+  display: block;
+  width: 100%;
+  height: 48px;
+  min-height: 48px;
+  flex: 0 0 48px;
+}
+
+/* ===== BODY ZONES — CENTER 'NO SPECIFIC AREAS' ===== */
+#sec-body .no-specific-areas-center{
+  justify-content:center !important;
+  text-align:center !important;
+  padding-left:24px !important;
+  padding-right:24px !important;
+}
+
+#sec-body .no-specific-areas-center > *{
+  text-align:center !important;
+}
+
+#sec-body .no-specific-areas-center .rank,
+#sec-body .no-specific-areas-center .chip-rank,
+#sec-body .no-specific-areas-center .order-badge{
+  position:static !important;
+  margin-right:10px;
+}
+
+/* ===== CENTER FULL-WIDTH BODY ZONE OPTION ===== */
+#zone-chips .zchip-full {
+  justify-content: center !important;
+  text-align: center !important;
+}
 </style>
 </head>
 <body>
@@ -244,7 +282,7 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
       <div class="wheel-wrap"><div class="wheel-sel"></div><div class="wheel" id="ageWheel"></div></div>
       <div class="oage-hint">Scroll to select &middot; <span id="ageVal">55</span> years</div>
       <div class="owhy">Men and women have different reference ranges. Your age lets us compare your movement with your chronological age &mdash; the basis of your <b>Functional Age</b>.</div>
-      <button class="btn-primary" id="btn-s1" disabled onclick="nextFromGender()">Continue &#8594;</button>
+      <button class="btn-primary no-specific-areas-center" id="btn-s1" disabled onclick="nextFromGender()">Continue &#8594;</button>
     </div>
 
     <!-- STEP 2 — GOALS -->
@@ -355,7 +393,9 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
         <button class="dopt" data-val="regular" onclick="pickOne(this,'exp-opts','experience')"><span class="dopt-txt">Practice regularly</span><span class="dcheck">&#10003;</span></button>
       </div>
 
-      <div class="dq">How long would you like each session?</div>
+      <div class="experience-section-gap" aria-hidden="true"></div>
+
+      <div class="dq session-length-heading">How long would you like each session?</div>
       <div class="dchips" id="len-chips">
         <button class="dchip2" data-val="15" onclick="pickLen(this)">15 min<span class="cc">&#10003;</span></button>
         <button class="dchip2" data-val="30" onclick="pickLen(this)">30 min<span class="cc">&#10003;</span></button>
