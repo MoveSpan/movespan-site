@@ -759,6 +759,9 @@ window.startMyPractice = function() {
     sessionStorage.setItem('ms_new_user', '1');
   }
 
+  // One-time signal for Home Screen.
+  sessionStorage.setItem('ms_focus_todays_practice', '1');
+
   window.location.href =
     '/home.html?focus=today&updated=' +
     (EDIT ? 'profile' : 'new');
