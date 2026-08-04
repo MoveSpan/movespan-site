@@ -682,6 +682,7 @@ window.onMwAuthReady = function(user, profile) {
   uid = user.uid;
   const onb = (profile && profile.onboarding) || null;
 
+  console.log("EDIT mode:", EDIT, "FRESH:", FRESH, "onb:", JSON.stringify(onb));
   if (EDIT) {
     if (onb) {
       oldState = JSON.parse(JSON.stringify(onb));
