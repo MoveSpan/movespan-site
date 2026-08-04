@@ -681,7 +681,8 @@ window.onMwAuthReady = function(user, profile) {
   ready = true;
   uid = user.uid;
   const onb = (profile && profile.onboarding) || null;
-
+  if (onb) prefill(onb);
+  return; // always show step 1
   console.log("EDIT mode:", EDIT, "FRESH:", FRESH, "onb:", JSON.stringify(onb));
   if (EDIT) {
     if (onb) {
