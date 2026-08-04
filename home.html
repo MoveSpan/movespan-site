@@ -458,11 +458,27 @@ img{max-width:100%;display:block}
   overflow: hidden;
 }
 
+#practice-hero .practice-mode-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  padding: 5px 13px;
+  border: 1px solid rgba(255,255,255,.32);
+  border-radius: 999px;
+  background: rgba(255,255,255,.14);
+  color: rgba(255,255,255,.94);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: .03em;
+}
+
 #practice-hero .practice-focus {
   position: absolute;
   left: 44px;
   bottom: 88px;
-  width: 54%;
+  width: 56%;
   z-index: 4;
 }
 
@@ -1572,14 +1588,12 @@ body.practice-sheet-open {
 }
 
 #practice-hero.practice-focus-animated .journey-cta {
-  position: relative;
   z-index: 9993;
   animation: practiceButtonPulse 0.9s ease-in-out infinite;
 }
 
 /* После анимации и при возврате из Practice Player */
 #practice-hero.practice-focus-static .journey-cta {
-  position: relative;
   z-index: 9993;
   outline: 3px solid rgba(255, 255, 255, 0.92);
   outline-offset: 4px;
@@ -1648,6 +1662,250 @@ body.practice-sheet-open {
 }
 </style>
 
+
+<style id="home-hero-spacing-fix">
+#practice-hero {
+  margin-top: 24px !important;
+  margin-bottom: 24px !important;
+}
+</style>
+
+
+
+
+
+<style id="home-card-levels-demo">
+/* Practice Note — фирменная волна MoveSpan */
+.card:has(.pnote),
+.card:has(.pnote).silver {
+  position: relative;
+  overflow: hidden;
+
+  border: 1px solid #DCE7E1 !important;
+  border-radius: 24px !important;
+
+  background-color: #FFFFFF !important;
+
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 240' preserveAspectRatio='none'%3E%3Cpath d='M0 145 C170 90 290 205 480 150 C640 103 760 128 900 78 L900 240 L0 240 Z' fill='%232D7D52' fill-opacity='.13'/%3E%3Cpath d='M0 185 C180 125 310 225 500 180 C665 142 785 160 900 120' fill='none' stroke='%232D7D52' stroke-opacity='.34' stroke-width='9'/%3E%3Cpath d='M0 212 C190 158 340 240 545 205 C690 180 800 188 900 164' fill='none' stroke='%236FAE78' stroke-opacity='.24' stroke-width='18'/%3E%3C/svg%3E") !important;
+
+  background-repeat: no-repeat !important;
+  background-position: center bottom !important;
+  background-size: 100% 58% !important;
+
+  box-shadow:
+    0 8px 24px rgba(31, 67, 47, .09) !important;
+}
+
+/* Отключаем старые серебряные и псевдо-эффекты */
+.card:has(.pnote)::before,
+.card:has(.pnote)::after,
+.card:has(.pnote).silver::before,
+.card:has(.pnote).silver::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Контент остаётся поверх волн */
+.card:has(.pnote) .pnote,
+.card:has(.pnote) .pnote-body {
+  position: relative;
+  z-index: 2;
+  background: transparent !important;
+}
+
+/* Даём тексту достаточно чистого пространства */
+.card:has(.pnote) .pnote-body {
+  padding-bottom: 54px !important;
+}
+
+/* Остальные карточки — чисто белые */
+.card:has(.checkin-head),
+.health-snapshot-toggle,
+.card:has(.hs-head) {
+  background-color: #FFFFFF !important;
+  background-image: none !important;
+  border: 1px solid #E1E8E4 !important;
+  box-shadow:
+    0 5px 16px rgba(31, 47, 39, .06) !important;
+}
+</style>
+
+
+
+
+
+
+<style id="connect-device-mineral-demo">
+/* Connect Device — deep satin silver experiment */
+#device-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  min-height: 245px;
+
+  border: 1px solid rgba(103, 113, 109, .38) !important;
+  border-radius: 26px !important;
+
+  background:
+    radial-gradient(
+      95% 150% at 4% 0%,
+      rgba(255, 255, 255, .98) 0%,
+      rgba(255, 255, 255, .48) 22%,
+      transparent 48%
+    ),
+    radial-gradient(
+      90% 170% at 62% 115%,
+      rgba(255, 255, 255, .34) 0%,
+      transparent 55%
+    ),
+    linear-gradient(
+      122deg,
+      #F5F6F6 0%,
+      #D8DCDB 20%,
+      #AEB5B2 42%,
+      #E4E7E6 61%,
+      #909996 82%,
+      #C7CDCA 100%
+    ) !important;
+
+  box-shadow:
+    0 16px 34px rgba(40, 49, 45, .17),
+    inset 0 1px 0 rgba(255, 255, 255, .95),
+    inset 0 -1px 0 rgba(61, 70, 66, .2) !important;
+}
+
+/* Широкий сатиновый блик */
+#device-card::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: -60%;
+  left: 18%;
+
+  width: 34%;
+  height: 220%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, .18) 15%,
+      rgba(255, 255, 255, .62) 48%,
+      rgba(255, 255, 255, .14) 78%,
+      transparent 100%
+    );
+
+  transform: rotate(16deg);
+  filter: blur(3px);
+  pointer-events: none;
+}
+
+/* Тонкая холодная металлическая грань */
+#device-card::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: -6%;
+  bottom: 17%;
+
+  width: 78%;
+  height: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(104, 116, 111, .18),
+      rgba(255, 255, 255, .78),
+      rgba(93, 104, 100, .25),
+      transparent
+    );
+
+  box-shadow:
+    0 5px 13px rgba(67, 76, 72, .13);
+
+  transform: rotate(-5deg);
+  pointer-events: none;
+}
+
+#device-card .dcard-left,
+#device-card .dcard-right {
+  position: relative;
+  z-index: 2;
+}
+
+#device-card .dcard-left {
+  padding: 30px 30px 28px !important;
+  background: transparent !important;
+  background-image: none !important;
+}
+
+#device-card .dtitle {
+  color: #171C1A !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  letter-spacing: .045em;
+}
+
+#device-card .dtext {
+  max-width: 420px;
+  color: #38413D !important;
+  line-height: 1.52 !important;
+}
+
+#device-card .dcta {
+  border: 1px solid rgba(255, 255, 255, .5) !important;
+  border-radius: 14px !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      #3D8059,
+      #2B6545
+    ) !important;
+
+  color: #FFFFFF !important;
+
+  box-shadow:
+    0 8px 18px rgba(29, 74, 49, .22),
+    inset 0 1px 0 rgba(255, 255, 255, .18) !important;
+}
+
+/* Правая часть остаётся фирменной зелёной */
+#device-card .dcard-right {
+  background:
+    radial-gradient(
+      circle at 28% 25%,
+      rgba(255, 255, 255, .13),
+      transparent 34%
+    ),
+    linear-gradient(
+      145deg,
+      #5A8D6B 0%,
+      #376C4C 100%
+    ) !important;
+
+  box-shadow:
+    inset 16px 0 28px rgba(30, 54, 41, .12);
+}
+
+#device-card .dcard-right img {
+  filter:
+    drop-shadow(0 12px 14px rgba(20, 45, 31, .22));
+}
+
+@media (max-width: 520px) {
+  #device-card {
+    min-height: 220px;
+  }
+
+  #device-card .dcard-left {
+    padding: 24px 22px !important;
+  }
+}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -1668,36 +1926,6 @@ body.practice-sheet-open {
   <h1 class="greet" id="home-greeting">Good morning, Dmitry! &#128075;</h1>
   <p class="greet-sub">Let's take a good step for your body and mind today.</p>
 
-  <!-- PRACTICE NOTE (silver) -->
-  <div class="card silver">
-    <div class="pnote">
-      <div class="pnote-body">
-        <span class="eyebrow">Practice Note</span>
-        <div class="pnote-title">Small, regular practice matters
-<div class="practice-note-inline-detail" id="practice-note-inline-detail" hidden>
-  <p>
-    More is not always better. The body responds especially well to
-    movement that is regular, manageable and easy to repeat.
-  </p>
-
-  <p>
-    A short daily practice can support mobility, coordination and nervous
-    system regulation more effectively than occasional intense sessions.
-  </p>
-
-  <div class="practice-note-inline-principle">
-    Small daily practice beats occasional intensity.
-  </div>
-</div>
-</div>
-        <div class="pnote-text">Move within a comfortable range today. Consistency is more valuable than intensity.</div>
-        <div class="pnote-actions">
-          <button class="pnote-link" onclick="dismissNote()">Got it</button>
-          <button class="pnote-link" onclick="go('practice-note')">Read more &rarr;</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- TODAY'S PRACTICE (green hero — same design as Journey) -->
   <div class="journey" id="practice-hero">
@@ -1716,12 +1944,7 @@ body.practice-sheet-open {
       <span class="personalized-badge">Personalized</span>
     </div>
     <div class="journey-title" style="margin:6px 0 8px">Joint Recovery</div>
-    <div class="practice-meta">Session 1 &middot; 30 min &middot; 8 exercises <span class="practice-badge">Restore</span></div>
-    <div class="practice-tags">
-      <span class="practice-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 8v9M13 5v12M8 11v6"/></svg>Mobility</span>
-      <span class="practice-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6M12 8c-2 0-4 1-4 4v6a2 2 0 0 0 4 0M12 8c2 0 4 1 4 4v6a2 2 0 0 1-4 0"/></svg>Breath</span>
-      <span class="practice-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="4" r="2"/><path d="M12 6v6M8 9l4 1 4-1M9 21l3-9 3 9"/></svg>Balance</span>
-    </div>
+    <div class="practice-mode-badge">Restore</div>
     <div class="practice-focus">
   <div class="practice-focus-label">Practice focus</div>
   <div class="practice-focus-text">
@@ -1762,6 +1985,37 @@ body.practice-sheet-open {
         <div class="mood-face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 17s-1.5-3-4-3-4 3-4 3"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
         <span class="mood-label">Bad</span>
       </button>
+    </div>
+  </div>
+
+  <!-- PRACTICE NOTE (silver) -->
+  <div class="card silver">
+    <div class="pnote">
+      <div class="pnote-body">
+        <span class="eyebrow">Practice Note</span>
+        <div class="pnote-title">Small, regular practice matters
+<div class="practice-note-inline-detail" id="practice-note-inline-detail" hidden>
+  <p>
+    More is not always better. The body responds especially well to
+    movement that is regular, manageable and easy to repeat.
+  </p>
+
+  <p>
+    A short daily practice can support mobility, coordination and nervous
+    system regulation more effectively than occasional intense sessions.
+  </p>
+
+  <div class="practice-note-inline-principle">
+    Small daily practice beats occasional intensity.
+  </div>
+</div>
+</div>
+        <div class="pnote-text">Move within a comfortable range today. Consistency is more valuable than intensity.</div>
+        <div class="pnote-actions">
+          <button class="pnote-link" onclick="dismissNote()">Got it</button>
+          <button class="pnote-link" onclick="go('practice-note')">Read more &rarr;</button>
+        </div>
+      </div>
     </div>
   </div>
 
