@@ -202,49 +202,82 @@ body {
 }
 
 @media (min-width: 900px) {
+  html {
+    background: #EEF3F0;
+  }
+
   body {
-    max-width: none;
-    box-shadow: none;
+    width: 100%;
+    max-width: 430px;
+    min-height: 100vh;
+    margin: 0 auto;
+    background: #FFFFFF;
+    box-shadow: 0 0 40px rgba(26, 58, 42, 0.14);
   }
 
   .page {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1.08fr 0.92fr;
-  }
-
-  .hero {
-    min-height: 100vh;
-    padding: 72px;
-  }
-
-  .method {
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding: 72px;
-  }
-
-  .hero-title {
-    font-size: 66px;
-  }
-
-  .hero-sub {
-    max-width: 470px;
-    font-size: 17px;
-  }
-
-  .method-text {
-    max-width: 470px;
-    font-size: 20px;
-  }
-
-  .cta {
-    max-width: 420px;
-    margin: 0 auto;
+    min-height: 100vh;
   }
 }
+
+/* Mobile landing: seamless curved transition */
+.method {
+  position: relative;
+  margin-top: 58px;
+  padding:
+    46px
+    24px
+    max(28px, env(safe-area-inset-bottom));
+  overflow: visible;
+  background:
+    linear-gradient(
+      180deg,
+      #3F8A60 0%,
+      #2D7D52 24%,
+      #255E42 64%,
+      #1C4A34 100%
+    );
+}
+
+.method::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  top: -58px;
+  width: 100%;
+  height: 60px;
+  pointer-events: none;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 430 60' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%23599A70'/%3E%3Cstop offset='58%25' stop-color='%234A8F66'/%3E%3Cstop offset='100%25' stop-color='%233F8A60'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M0 43 C68 12 132 6 208 19 C286 33 344 47 430 25 L430 60 L0 60 Z' fill='url(%23g)'/%3E%3C/svg%3E")
+    center bottom / 100% 100% no-repeat;
+}
+
+.method > * {
+  position: relative;
+  z-index: 1;
+}
+
+.method-kicker {
+  margin-bottom: 11px;
+}
+
+.method-text {
+  margin-bottom: 22px;
+  line-height: 1.55;
+}
+
+.cta {
+  min-height: 54px;
+  border-radius: 18px;
+}
+
+.cta-note {
+  margin-top: 12px;
+}
+
 </style>
 </head>
 
