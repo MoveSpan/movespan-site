@@ -1659,7 +1659,7 @@ body.practice-sheet-open {
         <div class="hs-metric"><div class="hs-mlabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Sleep</div><div class="hs-mval">&mdash; <span class="hs-munit">h</span></div></div>
       </div>
     </div>
-    <button class="hs-cta" onclick="go('health')">Open Health Dashboard &rarr;</button>
+    <button class="hs-cta" onclick="window.location.href='health-dashboard-v4.html'">Open Health Dashboard &rarr;</button>
   </div>
 
   <!-- CONNECT DEVICE (conditional) -->
@@ -2333,20 +2333,6 @@ applyMockState();
     }
 
     detailsInner.appendChild(originalContent);
-
-    const existingMeasureLink = originalContent.querySelector(
-      'a[href*="measure"], button[onclick*="measure"]'
-    );
-
-    if (!existingMeasureLink) {
-      const measureButton = document.createElement("a");
-
-      measureButton.className = "health-snapshot-measure-button";
-      measureButton.href = "/measure.html";
-      measureButton.textContent = "Take Measurements →";
-
-      detailsInner.appendChild(measureButton);
-    }
 
     details.appendChild(detailsInner);
 
