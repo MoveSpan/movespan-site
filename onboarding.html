@@ -697,7 +697,7 @@ window.onMwAuthReady = function(user, profile) {
     return;
   }
 
-  if (onb && onb.step && !FRESH) {
+  if (onb && onb.step && !FRESH && !EDIT) {
     // Resume where they left off
     prefill(onb);
     goStep(Math.min(onb.step + 1, 6));
