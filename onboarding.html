@@ -691,7 +691,7 @@ window.onMwAuthReady = function(user, profile) {
     return;
   }
 
-  if (onb && onb.completedAt && !FRESH) {
+  if (onb && onb.completedAt && !FRESH && !EDIT) {
     // Onboarding already done — straight to program
     window.location.replace('/home');
     return;
