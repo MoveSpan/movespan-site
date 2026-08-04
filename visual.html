@@ -17,7 +17,7 @@
   --orange: #F59E0B;
 }
 body { font-family: var(--font); background: var(--surface); color: var(--text); min-height: 100vh; }
-.wrap { max-width: 560px; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
+.wrap { width: 100%; max-width: 430px; margin: 0 auto; padding: 24px 16px 64px; }
 .logo { display: flex; align-items: center; gap: 10px; margin-bottom: 1.75rem; }
 .logo-icon { width: 40px; height: 40px; border-radius: 11px; overflow: hidden; flex-shrink: 0; }
 .logo-name { font-size: 15px; font-weight: 600; color: var(--text); }
@@ -260,6 +260,253 @@ body {
   color:var(--green);
 }
 
+
+/* === FINAL BODY ASSESSMENTS MOBILE STANDARD START === */
+
+:root{
+  --ms-green:#2D7D52;
+  --ms-green-soft:#EAF4EE;
+  --ms-text:#1A1A1A;
+  --ms-secondary:#606878;
+  --ms-muted:#98A1AE;
+  --ms-border:#E1E5E8;
+  --ms-page:#F4F7F5;
+  --ms-white:#FFFFFF;
+}
+
+/* Логотип на Body Assessments больше не используется */
+.logo,
+.brand,
+.logo-icon,
+.logo-name,
+.brand-lockup,
+.app-logo,
+.top-logo,
+img[src*="movespan-symbol-official"]{
+  display:none !important;
+}
+
+html,
+body{
+  width:100% !important;
+  min-width:0 !important;
+  min-height:100% !important;
+  margin:0 !important;
+  padding:0 !important;
+  overflow-x:hidden !important;
+}
+
+body{
+  display:block !important;
+  background:var(--ms-page) !important;
+  color:var(--ms-text) !important;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Основная мобильная колонка */
+.wrap{
+  width:100% !important;
+  max-width:430px !important;
+  min-height:100vh !important;
+  margin:0 auto !important;
+  padding:20px 16px 40px !important;
+  background:var(--ms-white) !important;
+  box-sizing:border-box !important;
+}
+
+.wrap,
+.wrap *{
+  box-sizing:border-box;
+}
+
+/* Стрелка возврата */
+.functional-back-button,
+.back,
+.back-icon,
+a[aria-label="Back"]{
+  width:44px !important;
+  height:44px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  margin:0 0 18px -8px !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:50% !important;
+  background:var(--ms-green-soft) !important;
+  color:var(--ms-green) !important;
+  text-decoration:none !important;
+  box-shadow:none !important;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.functional-back-button svg,
+.back svg,
+.back-icon svg,
+a[aria-label="Back"] svg{
+  width:25px !important;
+  height:25px !important;
+  stroke:currentColor !important;
+  stroke-width:2.3 !important;
+}
+
+/* Progress */
+.pw{
+  width:100% !important;
+  height:4px !important;
+  margin:0 0 11px !important;
+  overflow:hidden !important;
+  border-radius:999px !important;
+  background:var(--ms-border) !important;
+}
+
+.pb{
+  height:100% !important;
+  border-radius:999px !important;
+  background:var(--ms-green) !important;
+}
+
+/* Подпись под progress bar */
+.sl{
+  margin:0 0 26px !important;
+  color:var(--ms-muted) !important;
+  font-size:13px !important;
+  font-weight:500 !important;
+  line-height:1.4 !important;
+}
+
+/* Заголовок и описание */
+.page-title,
+.wrap > h1{
+  margin:0 0 10px !important;
+  color:var(--ms-text) !important;
+  font-size:29px !important;
+  font-weight:700 !important;
+  line-height:1.15 !important;
+  letter-spacing:-.035em !important;
+}
+
+.page-sub,
+.wrap > p{
+  margin:0 0 22px !important;
+  color:var(--ms-secondary) !important;
+  font-size:15px !important;
+  line-height:1.58 !important;
+}
+
+/* Карточки тестов */
+.card{
+  width:100% !important;
+  margin:0 0 16px !important;
+  padding:18px !important;
+  border:1px solid var(--ms-border) !important;
+  border-radius:18px !important;
+  background:var(--ms-white) !important;
+  box-shadow:0 4px 16px rgba(24,45,34,.05) !important;
+}
+
+/* Заголовок теста */
+.tnum{
+  margin-bottom:8px !important;
+  color:var(--ms-green) !important;
+  font-size:12px !important;
+  font-weight:700 !important;
+  line-height:1.3 !important;
+}
+
+.ttitle{
+  margin-bottom:14px !important;
+  color:var(--ms-text) !important;
+  font-size:21px !important;
+  font-weight:700 !important;
+  line-height:1.25 !important;
+  letter-spacing:-.02em !important;
+}
+
+/* Изображение */
+.tillus{
+  width:100% !important;
+  margin:0 0 16px !important;
+  padding:10px !important;
+  border-radius:14px !important;
+  background:#F7F9F8 !important;
+}
+
+.tillus img,
+.card img{
+  max-width:100% !important;
+  height:auto !important;
+  display:block !important;
+  border-radius:12px !important;
+}
+
+/* Инструкции */
+.tinstr{
+  margin-bottom:16px !important;
+  color:var(--ms-secondary) !important;
+  font-size:14px !important;
+  line-height:1.58 !important;
+}
+
+/* Варианты ответа */
+.topts{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:10px !important;
+}
+
+.topts button,
+.topts label,
+.option{
+  width:100% !important;
+  min-height:52px !important;
+  padding:12px 14px !important;
+  border:1px solid var(--ms-border) !important;
+  border-radius:14px !important;
+  background:var(--ms-white) !important;
+  color:var(--ms-secondary) !important;
+  font-size:14px !important;
+  line-height:1.45 !important;
+}
+
+/* Основные кнопки */
+.btn{
+  width:100% !important;
+  min-height:56px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:13px 18px !important;
+  border:0 !important;
+  border-radius:16px !important;
+  background:var(--ms-green) !important;
+  color:#FFFFFF !important;
+  font-size:16px !important;
+  font-weight:650 !important;
+  text-align:center !important;
+  box-shadow:0 8px 20px rgba(45,125,82,.16) !important;
+}
+
+@media (max-width:430px){
+  .wrap{
+    padding-top:18px !important;
+  }
+}
+
+@media (min-width:431px){
+  body{
+    padding:20px 0 !important;
+  }
+
+  .wrap{
+    min-height:calc(100vh - 40px) !important;
+    border-radius:22px !important;
+    box-shadow:0 2px 18px rgba(18,38,28,.06) !important;
+  }
+}
+
+/* === FINAL BODY ASSESSMENTS MOBILE STANDARD END === */
+
 </style>
 </head>
 <body>
@@ -267,8 +514,8 @@ body {
   
 
   <div class="logo">
-    <img src="images/brand/movespan-symbol-official.png" alt="MoveSpan" height="36">
-    <span style="font-weight:700;font-size:18px;color:#1A1A1A">MoveSpan</span>
+    
+    
   </div>
   <div class="progress-wrap"><div class="progress" id="progress" style="width:15%"></div></div>
   <div class="step-label">Visual Assessment &middot; 2&ndash;3 minutes</div>
@@ -412,7 +659,7 @@ window.finishVisual = async function() {
 
 <script id="movespan-body-assessment-flow">
 document.addEventListener("DOMContentLoaded", function () {
-  const officialLogo = "/images/brand/movespan-symbol-official.png?v=10";
+  const officialLogo = "images/brand/movespan-symbol-official.png?v=10";
 
   const logoName = document.querySelector(".logo-name");
   if (logoName) {
@@ -516,7 +763,7 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.href =
         new URLSearchParams(window.location.search).get("from") === "journal"
           ? "/journal.html"
-          : "/assessments.html";
+          : "assessments.html";
       return;
     }
 
@@ -549,7 +796,7 @@ function bodyAssessmentBack() {
   window.location.href =
     source === "journal"
       ? "/journal.html"
-      : "/assessments.html";
+      : "assessments.html";
 }
 </script>
 

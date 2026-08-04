@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Functional Age Test — MoveSpan</title>
+
+  <style>
+    :root{
+      --green:#2D7D52;
+      --green-soft:#EAF4EE;
+      --green-border:#CFE4D7;
+      --text:#1A1A1A;
+      --secondary:#606878;
+      --muted:#98A1AE;
+      --border:#E1E5E8;
+      --surface:#F7F9F8;
+      --page:#F4F7F5;
+      --white:#FFFFFF;
+      --font:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html,
+    body{
+      width:100%;
+      min-height:100%;
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      background:var(--page);
+      color:var(--text);
+      font-family:var(--font);
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    button,
+    a{
+      font:inherit;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    .app{
+      width:100%;
+      max-width:430px;
+      min-height:100vh;
+      margin:0 auto;
+      padding:20px 16px 40px;
+      background:var(--white);
+    }
+
+    .top{
+      width:100%;
+      margin-bottom:26px;
+    }
+
+    .back{
+      width:44px;
+      height:44px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:0 0 18px -8px;
+      border:0;
+      border-radius:50%;
+      background:var(--green-soft);
+      color:var(--green);
+      text-decoration:none;
+    }
+
+    .back svg{
+      width:25px;
+      height:25px;
+      fill:none;
+      stroke:currentColor;
+      stroke-width:2.3;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .progress{
+      width:100%;
+      height:4px;
+      overflow:hidden;
+      border-radius:999px;
+      background:var(--border);
+    }
+
+    .progress-fill{
+      width:0;
+      height:100%;
+      border-radius:inherit;
+      background:var(--green);
+    }
+
+    .eyebrow{
+      margin-top:11px;
+      color:var(--muted);
+      font-size:13px;
+      font-weight:500;
+      line-height:1.4;
+    }
+
+    .hero{
+      margin-bottom:22px;
+      text-align:center;
+    }
+
+    .hero h1{
+      margin:0;
+      color:var(--text);
+      font-size:29px;
+      font-weight:700;
+      line-height:1.15;
+      letter-spacing:-.035em;
+    }
+
+    .hero p{
+      margin:10px 0 0;
+      color:var(--secondary);
+      font-size:15px;
+      line-height:1.55;
+    }
+
+    .insight-card{
+      margin-bottom:22px;
+      padding:18px 17px;
+      border:1px solid var(--green-border);
+      border-radius:18px;
+      background:var(--green-soft);
+    }
+
+    .insight-card h2{
+      margin:0 0 14px;
+      color:var(--green);
+      font-size:15px;
+      font-weight:700;
+      line-height:1.3;
+    }
+
+    .insight-row{
+      display:grid;
+      grid-template-columns:24px minmax(0,1fr);
+      gap:9px;
+      align-items:start;
+      margin-top:11px;
+    }
+
+    .insight-row:first-of-type{
+      margin-top:0;
+    }
+
+    .insight-icon{
+      font-size:15px;
+      line-height:1.5;
+    }
+
+    .insight-text{
+      margin:0;
+      color:var(--text);
+      font-size:14px;
+      line-height:1.55;
+    }
+
+    .insight-note{
+      margin:14px 0 0;
+      padding-top:14px;
+      border-top:1px solid rgba(45,125,82,.14);
+      color:var(--secondary);
+      font-size:13px;
+      line-height:1.55;
+    }
+
+    .measurements{
+      margin-bottom:22px;
+    }
+
+    .section-title{
+      margin:0 0 12px;
+      color:var(--green);
+      font-size:15px;
+      font-weight:700;
+      line-height:1.3;
+    }
+
+    .measure-list{
+      margin:0;
+      padding:0;
+      list-style:none;
+      border-top:1px solid var(--border);
+    }
+
+    .measure-item{
+      min-height:52px;
+      display:grid;
+      grid-template-columns:36px minmax(0,1fr);
+      gap:10px;
+      align-items:center;
+      border-bottom:1px solid var(--border);
+    }
+
+    .measure-number{
+      width:28px;
+      height:28px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:50%;
+      background:var(--green-soft);
+      color:var(--green);
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .measure-copy{
+      color:var(--secondary);
+      font-size:14px;
+      line-height:1.4;
+    }
+
+    .sex{
+      margin-bottom:20px;
+    }
+
+    .sex-label{
+      margin:0 0 9px;
+      color:var(--secondary);
+      font-size:14px;
+      font-weight:600;
+    }
+
+    .sex-options{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .sex-button{
+      min-height:50px;
+      border:1.5px solid var(--border);
+      border-radius:14px;
+      background:var(--surface);
+      color:var(--secondary);
+      font-size:15px;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    .sex-button.active{
+      border-color:var(--green);
+      background:var(--green-soft);
+      color:var(--green);
+    }
+
+    .sex-note{
+      margin:8px 2px 0;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .start{
+      width:100%;
+      min-height:56px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:13px 18px;
+      border:0;
+      border-radius:16px;
+      background:var(--green);
+      color:var(--white);
+      font-size:16px;
+      font-weight:650;
+      cursor:pointer;
+      box-shadow:0 8px 20px rgba(45,125,82,.16);
+    }
+
+    .start:active{
+      transform:scale(.995);
+    }
+
+    @media (min-width:431px){
+      body{
+        padding:20px 0;
+      }
+
+      .app{
+        min-height:calc(100vh - 40px);
+        border-radius:22px;
+        box-shadow:0 2px 18px rgba(18,38,28,.06);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+
+    <header class="top">
+      <a class="back" href="assessments.html" aria-label="Back to assessments">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </a>
+
+      <div class="progress" aria-hidden="true">
+        <div class="progress-fill"></div>
+      </div>
+
+      <div class="eyebrow">
+        Functional Age Test · 5–7 minutes
+      </div>
+    </header>
+
+    <section class="hero">
+      <h1>Functional Age Test</h1>
+
+      <p>
+        6 simple tests · no equipment needed · 5–7 minutes
+      </p>
+    </section>
+
+    <section class="insight-card">
+      <h2>What you'll discover</h2>
+
+      <div class="insight-row">
+        <span class="insight-icon" aria-hidden="true">📊</span>
+        <p class="insight-text">
+          Your <strong>functional age</strong> — how old your body performs
+          across six functional systems.
+        </p>
+      </div>
+
+      <div class="insight-row">
+        <span class="insight-icon" aria-hidden="true">🎯</span>
+        <p class="insight-text">
+          Your <strong>weakest system</strong> — where to focus first.
+        </p>
+      </div>
+
+      <div class="insight-row">
+        <span class="insight-icon" aria-hidden="true">💡</span>
+        <p class="insight-text">
+          A <strong>personal insight</strong> that will shape your MoveSpan program.
+        </p>
+      </div>
+
+      <p class="insight-note">
+        Each measurement takes 1–2 minutes. No equipment needed — just you and a timer.
+      </p>
+    </section>
+
+    <section class="measurements">
+      <h2 class="section-title">Six measurements</h2>
+
+      <ol class="measure-list">
+        <li class="measure-item">
+          <span class="measure-number">1</span>
+          <span class="measure-copy">Resting heart rate — cardiovascular</span>
+        </li>
+
+        <li class="measure-item">
+          <span class="measure-number">2</span>
+          <span class="measure-copy">Breathing rate — respiratory system</span>
+        </li>
+
+        <li class="measure-item">
+          <span class="measure-number">3</span>
+          <span class="measure-copy">Forward bend — flexibility and posterior chain</span>
+        </li>
+
+        <li class="measure-item">
+          <span class="measure-number">4</span>
+          <span class="measure-copy">Balance on one leg — nervous system</span>
+        </li>
+
+        <li class="measure-item">
+          <span class="measure-number">5</span>
+          <span class="measure-copy">Shoulder clasp — shoulder mobility</span>
+        </li>
+
+        <li class="measure-item">
+          <span class="measure-number">6</span>
+          <span class="measure-copy">Sitting–Rising Test — strength, flexibility and coordination</span>
+        </li>
+      </ol>
+    </section>
+
+    <section class="sex">
+      <div class="sex-label">Biological sex</div>
+
+      <div class="sex-options">
+        <button
+          class="sex-button active"
+          id="male-button"
+          type="button"
+          onclick="selectGender('male')"
+        >
+          Male
+        </button>
+
+        <button
+          class="sex-button"
+          id="female-button"
+          type="button"
+          onclick="selectGender('female')"
+        >
+          Female
+        </button>
+      </div>
+
+      <p class="sex-note">
+        Used only for age-related reference ranges.
+      </p>
+    </section>
+
+    <button class="start" type="button" onclick="startTest()">
+      Start the Test
+      <span aria-hidden="true">→</span>
+    </button>
+
+  </main>
+
+  <script>
+    let selectedGender = "male";
+
+    function selectGender(gender){
+      selectedGender = gender;
+
+      document
+        .getElementById("male-button")
+        .classList.toggle("active", gender === "male");
+
+      document
+        .getElementById("female-button")
+        .classList.toggle("active", gender === "female");
+    }
+
+    function startTest(){
+      localStorage.setItem(
+        "movespan_functional_age_gender",
+        selectedGender
+      );
+
+      window.location.href =
+        "test.html?functionalStart=1&gender=" +
+        encodeURIComponent(selectedGender);
+    }
+  </script>
+</body>
+</html>
