@@ -1622,6 +1622,32 @@ body.practice-sheet-open {
 }
 </style>
 
+
+<style id="practice-note-layer-fix">
+/* Practice Note всегда располагается поверх Home Screen */
+.practice-sheet-backdrop {
+  z-index: 9998 !important;
+}
+
+.practice-sheet {
+  z-index: 9999 !important;
+  isolation: isolate;
+  background: #FFFFFF !important;
+}
+
+.practice-sheet-drag-zone {
+  z-index: 2;
+  background: #FFFFFF !important;
+}
+
+.practice-sheet-header,
+.practice-sheet-content {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+}
+</style>
+
 </head>
 <body>
 <div class="wrap">
