@@ -563,7 +563,17 @@ const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
 // Smart routing: onboarding done → /home, otherwise → /onboarding (resumes saved step)
+// QA mode: allows an existing account to test the new-user onboarding route.
+const authParams = new URLSearchParams(window.location.search);
+const onboardingQaMode = authParams.get('qa') === 'onboarding';
+
 async function routeAfterAuth(user) {
+  // Explicit testing route. It does not delete the Firebase profile.
+  if (onboardingQaMode) {
+    window.location.replace('/onboarding.html?fresh=1&qa=1');
+    return;
+  }
+
   try {
     const snap = await getDoc(doc(db, 'users', user.uid));
     const profile = snap.exists() ? snap.data() : null;
@@ -589,6 +599,10 @@ async function routeAfterAuth(user) {
 // Already signed in - route by profile
 onAuthStateChanged(auth, async (user) => {
   if (!user || window._signingIn) return;
+
+  // Keep the authentication screen visible in QA mode so Google sign-in
+  // can be tested manually with an existing account.
+  if (onboardingQaMode) return;
 
   const loading = document.getElementById('loading');
   if (loading) {
