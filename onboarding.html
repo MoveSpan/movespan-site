@@ -702,6 +702,9 @@ window.onMwAuthReady = function(user, profile) {
     // Resume where they left off
     prefill(onb);
     goStep(Math.min(onb.step + 1, 6));
+  } else if (EDIT && onb) {
+    // Edit mode: prefill but stay on step 1
+    prefill(onb);
   }
 };
 </script>
