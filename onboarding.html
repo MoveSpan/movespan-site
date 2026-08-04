@@ -692,18 +692,8 @@ window.onMwAuthReady = function(user, profile) {
     return;
   }
 
-  if (onb && onb.completedAt && !FRESH && !EDIT) {
-    // Onboarding already done — straight to program
-    window.location.replace('/home');
-    return;
-  }
-
-  if (onb && onb.step && !FRESH && !EDIT) {
-    // Resume where they left off
-    prefill(onb);
-    goStep(Math.min(onb.step + 1, 6));
-  } else if (EDIT && onb) {
-    // Edit mode: prefill but stay on step 1
+  // Always prefill if data exists, never auto-redirect or auto-jump
+  if (onb) {
     prefill(onb);
   }
 };
