@@ -1,0 +1,14 @@
+/* MoveSpan shared screen shell */
+.movespan-screen-shell{
+  width:100%;
+  max-width:480px;
+  min-height:100vh;
+  margin:0 auto;
+  padding:calc(env(safe-area-inset-top) + 20px) 16px calc(env(safe-area-inset-bottom) + 96px);
+  box-sizing:border-box;
+  background:#F6F7F8;
+}
+@media (min-width:481px){
+  body{background:#EEF1EF;}
+  .movespan-screen-shell{background:#F6F7F8;}
+}

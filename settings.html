@@ -8,6 +8,7 @@
   >
   <meta name="theme-color" content="#F5F7F4">
   <title>Settings — MoveSpan</title>
+  <link rel="stylesheet" href="/assets/css/movespan-navigation.css">
 
   <style>
     :root {
@@ -524,22 +525,9 @@
 <body>
   <main class="app-page">
     <header class="app-header">
-      <button
-        class="header-button"
-        type="button"
-        onclick="goBack()"
-        aria-label="Back"
-      >
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2.2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M15 18l-6-6 6-6"/>
+      <button class="movespan-back" type="button" onclick="goBack()" aria-label="Back">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M15 18l-6-6 6-6"></path>
         </svg>
       </button>
 

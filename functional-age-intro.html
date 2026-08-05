@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Functional Age Test — MoveSpan</title>
+  <link rel="stylesheet" href="/assets/css/movespan-navigation.css">
+  <link rel="stylesheet" href="/assets/css/movespan-shell.css">
 
   <style>
     :root{
@@ -298,16 +300,109 @@
         box-shadow:0 2px 18px rgba(18,38,28,.06);
       }
     }
+
+    /* MoveSpan unified screen standard */
+    .app.movespan-screen-shell{
+      width:100% !important;
+      max-width:480px !important;
+      min-height:100vh !important;
+      margin:0 auto !important;
+      padding:calc(env(safe-area-inset-top) + 20px) 16px calc(env(safe-area-inset-bottom) + 96px) !important;
+      border-radius:0 !important;
+      background:#F7F9FB !important;
+      box-shadow:none !important;
+    }
+    .top{
+      margin:0 0 16px !important;
+      padding:0 !important;
+    }
+    .movespan-back{
+      margin:0 0 12px 0 !important;
+    }
+    .card,
+    .panel,
+    .measure-card{
+      border-radius:16px !important;
+      background:#FFFFFF !important;
+      box-shadow:0 1px 6px rgba(0,0,0,.06) !important;
+    }
+    @media (min-width:481px){
+      body{background:#EEF1EF !important;}
+    }
+
+    /* MoveSpan unified Functional Age Intro */
+    body{
+      background:#F6F7F8 !important;
+    }
+    .app.functional-age-intro{
+      width:100% !important;
+      max-width:480px !important;
+      min-height:100vh !important;
+      margin:0 auto !important;
+      padding:calc(env(safe-area-inset-top) + 20px) 16px calc(env(safe-area-inset-bottom) + 96px) !important;
+      border-radius:0 !important;
+      background:#F6F7F8 !important;
+      box-shadow:none !important;
+    }
+    .top{
+      margin:0 0 20px !important;
+      padding:0 !important;
+    }
+    .movespan-back{
+      margin:0 0 12px 0 !important;
+      border:0 !important;
+      border-radius:0 !important;
+      background:transparent !important;
+      box-shadow:none !important;
+    }
+    .progress{
+      margin:0 0 18px !important;
+    }
+    .hero{
+      text-align:left !important;
+      margin-bottom:20px !important;
+    }
+    .hero h1{
+      font-size:30px !important;
+      line-height:1.15 !important;
+      text-align:left !important;
+    }
+    .hero p{
+      font-size:15px !important;
+      line-height:1.6 !important;
+      text-align:left !important;
+    }
+    .discover,
+    .measurements,
+    .sex{
+      border-radius:16px !important;
+    }
+    .start{
+      min-height:54px !important;
+      border-radius:16px !important;
+      box-shadow:none !important;
+    }
+    @media (min-width:481px){
+      body{background:#EEF1EF !important;}
+    }
+
+      .functional-age-intro .movespan-back:focus,
+    .functional-age-intro .movespan-back:focus-visible{
+      outline:none !important;
+      box-shadow:none !important;
+      border:0 !important;
+      border-radius:0 !important;
+    }
   </style>
 </head>
 
 <body>
-  <main class="app">
+  <main class="app movespan-screen-shell functional-age-intro">
 
     <header class="top">
-      <a class="back" href="assessments.html" aria-label="Back to assessments">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M15 18l-6-6 6-6"/>
+      <a class="movespan-back" href="assessments.html" aria-label="Back" onpointerup="this.blur()">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M15 18l-6-6 6-6"></path>
         </svg>
       </a>
 
@@ -455,5 +550,6 @@
         encodeURIComponent(selectedGender);
     }
   </script>
+
 </body>
 </html>

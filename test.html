@@ -762,11 +762,39 @@ body{
   margin-top:24px !important;
 }
 
+
+/* MoveSpan Back Navigation override */
+.movespan-back{
+  width:44px !important;
+  height:44px !important;
+  min-width:44px !important;
+  min-height:44px !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  color:#2D7D52 !important;
+}
+.movespan-back svg{
+  width:24px !important;
+  height:24px !important;
+  stroke-width:2.2 !important;
+}
+#s-intro{
+  padding-top:0 !important;
+}
+#s-intro > div:first-child{
+  margin-top:0 !important;
+  margin-bottom:12px !important;
+}
 </style>
 <link rel="manifest" href="/manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="MoveSpan">
+<link rel="stylesheet" href="/assets/css/movespan-navigation.css">
 </head>
 <body>
 <div class="wrap">
@@ -781,7 +809,7 @@ body{
     <!-- INTRO -->
     <!-- AGE + GENDER SCREEN -->
     <div class="sec" id="s-age">
-      <div class="back-link"><a href="/program" style="font-size:13px;color:var(--green);font-weight:500;text-decoration:none">← Back to program</a></div>
+      <div class="back-link"><a class="movespan-back" href="/program" aria-label="Back"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 18l-6-6 6-6"></path></svg></a></div>
       <div class="tnum" style="color:var(--green);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Before we start</div>
       <h1 style="font-size:22px;font-weight:600;margin-bottom:8px;letter-spacing:-.02em">Your age &amp; gender</h1>
       <p style="font-size:14px;color:var(--sec);line-height:1.65;margin-bottom:1.5rem">We need this to calculate your biological age. You only enter this once — it&rsquo;s saved to your profile.</p>
@@ -799,7 +827,7 @@ body{
         <span>Gender affects the scoring of flexibility and cardiovascular tests. Used only for your biological age calculation.</span>
       </div>
       <button class="btn" id="profile-age-next-btn" onclick="goFromAge()" disabled>Continue to test &#8594;</button>
-      <button onclick="window.location.href='/program'" style="width:100%;padding:11px;background:var(--gl);border:1.5px solid var(--gb);border-radius:14px;color:var(--green);font-size:13px;font-weight:500;font-family:Inter,sans-serif;cursor:pointer;margin-top:8px">&#8592; Back to program</button>
+      <button class="movespan-back" type="button" onclick="window.location.href='/program'" aria-label="Back"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 18l-6-6 6-6"></path></svg></button>
     </div>
 
     <!-- RETAKE SCREEN -->
@@ -815,18 +843,12 @@ body{
       </div>
       <div style="background:var(--surface);border-radius:12px;padding:12px;font-size:12px;color:var(--sec);line-height:1.6;margin-bottom:1.25rem">📊 After 2–3 retests the system will show your progress graph — how your biological age changes with practice.</div>
       <button class="btn" id="retake-start-btn" onclick="go()" style="width:100%">Start test &#8594;</button>
-      <button onclick="window.location.href='home.html'" style="width:100%;padding:11px;background:var(--gl);border:1.5px solid var(--gb);border-radius:12px;color:var(--green);font-size:13px;font-weight:500;cursor:pointer;font-family:Inter,sans-serif;margin-top:8px">&#8592; Back to Home</button>
+      <button class="movespan-back" type="button" onclick="window.location.href='home.html'" aria-label="Back"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 18l-6-6 6-6"></path></svg></button>
     </div>
 
     <div class="sec active" id="s-intro">
       <div style="margin-bottom:12px">
-        <a href="assessments.html"
-           aria-label="Back"
-           style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;margin-left:-10px;color:var(--green);text-decoration:none;outline:none;-webkit-tap-highlight-color:transparent">
-          <svg viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M15 18l-6-6 6-6"/>
-          </svg>
-        </a>
+        <a class="movespan-back" href="assessments.html" aria-label="Back"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 18l-6-6 6-6"></path></svg></a>
       </div>
 
       <span class="intro-emoji">🧬</span>

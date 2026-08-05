@@ -247,6 +247,7 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
   text-align: center !important;
 }
 </style>
+<link rel="stylesheet" href="/assets/css/movespan-navigation.css">
 </head>
 <body>
 <div class="wrap">
@@ -336,7 +337,7 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
       </div>
 
       <button class="btn-primary" id="btn-s2" disabled onclick="saveStep({step:2});goStep(3)">Continue &#8594;</button>
-      <button class="btn-back" onclick="goStep(1)">&#8592; Back</button>
+      <button class="movespan-back" type="button" onclick="goStep(1)" aria-label="Back"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 18l-6-6 6-6"></path></svg></button>
     </div>
 
     <!-- STEP 3 — PRACTICES -->
@@ -378,7 +379,7 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
       </div>
 
       <button class="btn-primary" id="btn-s3" disabled onclick="goStep(4)">Continue &#8594;</button>
-      <button class="btn-back" onclick="goStep(2)">&#8592; Back</button>
+      <button class="movespan-back" type="button" onclick="goStep(2)" aria-label="Back"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 18l-6-6 6-6"></path></svg></button>
     </div>
 
     <!-- STEP 4 — EXPERIENCE + LENGTH -->
@@ -403,7 +404,7 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
       </div>
 
       <button class="btn-primary" id="btn-s4" disabled onclick="saveStep({step:4});goStep(5)">Continue &#8594;</button>
-      <button class="btn-back" onclick="goStep(3)">&#8592; Back</button>
+      <button class="movespan-back" type="button" onclick="goStep(3)" aria-label="Back"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 18l-6-6 6-6"></path></svg></button>
     </div>
 
     <!-- STEP 5 — OBSTACLE -->
@@ -420,7 +421,7 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
       </div>
 
       <button class="btn-primary" id="btn-s5" onclick="saveStep({step:5});goStep(6)">Continue &#8594;</button>
-      <button class="btn-back" onclick="goStep(4)">&#8592; Back</button>
+      <button class="movespan-back" type="button" onclick="goStep(4)" aria-label="Back"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 18l-6-6 6-6"></path></svg></button>
     </div>
 
     <!-- STEP 6 — PAIN -->
@@ -436,7 +437,7 @@ body { font-family: var(--font); background: var(--surface); color: var(--text);
       </div>
 
       <button class="btn-primary" id="btn-s6" disabled onclick="finishOnboarding()">Build my program &#8594;</button>
-      <button class="btn-back" onclick="goStep(5)">&#8592; Back</button>
+      <button class="movespan-back" type="button" onclick="goStep(5)" aria-label="Back"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 18l-6-6 6-6"></path></svg></button>
     </div>
 
     <!-- CARE SCREEN (pain = 3) -->

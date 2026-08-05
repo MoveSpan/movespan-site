@@ -1,0 +1,8 @@
+.movespan-back{
+width:44px;height:44px;min-width:44px;min-height:44px;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;color:#2D7D52;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;font:inherit;-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent;
+}
+.movespan-back svg{
+width:24px;height:24px;display:block;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none;
+}
+.movespan-back:focus{outline:none;}
+.movespan-back:focus-visible{outline:none;box-shadow:none;border-radius:0;}

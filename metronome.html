@@ -75,12 +75,17 @@ body{font-family:var(--font);background:#ECEFF3;padding:1.5rem 1.25rem 4rem;colo
 .protocol-step:last-child{margin-bottom:0}
 .ps-bpm{font-weight:600;color:#1A1A1A;width:60px;flex-shrink:0}
 .ps-dur{font-size:11px;color:var(--muted)}
-</style></head><body>
+</style><link rel="stylesheet" href="/assets/css/movespan-navigation.css">
+</head><body>
 
 <div class="logo"><img src="images/brand/movespan-symbol-official.png" alt="MoveSpan" height="36">
     <span style="font-weight:700;font-size:18px;color:#1A1A1A">MoveSpan</span></div>
 <div class="metro-card">
-  <a href="/program" style="font-size:13px;color:var(--green);font-weight:500;margin-bottom:1.25rem;display:block;text-decoration:none">← Back to program</a>
+  <a class="movespan-back" href="/program" aria-label="Back">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M15 18l-6-6 6-6"></path>
+    </svg>
+  </a>
   <div class="metro-title">🎵 Metronome</div>
   <div class="metro-sub">A slow, steady beat helps the nervous system release tension. Set the tempo, press Start, and let the sound do the work.</div>
 
