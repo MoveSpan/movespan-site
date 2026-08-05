@@ -248,6 +248,847 @@ circle{fill:none;stroke-width:8}
 }
 </style>
 
+
+<style id="movespan-measure-flow-v2">
+:root {
+  --measure-green: #2D7D52;
+  --measure-green-dark: #245F41;
+  --measure-green-soft: #EAF4EE;
+  --measure-border: #DCE7E1;
+  --measure-text: #172019;
+  --measure-muted: #68736D;
+  --measure-bg: #F3F5F3;
+  --measure-white: #FFFFFF;
+}
+
+body {
+  background: var(--measure-bg);
+}
+
+.wrap {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 16px 36px;
+}
+
+.logo {
+  display: none !important;
+}
+
+.measure-shell {
+  position: relative;
+  min-height: calc(100vh - 24px);
+  padding: 56px 4px 32px;
+}
+
+.measure-back-chevron {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--measure-green);
+  font-family: Arial, sans-serif;
+  font-size: 44px;
+  font-weight: 300;
+  line-height: 38px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.measure-progress-label,
+.measure-progress-text {
+  color: var(--measure-green);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-align: center;
+}
+
+.measure-heading {
+  margin: 12px auto 8px;
+  color: var(--measure-text);
+  font-size: clamp(28px, 7vw, 38px);
+  line-height: 1.08;
+  letter-spacing: -.035em;
+  text-align: center;
+}
+
+.measure-intro {
+  max-width: 430px;
+  margin: 0 auto 22px;
+  color: var(--measure-muted);
+  font-size: 16px;
+  line-height: 1.52;
+  text-align: center;
+}
+
+.prepare-list {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 18px;
+}
+
+.prepare-row {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  align-items: center;
+  gap: 12px;
+  min-height: 62px;
+  padding: 11px 14px;
+  border: 1px solid var(--measure-border);
+  border-radius: 17px;
+  background: var(--measure-white);
+  color: var(--measure-text);
+  font-size: 15px;
+  line-height: 1.38;
+}
+
+.prepare-icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: var(--measure-green-soft);
+  color: var(--measure-green);
+}
+
+.prepare-icon svg,
+.breath-help-icon svg {
+  width: 23px;
+  height: 23px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.measure-timer-card {
+  display: grid;
+  place-items: center;
+  margin: 14px 0 18px;
+}
+
+.measure-timer-ring {
+  position: relative;
+  width: 176px;
+  height: 176px;
+}
+
+.measure-timer-ring svg {
+  width: 176px;
+  height: 176px;
+  transform: rotate(-90deg);
+}
+
+.measure-ring-track,
+.measure-ring-progress {
+  fill: none;
+  stroke-width: 10;
+}
+
+.measure-ring-track {
+  stroke: #DDE7E1;
+}
+
+.measure-ring-progress {
+  stroke: var(--measure-green);
+  stroke-linecap: round;
+  stroke-dasharray: 478;
+  stroke-dashoffset: 478;
+  transition: stroke-dashoffset .4s linear;
+}
+
+.measure-timer-center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+
+.measure-timer-value {
+  color: var(--measure-text);
+  font-size: 39px;
+  font-weight: 750;
+  letter-spacing: -.04em;
+}
+
+.measure-timer-caption {
+  max-width: 110px;
+  margin: 3px auto 0;
+  color: var(--measure-muted);
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.measure-primary-button {
+  width: 100%;
+  min-height: 56px;
+  border: 0;
+  border-radius: 18px;
+  background: var(--measure-green);
+  color: #fff;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 720;
+  cursor: pointer;
+  box-shadow: 0 7px 18px rgba(45, 125, 82, .18);
+}
+
+.measure-primary-button:disabled {
+  cursor: default;
+  opacity: .42;
+  box-shadow: none;
+}
+
+.measure-primary-button:active:not(:disabled) {
+  transform: scale(.988);
+}
+
+.measure-text-button {
+  display: block;
+  width: 100%;
+  min-height: 45px;
+  margin-top: 7px;
+  border: 0;
+  background: transparent;
+  color: var(--measure-green);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.measure-step-progress {
+  margin-bottom: 10px;
+}
+
+.measure-progress-line {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+  margin: 0 12px 10px;
+}
+
+.measure-progress-line span {
+  height: 4px;
+  border-radius: 999px;
+  background: #D6E0DA;
+}
+
+.measure-progress-line span.active {
+  background: var(--measure-green);
+}
+
+.breath-tap-zone {
+  position: relative;
+  display: grid;
+  place-content: center;
+  width: min(78vw, 320px);
+  aspect-ratio: 1;
+  margin: 18px auto 20px;
+  overflow: hidden;
+  border: 2px solid rgba(45, 125, 82, .34);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center,
+      rgba(255,255,255,.98) 0 52%,
+      rgba(234,244,238,.94) 100%);
+  color: var(--measure-text);
+  font-family: inherit;
+  text-align: center;
+  cursor: pointer;
+  box-shadow:
+    0 16px 40px rgba(45,125,82,.10),
+    inset 0 0 0 9px rgba(45,125,82,.045);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.breath-tap-zone:active {
+  transform: scale(.988);
+}
+
+.breath-tap-zone.running {
+  border-color: var(--measure-green);
+}
+
+.breath-tap-pulse {
+  position: absolute;
+  inset: 18px;
+  border: 1px solid rgba(45,125,82,.18);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.breath-tap-zone.tap-feedback .breath-tap-pulse {
+  animation: breathTapFeedback .38s ease-out;
+}
+
+@keyframes breathTapFeedback {
+  0% {
+    transform: scale(.86);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.09);
+    opacity: 0;
+  }
+}
+
+.breath-tap-count {
+  color: var(--measure-green);
+  font-size: clamp(64px, 18vw, 92px);
+  font-weight: 780;
+  line-height: .92;
+  letter-spacing: -.06em;
+}
+
+.breath-tap-unit {
+  margin-top: 5px;
+  color: var(--measure-text);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.breath-tap-time {
+  margin-top: 15px;
+  color: var(--measure-muted);
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+}
+
+.breath-tap-instruction {
+  max-width: 180px;
+  margin: 7px auto 0;
+  color: var(--measure-green);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.breath-help-card {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 14px;
+  margin: 0 0 17px;
+  border: 1px solid var(--measure-border);
+  border-radius: 17px;
+  background: var(--measure-white);
+}
+
+.breath-help-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--measure-green-soft);
+  color: var(--measure-green);
+}
+
+.breath-help-card strong {
+  display: block;
+  margin: 1px 0 3px;
+  color: var(--measure-text);
+  font-size: 14px;
+}
+
+.breath-help-card span {
+  display: block;
+  color: var(--measure-muted);
+  font-size: 13px;
+  line-height: 1.42;
+}
+
+.breath-result-card {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid rgba(45,125,82,.25);
+  border-radius: 22px;
+  background: var(--measure-white);
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(45,125,82,.08);
+}
+
+.breath-result-label {
+  color: var(--measure-muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.breath-result-value {
+  margin: 4px 0 6px;
+  color: var(--measure-green);
+}
+
+.breath-result-value > span {
+  font-size: 54px;
+  font-weight: 780;
+  letter-spacing: -.05em;
+}
+
+.breath-result-value small {
+  display: block;
+  margin-top: -2px;
+  color: var(--measure-text);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.breath-result-detail {
+  color: var(--measure-text);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.breath-result-note {
+  margin: 7px 0 18px;
+  color: var(--measure-muted);
+  font-size: 13px;
+  line-height: 1.42;
+}
+
+@media (max-width: 390px) {
+  .measure-shell {
+    padding-top: 52px;
+  }
+
+  .prepare-row {
+    font-size: 14px;
+  }
+
+  .breath-tap-zone {
+    width: min(76vw, 286px);
+  }
+}
+</style>
+
+
+<style id="movespan-pulse-flow-v2">
+.pulse-method-grid {
+  display: grid;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.pulse-method-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px 1fr 22px;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 104px;
+  padding: 17px 16px;
+  border: 1.5px solid var(--measure-border);
+  border-radius: 20px;
+  background: var(--measure-white);
+  color: var(--measure-text);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform .15s ease,
+    border-color .15s ease,
+    box-shadow .15s ease;
+}
+
+.pulse-method-card:hover,
+.pulse-method-card.selected {
+  border-color: rgba(45, 125, 82, .55);
+  box-shadow: 0 10px 26px rgba(45, 125, 82, .09);
+}
+
+.pulse-method-card:active {
+  transform: scale(.988);
+}
+
+.pulse-method-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
+  background: var(--measure-green-soft);
+  color: var(--measure-green);
+}
+
+.pulse-method-icon svg,
+.pulse-position-icon svg {
+  width: 25px;
+  height: 25px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pulse-method-copy strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.pulse-method-copy small {
+  display: block;
+  color: var(--measure-muted);
+  font-size: 13px;
+  line-height: 1.42;
+}
+
+.pulse-method-arrow {
+  color: var(--measure-green);
+  font-size: 34px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.pulse-mode-panel {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid var(--measure-border);
+  border-radius: 22px;
+  background: var(--measure-white);
+  box-shadow: 0 12px 30px rgba(45, 125, 82, .06);
+}
+
+.pulse-panel-heading {
+  margin-bottom: 15px;
+  color: var(--measure-text);
+  font-size: 18px;
+  font-weight: 730;
+  text-align: center;
+}
+
+.pulse-device-entry {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 11px;
+  margin: 12px 0 9px;
+}
+
+.pulse-device-input {
+  width: 150px;
+  height: 104px;
+  border: 2px solid var(--measure-border);
+  border-radius: 22px;
+  background: #FAFCFA;
+  color: var(--measure-green);
+  font-family: inherit;
+  font-size: 50px;
+  font-weight: 760;
+  text-align: center;
+  outline: none;
+}
+
+.pulse-device-input:focus {
+  border-color: var(--measure-green);
+  box-shadow: 0 0 0 4px rgba(45, 125, 82, .10);
+}
+
+.pulse-device-unit {
+  color: var(--measure-muted);
+  font-size: 18px;
+  font-weight: 650;
+}
+
+.pulse-panel-note {
+  max-width: 340px;
+  margin: 0 auto 18px;
+  color: var(--measure-muted);
+  font-size: 13px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.pulse-position-card {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 14px;
+  border-radius: 17px;
+  background: var(--measure-green-soft);
+  color: var(--measure-text);
+  font-size: 14px;
+  line-height: 1.42;
+}
+
+.pulse-position-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  background: #fff;
+  color: var(--measure-green);
+}
+
+.pulse-tap-zone {
+  position: relative;
+  display: grid;
+  place-content: center;
+  width: min(76vw, 310px);
+  aspect-ratio: 1;
+  margin: 12px auto 18px;
+  overflow: hidden;
+  border: 2px solid rgba(45, 125, 82, .34);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center,
+      rgba(255,255,255,.98) 0 52%,
+      rgba(234,244,238,.94) 100%);
+  color: var(--measure-text);
+  font-family: inherit;
+  text-align: center;
+  cursor: pointer;
+  box-shadow:
+    0 16px 40px rgba(45,125,82,.10),
+    inset 0 0 0 9px rgba(45,125,82,.045);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pulse-tap-zone.running {
+  border-color: var(--measure-green);
+}
+
+.pulse-tap-zone:active {
+  transform: scale(.988);
+}
+
+.pulse-tap-wave {
+  position: absolute;
+  inset: 18px;
+  border: 1px solid rgba(45,125,82,.18);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.pulse-tap-zone.tap-feedback .pulse-tap-wave {
+  animation: pulseTapFeedback .32s ease-out;
+}
+
+@keyframes pulseTapFeedback {
+  0% {
+    transform: scale(.84);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.08);
+    opacity: 0;
+  }
+}
+
+.pulse-tap-count {
+  color: var(--measure-green);
+  font-size: clamp(64px, 18vw, 92px);
+  font-weight: 780;
+  line-height: .92;
+  letter-spacing: -.06em;
+}
+
+.pulse-tap-unit {
+  margin-top: 5px;
+  color: var(--measure-text);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.pulse-tap-time {
+  margin-top: 15px;
+  color: var(--measure-muted);
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+}
+
+.pulse-tap-instruction {
+  max-width: 190px;
+  margin: 7px auto 0;
+  color: var(--measure-green);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.pulse-minimum-note {
+  max-width: 330px;
+  margin: 0 auto 17px;
+  color: var(--measure-muted);
+  font-size: 13px;
+  line-height: 1.42;
+  text-align: center;
+}
+
+.pulse-result-card {
+  margin-top: 20px;
+  padding: 21px;
+  border: 1px solid rgba(45,125,82,.25);
+  border-radius: 22px;
+  background: var(--measure-white);
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(45,125,82,.08);
+}
+
+.pulse-result-label {
+  color: var(--measure-muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.pulse-result-value {
+  margin: 4px 0 6px;
+  color: var(--measure-green);
+}
+
+.pulse-result-value > span {
+  font-size: 54px;
+  font-weight: 780;
+  letter-spacing: -.05em;
+}
+
+.pulse-result-value small {
+  display: block;
+  margin-top: -2px;
+  color: var(--measure-text);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.pulse-result-detail {
+  color: var(--measure-text);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.pulse-result-note {
+  margin: 7px 0 18px;
+  color: var(--measure-muted);
+  font-size: 13px;
+  line-height: 1.42;
+}
+
+@media (max-width: 390px) {
+  .pulse-method-card {
+    min-height: 96px;
+    padding: 14px;
+  }
+
+  .pulse-tap-zone {
+    width: min(74vw, 282px);
+  }
+}
+</style>
+
+
+<style id="pulse-mobile-width-fix">
+/* Pulse and final result must remain in the MoveSpan mobile frame */
+#s-pulse,
+#s-result {
+  width: 100%;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#s-pulse .measure-shell,
+#s-result .measure-shell,
+#s-result > .card {
+  width: 100%;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+#s-pulse .measure-shell {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#s-pulse .pulse-method-grid,
+#s-pulse .pulse-mode-panel,
+#s-pulse .pulse-result-card {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 521px) {
+  #s-pulse,
+  #s-result {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 520px) {
+  #s-pulse,
+  #s-result {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+</style>
+
+
+<style id="measurement-save-flow-fix">
+#s-pattern .card {
+  position: relative;
+  padding-top: 72px;
+}
+
+#s-pattern .pattern-back-chevron {
+  top: 15px;
+  left: 20px;
+}
+
+#pulse-next-btn.is-saving {
+  opacity: .72;
+  cursor: wait;
+}
+
+#pulse-next-btn.is-saved {
+  background: #245F41;
+}
+
+#pulse-next-btn.is-error {
+  background: #9A3F3F;
+}
+
+.pulse-result-detail {
+  margin-top: 7px;
+}
+
+.pulse-result-note {
+  max-width: 350px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 520px) {
+  #s-pattern .card {
+    padding-top: 64px;
+  }
+
+  #s-pattern .pattern-back-chevron {
+    top: 10px;
+    left: 14px;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="wrap">
@@ -258,86 +1099,244 @@ circle{fill:none;stroke-width:8}
 
   <!-- STEP 0: PREPARATION -->
   <div class="sec active" id="s-prep">
-    <div class="card">
-      <button class="back" onclick="window.location.href='/health-dashboard-v4.html'">← Back to Breath Snapshot</button>
-      <div class="step-label">Preparation · 1 minute</div>
-      <div class="title">Get into a resting state first</div>
-      <div class="posture-box">
-        <div class="posture-item"><span class="pi">🪑</span> Sit with your spine straight, both feet flat on the floor</div>
-        <div class="posture-item"><span class="pi">🙌</span> Hands relaxed on your knees, palms down</div>
-        <div class="posture-item"><span class="pi">😌</span> Close your eyes. Breathe naturally — don&rsquo;t change anything</div>
-        <div class="posture-item"><span class="pi">🤫</span> Stay completely still for 1 minute</div>
+    <div class="measure-shell">
+
+      <button
+        class="measure-back-chevron"
+        type="button"
+        aria-label="Return to Breath Snapshot"
+        onclick="window.location.href='/health-dashboard-v4.html'">
+        ‹
+      </button>
+
+      <div class="measure-progress-label">Preparation</div>
+
+      <h1 class="measure-heading">Prepare for your check</h1>
+
+      <p class="measure-intro">
+        Sit comfortably and allow your breathing and pulse to settle.
+      </p>
+
+      <div class="prepare-list">
+        <div class="prepare-row">
+          <span class="prepare-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              <path d="M5 11h14v7H5z"/>
+              <path d="M8 18v3M16 18v3"/>
+            </svg>
+          </span>
+          <span>Sit upright with both feet supported</span>
+        </div>
+
+        <div class="prepare-row">
+          <span class="prepare-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12c2-3 4-4 7-4s5 1 7 4"/>
+              <path d="M7 15h10"/>
+            </svg>
+          </span>
+          <span>Rest your hands and release unnecessary tension</span>
+        </div>
+
+        <div class="prepare-row">
+          <span class="prepare-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 12c3-5 13-5 16 0"/>
+              <path d="M7 15c3 2 7 2 10 0"/>
+            </svg>
+          </span>
+          <span>Breathe naturally without trying to improve the breath</span>
+        </div>
+
+        <div class="prepare-row">
+          <span class="prepare-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="8"/>
+              <path d="M12 8v4l3 2"/>
+            </svg>
+          </span>
+          <span>Remain still for one minute</span>
+        </div>
       </div>
-      <div class="hint"><span style="font-size:16px;flex-shrink:0">💡</span><span>Measure at the same time each day — ideally morning, before food or practice. Pulse changes even from talking — give the body a full minute to settle.</span></div>
-      <div class="timer-wrap">
-        <div class="timer-ring">
-          <svg width="160" height="160" viewBox="0 0 160 160">
-            <circle class="ring-bg" cx="80" cy="80" r="70"/>
-            <circle class="ring-calm" id="prep-ring" cx="80" cy="80" r="70" style="stroke-dashoffset:440"/>
+
+      <div class="measure-timer-card">
+        <div class="measure-timer-ring">
+          <svg viewBox="0 0 176 176" aria-hidden="true">
+            <circle class="measure-ring-track" cx="88" cy="88" r="76"/>
+            <circle
+              class="measure-ring-progress"
+              id="prep-ring"
+              cx="88"
+              cy="88"
+              r="76"/>
           </svg>
-          <div class="timer-num" id="prep-num">1:00</div>
-        </div>
-        <div class="timer-sub" id="prep-sub">Press Start when comfortable</div>
-      </div>
-      <button class="btn-primary" id="prep-btn" onclick="startPrep()">▶ Start 1-minute rest</button>
-      <button id="prep-skip-btn" onclick="skipPrep()" style="width:100%;padding:11px;background:var(--gl);border:1.5px solid var(--gb);border-radius:14px;font-size:13px;font-weight:500;color:var(--green);font-family:var(--font);cursor:pointer;margin-top:8px">I’m already rested — measure now →</button>
-    </div>
-  </div>
-  <!-- STEP 1: BREATHING RATE -->
-<div class="sec" id="s-breath">
-    <div class="card">
-      <div class="step-label">Step 1 of 3 · Breathing Rate</div>
-      <div class="title">Count your breaths</div>
-      <div class="sub">Stay in the same position. Don&rsquo;t change your breathing — just observe. Count each complete cycle (inhale + exhale = 1) for 1 minute.</div>
-      <div class="hint"><span style="font-size:16px;flex-shrink:0">💡</span><span>This observation itself calms the nervous system — noticing the breath without changing it is a practice.</span></div>
 
-      <div class="timer-wrap">
-        <div class="timer-ring">
-          <svg width="160" height="160" viewBox="0 0 160 160">
-            <circle class="ring-bg" cx="80" cy="80" r="70"/>
-            <circle class="ring-count" id="breath-ring" cx="80" cy="80" r="70" style="stroke-dashoffset:440"/>
-          </svg>
-          <div class="timer-num" id="breath-timer-num">1:00</div>
-        </div>
-        <div class="timer-sub" id="breath-timer-sub">Press Start when ready</div>
-      </div>
-      <div id="breath-screen-hint" class="hint" style="display:none"><span style="font-size:16px;flex-shrink:0">📵</span><span>You can lock your screen — a sound will signal when the minute is up.</span></div>
-      <button class="btn-primary" id="breath-timer-btn" onclick="startBreathTimer()">▶ Start 1-minute count</button>
-
-      <div id="breath-count-wrap" style="display:none">
-        <div class="count-box">
-          <div class="count-label">How many breaths did you count during 1 minute?</div>
-          <input class="count-input" type="number" id="breath-val" placeholder="—" min="4" max="40" oninput="interpBreath()">
-          <div class="count-unit">breaths per minute</div>
-        </div>
-        <div class="interp" id="interp-breath"></div>
-      </div>
-
-      <button class="why-btn" onclick="toggleWhy('why-breath')">💡 Why does breathing rate matter? ↓</button>
-      <div class="why-panel" id="why-breath">
-        <button class="listen-btn" onclick="speakWhy('why-breath-text',this)">🔊 Listen</button>
-        <div id="why-breath-text">
-          <p>At rest, a healthy breathing rate is <b>12–16 breaths per minute</b>. Above 16–18 means the system is chronically rushing even when there's nothing to rush for.</p>
-          <p style="margin-top:8px">Fast breathing almost always means <b>chest breathing</b> — the diaphragm isn't fully engaging. This creates a loop: chest breathing activates the sympathetic nervous system → stress → chest breathing. The diaphragm loses mobility, internal abdominal pressure rises, organs get less massage from breathing movements.</p>
-          <p style="margin-top:8px">Biochemically: when you over-breathe, CO₂ leaves the blood too fast, blood vessels narrow — paradoxically, you feel like you can't get enough air even though oxygen is fine. This is the <b>internal compression</b> that joint gymnastics and breathwork directly address.</p>
-          <p style="margin-top:8px">One cycle of slow nasal breathing with belly movement switches the nervous system from sympathetic to parasympathetic in 2–3 minutes. <b>Svistyelka, slow exhales, full diaphragmatic breath</b> — these are the tools.</p>
-          <div class="ranges">
-            <div class="rng"><span class="rng-val g">Below 12</span><span>Excellent — diaphragm fully engaged</span></div>
-            <div class="rng"><span class="rng-val ok">12–16</span><span>Normal</span></div>
-            <div class="rng"><span class="rng-val w">16–20</span><span>Elevated — chest breathing dominant, diaphragm underused</span></div>
-            <div class="rng"><span class="rng-val r">Above 20</span><span>High — chronic hyperventilation, high background stress</span></div>
+          <div class="measure-timer-center">
+            <div class="measure-timer-value" id="prep-num">1:00</div>
+            <div class="measure-timer-caption" id="prep-sub">
+              Ready when you are
+            </div>
           </div>
         </div>
       </div>
 
-      <button class="btn-primary" id="breath-next-btn" onclick="goPattern()" disabled>Next — check breathing pattern →</button>
-      <button onclick="cancelMeasure()" style="width:100%;padding:11px;background:var(--gl);border:1.5px solid var(--gb);border-radius:14px;font-size:13px;font-weight:500;color:var(--green);font-family:var(--font);cursor:pointer;margin-top:6px">&#10005; Cancel &mdash; back to start</button>
+      <button
+        class="measure-primary-button"
+        id="prep-btn"
+        type="button"
+        onclick="togglePreparation()">
+        Start 1-minute rest
+      </button>
+
+      <button
+        class="measure-text-button"
+        id="prep-skip-btn"
+        type="button"
+        onclick="skipPrep()">
+        I am already rested
+      </button>
+
+    </div>
+  </div>
+
+  <!-- STEP 1: BREATHING RATE -->
+<div class="sec" id="s-breath">
+    <div class="measure-shell">
+
+      <button
+        class="measure-back-chevron"
+        type="button"
+        aria-label="Return to preparation"
+        onclick="show('s-prep')">
+        ‹
+      </button>
+
+      <div class="measure-step-progress">
+        <div class="measure-progress-line">
+          <span class="active"></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div class="measure-progress-text">
+          Step 1 of 3 · Breathing Rate
+        </div>
+      </div>
+
+      <h1 class="measure-heading">Measure your breathing rate</h1>
+
+      <p class="measure-intro">
+        Tap the circle after every complete breath:
+        one inhale and one exhale equal one breath.
+      </p>
+
+      <button
+        class="breath-tap-zone"
+        id="breath-tap-zone"
+        type="button"
+        onclick="registerBreathTap()">
+
+        <div class="breath-tap-pulse" aria-hidden="true"></div>
+
+        <div class="breath-tap-count" id="breath-tap-count">0</div>
+
+        <div class="breath-tap-unit" id="breath-tap-unit">
+          breaths
+        </div>
+
+        <div class="breath-tap-time" id="breath-elapsed">
+          0:00
+        </div>
+
+        <div class="breath-tap-instruction" id="breath-tap-instruction">
+          Tap to begin
+        </div>
+      </button>
+
+      <div class="breath-help-card">
+        <div class="breath-help-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M8 6h8"/>
+            <path d="M6 10h12"/>
+            <path d="M8 14h8"/>
+            <path d="M10 18h4"/>
+          </svg>
+        </div>
+
+        <div>
+          <strong>How it works</strong>
+          <span>
+            The first tap starts the timer. Continue tapping after each full
+            breath, then finish whenever you are ready.
+          </span>
+        </div>
+      </div>
+
+      <button
+        class="measure-primary-button breath-finish-button"
+        id="breath-finish-btn"
+        type="button"
+        onclick="finishBreathMeasurement()"
+        disabled>
+        Finish measurement
+      </button>
+
+      <button
+        class="measure-text-button"
+        id="breath-reset-btn"
+        type="button"
+        onclick="resetBreathMeasurement()">
+        Start again
+      </button>
+
+      <div class="breath-result-card" id="breath-result-card" hidden>
+        <div class="breath-result-label">Breathing Rate</div>
+
+        <div class="breath-result-value">
+          <span id="breath-result-number">—</span>
+          <small>breaths/min</small>
+        </div>
+
+        <div class="breath-result-detail" id="breath-result-detail"></div>
+
+        <div class="breath-result-note" id="breath-result-note"></div>
+
+        <input
+          type="hidden"
+          id="breath-val"
+          value="">
+
+        <button
+          class="measure-primary-button"
+          id="breath-next-btn"
+          type="button"
+          onclick="goPattern()">
+          Continue to Breathing Pattern
+        </button>
+
+        <button
+          class="measure-text-button"
+          type="button"
+          onclick="resetBreathMeasurement()">
+          Measure again
+        </button>
+      </div>
+
     </div>
   </div>
 
   <!-- STEP 2: BREATHING PATTERN -->
   <div class="sec" id="s-pattern">
     <div class="card">
+      <button
+        class="measure-back-chevron pattern-back-chevron"
+        type="button"
+        aria-label="Return to breathing rate"
+        onclick="show('s-breath')">
+        ‹
+      </button>
+
       <div class="step-label">Step 2 of 3 · Breathing Pattern</div>
 
       <div class="title">Where does your breathing begin?</div>
@@ -377,6 +1376,7 @@ circle{fill:none;stroke-width:8}
       </div>
 
       <div class="manual-pattern-grid" id="manual-pattern-grid">
+
         <button
           class="manual-pattern-card"
           type="button"
@@ -385,31 +1385,31 @@ circle{fill:none;stroke-width:8}
           <span class="manual-pattern-check">✓</span>
           <span class="manual-pattern-name">Upper Chest</span>
           <span class="manual-pattern-description">
-            Movement begins high in the chest or around the collarbones.
+            Movement is concentrated high in the chest, near the collarbones.
           </span>
         </button>
 
         <button
           class="manual-pattern-card"
           type="button"
-          data-pattern="Rib cage"
+          data-pattern="Lower chest"
           onclick="selectPattern(this)">
           <span class="manual-pattern-check">✓</span>
-          <span class="manual-pattern-name">Rib Cage</span>
+          <span class="manual-pattern-name">Lower Chest</span>
           <span class="manual-pattern-description">
-            The lower ribs expand outward and slightly backward.
+            The chest rises and falls, while the abdomen and lower ribs move less.
           </span>
         </button>
 
         <button
           class="manual-pattern-card"
           type="button"
-          data-pattern="Belly"
+          data-pattern="Belly and lower ribs"
           onclick="selectPattern(this)">
           <span class="manual-pattern-check">✓</span>
-          <span class="manual-pattern-name">Belly</span>
+          <span class="manual-pattern-name">Belly + Lower Ribs</span>
           <span class="manual-pattern-description">
-            The abdomen moves gently as the diaphragm descends.
+            The abdomen moves gently and the lower ribs expand to the sides and back.
           </span>
         </button>
 
@@ -421,7 +1421,7 @@ circle{fill:none;stroke-width:8}
           <span class="manual-pattern-check">✓</span>
           <span class="manual-pattern-name">Low Belly</span>
           <span class="manual-pattern-description">
-            Movement is felt mainly in the lower abdominal area.
+            Movement is felt mainly in the lower abdomen and the breath is quiet.
           </span>
         </button>
 
@@ -431,48 +1431,16 @@ circle{fill:none;stroke-width:8}
           data-pattern="Mixed"
           onclick="selectPattern(this)">
           <span class="manual-pattern-check">✓</span>
-          <span class="manual-pattern-name">Mixed</span>
+          <span class="manual-pattern-name">Mixed / Not Sure</span>
           <span class="manual-pattern-description">
-            Chest, ribs, and abdomen move together without one clear
-            starting point.
+            Movement is spread across several areas or is difficult to identify.
           </span>
         </button>
+
       </div>
 
       <div class="pattern-result" id="pattern-result"></div>
-
-      <button
-        class="why-btn"
-        onclick="toggleWhy('why-pattern')">
-        💡 Why does breathing pattern matter? ↓
-      </button>
-
-      <div class="why-panel" id="why-pattern">
-        <button
-          class="listen-btn"
-          onclick="speakWhy('why-pattern-text',this)">
-          🔊 Listen
-        </button>
-
-        <div id="why-pattern-text">
-          <p>
-            The diaphragm is the primary muscle of breathing. When it moves
-            freely, the lower ribs and abdomen usually participate naturally.
-          </p>
-
-          <p style="margin-top:8px">
-            During prolonged stress, breathing often shifts upward toward the
-            chest. The neck, shoulders, and upper chest begin doing more work,
-            while movement around the lower ribs and abdomen becomes smaller.
-          </p>
-
-          <p style="margin-top:8px">
-            This check does not diagnose a medical condition. It helps you
-            notice your current movement pattern and choose practices for
-            diaphragm mobility, rib expansion, and relaxation.
-          </p>
-        </div>
-      </div>
+</div>
 
       <button
         class="btn-primary"
@@ -495,62 +1463,227 @@ circle{fill:none;stroke-width:8}
 
   <!-- STEP 3: RESTING PULSE -->
 <div class="sec" id="s-pulse">
-    <div class="card">
-      <div class="step-label">Step 3 of 3 · Resting Pulse</div>
-      <div class="title">Enter your resting pulse</div>
-      <div class="hybrid-label">Your pulse right now:</div>
-      <div class="hybrid-row">
-        <input class="hybrid-input" type="number" id="pulse-val" placeholder="—" min="30" max="150" oninput="interpPulse()">
-        <span class="hybrid-unit">bpm</span>
-        <div class="hybrid-watch"><b>⌚ From your watch?</b>Check the current heart rate on your smartwatch and enter it here</div>
-      </div>
-      <div class="manual-link">Don&rsquo;t have a watch? <button onclick="showManualPulse()">Count manually with timer ↓</button></div>
+    <div class="measure-shell">
 
-      <!-- manual count (hidden by default) -->
-      <div id="manual-pulse-wrap" style="display:none">
-        <div class="hint"><span style="font-size:16px;flex-shrink:0">🤲</span><span>Place 2 fingers on your wrist (inner side, below thumb) or on your neck. Press Start and count every beat for 1 minute.</span></div>
-        <div class="timer-wrap">
-          <div class="timer-ring">
-            <svg width="160" height="160" viewBox="0 0 160 160">
-              <circle class="ring-bg" cx="80" cy="80" r="70"/>
-              <circle class="ring-count" id="pulse-ring" cx="80" cy="80" r="70" style="stroke-dashoffset:440"/>
+      <button
+        class="measure-back-chevron"
+        type="button"
+        aria-label="Return to breathing pattern"
+        onclick="show('s-pattern')">
+        ‹
+      </button>
+
+      <div class="measure-step-progress">
+        <div class="measure-progress-line">
+          <span class="active"></span>
+          <span class="active"></span>
+          <span class="active"></span>
+        </div>
+
+        <div class="measure-progress-text">
+          Step 3 of 3 · Resting Pulse
+        </div>
+      </div>
+
+      <h1 class="measure-heading">Measure your resting pulse</h1>
+
+      <p class="measure-intro">
+        Use your current device reading or measure your pulse manually.
+      </p>
+
+      <div class="pulse-method-grid">
+
+        <button
+          class="pulse-method-card"
+          id="pulse-device-method"
+          type="button"
+          onclick="selectPulseMethod('device')">
+
+          <span class="pulse-method-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="7" y="3" width="10" height="18" rx="4"/>
+              <path d="M10 7h4M10 17h4"/>
             </svg>
-            <div class="timer-num" id="pulse-timer-num">1:00</div>
-          </div>
-          <div class="timer-sub" id="pulse-timer-sub">Press Start to begin counting</div>
-        </div>
-        <button class="btn-primary" id="pulse-timer-btn" onclick="startPulseTimer()">▶ Start 1-minute count</button>
-        <div class="hint" style="display:none" id="pulse-screen-hint"><span style="font-size:16px;flex-shrink:0">📵</span><span>You can lock your screen — a sound will signal when the minute is up.</span></div>
-        <div id="pulse-count-wrap" style="display:none">
-          <div class="count-box">
-            <div class="count-label">How many beats did you count during 1 minute?</div>
-            <input class="count-input" type="number" id="pulse-count-input" placeholder="—" oninput="document.getElementById('pulse-val').value=this.value;interpPulse()">
-            <div class="count-unit">beats per minute</div>
-          </div>
-        </div>
+          </span>
+
+          <span class="pulse-method-copy">
+            <strong>Use a device reading</strong>
+            <small>
+              Enter the current heart rate shown by your watch or wearable.
+            </small>
+          </span>
+
+          <span class="pulse-method-arrow">›</span>
+        </button>
+
+        <button
+          class="pulse-method-card"
+          id="pulse-manual-method"
+          type="button"
+          onclick="selectPulseMethod('manual')">
+
+          <span class="pulse-method-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 12h4l2-5 4 10 2-5h6"/>
+            </svg>
+          </span>
+
+          <span class="pulse-method-copy">
+            <strong>Measure manually</strong>
+            <small>
+              Find your pulse with one hand and tap once for every heartbeat with the other.
+            </small>
+          </span>
+
+          <span class="pulse-method-arrow">›</span>
+        </button>
+
       </div>
 
-      <div class="interp" id="interp-pulse"></div>
+      <!-- DEVICE MODE -->
+      <div class="pulse-mode-panel" id="pulse-device-panel" hidden>
 
-      <button class="why-btn" onclick="toggleWhy('why-pulse')">💡 Why does resting pulse matter? ↓</button>
-      <div class="why-panel" id="why-pulse">
-        <button class="listen-btn" onclick="speakWhy('why-pulse-text',this)">🔊 Listen</button>
-        <div id="why-pulse-text">
-          <p>Resting pulse shows how hard your heart works when the body is doing nothing. The higher it is, the more effort your system spends just maintaining baseline.</p>
-          <p style="margin-top:8px">A high resting pulse means the <b>sympathetic nervous system («fight or flight») is dominant</b> — blood vessels are narrowed, muscles slightly tensed, internal pressure elevated. The body is bracing for a threat that isn't there. This is chronic background stress — most people don't notice it because they've come to accept it as normal.</p>
-          <p style="margin-top:8px">Our practices lower resting pulse by activating the vagus nerve — <b>Svistyelka, slow exhales, joint gymnastics with breath, Shavasana</b>. This is why long-term yoga practitioners often have a resting pulse of 45–55 bpm: not from running, but from teaching the nervous system to truly rest.</p>
-          <div class="ranges">
-            <div class="rng"><span class="rng-val g">Below 60</span><span>Excellent — nervous system recovers well</span></div>
-            <div class="rng"><span class="rng-val ok">60–75</span><span>Normal — room for improvement</span></div>
-            <div class="rng"><span class="rng-val w">75–85</span><span>Elevated — sympathetic dominance, background tension</span></div>
-            <div class="rng"><span class="rng-val r">Above 85</span><span>High — regular relaxation practice needed</span></div>
-          </div>
-          <p style="margin-top:8px;font-size:12px;color:var(--muted)">Note: your personal baseline matters more than population averages. After 14 days of measurements the system learns your individual norm.</p>
+        <div class="pulse-panel-heading">Enter device reading</div>
+
+        <div class="pulse-device-entry">
+          <input
+            class="pulse-device-input"
+            type="number"
+            id="pulse-device-input"
+            inputmode="numeric"
+            min="30"
+            max="220"
+            placeholder="—"
+            aria-label="Resting pulse in beats per minute"
+            oninput="updateDevicePulse()">
+
+          <span class="pulse-device-unit">bpm</span>
         </div>
+
+        <p class="pulse-panel-note">
+          Use a current resting reading, not an exercise or recovery average.
+        </p>
+
+        <button
+          class="measure-primary-button"
+          id="pulse-device-save-btn"
+          type="button"
+          onclick="acceptDevicePulse()"
+          disabled>
+          Use this pulse
+        </button>
+
+        <button
+          class="measure-text-button"
+          type="button"
+          onclick="resetPulseMethod()">
+          Choose another method
+        </button>
+
       </div>
 
-      <button class="btn-primary" id="pulse-next-btn" onclick="saveMeasurements()" disabled>Save Breath Snapshot →</button>
-      <button onclick="cancelMeasure()" style="width:100%;padding:11px;background:var(--gl);border:1.5px solid var(--gb);border-radius:14px;font-size:13px;font-weight:500;color:var(--green);font-family:var(--font);cursor:pointer;margin-top:6px">&#10005; Cancel &mdash; back to start</button>
+      <!-- MANUAL MODE -->
+      <div class="pulse-mode-panel" id="pulse-manual-panel" hidden>
+
+        <div class="pulse-position-card">
+          <span class="pulse-position-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 13c3-5 6-7 9-7 2 0 4 1 5 3"/>
+              <path d="M7 16c3-3 6-4 10-3"/>
+              <path d="M4 19c4-2 8-2 12 0"/>
+            </svg>
+          </span>
+
+          <span>
+            Find your pulse with the index and middle fingers of one hand.
+            Use your free hand to tap the circle once for every heartbeat.
+            If the wrist pulse is difficult to feel, gently check one side
+            of the neck below the jaw. Do not use your thumb.
+          </span>
+        </div>
+
+        <button
+          class="pulse-tap-zone"
+          id="pulse-tap-zone"
+          type="button"
+          onclick="registerPulseTap()">
+
+          <div class="pulse-tap-wave" aria-hidden="true"></div>
+
+          <div class="pulse-tap-count" id="pulse-tap-count">0</div>
+
+          <div class="pulse-tap-unit" id="pulse-tap-unit">
+            beats
+          </div>
+
+          <div class="pulse-tap-time" id="pulse-elapsed">
+            0:00
+          </div>
+
+          <div class="pulse-tap-instruction" id="pulse-tap-instruction">
+            Tap with the first heartbeat
+          </div>
+        </button>
+
+        <div class="pulse-minimum-note">
+          After 10 seconds you can finish. A longer measurement gives a more
+          stable result.
+        </div>
+
+        <button
+          class="measure-primary-button"
+          id="pulse-finish-btn"
+          type="button"
+          onclick="finishPulseMeasurement()"
+          disabled>
+          Finish measurement
+        </button>
+
+        <button
+          class="measure-text-button"
+          type="button"
+          onclick="resetPulseMeasurement()">
+          Start again
+        </button>
+
+      </div>
+
+      <!-- RESULT -->
+      <div class="pulse-result-card" id="pulse-result-card" hidden>
+
+        <div class="pulse-result-label">Resting Pulse</div>
+
+        <div class="pulse-result-value">
+          <span id="pulse-result-number">—</span>
+          <small>bpm</small>
+        </div>
+
+        <div class="pulse-result-detail" id="pulse-result-detail"></div>
+
+        <div class="pulse-result-note" id="pulse-result-note"></div>
+
+        <button
+          class="measure-primary-button"
+          id="pulse-next-btn"
+          type="button"
+          onclick="saveMeasurements()">
+          Save Breath Snapshot
+        </button>
+
+        <button
+          class="measure-text-button"
+          type="button"
+          onclick="restartManualPulseMeasurement()">
+          Measure again
+        </button>
+
+      </div>
+
+      <input
+        type="hidden"
+        id="pulse-val"
+        value="">
+
     </div>
   </div>
 
@@ -674,20 +1807,32 @@ function selectPattern(button) {
 
   var messages = {
     'Upper chest':
-      'Your breathing movement is concentrated in the upper chest. Practices for diaphragm awareness and lower-rib mobility may be useful.',
-    'Rib cage':
-      'Your ribs participate clearly in breathing. The next focus is smooth expansion around the front, sides, and back of the lower rib cage.',
-    'Belly':
-      'Abdominal movement is present, suggesting that the diaphragm participates in your breathing.',
+      'Your breathing movement is concentrated high in the chest. At rest, this can be associated with faster, shallower breathing, increased tension, and greater use of the upper-chest breathing muscles.',
+
+    'Lower chest':
+      'Your chest provides most of the visible movement. This is generally quieter than upper-chest breathing, but movement of the abdomen and three-dimensional expansion of the lower ribs may still be limited.',
+
+    'Belly and lower ribs':
+      'Your abdomen moves gently and your lower ribs expand to the sides and back. This indicates clear diaphragm participation and a quieter, more economical resting breathing pattern.',
+
     'Low belly':
-      'Movement is most noticeable in the lower abdomen. We will also help you develop balanced lower-rib expansion.',
+      'Movement is felt mainly in the lower abdomen while the breath remains quiet and subtle. Some people notice this pattern during deep relaxation or meditation.',
+
     'Mixed':
-      'Your breathing movement is distributed across several areas without one dominant starting point.'
+      'Movement is distributed across several areas, or no single area is clearly dominant. Repeat the observation without deliberately changing or deepening your breathing.'
+  };
+
+  var titles = {
+    'Upper chest': 'Upper Chest',
+    'Lower chest': 'Lower Chest',
+    'Belly and lower ribs': 'Belly + Lower Ribs',
+    'Low belly': 'Low Belly',
+    'Mixed': 'Mixed / Not Sure'
   };
 
   result.className = 'pattern-result show';
   result.innerHTML =
-    '<b>' + patternVal + '</b><span>' +
+    '<b>' + titles[patternVal] + '</b><span>' +
     messages[patternVal] +
     '</span>';
 }
@@ -852,5 +1997,809 @@ function beep() {
   // logo will be injected by firebase-auth when ready
 })();
 </script>
+
+<script id="movespan-measure-flow-v2-script">
+let prepIntervalV2 = null;
+let prepRunningV2 = false;
+let prepRemainingV2 = 60;
+
+let breathIntervalV2 = null;
+let breathRunningV2 = false;
+let breathStartTimeV2 = null;
+let breathElapsedSecondsV2 = 0;
+let breathTapCountV2 = 0;
+
+function formatMeasureTime(totalSeconds) {
+  const safe = Math.max(0, Math.floor(totalSeconds));
+  const minutes = Math.floor(safe / 60);
+  const seconds = safe % 60;
+  return minutes + ':' + String(seconds).padStart(2, '0');
+}
+
+function stopExistingTimerEngine() {
+  if (typeof activeTimer !== 'undefined' && activeTimer) {
+    clearInterval(activeTimer);
+    activeTimer = null;
+  }
+}
+
+function resetPreparationV2() {
+  if (prepIntervalV2) {
+    clearInterval(prepIntervalV2);
+    prepIntervalV2 = null;
+  }
+
+  prepRunningV2 = false;
+  prepRemainingV2 = 60;
+
+  const button = document.getElementById('prep-btn');
+  const number = document.getElementById('prep-num');
+  const caption = document.getElementById('prep-sub');
+  const ring = document.getElementById('prep-ring');
+
+  if (button) button.textContent = 'Start 1-minute rest';
+  if (number) number.textContent = '1:00';
+  if (caption) caption.textContent = 'Ready when you are';
+  if (ring) ring.style.strokeDashoffset = '478';
+}
+
+function togglePreparation() {
+  stopExistingTimerEngine();
+
+  if (prepRunningV2) {
+    resetPreparationV2();
+    return;
+  }
+
+  prepRunningV2 = true;
+  prepRemainingV2 = 60;
+
+  const button = document.getElementById('prep-btn');
+  const number = document.getElementById('prep-num');
+  const caption = document.getElementById('prep-sub');
+  const ring = document.getElementById('prep-ring');
+
+  if (button) button.textContent = 'Stop';
+  if (caption) caption.textContent = 'Settling…';
+
+  const total = 60;
+  const circumference = 478;
+
+  prepIntervalV2 = setInterval(function () {
+    prepRemainingV2 -= 1;
+
+    const completed = total - prepRemainingV2;
+    const progress = completed / total;
+
+    if (number) {
+      number.textContent = formatMeasureTime(prepRemainingV2);
+    }
+
+    if (ring) {
+      ring.style.strokeDashoffset =
+        String(circumference * (1 - progress));
+    }
+
+    if (prepRemainingV2 <= 0) {
+      clearInterval(prepIntervalV2);
+      prepIntervalV2 = null;
+      prepRunningV2 = false;
+
+      if (button) button.textContent = 'Continue';
+      if (caption) caption.textContent = 'Ready to measure';
+
+      if (typeof beep === 'function') {
+        beep();
+      }
+
+      setTimeout(function () {
+        show('s-breath');
+        resetBreathMeasurement();
+      }, 900);
+    }
+  }, 1000);
+}
+
+function skipPrep() {
+  resetPreparationV2();
+  show('s-breath');
+  resetBreathMeasurement();
+}
+
+function updateBreathTapDisplay() {
+  const count = document.getElementById('breath-tap-count');
+  const unit = document.getElementById('breath-tap-unit');
+  const elapsed = document.getElementById('breath-elapsed');
+  const instruction = document.getElementById('breath-tap-instruction');
+  const finishButton = document.getElementById('breath-finish-btn');
+
+  if (count) count.textContent = String(breathTapCountV2);
+
+  if (unit) {
+    unit.textContent =
+      breathTapCountV2 === 1 ? 'breath' : 'breaths';
+  }
+
+  if (elapsed) {
+    elapsed.textContent = formatMeasureTime(breathElapsedSecondsV2);
+  }
+
+  if (instruction) {
+    instruction.textContent =
+      breathTapCountV2 === 0
+        ? 'Tap to begin'
+        : 'Tap again after the next breath';
+  }
+
+  if (finishButton) {
+    finishButton.disabled =
+      !breathRunningV2 || breathElapsedSecondsV2 < 10;
+  }
+}
+
+function startBreathTapTimer() {
+  breathRunningV2 = true;
+  breathStartTimeV2 = Date.now();
+
+  const tapZone = document.getElementById('breath-tap-zone');
+
+  if (tapZone) {
+    tapZone.classList.add('running');
+  }
+
+  breathIntervalV2 = setInterval(function () {
+    breathElapsedSecondsV2 = Math.min(
+      60,
+      Math.floor((Date.now() - breathStartTimeV2) / 1000)
+    );
+
+    updateBreathTapDisplay();
+
+    if (breathElapsedSecondsV2 >= 60) {
+      finishBreathMeasurement();
+    }
+  }, 250);
+}
+
+function registerBreathTap() {
+  const resultCard = document.getElementById('breath-result-card');
+
+  if (resultCard && !resultCard.hidden) {
+    return;
+  }
+
+  if (!breathRunningV2) {
+    startBreathTapTimer();
+  }
+
+  breathTapCountV2 += 1;
+
+  const tapZone = document.getElementById('breath-tap-zone');
+
+  if (tapZone) {
+    tapZone.classList.remove('tap-feedback');
+    void tapZone.offsetWidth;
+    tapZone.classList.add('tap-feedback');
+  }
+
+  updateBreathTapDisplay();
+}
+
+function finishBreathMeasurement() {
+  if (!breathRunningV2) {
+    return;
+  }
+
+  if (breathElapsedSecondsV2 < 10) {
+    return;
+  }
+
+  if (breathIntervalV2) {
+    clearInterval(breathIntervalV2);
+    breathIntervalV2 = null;
+  }
+
+  breathRunningV2 = false;
+
+  const elapsed = Math.max(10, breathElapsedSecondsV2);
+  const estimatedRate = Math.max(
+    1,
+    Math.round((breathTapCountV2 * 60) / elapsed)
+  );
+
+  const hiddenInput = document.getElementById('breath-val');
+  const resultCard = document.getElementById('breath-result-card');
+  const resultNumber = document.getElementById('breath-result-number');
+  const resultDetail = document.getElementById('breath-result-detail');
+  const resultNote = document.getElementById('breath-result-note');
+  const finishButton = document.getElementById('breath-finish-btn');
+  const tapZone = document.getElementById('breath-tap-zone');
+
+  if (hiddenInput) {
+    hiddenInput.value = String(estimatedRate);
+  }
+
+  breathVal = estimatedRate;
+
+  if (resultNumber) {
+    resultNumber.textContent = String(estimatedRate);
+  }
+
+  if (resultDetail) {
+    resultDetail.textContent =
+      breathTapCountV2 +
+      (breathTapCountV2 === 1 ? ' breath' : ' breaths') +
+      ' in ' +
+      elapsed +
+      ' seconds';
+  }
+
+  if (resultNote) {
+    resultNote.textContent =
+      elapsed >= 60
+        ? 'Measured over a full 60 seconds.'
+        : 'Calculated from a ' +
+          elapsed +
+          '-second measurement. A full minute gives a more stable result.';
+  }
+
+  if (tapZone) {
+    tapZone.classList.remove('running');
+  }
+
+  if (finishButton) {
+    finishButton.disabled = true;
+  }
+
+  if (resultCard) {
+    resultCard.hidden = false;
+    resultCard.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
+    });
+  }
+
+  if (typeof beep === 'function') {
+    beep();
+  }
+}
+
+function resetBreathMeasurement() {
+  if (breathIntervalV2) {
+    clearInterval(breathIntervalV2);
+    breathIntervalV2 = null;
+  }
+
+  breathRunningV2 = false;
+  breathStartTimeV2 = null;
+  breathElapsedSecondsV2 = 0;
+  breathTapCountV2 = 0;
+  breathVal = null;
+
+  const hiddenInput = document.getElementById('breath-val');
+  const resultCard = document.getElementById('breath-result-card');
+  const tapZone = document.getElementById('breath-tap-zone');
+
+  if (hiddenInput) hiddenInput.value = '';
+  if (resultCard) resultCard.hidden = true;
+
+  if (tapZone) {
+    tapZone.classList.remove('running', 'tap-feedback');
+  }
+
+  updateBreathTapDisplay();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  resetPreparationV2();
+  resetBreathMeasurement();
+});
+</script>
+
+
+<script id="movespan-pulse-flow-v2-script">
+let pulseMethodV2 = null;
+let pulseIntervalV2 = null;
+let pulseRunningV2 = false;
+let pulseStartTimeV2 = null;
+let pulseElapsedSecondsV2 = 0;
+let pulseTapCountV2 = 0;
+
+function selectPulseMethod(method) {
+  pulseMethodV2 = method;
+
+  const deviceCard = document.getElementById('pulse-device-method');
+  const manualCard = document.getElementById('pulse-manual-method');
+  const devicePanel = document.getElementById('pulse-device-panel');
+  const manualPanel = document.getElementById('pulse-manual-panel');
+  const resultCard = document.getElementById('pulse-result-card');
+
+  if (deviceCard) {
+    deviceCard.classList.toggle('selected', method === 'device');
+  }
+
+  if (manualCard) {
+    manualCard.classList.toggle('selected', method === 'manual');
+  }
+
+  if (devicePanel) {
+    devicePanel.hidden = method !== 'device';
+  }
+
+  if (manualPanel) {
+    manualPanel.hidden = method !== 'manual';
+  }
+
+  if (resultCard) {
+    resultCard.hidden = true;
+  }
+
+  if (method === 'manual') {
+    resetPulseMeasurement();
+  }
+
+  const panel =
+    method === 'device' ? devicePanel : manualPanel;
+
+  if (panel) {
+    setTimeout(function () {
+      panel.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }, 50);
+  }
+}
+
+function restartManualPulseMeasurement() {
+  resetPulseMeasurement();
+
+  const deviceInput = document.getElementById('pulse-device-input');
+  const deviceButton = document.getElementById('pulse-device-save-btn');
+  const resultCard = document.getElementById('pulse-result-card');
+
+  if (deviceInput) deviceInput.value = '';
+  if (deviceButton) deviceButton.disabled = true;
+  if (resultCard) resultCard.hidden = true;
+
+  selectPulseMethod('manual');
+}
+
+function resetPulseMethod() {
+  resetPulseMeasurement();
+
+  pulseMethodV2 = null;
+  pulseVal = null;
+
+  const hiddenInput = document.getElementById('pulse-val');
+  const deviceInput = document.getElementById('pulse-device-input');
+  const deviceButton = document.getElementById('pulse-device-save-btn');
+  const deviceCard = document.getElementById('pulse-device-method');
+  const manualCard = document.getElementById('pulse-manual-method');
+  const devicePanel = document.getElementById('pulse-device-panel');
+  const manualPanel = document.getElementById('pulse-manual-panel');
+  const resultCard = document.getElementById('pulse-result-card');
+
+  if (hiddenInput) hiddenInput.value = '';
+  if (deviceInput) deviceInput.value = '';
+  if (deviceButton) deviceButton.disabled = true;
+
+  if (deviceCard) deviceCard.classList.remove('selected');
+  if (manualCard) manualCard.classList.remove('selected');
+
+  if (devicePanel) devicePanel.hidden = true;
+  if (manualPanel) manualPanel.hidden = true;
+  if (resultCard) resultCard.hidden = true;
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+
+function updateDevicePulse() {
+  const input = document.getElementById('pulse-device-input');
+  const button = document.getElementById('pulse-device-save-btn');
+
+  const value = input ? parseInt(input.value, 10) : NaN;
+  const valid = Number.isFinite(value) && value >= 30 && value <= 220;
+
+  if (button) {
+    button.disabled = !valid;
+  }
+}
+
+function acceptDevicePulse() {
+  const input = document.getElementById('pulse-device-input');
+  const value = input ? parseInt(input.value, 10) : NaN;
+
+  if (!Number.isFinite(value) || value < 30 || value > 220) {
+    return;
+  }
+
+  setPulseResult(
+    value,
+    'Entered from your connected device',
+    'Use a current resting reading taken while sitting quietly.'
+  );
+}
+
+function formatPulseTime(totalSeconds) {
+  const safe = Math.max(0, Math.floor(totalSeconds));
+  const minutes = Math.floor(safe / 60);
+  const seconds = safe % 60;
+
+  return minutes + ':' + String(seconds).padStart(2, '0');
+}
+
+function updatePulseTapDisplay() {
+  const count = document.getElementById('pulse-tap-count');
+  const unit = document.getElementById('pulse-tap-unit');
+  const elapsed = document.getElementById('pulse-elapsed');
+  const instruction = document.getElementById('pulse-tap-instruction');
+  const finishButton = document.getElementById('pulse-finish-btn');
+
+  if (count) {
+    count.textContent = String(pulseTapCountV2);
+  }
+
+  if (unit) {
+    unit.textContent =
+      pulseTapCountV2 === 1 ? 'beat' : 'beats';
+  }
+
+  if (elapsed) {
+    elapsed.textContent = formatPulseTime(pulseElapsedSecondsV2);
+  }
+
+  if (instruction) {
+    instruction.textContent =
+      pulseTapCountV2 === 0
+        ? 'Tap with the first heartbeat'
+        : 'Keep tapping with each heartbeat';
+  }
+
+  if (finishButton) {
+    finishButton.disabled =
+      !pulseRunningV2 || pulseElapsedSecondsV2 < 10;
+  }
+}
+
+function startPulseTapTimer() {
+  pulseRunningV2 = true;
+  pulseStartTimeV2 = Date.now();
+
+  const tapZone = document.getElementById('pulse-tap-zone');
+
+  if (tapZone) {
+    tapZone.classList.add('running');
+  }
+
+  pulseIntervalV2 = setInterval(function () {
+    pulseElapsedSecondsV2 = Math.min(
+      60,
+      Math.floor((Date.now() - pulseStartTimeV2) / 1000)
+    );
+
+    updatePulseTapDisplay();
+
+    if (pulseElapsedSecondsV2 >= 60) {
+      finishPulseMeasurement();
+    }
+  }, 250);
+}
+
+function registerPulseTap() {
+  const resultCard = document.getElementById('pulse-result-card');
+
+  if (resultCard && !resultCard.hidden) {
+    return;
+  }
+
+  if (!pulseRunningV2) {
+    startPulseTapTimer();
+  }
+
+  pulseTapCountV2 += 1;
+
+  const tapZone = document.getElementById('pulse-tap-zone');
+
+  if (tapZone) {
+    tapZone.classList.remove('tap-feedback');
+    void tapZone.offsetWidth;
+    tapZone.classList.add('tap-feedback');
+  }
+
+  updatePulseTapDisplay();
+}
+
+function finishPulseMeasurement() {
+  if (!pulseRunningV2 || pulseElapsedSecondsV2 < 10) {
+    return;
+  }
+
+  if (pulseIntervalV2) {
+    clearInterval(pulseIntervalV2);
+    pulseIntervalV2 = null;
+  }
+
+  pulseRunningV2 = false;
+
+  const elapsed = Math.max(10, pulseElapsedSecondsV2);
+  const estimatedPulse = Math.round(
+    (pulseTapCountV2 * 60) / elapsed
+  );
+
+  if (estimatedPulse < 30 || estimatedPulse > 220) {
+    const resultCard = document.getElementById('pulse-result-card');
+    const resultNumber = document.getElementById('pulse-result-number');
+    const resultDetail = document.getElementById('pulse-result-detail');
+    const resultNote = document.getElementById('pulse-result-note');
+    const saveButton = document.getElementById('pulse-next-btn');
+    const manualPanel = document.getElementById('pulse-manual-panel');
+
+    pulseVal = null;
+
+    const hiddenInput = document.getElementById('pulse-val');
+    if (hiddenInput) hiddenInput.value = '';
+
+    if (manualPanel) manualPanel.hidden = true;
+    if (resultCard) resultCard.hidden = false;
+    if (resultNumber) resultNumber.textContent = '—';
+
+    if (resultDetail) {
+      resultDetail.textContent =
+        'The measurement appears incomplete';
+    }
+
+    if (resultNote) {
+      resultNote.textContent =
+        'Only ' +
+        pulseTapCountV2 +
+        (pulseTapCountV2 === 1 ? ' beat was' : ' beats were') +
+        ' recorded in ' +
+        elapsed +
+        ' seconds. Please measure again and tap with every heartbeat.';
+    }
+
+    if (saveButton) saveButton.hidden = true;
+
+    return;
+  }
+
+  const saveButton = document.getElementById('pulse-next-btn');
+  if (saveButton) saveButton.hidden = false;
+
+  setPulseResult(
+    estimatedPulse,
+    'Estimated from a ' + elapsed + '-second measurement',
+    elapsed >= 60
+      ? 'Measured over a full 60 seconds.'
+      : 'A longer measurement gives a more stable result.'
+  );
+
+  const tapZone = document.getElementById('pulse-tap-zone');
+  const finishButton = document.getElementById('pulse-finish-btn');
+
+  if (tapZone) {
+    tapZone.classList.remove('running');
+  }
+
+  if (finishButton) {
+    finishButton.disabled = true;
+  }
+
+  if (typeof beep === 'function') {
+    beep();
+  }
+}
+
+function setPulseResult(value, detail, note) {
+  pulseVal = value;
+
+  const hiddenInput = document.getElementById('pulse-val');
+  const resultCard = document.getElementById('pulse-result-card');
+  const resultNumber = document.getElementById('pulse-result-number');
+  const resultDetail = document.getElementById('pulse-result-detail');
+  const resultNote = document.getElementById('pulse-result-note');
+  const devicePanel = document.getElementById('pulse-device-panel');
+  const manualPanel = document.getElementById('pulse-manual-panel');
+
+  if (hiddenInput) {
+    hiddenInput.value = String(value);
+  }
+
+  if (resultNumber) {
+    resultNumber.textContent = String(value);
+  }
+
+  if (resultDetail) {
+    resultDetail.textContent = detail;
+  }
+
+  if (resultNote) {
+    resultNote.textContent = note;
+  }
+
+  if (devicePanel) devicePanel.hidden = true;
+  if (manualPanel) manualPanel.hidden = true;
+
+  if (resultCard) {
+    resultCard.hidden = false;
+
+    setTimeout(function () {
+      resultCard.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }, 50);
+  }
+}
+
+function resetPulseMeasurement() {
+  if (pulseIntervalV2) {
+    clearInterval(pulseIntervalV2);
+    pulseIntervalV2 = null;
+  }
+
+  pulseRunningV2 = false;
+  pulseStartTimeV2 = null;
+  pulseElapsedSecondsV2 = 0;
+  pulseTapCountV2 = 0;
+  pulseVal = null;
+
+  const hiddenInput = document.getElementById('pulse-val');
+  const tapZone = document.getElementById('pulse-tap-zone');
+  const resultCard = document.getElementById('pulse-result-card');
+
+  if (hiddenInput) hiddenInput.value = '';
+  if (resultCard) resultCard.hidden = true;
+
+  if (tapZone) {
+    tapZone.classList.remove('running', 'tap-feedback');
+  }
+
+  updatePulseTapDisplay();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  resetPulseMethod();
+});
+</script>
+
+
+<script id="pulse-default-manual-mode">
+document.addEventListener('DOMContentLoaded', function () {
+  const originalGoPulse = window.goPulse;
+
+  window.goPulse = function () {
+    if (typeof originalGoPulse === 'function') {
+      originalGoPulse();
+    } else if (typeof show === 'function') {
+      show('s-pulse');
+    }
+
+    setTimeout(function () {
+      if (typeof selectPulseMethod === 'function') {
+        selectPulseMethod('manual');
+      }
+    }, 50);
+  };
+});
+</script>
+
+
+<script id="measurement-save-flow-fix-script">
+window.saveMeasurements = async function () {
+  const button = document.getElementById('pulse-next-btn');
+
+  const pulseInput = document.getElementById('pulse-val');
+  const breathInput = document.getElementById('breath-val');
+
+  const pulse = pulseInput
+    ? parseInt(pulseInput.value, 10)
+    : NaN;
+
+  const breath = breathInput
+    ? parseInt(breathInput.value, 10)
+    : NaN;
+
+  const currentPattern =
+    typeof patternVal !== 'undefined'
+      ? patternVal
+      : null;
+
+  if (
+    !Number.isFinite(pulse) ||
+    !Number.isFinite(breath) ||
+    !currentPattern
+  ) {
+    if (button) {
+      button.disabled = false;
+      button.classList.add('is-error');
+      button.textContent = 'Complete all measurements';
+    }
+
+    setTimeout(function () {
+      if (button) {
+        button.classList.remove('is-error');
+        button.textContent = 'Save Breath Snapshot';
+      }
+    }, 1800);
+
+    return;
+  }
+
+  if (button) {
+    button.disabled = true;
+    button.classList.remove('is-error', 'is-saved');
+    button.classList.add('is-saving');
+    button.textContent = 'Saving…';
+  }
+
+  let mode = 'reset';
+
+  if (pulse > 85 || breath > 20) {
+    mode = 'restore';
+  } else if (pulse > 75 || breath > 16) {
+    mode = 'restore';
+  }
+
+  const measurement = {
+    pulse: pulse,
+    breath: breath,
+    pattern: currentPattern,
+    mode: mode
+  };
+
+  try {
+    sessionStorage.setItem(
+      'mw_measure',
+      JSON.stringify(measurement)
+    );
+
+    localStorage.setItem(
+      'mw_last_breath_snapshot',
+      JSON.stringify({
+        ...measurement,
+        savedAt: new Date().toISOString()
+      })
+    );
+
+    if (typeof window.mwSaveMeasurement === 'function') {
+      await window.mwSaveMeasurement(measurement);
+    }
+
+    if (button) {
+      button.classList.remove('is-saving');
+      button.classList.add('is-saved');
+      button.textContent = 'Saved ✓';
+    }
+
+    setTimeout(function () {
+      window.location.href =
+        '/health-dashboard-v4.html#current-snapshot';
+    }, 850);
+
+  } catch (error) {
+    console.error('Breath Snapshot save failed:', error);
+
+    if (button) {
+      button.disabled = false;
+      button.classList.remove('is-saving', 'is-saved');
+      button.classList.add('is-error');
+      button.textContent = 'Could not save — try again';
+    }
+
+    setTimeout(function () {
+      if (button) {
+        button.classList.remove('is-error');
+        button.textContent = 'Save Breath Snapshot';
+      }
+    }, 2200);
+  }
+};
+</script>
+
 </body>
 </html>
