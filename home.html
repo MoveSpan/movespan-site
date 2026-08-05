@@ -506,26 +506,31 @@ img{max-width:100%;display:block}
   width: 56%;
   margin: 0;
   z-index: 4;
+  outline: 3px solid rgba(255,255,255,.92);
+  outline-offset: 4px;
+  box-shadow:
+    0 0 0 7px rgba(255,255,255,.18),
+    0 8px 24px rgba(0,0,0,.18);
 }
 
 .practice-person-frame.layout-vertical {
-  width: 38%;
-  height: 94%;
+  width: 34%;
+  height: 90%;
   right: 2%;
   bottom: 0;
 }
 
 .practice-person-frame.layout-balanced {
-  width: 43%;
-  height: 88%;
-  right: 1%;
+  width: 39%;
+  height: 84%;
+  right: 1.5%;
   bottom: 0;
 }
 
 .practice-person-frame.layout-horizontal {
-  width: 47%;
-  height: 58%;
-  right: 1%;
+  width: 40%;
+  height: 50%;
+  right: 2%;
   bottom: 5%;
 }
 
@@ -547,6 +552,31 @@ img{max-width:100%;display:block}
     width: 58%;
   }
 }
+
+/* Final mobile image sizing */
+@media (max-width: 390px) {
+  .practice-person-frame.layout-vertical {
+    width: 31%;
+    height: 84%;
+    right: 1%;
+    bottom: 0;
+  }
+
+  .practice-person-frame.layout-balanced {
+    width: 35%;
+    height: 78%;
+    right: 1%;
+    bottom: 0;
+  }
+
+  .practice-person-frame.layout-horizontal {
+    width: 38%;
+    height: 44%;
+    right: 1%;
+    bottom: 7%;
+  }
+}
+
 </style>
 <style id="movespan-home-sheets-style">
 body.home-sheet-open {
@@ -1556,83 +1586,28 @@ body.practice-sheet-open {
 
 
 <style id="onboarding-today-practice-focus-style">
+/*
+  Today’s Practice opens normally after onboarding.
+  No overlay, pulse animation, extra outline or persistent glow.
+*/
 .practice-focus-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9990;
-  background: rgba(15, 23, 19, 0.60);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
+  display: none !important;
 }
 
-.practice-focus-overlay.is-visible {
-  opacity: 1;
+#practice-hero.practice-focus-target,
+#practice-hero.practice-focus-animated,
+#practice-hero.practice-focus-static {
+  animation: none !important;
 }
 
-/* Яркое постоянное выделение */
-#practice-hero.practice-focus-target {
-  position: relative;
-  z-index: 9992 !important;
-  outline: 5px solid #ffffff;
-  outline-offset: 8px;
-  box-shadow:
-    0 0 0 15px rgba(45, 125, 82, 0.72),
-    0 0 34px 12px rgba(45, 125, 82, 0.38),
-    0 24px 65px rgba(0, 0, 0, 0.34);
-}
-
-/* Пульсация только при первом переходе из onboarding */
-#practice-hero.practice-focus-animated {
-  animation: practiceCardPulse 1.3s ease-in-out infinite;
-}
-
-#practice-hero.practice-focus-animated .journey-cta {
-  z-index: 9993;
-  animation: practiceButtonPulse 0.9s ease-in-out infinite;
-}
-
-/* После анимации и при возврате из Practice Player */
+#practice-hero.practice-focus-animated .journey-cta,
 #practice-hero.practice-focus-static .journey-cta {
-  z-index: 9993;
-  outline: 3px solid rgba(255, 255, 255, 0.92);
-  outline-offset: 4px;
+  animation: none !important;
+  outline: 3px solid rgba(255, 255, 255, 0.92) !important;
+  outline-offset: 4px !important;
   box-shadow:
     0 0 0 7px rgba(255, 255, 255, 0.18),
-    0 8px 24px rgba(0, 0, 0, 0.18);
-}
-
-@keyframes practiceCardPulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.012);
-  }
-}
-
-@keyframes practiceButtonPulse {
-  0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-  }
-
-  50% {
-    transform: scale(1.035);
-    box-shadow: 0 0 0 9px rgba(255, 255, 255, 0.28);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  #practice-hero.practice-focus-animated,
-  #practice-hero.practice-focus-animated .journey-cta {
-    animation: none;
-  }
-
-  .practice-focus-overlay {
-    transition: none;
-  }
+    0 8px 24px rgba(0, 0, 0, 0.18) !important;
 }
 </style>
 
@@ -1731,181 +1706,397 @@ body.practice-sheet-open {
 }
 </style>
 
-
-
-
-
-
-<style id="connect-device-mineral-demo">
-/* Connect Device — deep satin silver experiment */
-#device-card {
-  position: relative;
-  isolation: isolate;
+<style id="breath-snapshot-real-style">
+.breath-snapshot {
+  margin: 0 0 24px;
   overflow: hidden;
-
-  min-height: 245px;
-
-  border: 1px solid rgba(103, 113, 109, .38) !important;
-  border-radius: 26px !important;
-
+  border: 0;
+  border-radius: 25px;
   background:
-    radial-gradient(
-      95% 150% at 4% 0%,
-      rgba(255, 255, 255, .98) 0%,
-      rgba(255, 255, 255, .48) 22%,
-      transparent 48%
-    ),
-    radial-gradient(
-      90% 170% at 62% 115%,
-      rgba(255, 255, 255, .34) 0%,
-      transparent 55%
-    ),
-    linear-gradient(
-      122deg,
-      #F5F6F6 0%,
-      #D8DCDB 20%,
-      #AEB5B2 42%,
-      #E4E7E6 61%,
-      #909996 82%,
-      #C7CDCA 100%
-    ) !important;
-
+    radial-gradient(circle at 90% 5%, rgba(255,255,255,.14), transparent 35%),
+    linear-gradient(140deg, #397f59 0%, #2d7d52 48%, #205f40 100%);
   box-shadow:
-    0 16px 34px rgba(40, 49, 45, .17),
-    inset 0 1px 0 rgba(255, 255, 255, .95),
-    inset 0 -1px 0 rgba(61, 70, 66, .2) !important;
+    0 15px 34px rgba(35,96,61,.19),
+    inset 0 1px 0 rgba(255,255,255,.16);
 }
 
-/* Широкий сатиновый блик */
-#device-card::before {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  top: -60%;
-  left: 18%;
-
-  width: 34%;
-  height: 220%;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(255, 255, 255, .18) 15%,
-      rgba(255, 255, 255, .62) 48%,
-      rgba(255, 255, 255, .14) 78%,
-      transparent 100%
-    );
-
-  transform: rotate(16deg);
-  filter: blur(3px);
-  pointer-events: none;
-}
-
-/* Тонкая холодная металлическая грань */
-#device-card::after {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  left: -6%;
-  bottom: 17%;
-
-  width: 78%;
-  height: 2px;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(104, 116, 111, .18),
-      rgba(255, 255, 255, .78),
-      rgba(93, 104, 100, .25),
-      transparent
-    );
-
-  box-shadow:
-    0 5px 13px rgba(67, 76, 72, .13);
-
-  transform: rotate(-5deg);
-  pointer-events: none;
-}
-
-#device-card .dcard-left,
-#device-card .dcard-right {
+.breath-snapshot-summary {
   position: relative;
-  z-index: 2;
+  min-height: 166px;
+  display: grid;
+  grid-template-columns: 52px minmax(0,1fr) 32px;
+  gap: 16px;
+  align-items: start;
+  padding: 27px 23px 25px;
+  color: #fff;
+  cursor: pointer;
+  list-style: none;
 }
 
-#device-card .dcard-left {
-  padding: 30px 30px 28px !important;
-  background: transparent !important;
-  background-image: none !important;
+.breath-snapshot-summary::-webkit-details-marker {
+  display: none;
 }
 
-#device-card .dtitle {
-  color: #171C1A !important;
-  font-size: 18px !important;
-  font-weight: 800 !important;
-  letter-spacing: .045em;
-}
-
-#device-card .dtext {
-  max-width: 420px;
-  color: #38413D !important;
-  line-height: 1.52 !important;
-}
-
-#device-card .dcta {
-  border: 1px solid rgba(255, 255, 255, .5) !important;
-  border-radius: 14px !important;
-
+.breath-snapshot-summary::after {
+  content: "";
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: -65px;
+  height: 115px;
+  pointer-events: none;
   background:
-    linear-gradient(
-      145deg,
-      #3D8059,
-      #2B6545
-    ) !important;
-
-  color: #FFFFFF !important;
-
-  box-shadow:
-    0 8px 18px rgba(29, 74, 49, .22),
-    inset 0 1px 0 rgba(255, 255, 255, .18) !important;
+    radial-gradient(70% 90% at 24% 0%,
+      rgba(255,255,255,.16) 0%,
+      rgba(255,255,255,.06) 43%,
+      transparent 44%),
+    radial-gradient(72% 90% at 78% 8%,
+      rgba(255,255,255,.10) 0%,
+      rgba(255,255,255,.04) 45%,
+      transparent 46%);
 }
 
-/* Правая часть остаётся фирменной зелёной */
-#device-card .dcard-right {
+.breath-snapshot-icon {
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 16px;
+  background: rgba(255,255,255,.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.17),
+    0 8px 18px rgba(10,51,30,.13);
+}
+
+.breath-snapshot-icon svg {
+  width: 27px;
+  height: 27px;
+}
+
+.breath-snapshot-heading {
+  position: relative;
+  z-index: 1;
+  padding-top: 1px;
+}
+
+.breath-snapshot-title {
+  margin-bottom: 10px;
+  font-size: 22px;
+  line-height: 1.15;
+  font-weight: 760;
+  letter-spacing: -.025em;
+}
+
+.breath-snapshot-description {
+  max-width: 390px;
+  color: rgba(255,255,255,.85);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.breath-snapshot-chevron {
+  position: relative;
+  z-index: 1;
+  width: 31px;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  margin-top: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.12);
+  transition: transform .22s ease;
+}
+
+.breath-snapshot-chevron svg {
+  width: 18px;
+  height: 18px;
+}
+
+.breath-snapshot[open] .breath-snapshot-chevron {
+  transform: rotate(180deg);
+}
+
+.breath-snapshot-panel {
+  margin: 0 8px 8px;
+  padding: 22px 18px 18px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 10px 25px rgba(22,58,38,.14);
+}
+
+.breath-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 11px;
+}
+
+.breath-metric {
+  min-width: 0;
+  min-height: 126px;
+  padding: 14px 12px;
+  border: 1px solid #dfe7e2;
+  border-radius: 17px;
+  background: #fafcfb;
+}
+
+.breath-metric-icon {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background: #eaf4ed;
+  color: #2d7d52;
+}
+
+.breath-metric-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.breath-metric-label {
+  min-height: 34px;
+  color: #26332c;
+  font-size: 12px;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.breath-metric-value {
+  margin-top: 10px;
+  color: #151c18;
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 650;
+}
+
+.breath-metric-value span {
+  color: #8a958e;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.breath-dashboard-button {
+  width: 100%;
+  min-height: 53px;
+  margin: 15px 0 18px;
+  border: 0;
+  border-radius: 16px;
+  background: #2d7d52;
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 720;
+  box-shadow:
+    0 8px 18px rgba(45,125,82,.19),
+    inset 0 1px 0 rgba(255,255,255,.15);
+  cursor: pointer;
+}
+
+.breath-device-card {
+  position: relative;
+  min-height: 180px;
+  overflow: hidden;
+  padding: 23px 160px 28px 21px;
+  border: 1px solid #dce7e1;
+  border-radius: 21px;
+  background: #fff;
+  box-shadow: 0 7px 19px rgba(34,71,49,.08);
+}
+
+.breath-device-copy {
+  position: relative;
+  z-index: 4;
+}
+
+.breath-device-title {
+  margin-bottom: 8px;
+  color: #18231d;
+  font-size: 18px;
+  line-height: 1.2;
+  font-weight: 760;
+}
+
+.breath-device-text {
+  max-width: 285px;
+  margin-bottom: 16px;
+  color: #606c65;
+  font-size: 12px;
+  line-height: 1.48;
+}
+
+.breath-device-button {
+  min-height: 41px;
+  padding: 10px 15px;
+  border: 1px solid rgba(45,125,82,.22);
+  border-radius: 12px;
+  background: #edf7f0;
+  color: #2d7d52;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 720;
+  cursor: pointer;
+}
+
+.breath-watch {
+  position: absolute;
+  z-index: 3;
+  top: 19px;
+  right: 27px;
+  width: 106px;
+  height: 144px;
+  transform: rotate(1deg);
+}
+
+.breath-watch-face {
+  position: absolute;
+  top: 38px;
+  left: 13px;
+  width: 80px;
+  height: 75px;
+  border-radius: 21px;
+  background: linear-gradient(145deg,#252b29,#070908);
+  box-shadow:
+    0 14px 20px rgba(13,19,16,.23),
+    inset 0 0 0 4px #303633,
+    inset 0 0 0 6px #080a09;
+}
+
+.breath-watch-glass {
+  position: absolute;
+  inset: 8px;
+  border-radius: 15px;
   background:
-    radial-gradient(
-      circle at 28% 25%,
-      rgba(255, 255, 255, .13),
-      transparent 34%
-    ),
-    linear-gradient(
-      145deg,
-      #5A8D6B 0%,
-      #376C4C 100%
-    ) !important;
-
-  box-shadow:
-    inset 16px 0 28px rgba(30, 54, 41, .12);
+    linear-gradient(145deg,rgba(255,255,255,.09),transparent 38%),
+    #050706;
 }
 
-#device-card .dcard-right img {
-  filter:
-    drop-shadow(0 12px 14px rgba(20, 45, 31, .22));
+.breath-watch-crown {
+  position: absolute;
+  right: -7px;
+  top: 23px;
+  width: 7px;
+  height: 17px;
+  border-radius: 5px;
+  background: #161b18;
+}
+
+.breath-watch-strap {
+  position: absolute;
+  left: 32px;
+  width: 42px;
+  background: linear-gradient(90deg,#121513,#242925,#101311);
+}
+
+.breath-watch-strap-top {
+  top: 0;
+  height: 48px;
+  border-radius: 20px 20px 8px 8px;
+}
+
+.breath-watch-strap-bottom {
+  bottom: 0;
+  height: 45px;
+  border-radius: 8px 8px 20px 20px;
+}
+
+.breath-device-wave {
+  position: absolute;
+  z-index: 1;
+  left: -10%;
+  width: 120%;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.breath-device-wave-one {
+  bottom: -78px;
+  height: 132px;
+  background: rgba(45,125,82,.11);
+  transform: rotate(2deg);
+}
+
+.breath-device-wave-two {
+  bottom: -94px;
+  height: 137px;
+  background: rgba(45,125,82,.07);
+  transform: rotate(-2deg);
 }
 
 @media (max-width: 520px) {
-  #device-card {
-    min-height: 220px;
+  .breath-snapshot-summary {
+    min-height: 160px;
+    grid-template-columns: 46px minmax(0,1fr) 29px;
+    gap: 13px;
+    padding: 24px 18px 23px;
   }
 
-  #device-card .dcard-left {
-    padding: 24px 22px !important;
+  .breath-snapshot-icon {
+    width: 45px;
+    height: 45px;
+  }
+
+  .breath-snapshot-title {
+    font-size: 20px;
+  }
+
+  .breath-snapshot-description {
+    font-size: 13px;
+    line-height: 1.46;
+  }
+
+  .breath-snapshot-panel {
+    margin: 0 6px 6px;
+    padding: 17px 14px 15px;
+  }
+
+  .breath-metrics {
+    gap: 7px;
+  }
+
+  .breath-metric {
+    min-height: 119px;
+    padding: 12px 8px;
+  }
+
+  .breath-metric-label {
+    font-size: 10px;
+  }
+
+  .breath-metric-value {
+    font-size: 21px;
+  }
+
+  .breath-metric-value span {
+    display: block;
+    margin-top: 5px;
+    font-size: 9px;
+  }
+
+  .breath-device-card {
+    min-height: 172px;
+    padding: 20px 117px 25px 17px;
+  }
+
+  .breath-device-title {
+    font-size: 16px;
+  }
+
+  .breath-device-text {
+    font-size: 11px;
+  }
+
+  .breath-watch {
+    right: 8px;
+    top: 24px;
+    transform: scale(.83);
+    transform-origin: top right;
   }
 }
 </style>
+
 </head>
 <body>
 <div class="wrap">
@@ -2020,33 +2211,116 @@ body.practice-sheet-open {
   </div>
 
   <!-- HEALTH SNAPSHOT -->
-  <div class="card card-pad">
-    <div class="hs-head">
-      <span class="eyebrow">Health Snapshot</span>
-      <span class="sec-link" onclick="go('health')">Details &rsaquo;</span>
-    </div>
-    <div class="hs-scroll">
-      <div class="hs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-      <div class="hs-metrics">
-        <div class="hs-metric"><div class="hs-mlabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Pulse</div><div class="hs-mval">&mdash; <span class="hs-munit">bpm</span></div></div>
-        <div class="hs-metric"><div class="hs-mlabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h4l3-9 6 18 3-9h4"/></svg>Breathing rate</div><div class="hs-mval">&mdash; <span class="hs-munit">breaths/min</span></div></div>
-        <div class="hs-metric"><div class="hs-mlabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Recovery</div><div class="hs-mval">&mdash; <span class="hs-munit">%</span></div></div>
-        <div class="hs-metric"><div class="hs-mlabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l2-8 4 16 2-8h6"/></svg>HRV</div><div class="hs-mval">&mdash; <span class="hs-munit">ms</span></div></div>
-        <div class="hs-metric"><div class="hs-mlabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Sleep</div><div class="hs-mval">&mdash; <span class="hs-munit">h</span></div></div>
+  
+  <!-- BREATH SNAPSHOT -->
+  <details class="breath-snapshot" id="breath-snapshot">
+    <summary class="breath-snapshot-summary">
+      <div class="breath-snapshot-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 12h4l3-8 5 16 3-8h5"/>
+        </svg>
+      </div>
+
+      <div class="breath-snapshot-heading">
+        <div class="breath-snapshot-title">Breath Snapshot</div>
+        <div class="breath-snapshot-description">
+          Discover how your breathing influences your energy,
+          recovery, and nervous system.
+        </div>
+      </div>
+
+      <div class="breath-snapshot-chevron" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m7 10 5 5 5-5"/>
+        </svg>
+      </div>
+    </summary>
+
+    <div class="breath-snapshot-panel">
+      <div class="breath-metrics">
+        <div class="breath-metric">
+          <div class="breath-metric-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round">
+              <path d="M3 12h4l2-7 5 14 3-7h4"/>
+            </svg>
+          </div>
+          <div class="breath-metric-label">Breathing Rate</div>
+          <div class="breath-metric-value">
+            — <span>breaths/min</span>
+          </div>
+        </div>
+
+        <div class="breath-metric">
+          <div class="breath-metric-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round">
+              <path d="M4 8c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3"/>
+              <path d="M4 16c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3"/>
+            </svg>
+          </div>
+          <div class="breath-metric-label">Breathing Pattern</div>
+          <div class="breath-metric-value">
+            — <span>not measured</span>
+          </div>
+        </div>
+
+        <div class="breath-metric">
+          <div class="breath-metric-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21.2l8.8-8.8a5.5 5.5 0 0 0 0-7.8z"/>
+            </svg>
+          </div>
+          <div class="breath-metric-label">Pulse</div>
+          <div class="breath-metric-value">
+            — <span>bpm</span>
+          </div>
+        </div>
+      </div>
+
+      <button
+        class="breath-dashboard-button"
+        type="button"
+        onclick="window.location.href='health-dashboard-v4.html'">
+        Open Breath Snapshot
+        <span aria-hidden="true">→</span>
+      </button>
+
+      <div class="breath-device-card">
+        <div class="breath-device-copy">
+          <div class="breath-device-title">Connect Your Device</div>
+
+          <div class="breath-device-text">
+            Add data from Apple Health, WHOOP, Fitbit, Garmin, or Oura
+            for a more complete view of your health trends.
+          </div>
+
+          <button
+            class="breath-device-button"
+            type="button"
+            onclick="go('device')">
+            Connect Device <span aria-hidden="true">→</span>
+          </button>
+        </div>
+
+        <div class="breath-watch" aria-hidden="true">
+          <div class="breath-watch-strap breath-watch-strap-top"></div>
+          <div class="breath-watch-face">
+            <div class="breath-watch-glass"></div>
+            <div class="breath-watch-crown"></div>
+          </div>
+          <div class="breath-watch-strap breath-watch-strap-bottom"></div>
+        </div>
+
+        <div class="breath-device-wave breath-device-wave-one"></div>
+        <div class="breath-device-wave breath-device-wave-two"></div>
       </div>
     </div>
-    <button class="hs-cta" onclick="window.location.href='health-dashboard-v4.html'">Open Health Dashboard &rarr;</button>
-  </div>
+  </details>
 
-  <!-- CONNECT DEVICE (conditional) -->
-  <div class="dcard" id="device-card">
-    <div class="dcard-left">
-      <div class="dtitle">Connect your health device</div>
-      <div class="dtext">Apple Health, WHOOP, Fitbit, Garmin and Oura are supported in this MVP.</div>
-      <button class="dcta" onclick="go('device')">Connect a device &rarr;</button>
-    </div>
-    <div class="dcard-right"><img src="images/connect-device-woman.png" alt="Connect your device"></div>
-  </div>
 
   <!-- TODAY'S JOURNEY (regular card) -->
   <div class="card card-pad">
@@ -2648,11 +2922,11 @@ applyMockState();
 
       <span class="health-snapshot-toggle-copy">
         <span class="health-snapshot-toggle-title">
-          Health Snapshot
+          Breath Snapshot
         </span>
 
         <span class="health-snapshot-toggle-subtitle">
-          Pulse, breathing and recovery data
+          Discover how your breathing influences your energy, recovery, and nervous system.
         </span>
       </span>
 
@@ -2677,7 +2951,7 @@ applyMockState();
     const card = findHealthSnapshotCard();
 
     if (!card) {
-      console.warn("MoveSpan: Health Snapshot card not found");
+      console.warn("MoveSpan: Breath Snapshot card not found");
       return;
     }
 
@@ -2748,7 +3022,6 @@ applyMockState();
 
 <script id="onboarding-today-practice-focus-script">
 (function () {
-  const INTRO_SHOWN_KEY = 'ms_today_practice_intro_shown';
   const ONBOARDING_FOCUS_KEY = 'ms_focus_todays_practice';
 
   function cleanFocusParameter() {
@@ -2771,20 +3044,17 @@ applyMockState();
     );
   }
 
-  function activateTodaysPractice(attempt) {
+  function openTodaysPractice(attempt) {
     const hero = document.getElementById('practice-hero');
-    const button = hero
-      ? hero.querySelector('.journey-cta')
-      : null;
 
-    if ((!hero || !button) && attempt < 20) {
+    if (!hero && attempt < 20) {
       window.setTimeout(function () {
-        activateTodaysPractice(attempt + 1);
+        openTodaysPractice(attempt + 1);
       }, 150);
       return;
     }
 
-    if (!hero || !button) {
+    if (!hero) {
       return;
     }
 
@@ -2792,81 +3062,109 @@ applyMockState();
       new URLSearchParams(window.location.search).get('focus') === 'today' ||
       sessionStorage.getItem(ONBOARDING_FOCUS_KEY) === '1';
 
-    const introAlreadyShown =
-      sessionStorage.getItem(INTRO_SHOWN_KEY) === '1';
-
-    const shouldAnimate =
-      cameFromOnboarding && !introAlreadyShown;
+    if (!cameFromOnboarding) {
+      return;
+    }
 
     hero.scrollIntoView({
       behavior: 'auto',
       block: 'center'
     });
 
-    hero.classList.add('practice-focus-target');
-
-    if (shouldAnimate) {
-      const overlay = document.createElement('div');
-      overlay.className = 'practice-focus-overlay';
-      document.body.appendChild(overlay);
-
-      hero.classList.add('practice-focus-animated');
-
-      requestAnimationFrame(function () {
-        overlay.classList.add('is-visible');
-      });
-
-      sessionStorage.setItem(INTRO_SHOWN_KEY, '1');
-
-      window.setTimeout(function () {
-        overlay.classList.remove('is-visible');
-
-        hero.classList.remove('practice-focus-animated');
-        hero.classList.add('practice-focus-static');
-
-        window.setTimeout(function () {
-          overlay.remove();
-        }, 300);
-      }, 7000);
-    } else {
-      /* При возврате с практики — сразу статичное выделение */
-      hero.classList.add('practice-focus-static');
-    }
-
-    button.addEventListener(
-      'click',
-      function () {
-        /*
-         * Убираем выделение перед переходом, но сохраняем информацию,
-         * что вводная пульсация уже была показана.
-         */
-        hero.classList.remove(
-          'practice-focus-target',
-          'practice-focus-animated',
-          'practice-focus-static'
-        );
-      },
-      { once: true }
-    );
-
-    cleanFocusParameter();
     sessionStorage.removeItem(ONBOARDING_FOCUS_KEY);
-  }
-
-  function start() {
-    window.setTimeout(function () {
-      activateTodaysPractice(0);
-    }, 300);
+    cleanFocusParameter();
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener(
-      'DOMContentLoaded',
-      start,
-      { once: true }
-    );
+    document.addEventListener('DOMContentLoaded', function () {
+      openTodaysPractice(0);
+    });
   } else {
-    start();
+    openTodaysPractice(0);
+  }
+})();
+</script>
+
+
+<script id="health-snapshot-device-merge-script">
+(function () {
+  function mergeDeviceCard(attempt) {
+    const healthCard =
+      document.querySelector('.health-snapshot-collapsible');
+
+    const deviceCard =
+      document.querySelector('.dcard');
+
+    if ((!healthCard || !deviceCard) && attempt < 30) {
+      window.setTimeout(function () {
+        mergeDeviceCard(attempt + 1);
+      }, 100);
+      return;
+    }
+
+    if (!healthCard || !deviceCard) {
+      return;
+    }
+
+    if (healthCard.dataset.deviceMerged === '1') {
+      return;
+    }
+
+    const detailsInner =
+      healthCard.querySelector('.health-snapshot-details-inner');
+
+    if (!detailsInner) {
+      if (attempt < 30) {
+        window.setTimeout(function () {
+          mergeDeviceCard(attempt + 1);
+        }, 100);
+      }
+      return;
+    }
+
+    const existingAction =
+      deviceCard.querySelector('.dcta, a, button');
+
+    const connectBlock = document.createElement('div');
+    connectBlock.className = 'health-device-connect';
+
+    const title = document.createElement('div');
+    title.className = 'health-device-connect-title';
+    title.textContent = 'No device connected';
+
+    const description = document.createElement('div');
+    description.className = 'health-device-connect-text';
+    description.textContent =
+      'Connect Apple Health, WHOOP, Fitbit, Garmin or Oura';
+
+    connectBlock.appendChild(title);
+    connectBlock.appendChild(description);
+
+    if (existingAction) {
+      existingAction.textContent = 'Connect device';
+      connectBlock.appendChild(existingAction);
+    } else {
+      const fallbackButton = document.createElement('button');
+      fallbackButton.type = 'button';
+      fallbackButton.textContent = 'Connect device';
+      fallbackButton.addEventListener('click', function () {
+        window.location.href = 'settings.html';
+      });
+      connectBlock.appendChild(fallbackButton);
+    }
+
+    detailsInner.appendChild(connectBlock);
+    deviceCard.remove();
+
+    healthCard.dataset.deviceMerged = '1';
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      mergeDeviceCard(0);
+    });
+  } else {
+    mergeDeviceCard(0);
   }
 })();
 </script>
