@@ -1834,6 +1834,18 @@ function restart(){
     const active = getActiveScreen();
     const activeId = active ? active.id : currentScreenId;
 
+    const params = new URLSearchParams(window.location.search);
+    const externalFunctionalStart =
+      params.get("functionalStart") === "1";
+
+    if (
+      externalFunctionalStart &&
+      (!activeId || activeId === "s-t1")
+    ) {
+      window.location.href = "functional-age-intro.html";
+      return;
+    }
+
     if (!activeId || activeId === "s-intro") {
       window.location.href = "assessments.html";
       return;
@@ -1855,6 +1867,11 @@ function restart(){
 
     if (previousId) {
       activateScreenById(previousId);
+      return;
+    }
+
+    if (externalFunctionalStart) {
+      window.location.href = "functional-age-intro.html";
       return;
     }
 
@@ -1988,13 +2005,12 @@ document.addEventListener("DOMContentLoaded", function () {
       setG(gender);
     }
 
-    const startButton =
-      document.getElementById("functional-start-btn");
+    selectedGender = gender === "female" ? "f" : "m";
 
-    if (startButton) {
-      startButton.click();
-    } else if (typeof startFunctionalAge === "function") {
+    if (typeof startFunctionalAge === "function") {
       startFunctionalAge();
+    } else {
+      throw new Error("startFunctionalAge is not available");
     }
   } catch (error) {
     console.error(
