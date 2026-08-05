@@ -1012,6 +1012,158 @@
 }
 </style>
 
+
+  <style id="movespan-education-mobile-standard">
+    /*
+      MoveSpan mobile standard.
+      Visual overrides only:
+      no content, order, or JavaScript changes.
+    */
+
+    :root {
+      --green: #2D7D52;
+      --green-dark: #256844;
+      --green-soft: #EAF4EE;
+      --green-soft-2: #F2F7F4;
+
+      --background: #F5F7F6;
+      --surface: #FFFFFF;
+      --border: #DDE3DF;
+
+      --app-width: 430px;
+      --page-padding: 16px;
+      --radius-large: 24px;
+      --radius-medium: 18px;
+    }
+
+    html,
+    body {
+      background: var(--background);
+    }
+
+    .app {
+      width: min(100%, var(--app-width));
+      margin-left: auto;
+      margin-right: auto;
+      background: var(--background);
+    }
+
+    /*
+      Main Education menu
+    */
+
+    .education-entry {
+      border-radius: var(--radius-medium);
+    }
+
+    /*
+      Detail pages sliding from the right
+    */
+
+    .detail-overlay {
+      width: 100%;
+    }
+
+    .detail-page {
+      width: min(100%, var(--app-width));
+      max-width: var(--app-width);
+      background: var(--background);
+    }
+
+    .detail-header {
+      padding-left: var(--page-padding);
+      padding-right: var(--page-padding);
+    }
+
+    .detail-content {
+      padding-left: var(--page-padding);
+      padding-right: var(--page-padding);
+    }
+
+    /*
+      Touch target for back button:
+      minimum comfortable mobile size
+    */
+
+    .detail-back {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      min-height: 44px;
+    }
+
+    /*
+      Content cards
+    */
+
+    .reading-card,
+    .insight-card,
+    .practice-bridge,
+    .diaphragm-image-card {
+      border-radius: var(--radius-medium);
+    }
+
+    /*
+      Primary and secondary actions
+    */
+
+    .practice-primary,
+    .practice-secondary {
+      min-height: 48px;
+      padding: 14px 16px;
+      border-radius: var(--radius-medium);
+      font-size: 15px;
+      line-height: 1.3;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+
+    .practice-primary {
+      background: var(--green);
+      color: #FFFFFF;
+    }
+
+    .practice-secondary {
+      border-color: rgba(45, 125, 82, 0.25);
+      background: #FFFFFF;
+      color: var(--green-dark);
+    }
+
+    /*
+      Prevent the Education layout becoming narrower than
+      the rest of MoveSpan on small phones.
+    */
+
+    @media (max-width: 430px) {
+      .app {
+        width: 100%;
+        box-shadow: none;
+      }
+
+      .detail-page {
+        width: 100%;
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .app {
+        padding-left: var(--page-padding);
+        padding-right: var(--page-padding);
+        box-sizing: border-box;
+      }
+
+      .detail-header,
+      .detail-content {
+        padding-left: var(--page-padding);
+        padding-right: var(--page-padding);
+      }
+    }
+  </style>
+
 </head>
 
 <body>
@@ -1569,6 +1721,127 @@
     </article>
   </div>
 
+
+
+
+  <!-- BREATHING AND HEART RHYTHM -->
+
+  <div
+    class="detail-overlay"
+    id="heartPage"
+    aria-hidden="true">
+
+    <article class="detail-page">
+
+      <header class="detail-header">
+        <button
+          class="detail-back"
+          type="button"
+          aria-label="Return to education menu"
+          onclick="closeEducationPage('heart')">
+          ‹
+        </button>
+
+        <div class="detail-header-title">
+          Breathing and Heart Rhythm
+        </div>
+
+        <div aria-hidden="true"></div>
+      </header>
+
+      <div class="detail-content">
+
+        <div class="detail-label">
+          Breath and pulse
+        </div>
+
+        <h1 class="detail-title">
+          Breathing and Heart Rhythm
+        </h1>
+
+        <p class="detail-lead">
+          Breathing and heart rhythm continuously interact. This is why
+          resting pulse is useful context in your Breath Snapshot, although
+          one measurement cannot explain the whole state of the body.
+        </p>
+
+        <section class="reading-card">
+          <h2>Your heart does not beat like a metronome</h2>
+
+          <p>
+            The time between heartbeats changes naturally. In many people,
+            heart rate rises slightly during inhalation and falls slightly
+            during exhalation. This normal interaction is called respiratory
+            sinus arrhythmia.
+          </p>
+        </section>
+
+        <section class="reading-card">
+          <h2>Why breathing influences heart rhythm</h2>
+
+          <p>
+            Breathing changes pressure inside the chest, affects blood return
+            to the heart, and interacts with autonomic regulation. Slow,
+            comfortable breathing can make the natural relationship between
+            breath and pulse more noticeable.
+          </p>
+        </section>
+
+        <section class="reading-card">
+          <h2>What resting pulse can tell you</h2>
+
+          <p>
+            Resting pulse provides useful context, especially when it is
+            measured repeatedly under similar conditions. It may reflect
+            recovery, physical conditioning, recent activity, illness,
+            emotional state, or other influences.
+          </p>
+        </section>
+
+        <section class="reading-card">
+          <h2>One measurement is not a diagnosis</h2>
+
+          <p>
+            Pulse can change because of heat, hydration, caffeine, sleep,
+            medication, recent exercise, pain, stress, or illness. A single
+            value does not prove a specific nervous-system state.
+          </p>
+        </section>
+
+        <section class="insight-card">
+          <div class="insight-label">MoveSpan approach</div>
+
+          <p>
+            MoveSpan interprets resting pulse together with breathing rate,
+            breathing pattern, assessments, and repeated observations rather
+            than treating one number as a complete conclusion.
+          </p>
+        </section>
+
+        <section class="practice-bridge">
+          <div class="practice-bridge-copy">
+            <strong>Use this information in your program</strong>
+
+            <span>
+              Your Breath Snapshot helps MoveSpan choose an appropriate
+              starting direction.
+            </span>
+          </div>
+
+          <div class="practice-bridge-actions">
+            <a class="practice-primary" href="/program.html">
+              Start Your Recommended Practice
+            </a>
+
+            <a class="practice-secondary" href="/test.html">
+              Refine Your Plan with Assessments
+            </a>
+          </div>
+        </section>
+
+      </div>
+    </article>
+  </div>
 
 
   <!-- MEET YOUR DIAPHRAGM -->
@@ -2902,6 +3175,78 @@
     }
 
 
+
+    function addHeartRhythmEducationCard() {
+      if (document.querySelector('[data-heart-rhythm-card]')) return;
+
+      const candidates = Array.from(
+        document.querySelectorAll('button, a, [role="button"]')
+      );
+
+      const whyCard = candidates.find(function (element) {
+        return element.textContent
+          .replace(/\s+/g, ' ')
+          .trim()
+          .includes('Why Breathing Matters');
+      });
+
+      if (!whyCard || !whyCard.parentNode) {
+        console.warn(
+          'Breathing and Heart Rhythm: menu template was not found.'
+        );
+        return;
+      }
+
+      const heartCard = whyCard.cloneNode(true);
+
+      heartCard.removeAttribute('id');
+      heartCard.removeAttribute('onclick');
+      heartCard.removeAttribute('href');
+      heartCard.setAttribute('data-heart-rhythm-card', 'true');
+
+      heartCard.querySelectorAll('[id]').forEach(function (element) {
+        element.removeAttribute('id');
+      });
+
+      const titleElement = Array.from(
+        heartCard.querySelectorAll(
+          'h1, h2, h3, h4, strong, .title, .education-title'
+        )
+      ).find(function (element) {
+        return element.textContent.includes('Why Breathing Matters');
+      });
+
+      if (titleElement) {
+        titleElement.textContent = 'Breathing and Heart Rhythm';
+      } else {
+        heartCard.innerHTML = heartCard.innerHTML.replace(
+          'Why Breathing Matters',
+          'Breathing and Heart Rhythm'
+        );
+      }
+
+      const descriptionElement = heartCard.querySelector(
+        'p, small, .subtitle, .description, .education-description'
+      );
+
+      if (descriptionElement) {
+        descriptionElement.textContent =
+          'How breathing and pulse continuously interact.';
+      }
+
+      heartCard.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        openEducationPage('heart');
+      });
+
+      whyCard.parentNode.insertBefore(
+        heartCard,
+        whyCard.nextSibling
+      );
+    }
+
+
     function openEducationPage(pageName) {
       const page =
         document.getElementById(pageName + 'Page');
@@ -2973,6 +3318,8 @@
 
 
     document.addEventListener('DOMContentLoaded', function () {
+      addHeartRhythmEducationCard();
+
       refreshFocusPreferenceButtons();
 
       document
@@ -2988,5 +3335,622 @@
         });
     });
   </script>
+
+  <!-- CHEST BREATHING VS 360 DEGREE BREATHING -->
+
+  <div
+    class="detail-overlay"
+    id="breathing360Page"
+    aria-hidden="true">
+
+    <article class="detail-page">
+
+      <header class="detail-header">
+        <button
+          class="detail-back"
+          type="button"
+          aria-label="Return to education menu"
+          onclick="closeEducationPage('breathing360')">
+          ‹
+        </button>
+
+        <div class="detail-header-title">
+          Chest Breathing vs 360° Breathing
+        </div>
+
+        <div aria-hidden="true"></div>
+      </header>
+
+      <div class="detail-content">
+
+        <div class="detail-label">
+          How breathing movement distributes
+        </div>
+
+        <h1 class="detail-title">
+          Chest Breathing vs 360° Breathing
+        </h1>
+
+        <p class="detail-lead">
+          Comfortable breathing is not only movement of the upper chest or
+          the front abdomen. Breathing movement can also spread through the
+          lower ribs, sides, and back.
+        </p>
+
+        <section class="reading-card">
+          <h2>Upper-chest dominant breathing</h2>
+
+          <p>
+            In this pattern, movement is concentrated around the upper ribs,
+            sternum, shoulders, or neck. It may appear during exercise,
+            emotional activation, pain, restricted lower-rib movement, or
+            simply as an established habit.
+          </p>
+
+          <p>
+            Upper-chest movement is not automatically wrong. The useful
+            question is whether it remains the main pattern during quiet rest
+            and whether breathing feels unnecessarily effortful.
+          </p>
+        </section>
+
+        <section class="reading-card">
+          <h2>What 360° breathing means</h2>
+
+          <p>
+            During a comfortable inhalation, the lower rib cage may widen
+            forward, sideways, and toward the back. The abdomen can also move
+            naturally as the diaphragm descends.
+          </p>
+
+          <p>
+            This does not mean deliberately pushing the abdomen outward.
+            The goal is a more distributed breathing movement with less
+            unnecessary lifting through the shoulders and neck.
+          </p>
+        </section>
+
+        <section class="reading-card">
+          <h2>Why lower-rib mobility matters</h2>
+
+          <p>
+            The diaphragm attaches around the lower rib cage. Stiffness
+            through the lower ribs, thoracic spine, and side body may reduce
+            the comfortable movement available during breathing.
+          </p>
+
+          <p>
+            MoveSpan may use thoracic rotation, side-body stretching, chest
+            opening, supported positions, and gentle lower-rib breathing to
+            improve movement options.
+          </p>
+        </section>
+
+        <section class="reading-card">
+          <h2>Do not force a larger breath</h2>
+
+          <p>
+            More air is not always better. Begin with comfortable breathing
+            without strain, dizziness, excessive effort, or deliberate
+            overexpansion.
+          </p>
+        </section>
+
+        <section class="practice-bridge">
+          <div class="practice-bridge-copy">
+            <strong>Use this information in your program</strong>
+
+            <span>
+              MoveSpan can include lower-rib mobility and breath–movement
+              coordination in your recommended sequence.
+            </span>
+          </div>
+
+          <div class="practice-bridge-actions">
+            <a class="practice-primary" href="/program.html">
+              Start Your Recommended Practice
+            </a>
+
+            <a class="practice-secondary" href="/test.html">
+              Refine Your Plan with Assessments
+            </a>
+          </div>
+        </section>
+
+      </div>
+    </article>
+  </div>
+
+
+  <script id="breathing360-education-script">
+    document.addEventListener('DOMContentLoaded', function () {
+      if (
+        document.querySelector(
+          '[data-breathing360-education-card]'
+        )
+      ) {
+        return;
+      }
+
+      const candidates = Array.from(
+        document.querySelectorAll(
+          'button, a, [role="button"]'
+        )
+      );
+
+      const diaphragmCard = candidates.find(function (element) {
+        return element.textContent
+          .replace(/\s+/g, ' ')
+          .trim()
+          .includes('Meet Your Diaphragm');
+      });
+
+      if (!diaphragmCard || !diaphragmCard.parentNode) {
+        console.warn(
+          'Chest Breathing vs 360° Breathing: ' +
+          'Meet Your Diaphragm card not found.'
+        );
+        return;
+      }
+
+      const newCard = diaphragmCard.cloneNode(true);
+
+      newCard.removeAttribute('id');
+      newCard.removeAttribute('onclick');
+      newCard.removeAttribute('href');
+
+      newCard.setAttribute(
+        'data-breathing360-education-card',
+        'true'
+      );
+
+      newCard.querySelectorAll('[id]').forEach(function (element) {
+        element.removeAttribute('id');
+      });
+
+      newCard.innerHTML = newCard.innerHTML.replace(
+        /Meet Your Diaphragm/g,
+        'Chest Breathing vs 360° Breathing'
+      );
+
+      const description = newCard.querySelector(
+        'p, small, .subtitle, .description, ' +
+        '.education-description'
+      );
+
+      if (description) {
+        description.textContent =
+          'How breathing movement distributes through the rib cage.';
+      }
+
+      newCard.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        openEducationPage('breathing360');
+      });
+
+      diaphragmCard.parentNode.insertBefore(
+        newCard,
+        diaphragmCard.nextSibling
+      );
+    });
+  </script>
+
+
+  <!-- BREATHING AND THE NERVOUS SYSTEM -->
+
+  <div
+    class="detail-overlay"
+    id="nervousSystemPage"
+    aria-hidden="true">
+
+    <article class="detail-page">
+
+      <header class="detail-header">
+        <button
+          class="detail-back"
+          type="button"
+          aria-label="Return to education menu"
+          onclick="closeEducationPage('nervousSystem')">
+          ‹
+        </button>
+
+        <div class="detail-header-title">
+          Breathing and the Nervous System
+        </div>
+
+        <div aria-hidden="true"></div>
+      </header>
+
+      <div class="detail-content">
+
+        <div class="detail-label">
+          Breath and regulation
+        </div>
+
+        <h1 class="detail-title">
+          Breathing and the Nervous System
+        </h1>
+
+        <p class="detail-lead">
+          Breathing changes with the state of the body. Because breathing
+          is both automatic and partly voluntary, it can also become a
+          practical way to influence how the body feels.
+        </p>
+
+        <section class="reading-card">
+          <h2>Breathing is automatic and voluntary</h2>
+
+          <p>
+            Most breathing happens automatically, but you can also change
+            its pace, depth, route, and timing. This creates a practical
+            bridge between conscious attention and automatic body
+            regulation.
+          </p>
+        </section>
+
+        <section class="reading-card">
+          <h2>What may happen under stress</h2>
+
+          <p>
+            Breathing may become faster, less regular, more effortful, or
+            more concentrated in the upper chest. Similar changes may also
+            occur because of physical activity, heat, pain, posture,
+            illness, or restricted movement.
+          </p>
+
+          <p>
+            One breathing observation does not prove that a person has
+            sympathetic dominance or a nervous-system disorder.
+          </p>
+        </section>
+
+        <section class="reading-card">
+          <h2>Why a comfortable exhalation matters</h2>
+
+          <p>
+            A calm, unforced exhalation may support a subjective sense of
+            settling. Some people find that allowing the exhalation to
+            become slightly longer than the inhalation feels regulating.
+          </p>
+
+          <p>
+            The breath should remain easy. Long breath holds, aggressive
+            slowing, and forced deep breathing are not required for basic
+            regulation.
+          </p>
+        </section>
+
+        <section class="reading-card">
+          <h2>Start with comfort</h2>
+
+          <p>
+            MoveSpan begins with awareness, comfortable breathing,
+            mobility, and coordination. Active techniques such as
+            Kapalabhati, Impulse Breathing, false inhalation, and abdominal
+            manipulations require separate suitability screening and are
+            not appropriate for everyone.
+          </p>
+        </section>
+
+        <section class="practice-bridge">
+          <div class="practice-bridge-copy">
+            <strong>Choose an appropriate starting level</strong>
+
+            <span>
+              Your measurements and assessments help determine whether
+              your first practice should focus on calming, mobility,
+              coordination, or more active breathing work.
+            </span>
+          </div>
+
+          <div class="practice-bridge-actions">
+            <a class="practice-primary" href="/program.html">
+              Start Your Recommended Practice
+            </a>
+
+            <a class="practice-secondary" href="/test.html">
+              Check Practice Suitability
+            </a>
+          </div>
+        </section>
+
+      </div>
+    </article>
+  </div>
+
+
+  <!-- WHAT TO PRACTICE -->
+
+  <div
+    class="detail-overlay"
+    id="practicePage"
+    aria-hidden="true">
+
+    <article class="detail-page">
+
+      <header class="detail-header">
+        <button
+          class="detail-back"
+          type="button"
+          aria-label="Return to education menu"
+          onclick="closeEducationPage('practice')">
+          ‹
+        </button>
+
+        <div class="detail-header-title">
+          What to Practice
+        </div>
+
+        <div aria-hidden="true"></div>
+      </header>
+
+      <div class="detail-content">
+
+        <div class="detail-label">
+          Your next step
+        </div>
+
+        <h1 class="detail-title">
+          What to Practice
+        </h1>
+
+        <p class="detail-lead">
+          You do not need to work on every breathing factor at once.
+          MoveSpan uses your Breath Snapshot and assessments to select
+          a manageable starting direction.
+        </p>
+
+        <section class="reading-card">
+          <h2>1. Begin with your current snapshot</h2>
+
+          <p>
+            Breathing rate, breathing pattern, and resting pulse provide
+            initial context. They do not diagnose a condition, but they
+            help identify a reasonable place to begin.
+          </p>
+        </section>
+
+        <section class="reading-card">
+          <h2>2. Select one main focus</h2>
+
+          <p>
+            Your starting focus may involve diaphragm comfort, lower-rib
+            mobility, thoracic movement, chest opening, natural abdominal
+            movement, or breath–movement coordination.
+          </p>
+        </section>
+
+        <section class="reading-card">
+          <h2>3. Use a manageable practice</h2>
+
+          <p>
+            A short and comfortable daily practice is generally more useful
+            than occasional aggressive breathing work. The program should
+            build capacity without creating unnecessary strain.
+          </p>
+        </section>
+
+        <section class="reading-card">
+          <h2>4. Refine the plan over time</h2>
+
+          <p>
+            Repeated snapshots, body assessments, practice feedback, and
+            changes in your condition allow MoveSpan to adjust the program.
+          </p>
+        </section>
+
+        <section class="reading-card">
+          <h2>Your selected breathing focus</h2>
+
+          <p id="practicePreferencesSummary">
+            No additional breathing focus has been selected yet.
+          </p>
+        </section>
+
+        <section class="reading-card">
+          <h2>When to reduce or stop</h2>
+
+          <p>
+            Reduce or stop a breathing practice if it causes dizziness,
+            unusual shortness of breath, chest discomfort, panic, or marked
+            strain. Persistent or concerning symptoms require appropriate
+            medical evaluation.
+          </p>
+        </section>
+
+        <section class="practice-bridge">
+          <div class="practice-bridge-copy">
+            <strong>Your program provides the next action</strong>
+
+            <span>
+              MoveSpan converts your measurements, preferences, and
+              assessments into a practical sequence.
+            </span>
+          </div>
+
+          <div class="practice-bridge-actions">
+            <a class="practice-primary" href="/program.html">
+              Start My Recommended Practice
+            </a>
+
+            <a class="practice-secondary" href="/test.html">
+              Refine My Plan with Assessments
+            </a>
+          </div>
+        </section>
+
+      </div>
+    </article>
+  </div>
+
+
+  <script id="final-two-education-script">
+    document.addEventListener('DOMContentLoaded', function () {
+      const breathing360Card = document.querySelector(
+        '[data-breathing360-education-card]'
+      );
+
+      if (!breathing360Card || !breathing360Card.parentNode) {
+        console.warn(
+          'Final Education sections: 360° breathing card not found.'
+        );
+        return;
+      }
+
+      function createEducationCard(
+        key,
+        title,
+        description,
+        pageName
+      ) {
+        const existing = document.querySelector(
+          '[data-final-education-card="' + key + '"]'
+        );
+
+        if (existing) {
+          return existing;
+        }
+
+        const card = breathing360Card.cloneNode(true);
+
+        card.removeAttribute('id');
+        card.removeAttribute('onclick');
+        card.removeAttribute('href');
+        card.removeAttribute(
+          'data-breathing360-education-card'
+        );
+
+        card.setAttribute(
+          'data-final-education-card',
+          key
+        );
+
+        card.querySelectorAll('[id]').forEach(function (element) {
+          element.removeAttribute('id');
+        });
+
+        card.innerHTML = card.innerHTML.replace(
+          /Chest Breathing vs 360° Breathing/g,
+          title
+        );
+
+        const descriptionElement = card.querySelector(
+          'p, small, .subtitle, .description, ' +
+          '.education-description'
+        );
+
+        if (descriptionElement) {
+          descriptionElement.textContent = description;
+        }
+
+        card.addEventListener('click', function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+
+          if (pageName === 'practice') {
+            renderPracticePreferencesSummary();
+          }
+
+          openEducationPage(pageName);
+        });
+
+        return card;
+      }
+
+
+      function renderPracticePreferencesSummary() {
+        const target = document.getElementById(
+          'practicePreferencesSummary'
+        );
+
+        if (!target) return;
+
+        let preferences = [];
+
+        try {
+          const raw = localStorage.getItem(
+            'mw_breath_focus_preferences'
+          );
+
+          if (raw) {
+            const parsed = JSON.parse(raw);
+
+            if (Array.isArray(parsed)) {
+              preferences = parsed;
+            } else if (
+              parsed &&
+              typeof parsed === 'object'
+            ) {
+              preferences = Object.keys(parsed).filter(
+                function (key) {
+                  return Boolean(parsed[key]);
+                }
+              );
+            }
+          }
+        } catch (error) {
+          preferences = [];
+        }
+
+        if (!preferences.length) {
+          target.textContent =
+            'No additional breathing focus has been selected yet. ' +
+            'MoveSpan can still begin with your Breath Snapshot ' +
+            'and assessments.';
+          return;
+        }
+
+        const labels = preferences.map(function (value) {
+          return String(value)
+            .replace(/[_-]+/g, ' ')
+            .replace(/\b\w/g, function (letter) {
+              return letter.toUpperCase();
+            });
+        });
+
+        target.textContent =
+          'Selected focus: ' +
+          labels.join(', ') +
+          '. These preferences are saved on this device.';
+      }
+
+
+      const nervousCard = createEducationCard(
+        'nervousSystem',
+        'Breathing and the Nervous System',
+        'How breathing can reflect and influence your state.',
+        'nervousSystem'
+      );
+
+      const practiceCard = createEducationCard(
+        'practice',
+        'What to Practice',
+        'Turn your Breath Snapshot into a manageable next step.',
+        'practice'
+      );
+
+      /*
+        Insert strictly after Chest Breathing vs 360° Breathing.
+        Nothing above it is moved.
+      */
+      const parent = breathing360Card.parentNode;
+      const originalNext = breathing360Card.nextSibling;
+
+      parent.insertBefore(
+        nervousCard,
+        originalNext
+      );
+
+      parent.insertBefore(
+        practiceCard,
+        originalNext
+      );
+
+      renderPracticePreferencesSummary();
+    });
+  </script>
+
 </body>
 </html>
