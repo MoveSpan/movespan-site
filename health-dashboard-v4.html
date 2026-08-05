@@ -6,7 +6,7 @@
     name="viewport"
     content="width=device-width, initial-scale=1, viewport-fit=cover"
   >
-  <title>Health Snapshot — MoveSpan</title>
+  <title>Breath Snapshot — MoveSpan</title>
 
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -663,6 +663,182 @@
       }
     }
   </style>
+
+<style id="breath-measure-source-style">
+.measure-source-card {
+  padding: 20px;
+}
+
+.measure-source-label {
+  margin-bottom: 7px;
+  color: var(--green);
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.measure-source-title {
+  max-width: 330px;
+  margin: 0 0 8px;
+  color: var(--text);
+  font-size: 22px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -.025em;
+}
+
+.measure-source-intro {
+  max-width: 360px;
+  margin: 0 0 18px;
+  color: var(--secondary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.measure-source-options {
+  display: grid;
+  gap: 11px;
+}
+
+.measure-source-option {
+  position: relative;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 13px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--silver-2);
+}
+
+.measure-source-option.recommended {
+  padding-top: 34px;
+  border-color: rgba(45,125,82,.45);
+  background: var(--green-soft-2);
+}
+
+.measure-source-recommended {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.measure-source-option-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: #FFFFFF;
+  color: var(--green);
+}
+
+.measure-source-option-icon svg {
+  width: 21px;
+  height: 21px;
+}
+
+.measure-source-option-title {
+  margin-bottom: 5px;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+.measure-source-option-text {
+  color: var(--secondary);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.measure-source-availability {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.measure-source-availability span {
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: rgba(45,125,82,.09);
+  color: var(--green);
+  font-size: 9px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.measure-source-note {
+  margin: 14px 2px 0;
+  padding: 12px 13px;
+  border-radius: 14px;
+  background: #F4F7F5;
+  color: var(--secondary);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.measure-source-actions {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  gap: 9px;
+  margin-top: 15px;
+}
+
+.measure-source-primary,
+.measure-source-secondary {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.measure-source-primary {
+  gap: 8px;
+  border: 0;
+  background: var(--green);
+  color: #FFFFFF;
+  box-shadow: 0 7px 16px rgba(45,125,82,.17);
+}
+
+.measure-source-secondary {
+  padding: 0 15px;
+  border: 1px solid rgba(45,125,82,.28);
+  background: #FFFFFF;
+  color: var(--green);
+}
+
+@media (max-width: 390px) {
+  .measure-source-card {
+    padding: 18px;
+  }
+
+  .measure-source-title {
+    font-size: 20px;
+  }
+
+  .measure-source-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .measure-source-secondary {
+    width: 100%;
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -678,12 +854,108 @@
         </svg>
       </a>
 
-      <h1 class="page-title">Health Snapshot</h1>
+      <h1 class="page-title">Breath Snapshot</h1>
 
       <div aria-hidden="true"></div>
     </header>
 
     <div class="content">
+
+      <!-- MEASUREMENT SOURCE -->
+      <section class="section" id="breath-measure-source">
+        <article class="card measure-source-card">
+          <div class="measure-source-label">Breath Snapshot</div>
+
+          <h2 class="measure-source-title">
+            How would you like to add your measurements?
+          </h2>
+
+          <p class="measure-source-intro">
+            Use available data from a connected device, or complete a guided
+            manual check directly in MoveSpan.
+          </p>
+
+          <div class="measure-source-options">
+            <div class="measure-source-option">
+              <div class="measure-source-option-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round"
+                     stroke-linejoin="round">
+                  <rect x="7" y="2" width="10" height="20" rx="3"/>
+                  <path d="M10 6h4M10 18h4"/>
+                </svg>
+              </div>
+
+              <div class="measure-source-option-copy">
+                <div class="measure-source-option-title">
+                  Use Connected Device
+                </div>
+
+                <div class="measure-source-option-text">
+                  Import available pulse and breathing data from Apple Health,
+                  WHOOP, Fitbit, Garmin, or Oura.
+                </div>
+
+                <div class="measure-source-availability">
+                  <span>Pulse</span>
+                  <span>Breathing rate when available</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="measure-source-option recommended">
+              <div class="measure-source-recommended">Works without a device</div>
+
+              <div class="measure-source-option-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round"
+                     stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="9"/>
+                  <path d="M12 7v5l3 2"/>
+                </svg>
+              </div>
+
+              <div class="measure-source-option-copy">
+                <div class="measure-source-option-title">
+                  Measure Manually
+                </div>
+
+                <div class="measure-source-option-text">
+                  Check your breathing rate, breathing pattern, and resting
+                  pulse with step-by-step guidance.
+                </div>
+
+                <div class="measure-source-availability">
+                  <span>Breathing rate</span>
+                  <span>Breathing pattern</span>
+                  <span>Pulse</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="measure-source-note">
+            Breathing pattern is checked manually because standard wearables
+            do not identify where your breathing movement begins.
+          </div>
+
+          <div class="measure-source-actions">
+            <a class="measure-source-primary" href="/measure.html">
+              Start Manual Check
+              <span aria-hidden="true">→</span>
+            </a>
+
+            <button
+              class="measure-source-secondary"
+              type="button"
+              id="connectDeviceFromSnapshot">
+              Connect Device
+            </button>
+          </div>
+        </article>
+      </section>
+
+
 
       <section class="section">
         <article class="card snapshot-card">
@@ -986,6 +1258,19 @@
         open ? "Show less" : "+2 more";
     });
   </script>
+
+<script id="breath-measure-source-script">
+document.addEventListener("DOMContentLoaded", function () {
+  const connectButton = document.getElementById("connectDeviceFromSnapshot");
+
+  if (!connectButton) return;
+
+  connectButton.addEventListener("click", function () {
+    window.location.href = "/home.html#device-card";
+  });
+});
+</script>
+
 </body>
 </html>
 
