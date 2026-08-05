@@ -328,75 +328,6 @@
       line-height: 1.5;
     }
 
-    /* Breathing pattern */
-
-    .section-intro {
-      margin: -2px 0 12px;
-      color: var(--secondary);
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .patterns-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .pattern-card {
-      position: relative;
-      min-width: 0;
-      min-height: 130px;
-      padding: 15px;
-      border: 1.5px solid var(--border);
-      border-radius: 20px;
-      background: var(--surface);
-      color: var(--text);
-      text-align: left;
-      cursor: pointer;
-    }
-
-    .pattern-card.selected {
-      border-color: var(--green);
-      background: var(--green-soft);
-    }
-
-    .pattern-name {
-      display: block;
-      padding-right: 24px;
-      font-size: 15px;
-      line-height: 1.35;
-      font-weight: 700;
-    }
-
-    .pattern-description {
-      display: block;
-      margin-top: 8px;
-      color: var(--secondary);
-      font-size: 11px;
-      line-height: 1.45;
-    }
-
-    .pattern-check {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      width: 20px;
-      height: 20px;
-      display: grid;
-      place-items: center;
-      border: 1.5px solid #BCC5C0;
-      border-radius: 50%;
-      color: transparent;
-      font-size: 12px;
-    }
-
-    .pattern-card.selected .pattern-check {
-      border-color: var(--green);
-      background: var(--green);
-      color: #FFFFFF;
-    }
-
     /* Insight */
 
     .insight-card {
@@ -904,6 +835,170 @@
 }
 </style>
 
+<style id="breath-education-entry-v1">
+.breath-education-entry-section {
+  margin-top: 20px;
+}
+
+.breath-education-entry {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid #D7E5DD;
+  border-radius: 24px;
+  background: linear-gradient(145deg, #EDF6F0 0%, #F8FAF8 100%);
+  color: #172019;
+  text-decoration: none;
+  box-shadow: 0 12px 30px rgba(41,83,58,.08);
+  transition:
+    transform .16s ease,
+    border-color .16s ease,
+    box-shadow .16s ease;
+}
+
+.breath-education-entry:hover {
+  border-color: rgba(45,125,82,.50);
+  box-shadow: 0 15px 34px rgba(45,125,82,.12);
+}
+
+.breath-education-entry:active {
+  transform: scale(.988);
+}
+
+.breath-education-entry-icon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: #FFFFFF;
+  color: #2D7D52;
+  box-shadow: 0 5px 15px rgba(45,125,82,.08);
+}
+
+.breath-education-entry-icon svg {
+  width: 27px;
+  height: 27px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.breath-education-entry-label {
+  display: block;
+  margin-bottom: 4px;
+  color: #2D7D52;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.breath-education-entry-copy strong {
+  display: block;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.breath-education-entry-copy small {
+  display: block;
+  margin-top: 5px;
+  color: #68736D;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.breath-education-entry-chevron {
+  color: #2D7D52;
+  font-size: 37px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+@media (max-width: 390px) {
+  .breath-education-entry {
+    grid-template-columns: 47px minmax(0, 1fr) 20px;
+    gap: 11px;
+    padding: 15px;
+  }
+
+  .breath-education-entry-icon {
+    width: 47px;
+    height: 47px;
+  }
+}
+</style>
+
+
+<style id="current-snapshot-primary-v1">
+#current-snapshot .snapshot-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.72);
+  background: #2D7D52;
+  color: #FFFFFF;
+  box-shadow:
+    0 0 0 4px rgba(255,255,255,.92),
+    0 0 0 6px rgba(45,125,82,.22),
+    0 16px 34px rgba(35,95,65,.20);
+}
+
+#current-snapshot .snapshot-card::before,
+#current-snapshot .snapshot-card::after {
+  content: "";
+  position: absolute;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+#current-snapshot .snapshot-card::before {
+  width: 240px;
+  height: 240px;
+  top: -155px;
+  right: -130px;
+}
+
+#current-snapshot .snapshot-card::after {
+  width: 190px;
+  height: 190px;
+  left: -115px;
+  bottom: -145px;
+}
+
+#current-snapshot .snapshot-header,
+#current-snapshot .metrics-grid {
+  position: relative;
+  z-index: 1;
+}
+
+#current-snapshot .snapshot-title,
+#current-snapshot .metric-value,
+#current-snapshot .metric-unit,
+#current-snapshot .metric-label {
+  color: #FFFFFF;
+}
+
+#current-snapshot .snapshot-time {
+  color: rgba(255,255,255,.72);
+}
+
+#current-snapshot .snapshot-status {
+  border-color: rgba(255,255,255,.40);
+  background: rgba(255,255,255,.15);
+  color: #FFFFFF;
+}
+
+#current-snapshot .metric {
+  border-color: rgba(255,255,255,.18);
+  background: rgba(255,255,255,.10);
+}
+</style>
+
 </head>
 
 <body>
@@ -1053,167 +1148,41 @@
         </article>
       </section>
 
-      <section class="section">
-        <button
-          class="learn-button"
-          id="learnButton"
-          type="button"
-          aria-expanded="false"
-        >
-          <span class="learn-icon">i</span>
+<section class="section breath-education-entry-section">
+        <a
+          class="breath-education-entry"
+          href="/breath-education.html">
 
-          <span>
-            <span class="learn-title">Learn Why It Matters</span>
-            <span class="learn-subtitle">
-              CO₂, oxygen delivery and brain circulation
-            </span>
+          <span class="breath-education-entry-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 4v16"/>
+              <path d="M12 10c-2.5-3-6-3.2-8-1"/>
+              <path d="M12 10c2.5-3 6-3.2 8-1"/>
+              <path d="M12 14c-2.7 3.2-6.2 3.4-8.5 1"/>
+              <path d="M12 14c2.7 3.2 6.2 3.4 8.5 1"/>
+            </svg>
           </span>
 
-          <span class="chevron">›</span>
-        </button>
+          <span class="breath-education-entry-copy">
+            <span class="breath-education-entry-label">
+              Breath Education
+            </span>
 
-        <article
-          class="card education-panel"
-          id="educationPanel"
-        >
-          <h3>Efficient breathing supports the brain and body</h3>
+            <strong>Understand Your Breath</strong>
 
-          <p>
-            When ventilation exceeds the body’s current metabolic demand,
-            carbon dioxide may fall. Carbon dioxide helps regulate cerebral
-            blood flow and supports oxygen release from hemoglobin into
-            tissues.
-          </p>
+            <small>
+              Understand your results, breathing pattern, diaphragm,
+              nervous system, and recommended focus.
+            </small>
+          </span>
 
-          <div class="education-facts">
-            <div class="education-fact">
-              <strong>Brain circulation</strong>
-              <span>
-                CO₂ helps regulate blood-vessel diameter in the brain.
-              </span>
-            </div>
-
-            <div class="education-fact">
-              <strong>Oxygen delivery</strong>
-              <span>
-                CO₂ participates in releasing oxygen into active tissues.
-              </span>
-            </div>
-
-            <div class="education-fact">
-              <strong>Calm regulation</strong>
-              <span>
-                Quieter breathing may reduce unnecessary respiratory effort.
-              </span>
-            </div>
-          </div>
-
-          <div class="medical-note">
-            Breathing rate and movement pattern alone do not diagnose
-            hyperventilation or low CO₂. MoveSpan uses them as wellness
-            observations to personalize practices.
-          </div>
-        </article>
+          <span class="breath-education-entry-chevron" aria-hidden="true">
+            ›
+          </span>
+        </a>
       </section>
 
-      <section class="section">
-        <h2 class="section-heading">Breathing Pattern Check</h2>
-
-        <p class="section-intro">
-          Select where you feel the clearest movement during a calm,
-          natural breath.
-        </p>
-
-        <div class="patterns-grid" id="patternsGrid">
-          <button class="pattern-card" type="button" data-pattern="Upper chest">
-            <span class="pattern-check">✓</span>
-            <span class="pattern-name">Upper chest</span>
-            <span class="pattern-description">
-              Most movement is high in the chest and collarbone area.
-            </span>
-          </button>
-
-          <button class="pattern-card" type="button" data-pattern="Rib cage">
-            <span class="pattern-check">✓</span>
-            <span class="pattern-name">Rib cage</span>
-            <span class="pattern-description">
-              The ribs expand outward and slightly backward.
-            </span>
-          </button>
-
-          <button
-            class="pattern-card selected"
-            type="button"
-            data-pattern="Belly"
-          >
-            <span class="pattern-check">✓</span>
-            <span class="pattern-name">Belly</span>
-            <span class="pattern-description">
-              The abdomen moves gently with the diaphragm.
-            </span>
-          </button>
-
-          <button class="pattern-card" type="button" data-pattern="Low belly">
-            <span class="pattern-check">✓</span>
-            <span class="pattern-name">Low belly</span>
-            <span class="pattern-description">
-              Movement is felt mainly below the navel.
-            </span>
-          </button>
-        </div>
-      </section>
-
-      <section class="section">
-        <article class="card insight-card">
-          <button
-            class="insight-button"
-            id="insightButton"
-            type="button"
-            aria-expanded="true"
-          >
-            <span class="insight-icon">✦</span>
-
-            <span>
-              <span class="insight-label">MoveSpan Insight</span>
-              <span class="insight-title">
-                Your breathing is calm, with room to improve rib mobility
-              </span>
-            </span>
-
-            <span class="chevron">›</span>
-          </button>
-
-          <div class="insight-body open" id="insightBody">
-            <p class="insight-text">
-              Your pulse and breathing rate are within a comfortable range.
-              Belly movement is present. The next focus is freer lower-rib
-              expansion and less tension through the upper chest, neck and
-              shoulders.
-            </p>
-
-            <div class="focus-tags">
-              <span class="focus-tag accent">Belly breathing</span>
-              <span class="focus-tag">Lower-rib expansion</span>
-
-              <button
-                class="more-button"
-                id="moreFocusButton"
-                type="button"
-                aria-expanded="false"
-              >
-                +2 more
-              </button>
-
-              <div class="extra-focus" id="extraFocus">
-                <span class="focus-tag">Relax neck and shoulders</span>
-                <span class="focus-tag">Soft, longer exhalation</span>
-              </div>
-            </div>
-          </div>
-        </article>
-      </section>
-
-      <section class="section actions">
+<section class="section actions">
         <a class="primary-action" href="/program.html">
           Start Recommended Practice
         </a>
@@ -1382,7 +1351,6 @@ document.addEventListener("DOMContentLoaded", function () {
   ensureArrow(manualCard);
 });
 </script>
-
 </body>
 </html>
 
