@@ -839,6 +839,71 @@
 }
 </style>
 
+
+<style id="clickable-measure-source-cards">
+.measure-source-clickable {
+  position: relative;
+  width: 100%;
+  appearance: none;
+  text-decoration: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  padding-right: 52px;
+  transition:
+    transform .16s ease,
+    border-color .16s ease,
+    box-shadow .16s ease,
+    background-color .16s ease;
+}
+
+.measure-source-clickable:hover {
+  border-color: rgba(45,125,82,.48);
+  box-shadow: 0 7px 18px rgba(35,79,52,.08);
+}
+
+.measure-source-clickable:active {
+  transform: scale(.985);
+}
+
+.measure-source-clickable:focus-visible {
+  outline: 3px solid rgba(45,125,82,.22);
+  outline-offset: 3px;
+}
+
+.measure-source-card-arrow {
+  position: absolute;
+  top: 50%;
+  right: 19px;
+  transform: translateY(-50%);
+  color: #77827C;
+  font-size: 37px;
+  line-height: 1;
+  font-weight: 300;
+}
+
+.measure-source-option.recommended .measure-source-card-arrow {
+  color: var(--green);
+}
+
+.measure-source-actions {
+  display: none !important;
+}
+</style>
+
+
+<style id="measure-source-cleanup-fix">
+.measure-source-actions {
+  display: none !important;
+}
+
+.measure-source-option:empty,
+.measure-source-option > .measure-source-card-arrow:only-child {
+  display: none !important;
+}
+</style>
+
 </head>
 
 <body>
@@ -876,7 +941,11 @@
           </p>
 
           <div class="measure-source-options">
-            <div class="measure-source-option">
+            <button
+              class="measure-source-option measure-source-clickable"
+              type="button"
+              id="connected-device-card"
+              aria-label="Use Connected Device">
               <div class="measure-source-option-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                      stroke-width="2" stroke-linecap="round"
@@ -901,9 +970,15 @@
                   <span>Breathing rate when available</span>
                 </div>
               </div>
-            </div>
+            
+              <span class="measure-source-card-arrow" aria-hidden="true">›</span>
+            </button>
 
-            <div class="measure-source-option recommended">
+
+            <a
+              class="measure-source-option recommended measure-source-clickable"
+              href="/measure.html"
+              aria-label="Measure Manually">
               <div class="measure-source-recommended">Works without a device</div>
 
               <div class="measure-source-option-icon" aria-hidden="true">
@@ -931,26 +1006,14 @@
                   <span>Pulse</span>
                 </div>
               </div>
-            </div>
-          </div>
+          
+              <span class="measure-source-card-arrow" aria-hidden="true">›</span>
+            </a>
+
 
           <div class="measure-source-note">
             Breathing pattern is checked manually because standard wearables
             do not identify where your breathing movement begins.
-          </div>
-
-          <div class="measure-source-actions">
-            <a class="measure-source-primary" href="/measure.html">
-              Start Manual Check
-              <span aria-hidden="true">→</span>
-            </a>
-
-            <button
-              class="measure-source-secondary"
-              type="button"
-              id="connectDeviceFromSnapshot">
-              Connect Device
-            </button>
           </div>
         </article>
       </section>
@@ -1259,15 +1322,64 @@
     });
   </script>
 
-<script id="breath-measure-source-script">
+<script id="clickable-measure-source-script">
 document.addEventListener("DOMContentLoaded", function () {
-  const connectButton = document.getElementById("connectDeviceFromSnapshot");
+  const deviceCard = document.getElementById("connected-device-card");
 
-  if (!connectButton) return;
+  if (!deviceCard) return;
 
-  connectButton.addEventListener("click", function () {
-    window.location.href = "/home.html#device-card";
+  deviceCard.addEventListener("click", function () {
+    window.location.href = "/home.html#breath-snapshot";
   });
+});
+</script>
+
+<script id="measure-source-dom-fix">
+document.addEventListener("DOMContentLoaded", function () {
+  const options = document.querySelector(".measure-source-options");
+  if (!options) return;
+
+  const cards = Array.from(
+    options.querySelectorAll(".measure-source-option")
+  );
+
+  const deviceCard = cards.find(function (card) {
+    return card.textContent.includes("Use Connected Device");
+  });
+
+  const manualCard = cards.find(function (card) {
+    return card.textContent.includes("Measure Manually");
+  });
+
+  /* Удаляем пустые элементы, появившиеся из-за неправильного закрытия тегов */
+  cards.forEach(function (card) {
+    const meaningfulText = card.textContent
+      .replace("›", "")
+      .trim();
+
+    if (!meaningfulText) {
+      card.remove();
+    }
+  });
+
+  function ensureArrow(card) {
+    if (!card) return;
+
+    /* Удаляем стрелки, которые могли оказаться не в том месте */
+    card.querySelectorAll(".measure-source-card-arrow").forEach(function (arrow) {
+      arrow.remove();
+    });
+
+    const arrow = document.createElement("span");
+    arrow.className = "measure-source-card-arrow";
+    arrow.setAttribute("aria-hidden", "true");
+    arrow.textContent = "›";
+
+    card.appendChild(arrow);
+  }
+
+  ensureArrow(deviceCard);
+  ensureArrow(manualCard);
 });
 </script>
 

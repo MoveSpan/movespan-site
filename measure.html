@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MoveSpan — Daily Measurements</title>
+<title>Manual Breath Check — MoveSpan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="manifest" href="/manifest.json">
@@ -92,6 +92,162 @@ circle{fill:none;stroke-width:8}
 .count-input{width:120px;padding:14px;border:1.5px solid var(--border);border-radius:12px;font-size:32px;font-weight:600;font-family:var(--font);text-align:center;color:var(--text)}
 .count-unit{font-size:12px;color:var(--muted);margin-top:6px}
 </style>
+
+<style id="manual-breath-pattern-style">
+.pattern-hand-guide {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 15px;
+  padding: 14px;
+  border-left: 3px solid var(--green);
+  border-radius: 14px;
+  background: var(--surface);
+}
+
+.pattern-hand-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: var(--sec);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.pattern-hand-icon {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--gl);
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.pattern-observation {
+  margin-bottom: 10px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.manual-pattern-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 9px;
+  margin-bottom: 14px;
+}
+
+.manual-pattern-card {
+  position: relative;
+  min-height: 128px;
+  padding: 14px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 15px;
+  background: var(--white);
+  color: var(--text);
+  font-family: var(--font);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color .18s ease,
+    background .18s ease,
+    transform .18s ease;
+}
+
+.manual-pattern-card:active {
+  transform: scale(.985);
+}
+
+.manual-pattern-card.selected {
+  border-color: var(--green);
+  background: var(--gl);
+}
+
+.manual-pattern-wide {
+  grid-column: 1 / -1;
+  min-height: 105px;
+}
+
+.manual-pattern-check {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 22px;
+  height: 22px;
+  display: none;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--green);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.manual-pattern-card.selected .manual-pattern-check {
+  display: grid;
+}
+
+.manual-pattern-name {
+  display: block;
+  padding-right: 23px;
+  margin-bottom: 7px;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.manual-pattern-description {
+  display: block;
+  color: var(--sec);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.pattern-result {
+  display: none;
+  margin-bottom: 14px;
+  padding: 12px 13px;
+  border: 1px solid var(--gb);
+  border-radius: 12px;
+  background: var(--gl);
+  color: var(--green);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.pattern-result.show {
+  display: block;
+}
+
+.pattern-result b,
+.pattern-result span {
+  display: block;
+}
+
+.pattern-result b {
+  margin-bottom: 3px;
+  color: var(--green);
+  font-size: 13px;
+}
+
+@media (max-width: 390px) {
+  .manual-pattern-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .manual-pattern-wide {
+    grid-column: auto;
+  }
+
+  .manual-pattern-card {
+    min-height: auto;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="wrap">
@@ -103,7 +259,7 @@ circle{fill:none;stroke-width:8}
   <!-- STEP 0: PREPARATION -->
   <div class="sec active" id="s-prep">
     <div class="card">
-      <button class="back" onclick="window.location.href='/program'">← Back to program</button>
+      <button class="back" onclick="window.location.href='/health-dashboard-v4.html'">← Back to Breath Snapshot</button>
       <div class="step-label">Preparation · 1 minute</div>
       <div class="title">Get into a resting state first</div>
       <div class="posture-box">
@@ -127,11 +283,220 @@ circle{fill:none;stroke-width:8}
       <button id="prep-skip-btn" onclick="skipPrep()" style="width:100%;padding:11px;background:var(--gl);border:1.5px solid var(--gb);border-radius:14px;font-size:13px;font-weight:500;color:var(--green);font-family:var(--font);cursor:pointer;margin-top:8px">I’m already rested — measure now →</button>
     </div>
   </div>
-
-  <!-- STEP 1: PULSE -->
-  <div class="sec" id="s-pulse">
+  <!-- STEP 1: BREATHING RATE -->
+<div class="sec" id="s-breath">
     <div class="card">
-      <div class="step-label">Step 1 of 2 · Resting Pulse</div>
+      <div class="step-label">Step 1 of 3 · Breathing Rate</div>
+      <div class="title">Count your breaths</div>
+      <div class="sub">Stay in the same position. Don&rsquo;t change your breathing — just observe. Count each complete cycle (inhale + exhale = 1) for 1 minute.</div>
+      <div class="hint"><span style="font-size:16px;flex-shrink:0">💡</span><span>This observation itself calms the nervous system — noticing the breath without changing it is a practice.</span></div>
+
+      <div class="timer-wrap">
+        <div class="timer-ring">
+          <svg width="160" height="160" viewBox="0 0 160 160">
+            <circle class="ring-bg" cx="80" cy="80" r="70"/>
+            <circle class="ring-count" id="breath-ring" cx="80" cy="80" r="70" style="stroke-dashoffset:440"/>
+          </svg>
+          <div class="timer-num" id="breath-timer-num">1:00</div>
+        </div>
+        <div class="timer-sub" id="breath-timer-sub">Press Start when ready</div>
+      </div>
+      <div id="breath-screen-hint" class="hint" style="display:none"><span style="font-size:16px;flex-shrink:0">📵</span><span>You can lock your screen — a sound will signal when the minute is up.</span></div>
+      <button class="btn-primary" id="breath-timer-btn" onclick="startBreathTimer()">▶ Start 1-minute count</button>
+
+      <div id="breath-count-wrap" style="display:none">
+        <div class="count-box">
+          <div class="count-label">How many breaths did you count during 1 minute?</div>
+          <input class="count-input" type="number" id="breath-val" placeholder="—" min="4" max="40" oninput="interpBreath()">
+          <div class="count-unit">breaths per minute</div>
+        </div>
+        <div class="interp" id="interp-breath"></div>
+      </div>
+
+      <button class="why-btn" onclick="toggleWhy('why-breath')">💡 Why does breathing rate matter? ↓</button>
+      <div class="why-panel" id="why-breath">
+        <button class="listen-btn" onclick="speakWhy('why-breath-text',this)">🔊 Listen</button>
+        <div id="why-breath-text">
+          <p>At rest, a healthy breathing rate is <b>12–16 breaths per minute</b>. Above 16–18 means the system is chronically rushing even when there's nothing to rush for.</p>
+          <p style="margin-top:8px">Fast breathing almost always means <b>chest breathing</b> — the diaphragm isn't fully engaging. This creates a loop: chest breathing activates the sympathetic nervous system → stress → chest breathing. The diaphragm loses mobility, internal abdominal pressure rises, organs get less massage from breathing movements.</p>
+          <p style="margin-top:8px">Biochemically: when you over-breathe, CO₂ leaves the blood too fast, blood vessels narrow — paradoxically, you feel like you can't get enough air even though oxygen is fine. This is the <b>internal compression</b> that joint gymnastics and breathwork directly address.</p>
+          <p style="margin-top:8px">One cycle of slow nasal breathing with belly movement switches the nervous system from sympathetic to parasympathetic in 2–3 minutes. <b>Svistyelka, slow exhales, full diaphragmatic breath</b> — these are the tools.</p>
+          <div class="ranges">
+            <div class="rng"><span class="rng-val g">Below 12</span><span>Excellent — diaphragm fully engaged</span></div>
+            <div class="rng"><span class="rng-val ok">12–16</span><span>Normal</span></div>
+            <div class="rng"><span class="rng-val w">16–20</span><span>Elevated — chest breathing dominant, diaphragm underused</span></div>
+            <div class="rng"><span class="rng-val r">Above 20</span><span>High — chronic hyperventilation, high background stress</span></div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="breath-next-btn" onclick="goPattern()" disabled>Next — check breathing pattern →</button>
+      <button onclick="cancelMeasure()" style="width:100%;padding:11px;background:var(--gl);border:1.5px solid var(--gb);border-radius:14px;font-size:13px;font-weight:500;color:var(--green);font-family:var(--font);cursor:pointer;margin-top:6px">&#10005; Cancel &mdash; back to start</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: BREATHING PATTERN -->
+  <div class="sec" id="s-pattern">
+    <div class="card">
+      <div class="step-label">Step 2 of 3 · Breathing Pattern</div>
+
+      <div class="title">Where does your breathing begin?</div>
+
+      <div class="sub">
+        Place one hand on your upper chest and the other on your abdomen.
+        Take several calm, natural breaths. Do not deliberately deepen or
+        change your breathing. Notice where the movement begins and where
+        it feels strongest.
+      </div>
+
+      <div class="pattern-hand-guide">
+        <div class="pattern-hand-item">
+          <span class="pattern-hand-icon">①</span>
+          <span>
+            Place one hand below the collarbones on the upper chest.
+          </span>
+        </div>
+
+        <div class="pattern-hand-item">
+          <span class="pattern-hand-icon">②</span>
+          <span>
+            Place the other hand over the abdomen around the navel.
+          </span>
+        </div>
+
+        <div class="pattern-hand-item">
+          <span class="pattern-hand-icon">③</span>
+          <span>
+            Observe 5–8 natural breaths before choosing an answer.
+          </span>
+        </div>
+      </div>
+
+      <div class="pattern-observation">
+        Select the area where you notice the clearest movement.
+      </div>
+
+      <div class="manual-pattern-grid" id="manual-pattern-grid">
+        <button
+          class="manual-pattern-card"
+          type="button"
+          data-pattern="Upper chest"
+          onclick="selectPattern(this)">
+          <span class="manual-pattern-check">✓</span>
+          <span class="manual-pattern-name">Upper Chest</span>
+          <span class="manual-pattern-description">
+            Movement begins high in the chest or around the collarbones.
+          </span>
+        </button>
+
+        <button
+          class="manual-pattern-card"
+          type="button"
+          data-pattern="Rib cage"
+          onclick="selectPattern(this)">
+          <span class="manual-pattern-check">✓</span>
+          <span class="manual-pattern-name">Rib Cage</span>
+          <span class="manual-pattern-description">
+            The lower ribs expand outward and slightly backward.
+          </span>
+        </button>
+
+        <button
+          class="manual-pattern-card"
+          type="button"
+          data-pattern="Belly"
+          onclick="selectPattern(this)">
+          <span class="manual-pattern-check">✓</span>
+          <span class="manual-pattern-name">Belly</span>
+          <span class="manual-pattern-description">
+            The abdomen moves gently as the diaphragm descends.
+          </span>
+        </button>
+
+        <button
+          class="manual-pattern-card"
+          type="button"
+          data-pattern="Low belly"
+          onclick="selectPattern(this)">
+          <span class="manual-pattern-check">✓</span>
+          <span class="manual-pattern-name">Low Belly</span>
+          <span class="manual-pattern-description">
+            Movement is felt mainly in the lower abdominal area.
+          </span>
+        </button>
+
+        <button
+          class="manual-pattern-card manual-pattern-wide"
+          type="button"
+          data-pattern="Mixed"
+          onclick="selectPattern(this)">
+          <span class="manual-pattern-check">✓</span>
+          <span class="manual-pattern-name">Mixed</span>
+          <span class="manual-pattern-description">
+            Chest, ribs, and abdomen move together without one clear
+            starting point.
+          </span>
+        </button>
+      </div>
+
+      <div class="pattern-result" id="pattern-result"></div>
+
+      <button
+        class="why-btn"
+        onclick="toggleWhy('why-pattern')">
+        💡 Why does breathing pattern matter? ↓
+      </button>
+
+      <div class="why-panel" id="why-pattern">
+        <button
+          class="listen-btn"
+          onclick="speakWhy('why-pattern-text',this)">
+          🔊 Listen
+        </button>
+
+        <div id="why-pattern-text">
+          <p>
+            The diaphragm is the primary muscle of breathing. When it moves
+            freely, the lower ribs and abdomen usually participate naturally.
+          </p>
+
+          <p style="margin-top:8px">
+            During prolonged stress, breathing often shifts upward toward the
+            chest. The neck, shoulders, and upper chest begin doing more work,
+            while movement around the lower ribs and abdomen becomes smaller.
+          </p>
+
+          <p style="margin-top:8px">
+            This check does not diagnose a medical condition. It helps you
+            notice your current movement pattern and choose practices for
+            diaphragm mobility, rib expansion, and relaxation.
+          </p>
+        </div>
+      </div>
+
+      <button
+        class="btn-primary"
+        id="pattern-next-btn"
+        onclick="goPulse()"
+        disabled>
+        Next — measure resting pulse →
+      </button>
+
+      <button
+        onclick="cancelMeasure()"
+        style="width:100%;padding:11px;background:var(--gl);
+        border:1.5px solid var(--gb);border-radius:14px;font-size:13px;
+        font-weight:500;color:var(--green);font-family:var(--font);
+        cursor:pointer;margin-top:6px">
+        &#10005; Cancel &mdash; back to start
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 3: RESTING PULSE -->
+<div class="sec" id="s-pulse">
+    <div class="card">
+      <div class="step-label">Step 3 of 3 · Resting Pulse</div>
       <div class="title">Enter your resting pulse</div>
       <div class="hybrid-label">Your pulse right now:</div>
       <div class="hybrid-row">
@@ -184,59 +549,7 @@ circle{fill:none;stroke-width:8}
         </div>
       </div>
 
-      <button class="btn-primary" id="pulse-next-btn" onclick="goBreath()" disabled>Next — measure breathing →</button>
-      <button onclick="cancelMeasure()" style="width:100%;padding:11px;background:var(--gl);border:1.5px solid var(--gb);border-radius:14px;font-size:13px;font-weight:500;color:var(--green);font-family:var(--font);cursor:pointer;margin-top:6px">&#10005; Cancel &mdash; back to start</button>
-    </div>
-  </div>
-
-  <!-- STEP 2: BREATHING -->
-  <div class="sec" id="s-breath">
-    <div class="card">
-      <div class="step-label">Step 2 of 2 · Breathing Rate</div>
-      <div class="title">Count your breaths</div>
-      <div class="sub">Stay in the same position. Don&rsquo;t change your breathing — just observe. Count each complete cycle (inhale + exhale = 1) for 1 minute.</div>
-      <div class="hint"><span style="font-size:16px;flex-shrink:0">💡</span><span>This observation itself calms the nervous system — noticing the breath without changing it is a practice.</span></div>
-
-      <div class="timer-wrap">
-        <div class="timer-ring">
-          <svg width="160" height="160" viewBox="0 0 160 160">
-            <circle class="ring-bg" cx="80" cy="80" r="70"/>
-            <circle class="ring-count" id="breath-ring" cx="80" cy="80" r="70" style="stroke-dashoffset:440"/>
-          </svg>
-          <div class="timer-num" id="breath-timer-num">1:00</div>
-        </div>
-        <div class="timer-sub" id="breath-timer-sub">Press Start when ready</div>
-      </div>
-      <div id="breath-screen-hint" class="hint" style="display:none"><span style="font-size:16px;flex-shrink:0">📵</span><span>You can lock your screen — a sound will signal when the minute is up.</span></div>
-      <button class="btn-primary" id="breath-timer-btn" onclick="startBreathTimer()">▶ Start 1-minute count</button>
-
-      <div id="breath-count-wrap" style="display:none">
-        <div class="count-box">
-          <div class="count-label">How many breaths did you count during 1 minute?</div>
-          <input class="count-input" type="number" id="breath-val" placeholder="—" min="4" max="40" oninput="interpBreath()">
-          <div class="count-unit">breaths per minute</div>
-        </div>
-        <div class="interp" id="interp-breath"></div>
-      </div>
-
-      <button class="why-btn" onclick="toggleWhy('why-breath')">💡 Why does breathing rate matter? ↓</button>
-      <div class="why-panel" id="why-breath">
-        <button class="listen-btn" onclick="speakWhy('why-breath-text',this)">🔊 Listen</button>
-        <div id="why-breath-text">
-          <p>At rest, a healthy breathing rate is <b>12–16 breaths per minute</b>. Above 16–18 means the system is chronically rushing even when there's nothing to rush for.</p>
-          <p style="margin-top:8px">Fast breathing almost always means <b>chest breathing</b> — the diaphragm isn't fully engaging. This creates a loop: chest breathing activates the sympathetic nervous system → stress → chest breathing. The diaphragm loses mobility, internal abdominal pressure rises, organs get less massage from breathing movements.</p>
-          <p style="margin-top:8px">Biochemically: when you over-breathe, CO₂ leaves the blood too fast, blood vessels narrow — paradoxically, you feel like you can't get enough air even though oxygen is fine. This is the <b>internal compression</b> that joint gymnastics and breathwork directly address.</p>
-          <p style="margin-top:8px">One cycle of slow nasal breathing with belly movement switches the nervous system from sympathetic to parasympathetic in 2–3 minutes. <b>Svistyelka, slow exhales, full diaphragmatic breath</b> — these are the tools.</p>
-          <div class="ranges">
-            <div class="rng"><span class="rng-val g">Below 12</span><span>Excellent — diaphragm fully engaged</span></div>
-            <div class="rng"><span class="rng-val ok">12–16</span><span>Normal</span></div>
-            <div class="rng"><span class="rng-val w">16–20</span><span>Elevated — chest breathing dominant, diaphragm underused</span></div>
-            <div class="rng"><span class="rng-val r">Above 20</span><span>High — chronic hyperventilation, high background stress</span></div>
-          </div>
-        </div>
-      </div>
-
-      <button class="btn-primary" id="breath-save-btn" onclick="saveMeasurements()" disabled>Save measurements →</button>
+      <button class="btn-primary" id="pulse-next-btn" onclick="saveMeasurements()" disabled>Save Breath Snapshot →</button>
       <button onclick="cancelMeasure()" style="width:100%;padding:11px;background:var(--gl);border:1.5px solid var(--gb);border-radius:14px;font-size:13px;font-weight:500;color:var(--green);font-family:var(--font);cursor:pointer;margin-top:6px">&#10005; Cancel &mdash; back to start</button>
     </div>
   </div>
@@ -247,9 +560,10 @@ circle{fill:none;stroke-width:8}
       <div class="step-label">Today&rsquo;s measurements · saved</div>
       <div class="title">✓ All done</div>
       <div id="result-pulse-badge" class="interp show" style="margin-bottom:8px"></div>
-      <div id="result-breath-badge" class="interp show" style="margin-bottom:1rem"></div>
+      <div id="result-breath-badge" class="interp show" style="margin-bottom:8px"></div>
+      <div id="result-pattern-badge" class="interp show" style="margin-bottom:1rem"></div>
       <div class="result-action" id="result-action"></div>
-      <button class="btn-primary" onclick="window.location.href='/program'">Go to my program →</button>
+      <button class="btn-primary" onclick="window.location.href='/health-dashboard-v4.html'">Return to Breath Snapshot →</button>
       <button class="btn-amber" onclick="restart()">Measure again</button>
     </div>
   </div>
@@ -282,7 +596,7 @@ window.mwSaveMeasurement = async function(data) {
 };
 </script>
 <script>
-var pulseVal = null, breathVal = null;
+var pulseVal = null, breathVal = null, patternVal = null;
 var prepTimer = null, pulseTimer = null, breathTimer = null;
 
 function show(id) {
@@ -292,14 +606,14 @@ function show(id) {
 }
 
 // ---- PREP TIMER ----
-function skipPrep(){ show('s-pulse'); }
+function skipPrep(){ show('s-breath'); }
 function startPrep() {
   var btn = document.getElementById('prep-btn');
   btn.disabled = true; btn.textContent = 'Resting…';
   runTimer(60, 'prep-ring', 'prep-num', '#A8D5B8', function(sec){
     document.getElementById('prep-sub').textContent = sec > 0 ? 'Resting… breathe and let go 🌿' : 'Ready — let\'s measure';
   }, function(){
-    beep(); show('s-pulse');
+    beep(); show('s-breath');
   });
 }
 
@@ -333,7 +647,50 @@ function interpPulse() {
   el.className='interp show '+cls;
   el.innerHTML='<span class="interp-icon">'+icon+'</span><div class="interp-text"><b>'+title+'</b><small>'+sub+'</small></div>';
 }
-function goBreath() { show('s-breath'); }
+function goPattern() { show('s-pattern'); }
+
+function goPulse() {
+  if (!patternVal) return;
+  show('s-pulse');
+}
+
+function selectPattern(button) {
+  document.querySelectorAll('.manual-pattern-card').forEach(function(card) {
+    card.classList.toggle('selected', card === button);
+  });
+
+  patternVal = button.dataset.pattern || null;
+
+  var result = document.getElementById('pattern-result');
+  var nextButton = document.getElementById('pattern-next-btn');
+
+  nextButton.disabled = !patternVal;
+
+  if (!patternVal) {
+    result.className = 'pattern-result';
+    result.innerHTML = '';
+    return;
+  }
+
+  var messages = {
+    'Upper chest':
+      'Your breathing movement is concentrated in the upper chest. Practices for diaphragm awareness and lower-rib mobility may be useful.',
+    'Rib cage':
+      'Your ribs participate clearly in breathing. The next focus is smooth expansion around the front, sides, and back of the lower rib cage.',
+    'Belly':
+      'Abdominal movement is present, suggesting that the diaphragm participates in your breathing.',
+    'Low belly':
+      'Movement is most noticeable in the lower abdomen. We will also help you develop balanced lower-rib expansion.',
+    'Mixed':
+      'Your breathing movement is distributed across several areas without one dominant starting point.'
+  };
+
+  result.className = 'pattern-result show';
+  result.innerHTML =
+    '<b>' + patternVal + '</b><span>' +
+    messages[patternVal] +
+    '</span>';
+}
 
 // ---- BREATH ----
 function startBreathTimer() {
@@ -352,7 +709,7 @@ function interpBreath() {
   var v = parseInt(document.getElementById('breath-val').value);
   breathVal = isNaN(v) ? null : v;
   var el = document.getElementById('interp-breath');
-  document.getElementById('breath-save-btn').disabled = !breathVal;
+  document.getElementById('breath-next-btn').disabled = !breathVal;
   if (!breathVal) { el.className='interp'; return; }
   var cls,icon,title,sub;
   if (v < 12) { cls='great';icon='💚';title='Below 12 / min · Excellent';sub='Diaphragm fully engaged. Deep, efficient breathing.'; }
@@ -367,7 +724,7 @@ function interpBreath() {
 function saveMeasurements() {
   var pulse = parseInt(document.getElementById('pulse-val').value);
   var breath = parseInt(document.getElementById('breath-val').value);
-  if (!pulse || !breath) return;
+  if (!pulse || !breath || !patternVal) return;
   // determine session recommendation
   var mode='reset', action='';
   if (pulse > 85 || breath > 20) {
@@ -386,28 +743,46 @@ function saveMeasurements() {
   // result badges
   var pb = document.getElementById('result-pulse-badge');
   var bb = document.getElementById('result-breath-badge');
+  var patternBadge = document.getElementById('result-pattern-badge');
   var pInterp = document.getElementById('interp-pulse').innerHTML;
   var bInterp = document.getElementById('interp-breath').innerHTML;
   pb.className = 'interp show ' + (pulse < 60?'great':pulse<=75?'ok':pulse<=85?'warn':'high');
   pb.innerHTML = pInterp;
   bb.className = 'interp show ' + (breath < 12?'great':breath<=16?'ok':breath<=20?'warn':'high');
   bb.innerHTML = bInterp;
+  patternBadge.className = 'interp show great';
+  patternBadge.innerHTML =
+    '<span class="interp-icon">🌬️</span>' +
+    '<div class="interp-text">' +
+    '<b>Breathing pattern · ' + patternVal + '</b>' +
+    '<small>Your selected movement pattern has been added to today\'s Breath Snapshot.</small>' +
+    '</div>';
+
   document.getElementById('result-action').innerHTML = action;
   // save to Firestore
-  if (window.mwSaveMeasurement) window.mwSaveMeasurement({ pulse: pulse, breath: breath, mode: mode });
+  if (window.mwSaveMeasurement) window.mwSaveMeasurement({ pulse: pulse, breath: breath, pattern: patternVal, mode: mode });
   // also update today's program via sessionStorage
-  try { sessionStorage.setItem('mw_measure', JSON.stringify({ pulse:pulse, breath:breath, mode:mode })); } catch(e){}
+  try { sessionStorage.setItem('mw_measure', JSON.stringify({ pulse:pulse, breath:breath, pattern:patternVal, mode:mode })); } catch(e){}
   show('s-result');
 }
 
 function restart() {
-  pulseVal = null; breathVal = null;
+  pulseVal = null; breathVal = null; patternVal = null;
   document.getElementById('pulse-val').value = '';
   document.getElementById('breath-val').value = '';
   document.getElementById('interp-pulse').className = 'interp';
   document.getElementById('interp-breath').className = 'interp';
   document.getElementById('pulse-next-btn').disabled = true;
-  document.getElementById('breath-save-btn').disabled = true;
+  document.getElementById('breath-next-btn').disabled = true;
+  document.getElementById('pattern-next-btn').disabled = true;
+
+  document.querySelectorAll('.manual-pattern-card').forEach(function(card) {
+    card.classList.remove('selected');
+  });
+
+  var patternResult = document.getElementById('pattern-result');
+  patternResult.className = 'pattern-result';
+  patternResult.innerHTML = '';
   document.getElementById('manual-pulse-wrap').style.display = 'none';
   document.getElementById('breath-count-wrap').style.display = 'none';
   document.getElementById('prep-btn').disabled = false;
