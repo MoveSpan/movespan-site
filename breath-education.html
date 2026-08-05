@@ -1,0 +1,1796 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#F3F5F3">
+
+  <title>Understand Your Breath · MoveSpan</title>
+
+  <style>
+    :root {
+      --green: #2D7D52;
+      --green-dark: #245F41;
+      --green-soft: #EAF4EE;
+      --green-pale: #F1F7F3;
+      --background: #F3F5F3;
+      --surface: #FFFFFF;
+      --text: #172019;
+      --secondary: #637068;
+      --muted: #7D8982;
+      --border: #DCE5DF;
+      --shadow: 0 10px 30px rgba(32, 67, 45, .08);
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family: var(--font);
+    }
+
+    body.education-page-open {
+      overflow: hidden;
+    }
+
+    button,
+    a {
+      font-family: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 560px;
+      min-height: 100vh;
+      margin: 0 auto;
+      padding:
+        calc(14px + env(safe-area-inset-top))
+        16px
+        calc(36px + env(safe-area-inset-bottom));
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 48px 1fr 48px;
+      align-items: center;
+      min-height: 48px;
+      margin-bottom: 15px;
+    }
+
+    .back-link {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 16px;
+      background: transparent;
+      color: var(--green);
+      text-decoration: none;
+      font-size: 44px;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    .topbar-title {
+      font-size: 15px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .hero {
+      overflow: hidden;
+      position: relative;
+      padding: 24px 21px;
+      border: 1px solid rgba(255,255,255,.7);
+      border-radius: 28px;
+      background: var(--green);
+      color: #FFFFFF;
+      box-shadow:
+        0 0 0 4px rgba(255,255,255,.9),
+        0 0 0 6px rgba(45,125,82,.18),
+        0 17px 36px rgba(35,95,65,.19);
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 50%;
+    }
+
+    .hero::before {
+      width: 220px;
+      height: 220px;
+      top: -145px;
+      right: -105px;
+    }
+
+    .hero::after {
+      width: 170px;
+      height: 170px;
+      left: -105px;
+      bottom: -130px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-label {
+      margin-bottom: 7px;
+      color: rgba(255,255,255,.75);
+      font-size: 11px;
+      font-weight: 750;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 31px;
+      line-height: 1.06;
+      letter-spacing: -.035em;
+    }
+
+    .hero p {
+      max-width: 440px;
+      margin: 12px 0 0;
+      color: rgba(255,255,255,.82);
+      font-size: 14px;
+      line-height: 1.52;
+    }
+
+    .section {
+      margin-top: 25px;
+    }
+
+    .section-label {
+      margin: 0 3px 10px;
+      color: var(--secondary);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .education-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .education-entry {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 50px minmax(0, 1fr) 24px;
+      align-items: center;
+      gap: 13px;
+      padding: 17px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--surface);
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition:
+        transform .16s ease,
+        border-color .16s ease,
+        box-shadow .16s ease;
+    }
+
+    .education-entry:active {
+      transform: scale(.988);
+    }
+
+    .education-entry-icon {
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .education-entry-copy strong {
+      display: block;
+      font-size: 17px;
+      line-height: 1.25;
+    }
+
+    .education-entry-copy small {
+      display: block;
+      margin-top: 5px;
+      color: var(--secondary);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .education-entry-chevron {
+      color: var(--green);
+      font-size: 37px;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    .coming-soon {
+      margin-top: 17px;
+      padding: 15px 17px;
+      border: 1px dashed #C9D8CF;
+      border-radius: 18px;
+      background: rgba(255,255,255,.54);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    /* Sliding internal page */
+
+    .detail-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 5000;
+      visibility: hidden;
+      overflow: hidden;
+      background: rgba(22,34,26,.22);
+      opacity: 0;
+      pointer-events: none;
+      transition:
+        opacity .26s ease,
+        visibility .26s ease;
+    }
+
+    .detail-overlay.open {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .detail-page {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: min(100%, 560px);
+      height: 100%;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      background: var(--background);
+      box-shadow: -18px 0 50px rgba(18,39,27,.18);
+      transform: translateX(100%);
+      transition: transform .34s cubic-bezier(.22,.8,.25,1);
+    }
+
+    .detail-overlay.open .detail-page {
+      transform: translateX(0);
+    }
+
+    .detail-header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: 50px 1fr 50px;
+      align-items: center;
+      min-height: 58px;
+      padding-top: env(safe-area-inset-top);
+      border-bottom: 1px solid rgba(220,229,223,.88);
+      background: rgba(243,245,243,.94);
+      backdrop-filter: blur(12px);
+    }
+
+    .detail-back {
+      width: 50px;
+      height: 50px;
+      border: 0;
+      background: transparent;
+      color: var(--green);
+      font-size: 44px;
+      font-weight: 300;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .detail-header-title {
+      overflow: hidden;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .detail-content {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 25px 17px calc(42px + env(safe-area-inset-bottom));
+    }
+
+    .detail-label {
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 750;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .detail-title {
+      margin: 8px 0 11px;
+      font-size: 33px;
+      line-height: 1.06;
+      letter-spacing: -.035em;
+    }
+
+    .detail-lead {
+      margin: 0 0 20px;
+      color: var(--secondary);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .snapshot-card {
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .snapshot-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 15px;
+    }
+
+    .snapshot-card-title {
+      font-size: 16px;
+      font-weight: 750;
+    }
+
+    .snapshot-date {
+      color: var(--muted);
+      font-size: 11px;
+      text-align: right;
+    }
+
+    .snapshot-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .snapshot-metric {
+      min-width: 0;
+      padding: 13px 8px;
+      border: 1px solid #E3E9E5;
+      border-radius: 17px;
+      background: var(--green-pale);
+      text-align: center;
+    }
+
+    .snapshot-value {
+      overflow-wrap: anywhere;
+      color: var(--green-dark);
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .snapshot-value.pattern {
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    .snapshot-unit {
+      min-height: 16px;
+      margin-top: 4px;
+      color: var(--secondary);
+      font-size: 10px;
+    }
+
+    .snapshot-metric-label {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.25;
+    }
+
+    .reading-card {
+      margin-top: 13px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--surface);
+    }
+
+    .reading-card h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 1.3;
+    }
+
+    .reading-card p {
+      margin: 0;
+      color: var(--secondary);
+      font-size: 14px;
+      line-height: 1.58;
+    }
+
+    .reading-card ul {
+      margin: 10px 0 0;
+      padding-left: 19px;
+      color: var(--secondary);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .medical-note {
+      margin-top: 13px;
+      padding: 15px 17px;
+      border: 1px solid #D7E5DD;
+      border-radius: 19px;
+      background: var(--green-soft);
+      color: #496257;
+      font-size: 12px;
+      line-height: 1.52;
+    }
+
+    .insight-hero {
+      overflow: hidden;
+      position: relative;
+      padding: 21px;
+      border-radius: 25px;
+      background: var(--green);
+      color: #FFFFFF;
+      box-shadow: 0 15px 34px rgba(45,125,82,.20);
+    }
+
+    .insight-hero-label {
+      color: rgba(255,255,255,.72);
+      font-size: 10px;
+      font-weight: 750;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .insight-hero h2 {
+      margin: 8px 0 9px;
+      font-size: 24px;
+      line-height: 1.16;
+    }
+
+    .insight-hero p {
+      margin: 0;
+      color: rgba(255,255,255,.84);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .focus-card {
+      margin-top: 13px;
+      padding: 18px;
+      border: 1px solid #D5E3DB;
+      border-radius: 22px;
+      background: var(--green-soft);
+    }
+
+    .focus-label {
+      color: var(--green);
+      font-size: 10px;
+      font-weight: 750;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .focus-card h2 {
+      margin: 7px 0 9px;
+      font-size: 18px;
+    }
+
+    .focus-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .focus-tag {
+      padding: 9px 12px;
+      border: 1px solid rgba(45,125,82,.20);
+      border-radius: 999px;
+      background: #FFFFFF;
+      color: var(--green-dark);
+      font-size: 11px;
+      font-weight: 680;
+      line-height: 1.25;
+      cursor: pointer;
+      transition:
+        background .16s ease,
+        color .16s ease,
+        border-color .16s ease,
+        transform .16s ease;
+    }
+
+    .focus-tag:active {
+      transform: scale(.97);
+    }
+
+    .focus-tag[aria-expanded="true"] {
+      border-color: var(--green);
+      background: var(--green);
+      color: #FFFFFF;
+    }
+
+    .focus-detail {
+      margin-top: 16px;
+      padding: 17px;
+      border: 1px solid rgba(45,125,82,.24);
+      border-radius: 19px;
+      background: #FFFFFF;
+      color: var(--secondary);
+    }
+
+    .focus-detail[hidden] {
+      display: none;
+    }
+
+    .focus-detail-label {
+      color: var(--green);
+      font-size: 10px;
+      font-weight: 750;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .focus-detail h3 {
+      margin: 6px 0 9px;
+      color: var(--text);
+      font-size: 19px;
+      line-height: 1.3;
+    }
+
+    .focus-detail h4 {
+      margin: 15px 0 5px;
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.3;
+    }
+
+    .focus-detail p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .focus-detail ul {
+      margin: 7px 0 0;
+      padding-left: 19px;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .focus-detail-caution {
+      margin-top: 13px;
+      padding: 11px 13px;
+      border-radius: 14px;
+      background: #F6F1E8;
+      color: #665741;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .focus-program-note {
+      margin: 15px 0 0;
+      color: #496257;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .next-button {
+      width: 100%;
+      min-height: 56px;
+      margin-top: 17px;
+      border: 0;
+      border-radius: 18px;
+      background: var(--green);
+      color: #FFFFFF;
+      font-size: 15px;
+      font-weight: 750;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(45,125,82,.19);
+    }
+
+    .empty-state {
+      padding: 21px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--surface);
+      color: var(--secondary);
+      font-size: 14px;
+      line-height: 1.55;
+      text-align: center;
+    }
+
+    @media (max-width: 390px) {
+      .app {
+        padding-left: 13px;
+        padding-right: 13px;
+      }
+
+      .education-entry {
+        grid-template-columns: 46px minmax(0,1fr) 20px;
+        gap: 11px;
+        padding: 15px;
+      }
+
+      .education-entry-icon {
+        width: 46px;
+        height: 46px;
+      }
+
+      .snapshot-metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .snapshot-metric {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        column-gap: 10px;
+        text-align: left;
+      }
+
+      .snapshot-metric-label {
+        grid-column: 1;
+      }
+
+      .snapshot-unit {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        align-self: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+
+    <header class="topbar">
+      <a
+        class="back-link"
+        href="/health-dashboard-v4.html"
+        aria-label="Return to Breath Snapshot">
+        ‹
+      </a>
+
+      <div class="topbar-title">Breath Education</div>
+
+      <div aria-hidden="true"></div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-label">MoveSpan Breath Education</div>
+
+        <h1>Understand Your Breath</h1>
+
+        <p>
+          Learn how your breathing rate, breathing pattern, diaphragm,
+          nervous system, and resting pulse work together.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">Start here</div>
+
+      <div class="education-list">
+
+        <button
+          class="education-entry"
+          type="button"
+          onclick="openEducationPage('snapshot')">
+
+          <span class="education-entry-icon" aria-hidden="true">◎</span>
+
+          <span class="education-entry-copy">
+            <strong>Your Breath Snapshot</strong>
+            <small>
+              Understand what your breathing rate, breathing pattern,
+              and resting pulse describe.
+            </small>
+          </span>
+
+          <span class="education-entry-chevron" aria-hidden="true">›</span>
+        </button>
+
+        <button
+          class="education-entry"
+          type="button"
+          onclick="openEducationPage('insight')">
+
+          <span class="education-entry-icon" aria-hidden="true">✦</span>
+
+          <span class="education-entry-copy">
+            <strong>Most Important Insight</strong>
+            <small>
+              See the main interpretation of your current combination
+              of breathing and pulse measurements.
+            </small>
+          </span>
+
+          <span class="education-entry-chevron" aria-hidden="true">›</span>
+        </button>
+
+      </div>
+
+      <div class="coming-soon">
+        The next sections will be added here: Why Breathing Matters,
+        Your Breathing Pattern, Meet Your Diaphragm, 360° Breathing,
+        Nervous-System Regulation, Heart Rhythm, and What to Practice.
+      </div>
+    </section>
+  </main>
+
+
+  <!-- YOUR BREATH SNAPSHOT -->
+
+  <div
+    class="detail-overlay"
+    id="snapshotPage"
+    aria-hidden="true">
+
+    <article class="detail-page">
+
+      <header class="detail-header">
+        <button
+          class="detail-back"
+          type="button"
+          aria-label="Return to education menu"
+          onclick="closeEducationPage('snapshot')">
+          ‹
+        </button>
+
+        <div class="detail-header-title">Your Breath Snapshot</div>
+
+        <div aria-hidden="true"></div>
+      </header>
+
+      <div class="detail-content">
+
+        <div class="detail-label">Your measurements</div>
+
+        <h1 class="detail-title">Your Breath Snapshot</h1>
+
+        <p class="detail-lead">
+          These measurements describe three different parts of your
+          current resting state. They are most useful when viewed
+          together and repeated under similar conditions.
+        </p>
+
+        <div id="snapshotDataContainer"></div>
+
+        <section class="reading-card">
+          <h2>Breathing rate describes tempo</h2>
+
+          <p>
+            Your breathing rate shows how many complete breathing cycles
+            occur in one minute. It describes breathing frequency, but
+            does not show where movement occurs or how much effort is used.
+          </p>
+        </section>
+
+        <section class="reading-card">
+          <h2>Breathing pattern describes movement</h2>
+
+          <p>
+            Your breathing pattern describes where you noticed the clearest
+            movement: higher in the chest, through the lower chest, around
+            the abdomen and lower ribs, or mainly in the lower abdomen.
+          </p>
+        </section>
+
+        <section class="reading-card">
+          <h2>Resting pulse describes heart rate</h2>
+
+          <p>
+            Resting pulse shows how many times the heart beats per minute
+            during this measurement. It can vary with recent activity,
+            heat, hydration, caffeine, sleep, illness, medication,
+            emotional state, and individual fitness.
+          </p>
+        </section>
+
+        <div class="medical-note">
+          A single Breath Snapshot is an observation, not a diagnosis.
+          Repeated measurements under similar conditions are more useful
+          for identifying your personal baseline and changes over time.
+        </div>
+
+        <button
+          class="next-button"
+          type="button"
+          onclick="openInsightFromSnapshot()">
+          See Your Most Important Insight
+        </button>
+
+      </div>
+    </article>
+  </div>
+
+
+  <!-- MOST IMPORTANT INSIGHT -->
+
+  <div
+    class="detail-overlay"
+    id="insightPage"
+    aria-hidden="true">
+
+    <article class="detail-page">
+
+      <header class="detail-header">
+        <button
+          class="detail-back"
+          type="button"
+          aria-label="Return to education menu"
+          onclick="closeEducationPage('insight')">
+          ‹
+        </button>
+
+        <div class="detail-header-title">Most Important Insight</div>
+
+        <div aria-hidden="true"></div>
+      </header>
+
+      <div class="detail-content">
+
+        <div class="detail-label">Personal interpretation</div>
+
+        <h1 class="detail-title">Most Important Insight</h1>
+
+        <p class="detail-lead">
+          This section combines your breathing rate, breathing pattern,
+          and resting pulse into one practical interpretation.
+        </p>
+
+        <div id="insightDataContainer"></div>
+
+        <div class="medical-note">
+          This interpretation is intended for general wellness guidance.
+          It does not identify the cause of an unusual reading and does
+          not replace medical assessment.
+        </div>
+
+      </div>
+    </article>
+  </div>
+
+
+  <script>
+    function readSavedSnapshot() {
+      try {
+        const raw =
+          localStorage.getItem('mw_last_breath_snapshot') ||
+          sessionStorage.getItem('mw_measure');
+
+        if (!raw) return null;
+
+        const parsed = JSON.parse(raw);
+
+        const pulse = Number(parsed.pulse);
+        const breath = Number(parsed.breath);
+        const pattern = parsed.pattern || null;
+
+        if (
+          !Number.isFinite(pulse) ||
+          !Number.isFinite(breath) ||
+          !pattern
+        ) {
+          return null;
+        }
+
+        return {
+          pulse,
+          breath,
+          pattern,
+          mode: parsed.mode || null,
+          savedAt: parsed.savedAt || null
+        };
+      } catch (error) {
+        console.error('Could not read Breath Snapshot:', error);
+        return null;
+      }
+    }
+
+
+    function formatPattern(pattern) {
+      const names = {
+        'Upper chest': 'Upper Chest',
+        'Lower chest': 'Lower Chest',
+        'Belly and lower ribs': 'Belly + Lower Ribs',
+        'Low belly': 'Low Belly',
+        'Mixed': 'Mixed / Not Sure'
+      };
+
+      return names[pattern] || pattern;
+    }
+
+
+    function formatSnapshotDate(value) {
+      if (!value) return 'Latest saved measurement';
+
+      const date = new Date(value);
+
+      if (Number.isNaN(date.getTime())) {
+        return 'Latest saved measurement';
+      }
+
+      return date.toLocaleString([], {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+
+    function getPatternInterpretation(pattern) {
+      const interpretations = {
+        'Upper chest': {
+          title: 'Your breathing movement is concentrated high in the chest',
+          text:
+            'At rest, this can be associated with faster, shallower breathing, ' +
+            'greater use of the upper-chest breathing muscles, and more visible ' +
+            'movement near the collarbones.',
+          focus: [
+            'Diaphragm awareness',
+            'Lower-rib mobility',
+            'Relax neck and shoulders',
+            'Quiet, unforced breathing'
+          ]
+        },
+
+        'Lower chest': {
+          title: 'Your chest provides most of the visible movement',
+          text:
+            'This is generally quieter than upper-chest breathing, but movement ' +
+            'of the abdomen and three-dimensional expansion of the lower ribs ' +
+            'may still be limited.',
+          focus: [
+            '360° lower-rib movement',
+            'Gentle abdominal expansion',
+            'Thoracic mobility',
+            'Avoid forcing the breath'
+          ]
+        },
+
+        'Belly and lower ribs': {
+          title: 'Your breathing shows clear diaphragm participation',
+          text:
+            'Your abdomen moves gently and your lower ribs expand to the sides ' +
+            'and back. The main goal is not to make the breath deeper, but to ' +
+            'preserve its quiet rhythm and comfortable three-dimensional movement.',
+          focus: [
+            'Maintain quiet breathing',
+            'Improve back-rib expansion',
+            'Coordinate breath with movement',
+            'Avoid unnecessary deep breathing'
+          ]
+        },
+
+        'Low belly': {
+          title: 'Your breathing is quiet and concentrated low in the abdomen',
+          text:
+            'Some people notice this pattern during deep relaxation or meditation. ' +
+            'The next useful observation is whether the lower ribs also expand ' +
+            'gently rather than the abdomen moving in isolation.',
+          focus: [
+            'Observe lower-rib movement',
+            'Maintain subtle breathing',
+            'Natural abdominal movement',
+            'Meditation and recovery'
+          ]
+        },
+
+        'Mixed': {
+          title: 'No single breathing area was clearly dominant',
+          text:
+            'Movement may be distributed across several areas, or the pattern may ' +
+            'not yet be easy to identify. The first step is observation rather than correction.',
+          focus: [
+            'Repeat while lying down',
+            'Hands on lower ribs',
+            'Observe without changing',
+            'Build body awareness'
+          ]
+        }
+      };
+
+      return interpretations[pattern] || {
+        title: 'Your current breathing pattern has been recorded',
+        text:
+          'Continue observing your breathing under similar resting conditions ' +
+          'to understand your personal pattern more clearly.',
+        focus: [
+          'Quiet observation',
+          'Repeat consistently',
+          'Avoid forcing the breath'
+        ]
+      };
+    }
+
+
+    function getPulseBreathContext(snapshot) {
+      const pulse = snapshot.pulse;
+      const breath = snapshot.breath;
+
+      if (breath > 20 && pulse > 85) {
+        return (
+          'Both readings are elevated in this measurement. Before interpreting ' +
+          'them, consider recent activity, heat, hydration, caffeine, sleep, ' +
+          'illness, medication, and emotional tension.'
+        );
+      }
+
+      if (breath > 20) {
+        return (
+          'Your breathing rate is elevated relative to this resting pulse reading. ' +
+          'The first practical focus is quieter, less effortful breathing rather ' +
+          'than deliberately taking larger breaths.'
+        );
+      }
+
+      if (pulse > 85) {
+        return (
+          'Your pulse is higher while your breathing rate remains comparatively ' +
+          'quiet. Recent movement, heat, hydration, caffeine, sleep, emotional ' +
+          'state, illness, and medication can all influence this result.'
+        );
+      }
+
+      if (breath <= 16 && pulse <= 75) {
+        return (
+          'Your breathing rate and resting pulse are both relatively calm in ' +
+          'this measurement. The main focus can be movement quality rather than ' +
+          'trying to reduce either number further.'
+        );
+      }
+
+      return (
+        'Your breathing rate and pulse should be interpreted together with how ' +
+        'you feel and with your usual baseline. A repeated measurement is more ' +
+        'informative than a single reading.'
+      );
+    }
+
+
+    function renderSnapshotPage() {
+      const container =
+        document.getElementById('snapshotDataContainer');
+
+      const snapshot = readSavedSnapshot();
+
+      if (!container) return;
+
+      if (!snapshot) {
+        container.innerHTML = `
+          <div class="empty-state">
+            No saved Breath Snapshot was found on this device.
+            Complete the manual check first, then return to this page.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <section class="snapshot-card">
+          <div class="snapshot-card-header">
+            <div class="snapshot-card-title">Your Latest Snapshot</div>
+            <div class="snapshot-date">
+              ${formatSnapshotDate(snapshot.savedAt)}
+            </div>
+          </div>
+
+          <div class="snapshot-metrics">
+            <div class="snapshot-metric">
+              <div class="snapshot-value">${snapshot.breath}</div>
+              <div class="snapshot-unit">breaths/min</div>
+              <div class="snapshot-metric-label">Breathing rate</div>
+            </div>
+
+            <div class="snapshot-metric">
+              <div class="snapshot-value pattern">
+                ${formatPattern(snapshot.pattern)}
+              </div>
+              <div class="snapshot-unit">&nbsp;</div>
+              <div class="snapshot-metric-label">Breathing pattern</div>
+            </div>
+
+            <div class="snapshot-metric">
+              <div class="snapshot-value">${snapshot.pulse}</div>
+              <div class="snapshot-unit">bpm</div>
+              <div class="snapshot-metric-label">Resting pulse</div>
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+
+    function renderInsightPage() {
+      const container =
+        document.getElementById('insightDataContainer');
+
+      const snapshot = readSavedSnapshot();
+
+      if (!container) return;
+
+      if (!snapshot) {
+        container.innerHTML = `
+          <div class="empty-state">
+            No saved Breath Snapshot was found. Complete the measurement
+            before opening a personal interpretation.
+          </div>
+        `;
+        return;
+      }
+
+      const patternInsight =
+        getPatternInterpretation(snapshot.pattern);
+
+      const pulseContext =
+        getPulseBreathContext(snapshot);
+
+      const standardFocusItems = [
+        ...patternInsight.focus,
+        'Diaphragm release',
+        'Lower-rib mobility',
+        'Thoracic rotation',
+        'Side-body stretching',
+        'Chest opening',
+        'Abdominal activation',
+        'Breath–movement coordination',
+        'Active diaphragm techniques'
+      ];
+
+      const uniqueFocusItems = [
+        ...new Set(standardFocusItems)
+      ];
+
+      const tags = uniqueFocusItems
+        .map(function (item) {
+          const encodedItem = encodeURIComponent(item);
+
+          return `
+            <button
+              class="focus-tag"
+              type="button"
+              data-focus="${encodedItem}"
+              aria-expanded="false"
+              onclick="toggleFocusDetail(this)">
+              ${item}
+            </button>
+          `;
+        })
+        .join('');
+
+      container.innerHTML = `
+        <section class="insight-hero">
+          <div class="insight-hero-label">
+            Your main interpretation
+          </div>
+
+          <h2>${patternInsight.title}</h2>
+
+          <p>${patternInsight.text}</p>
+        </section>
+
+        <section class="reading-card">
+          <h2>Breathing and resting pulse</h2>
+          <p>${pulseContext}</p>
+        </section>
+
+        <section class="reading-card">
+          <h2>Improving breathing requires more than attention</h2>
+
+          <p>
+            Better breathing is not created only by relaxing or trying to
+            breathe more slowly. Restrictions in the diaphragm, lower ribs,
+            thoracic spine, shoulders, neck, intercostal muscles, and abdominal
+            wall may also limit comfortable breathing movement.
+          </p>
+        </section>
+
+        <section class="reading-card">
+          <h2>A whole-body approach</h2>
+
+          <p>
+            Your breathing program may combine tissue release, joint mobility,
+            side-body stretching, thoracic rotation, chest opening, abdominal
+            work, diaphragm activation, breathing techniques, and coordinated
+            movement in lying, seated, and standing positions.
+          </p>
+        </section>
+
+        <section class="focus-card">
+          <div class="focus-label">Your recommended focus</div>
+          <h2>What to work on next</h2>
+
+          <div class="focus-list">
+            ${tags}
+          </div>
+
+          <div
+            class="focus-detail"
+            id="focusDetail"
+            hidden>
+          </div>
+
+          <p class="focus-program-note">
+            Your program may include exercises from Breathwork &amp; Meditation,
+            Joint Recovery, Body Release, and Strong Body Yoga. More active
+            techniques are selected according to the person’s condition
+            and suitability.
+          </p>
+        </section>
+      `;
+    }
+
+
+
+    const focusDetails = {
+      'Observe lower-rib movement': {
+        summary:
+          'Notice whether the lower ribs expand to the sides and back together with the abdomen.',
+        why:
+          'If movement occurs only through the front of the abdomen, breathing may still lack three-dimensional lower-rib participation.',
+        practices: [
+          'Hands placed around the lower ribs',
+          'Supine breathing observation',
+          'Side-lying rib breathing',
+          'Gentle side bends',
+          'Back-and-side rib awareness'
+        ]
+      },
+
+      'Maintain subtle breathing': {
+        summary:
+          'Keep the breath quiet, comfortable, and unforced rather than deliberately making every inhalation larger.',
+        why:
+          'More air and more movement are not automatically better. Excessive deep breathing may create unnecessary effort.',
+        practices: [
+          'Quiet breath observation',
+          'Gentle longer exhalation',
+          'Supine relaxation',
+          'Meditation',
+          'Slow movement with natural breathing'
+        ]
+      },
+
+      'Natural abdominal movement': {
+        summary:
+          'Allow the abdomen to move naturally as the diaphragm descends.',
+        why:
+          'The goal is neither to push the belly outward deliberately nor to hold it rigidly inward during quiet breathing.',
+        practices: [
+          'One hand on the abdomen while lying down',
+          'Relaxation of the abdominal wall',
+          'Coordination of abdomen and lower ribs',
+          'Gentle abdominal movement preparation'
+        ]
+      },
+
+      'Meditation and recovery': {
+        summary:
+          'Use quiet breathing as part of nervous-system recovery rather than as an intensive breathing workout.',
+        why:
+          'A calm setting can help the person observe breathing without forcing or correcting it continuously.',
+        practices: [
+          'Breath meditation',
+          'Humming',
+          'Bhramari',
+          'Soft extended exhalation',
+          'Shavasana and restorative yoga'
+        ]
+      },
+
+      'Diaphragm awareness': {
+        summary:
+          'Improve the ability to feel the diaphragm working through movement of the abdomen and lower ribs.',
+        why:
+          'Awareness helps distinguish natural diaphragm movement from deliberate upper-chest lifting or forced abdominal expansion.',
+        practices: [
+          'Hands-on lower-rib observation',
+          'Supine diaphragm breathing',
+          'Side-lying breathing',
+          'Breathing with slow arm movement'
+        ]
+      },
+
+      'Relax neck and shoulders': {
+        summary:
+          'Reduce unnecessary activity through the neck, shoulders, and upper-chest breathing muscles.',
+        why:
+          'These areas may become more active when breathing is effortful, fast, or concentrated high in the chest.',
+        practices: [
+          'Shoulder circles',
+          'Neck release',
+          'Upper-chest soft-tissue release',
+          'Supported rest positions',
+          'Slow Joint Recovery movements'
+        ]
+      },
+
+      'Quiet, unforced breathing': {
+        summary:
+          'Allow the breath to settle without controlling every inhalation and exhalation.',
+        why:
+          'Trying too hard to breathe correctly can itself increase effort and tension.',
+        practices: [
+          'Natural breath observation',
+          'Slow movement',
+          'Soft nasal breathing',
+          'Rest between active techniques'
+        ]
+      },
+
+      '360° lower-rib movement': {
+        summary:
+          'Develop expansion around the front, sides, and back of the lower rib cage.',
+        why:
+          'Three-dimensional rib movement supports more coordinated diaphragm participation than purely vertical chest movement.',
+        practices: [
+          'Hands around the lower ribs',
+          'Side-lying breathing',
+          'Back-rib breathing',
+          'Thoracic rotation with breath',
+          'Side-body stretching'
+        ]
+      },
+
+      'Gentle abdominal expansion': {
+        summary:
+          'Allow a small, natural abdominal movement during inhalation.',
+        why:
+          'The abdomen should respond to diaphragm movement without being forcefully pushed outward.',
+        practices: [
+          'Supine breathing',
+          'Hand contact on the abdomen',
+          'Relaxed exhalation',
+          'Lower-rib and abdomen coordination'
+        ]
+      },
+
+      'Thoracic mobility': {
+        summary:
+          'Restore movement through the thoracic spine and rib cage.',
+        why:
+          'A rigid thoracic region may reduce comfortable rib movement during breathing.',
+        practices: [
+          'Thoracic rotations',
+          'Supported extension',
+          'Open Book',
+          'Joint Recovery for the spine',
+          'Shoulder and rib movements'
+        ]
+      },
+
+      'Avoid forcing the breath': {
+        summary:
+          'Do not deliberately maximise every inhalation.',
+        why:
+          'Breathing practice should improve comfort and coordination, not create excessive respiratory effort.',
+        practices: [
+          'Quiet observation',
+          'Short practice intervals',
+          'Natural pauses',
+          'Slow breath–movement coordination'
+        ]
+      },
+
+      'Maintain quiet breathing': {
+        summary:
+          'Preserve an easy resting rhythm without trying to lower the rate unnecessarily.',
+        why:
+          'The aim is efficient and comfortable breathing, not achieving the lowest possible number.',
+        practices: [
+          'Natural breathing',
+          'Meditation',
+          'Gentle movement',
+          'Soft extended exhalation'
+        ]
+      },
+
+      'Improve back-rib expansion': {
+        summary:
+          'Encourage movement through the posterior lower ribs.',
+        why:
+          'Back-rib movement is often less noticeable and can contribute to more balanced three-dimensional breathing.',
+        practices: [
+          'Child’s Pose breathing',
+          'Side-lying breathing',
+          'Hands on the back ribs',
+          'Supported forward-fold breathing'
+        ]
+      },
+
+      'Coordinate breath with movement': {
+        summary:
+          'Connect breathing with movement of the spine, shoulders, ribs, and pelvis.',
+        why:
+          'Breathing becomes more functional when it adapts naturally to whole-body movement.',
+        practices: [
+          'Cat–Cow',
+          'Arm raises with breathing',
+          'Rotation with exhalation',
+          'Joint Recovery',
+          'Tai Chi & Flow'
+        ]
+      },
+
+      'Avoid unnecessary deep breathing': {
+        summary:
+          'Do not increase breath volume without a specific purpose.',
+        why:
+          'Repeated forced deep inhalations may create tension or light-headedness in some people.',
+        practices: [
+          'Quiet nasal breathing',
+          'Natural breath observation',
+          'Small comfortable movements',
+          'Rest between techniques'
+        ]
+      },
+
+      'Observe lower-rib movement': {
+        summary:
+          'Notice whether the lower ribs expand to the sides and back together with the abdomen.',
+        why:
+          'Lower-rib participation helps determine whether low abdominal movement is part of a broader diaphragm pattern.',
+        practices: [
+          'Hands around the lower ribs',
+          'Side-lying breathing',
+          'Supine breathing',
+          'Gentle side bends'
+        ]
+      },
+
+      'Maintain subtle breathing': {
+        summary:
+          'Keep the breath quiet and refined rather than deliberately increasing its depth.',
+        why:
+          'A low-belly pattern may already be associated with relaxation, so greater intensity is not automatically needed.',
+        practices: [
+          'Meditation',
+          'Supine observation',
+          'Soft exhalation',
+          'Restorative yoga'
+        ]
+      },
+
+      'Repeat while lying down': {
+        summary:
+          'Repeat the observation in a supported supine position.',
+        why:
+          'Lying down may make abdominal and lower-rib movement easier to detect.',
+        practices: [
+          'Knees bent, feet supported',
+          'One hand on chest and one on abdomen',
+          'Hands around lower ribs',
+          'Observe several natural breaths'
+        ]
+      },
+
+      'Hands on lower ribs': {
+        summary:
+          'Use gentle hand contact to feel rib movement.',
+        why:
+          'Touch provides simple feedback about side and back expansion.',
+        practices: [
+          'Lower-rib hand placement',
+          'Side-lying observation',
+          'Breathing without deliberate deepening'
+        ]
+      },
+
+      'Observe without changing': {
+        summary:
+          'Watch the breath before trying to improve it.',
+        why:
+          'Immediate correction can hide the person’s natural resting pattern.',
+        practices: [
+          'Five to eight natural breaths',
+          'No deliberate deep inhalation',
+          'Repeat under similar conditions'
+        ]
+      },
+
+      'Build body awareness': {
+        summary:
+          'Improve the ability to recognise movement in the chest, ribs, and abdomen.',
+        why:
+          'Clearer sensory awareness allows later exercises to be selected more accurately.',
+        practices: [
+          'Hands-on observation',
+          'Slow spinal movement',
+          'Body scan',
+          'Breathing in several positions'
+        ]
+      },
+
+      'Diaphragm release': {
+        summary:
+          'Reduce the sensation of tension around the lower ribs and upper abdomen.',
+        why:
+          'Comfortable tissue movement around the rib margins may support freer breathing, although no single massage technique can guarantee diaphragm release.',
+        practices: [
+          'Gentle self-massage below the rib margins',
+          'Body Release',
+          'Soft contact around the solar plexus',
+          'Supported chest opening',
+          'Slow breathing during release'
+        ]
+      },
+
+      'Lower-rib mobility': {
+        summary:
+          'Restore the ability of the lower ribs to move in several directions.',
+        why:
+          'Lower-rib stiffness can limit comfortable expansion during inhalation.',
+        practices: [
+          'Side bends',
+          'Side-lying breathing',
+          'Thoracic rotation',
+          'Arms overhead with breath',
+          'Joint Recovery rib movements'
+        ]
+      },
+
+      'Thoracic rotation': {
+        summary:
+          'Improve rotation through the thoracic spine and rib cage.',
+        why:
+          'Thoracic stiffness may reduce the adaptability of the ribs during breathing and movement.',
+        practices: [
+          'Open Book',
+          'Seated rotation',
+          'Standing thoracic turns',
+          'Spiral movements',
+          'Rotation coordinated with exhalation'
+        ]
+      },
+
+      'Side-body stretching': {
+        summary:
+          'Lengthen the side body from the pelvis to the lower ribs.',
+        why:
+          'Side-body and intercostal restrictions may reduce lateral rib expansion.',
+        practices: [
+          'Standing side bends',
+          'Seated side stretches',
+          'Child’s Pose with hands to one side',
+          'Side-lying reach',
+          'Accessible Extended Side Angle'
+        ]
+      },
+
+      'Chest opening': {
+        summary:
+          'Improve mobility through the front of the chest and shoulder girdle.',
+        why:
+          'Restricted shoulders and upper chest may influence posture and rib-cage movement.',
+        practices: [
+          'Wall chest stretch',
+          'Shoulder wall slides',
+          'Supported thoracic extension',
+          'Arms opening',
+          'Gentle backbends'
+        ]
+      },
+
+      'Abdominal activation': {
+        summary:
+          'Develop controlled abdominal movement without constant bracing.',
+        why:
+          'The abdominal wall works with the diaphragm during exhalation, posture, and pressure regulation.',
+        practices: [
+          'Gentle abdominal drawing-in',
+          'Exhalation with abdominal activation',
+          'Controlled abdominal waves',
+          'Preparatory yoga abdominal work'
+        ]
+      },
+
+      'Breath–movement coordination': {
+        summary:
+          'Coordinate breathing with movement of the whole body.',
+        why:
+          'This helps breathing adapt to spinal, rib, shoulder, and pelvic movement rather than remaining an isolated exercise.',
+        practices: [
+          'Cat–Cow',
+          'Twisting with exhalation',
+          'Arm raises with inhalation',
+          'Joint Recovery',
+          'Tai Chi & Flow',
+          'Restorative yoga'
+        ]
+      },
+
+      'Active diaphragm techniques': {
+        summary:
+          'Use more active breathing and abdominal techniques only when appropriate.',
+        why:
+          'These techniques can train coordination of the diaphragm and abdominal wall, but they are not suitable for every person or every health condition.',
+        practices: [
+          'Impulse Breathing',
+          'Kapalabhati',
+          'False inhalation',
+          'Abdominal drawing and expansion',
+          'Selected abdominal manipulations'
+        ],
+        caution:
+          'Active techniques require suitability screening and should not be recommended automatically.'
+      }
+    };
+
+
+    function toggleFocusDetail(button) {
+      const detail = document.getElementById('focusDetail');
+
+      if (!detail || !button) return;
+
+      const focusName = decodeURIComponent(
+        button.dataset.focus || ''
+      );
+
+      const information = focusDetails[focusName];
+
+      if (!information) return;
+
+      const alreadyOpen =
+        button.getAttribute('aria-expanded') === 'true';
+
+      document
+        .querySelectorAll('.focus-tag[aria-expanded="true"]')
+        .forEach(function (tag) {
+          tag.setAttribute('aria-expanded', 'false');
+        });
+
+      if (alreadyOpen) {
+        detail.hidden = true;
+        detail.innerHTML = '';
+        return;
+      }
+
+      button.setAttribute('aria-expanded', 'true');
+
+      const practices = information.practices
+        .map(function (practice) {
+          return '<li>' + practice + '</li>';
+        })
+        .join('');
+
+      const caution = information.caution
+        ? '<div class="focus-detail-caution">' +
+            information.caution +
+          '</div>'
+        : '';
+
+      detail.innerHTML = `
+        <div class="focus-detail-label">Selected focus</div>
+        <h3>${focusName}</h3>
+
+        <p>${information.summary}</p>
+
+        <h4>Why it matters</h4>
+        <p>${information.why}</p>
+
+        <h4>Practices may include</h4>
+        <ul>${practices}</ul>
+
+        ${caution}
+      `;
+
+      detail.hidden = false;
+
+      requestAnimationFrame(function () {
+        detail.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest'
+        });
+      });
+    }
+
+
+    function openEducationPage(pageName) {
+      const page =
+        document.getElementById(pageName + 'Page');
+
+      if (!page) return;
+
+      if (pageName === 'snapshot') {
+        renderSnapshotPage();
+      }
+
+      if (pageName === 'insight') {
+        renderInsightPage();
+      }
+
+      page.classList.add('open');
+      page.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('education-page-open');
+
+      const detailPage =
+        page.querySelector('.detail-page');
+
+      if (detailPage) {
+        detailPage.scrollTop = 0;
+      }
+    }
+
+
+    function closeEducationPage(pageName) {
+      const page =
+        document.getElementById(pageName + 'Page');
+
+      if (!page) return;
+
+      page.classList.remove('open');
+      page.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('education-page-open');
+    }
+
+
+    function openInsightFromSnapshot() {
+      closeEducationPage('snapshot');
+
+      setTimeout(function () {
+        openEducationPage('insight');
+      }, 250);
+    }
+
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key !== 'Escape') return;
+
+      document
+        .querySelectorAll('.detail-overlay.open')
+        .forEach(function (page) {
+          page.classList.remove('open');
+          page.setAttribute('aria-hidden', 'true');
+        });
+
+      document.body.classList.remove('education-page-open');
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+      document
+        .querySelectorAll('.detail-overlay')
+        .forEach(function (overlay) {
+          overlay.addEventListener('click', function (event) {
+            if (event.target !== overlay) return;
+
+            overlay.classList.remove('open');
+            overlay.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('education-page-open');
+          });
+        });
+    });
+  </script>
+</body>
+</html>
