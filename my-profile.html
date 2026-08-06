@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+
+  <title>My Profile — MoveSpan</title>
+
+  <style>
+    :root {
+      --primary: #2D7D52;
+      --primary-dark: #225F3E;
+      --primary-soft: #EAF4EE;
+
+      --background: #F4F6F4;
+      --surface: #FFFFFF;
+      --surface-alt: #F5F7F6;
+
+      --text: #18211B;
+      --secondary: #6D7971;
+      --muted: #98A19B;
+      --border: #E2E8E4;
+
+      --radius-card: 19px;
+
+      --shadow:
+        0 1px 2px rgba(22, 45, 31, .03),
+        0 8px 24px rgba(22, 45, 31, .055);
+
+      --font:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "SF Pro Text",
+        "Segoe UI",
+        sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--background);
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    a {
+      font: inherit;
+    }
+
+    .app-page {
+      width: min(100%, 520px);
+      min-height: 100vh;
+      margin: 0 auto;
+
+      padding:
+        calc(14px + env(safe-area-inset-top))
+        18px
+        calc(38px + env(safe-area-inset-bottom));
+    }
+
+    .app-header {
+      min-height: 48px;
+      display: grid;
+      grid-template-columns: 44px 1fr 44px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .movespan-back {
+      width: 44px;
+      height: 44px;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--primary);
+      cursor: pointer;
+
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .movespan-back svg {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .movespan-back:focus-visible {
+      outline: none;
+      border-radius: 10px;
+      box-shadow:
+        0 0 0 3px rgba(45, 125, 82, .16);
+    }
+
+    .page-title {
+      margin: 0;
+      text-align: center;
+      font-size: 20px;
+      line-height: 1.2;
+      font-weight: 760;
+      letter-spacing: -.015em;
+    }
+
+    .user-card {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      padding: 18px;
+      border-radius: 22px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #FFFFFF 0%,
+          #F0F6F2 100%
+        );
+
+      box-shadow: var(--shadow);
+    }
+
+    .avatar {
+      width: 64px;
+      height: 64px;
+      flex: 0 0 64px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 50%;
+      background: var(--primary);
+      color: #FFFFFF;
+
+      font-size: 24px;
+      font-weight: 760;
+    }
+
+    .user-copy {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .user-name {
+      margin: 0 0 4px;
+      font-size: 18px;
+      line-height: 1.25;
+      font-weight: 760;
+    }
+
+    .user-email {
+      margin: 0;
+      color: var(--secondary);
+      font-size: 13px;
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+    }
+
+    .edit-button {
+      flex: 0 0 auto;
+
+      padding: 8px 11px;
+      border: 1px solid rgba(45, 125, 82, .18);
+      border-radius: 11px;
+
+      background: var(--primary-soft);
+      color: var(--primary);
+
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .progress-card {
+      margin-top: 14px;
+      padding: 18px;
+
+      border-radius: var(--radius-card);
+
+      background:
+        linear-gradient(
+          118deg,
+          #286F49 0%,
+          #347F58 20%,
+          #246744 39%,
+          #3B8660 56%,
+          #245F41 76%,
+          #2D7D52 100%
+        );
+
+      color: #FFFFFF;
+
+      box-shadow:
+        0 10px 24px rgba(34, 96, 63, .18);
+    }
+
+    .level-line {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .level-label {
+      color: rgba(255,255,255,.76);
+      font-size: 11px;
+      font-weight: 760;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .level-value {
+      margin-top: 4px;
+      font-size: 25px;
+      font-weight: 780;
+    }
+
+    .points-value {
+      text-align: right;
+      font-size: 13px;
+      font-weight: 680;
+    }
+
+    .progress-track {
+      height: 7px;
+      margin-top: 14px;
+      overflow: hidden;
+
+      border-radius: 999px;
+      background: rgba(255,255,255,.20);
+    }
+
+    .progress-fill {
+      width: 0;
+      height: 100%;
+      border-radius: 999px;
+      background: #FFFFFF;
+      transition: width .3s ease;
+    }
+
+    .progress-meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .progress-stat {
+      padding: 10px;
+      border-radius: 13px;
+      background: rgba(255,255,255,.11);
+      text-align: center;
+    }
+
+    .progress-stat strong {
+      display: block;
+      font-size: 17px;
+      line-height: 1.2;
+    }
+
+    .progress-stat span {
+      display: block;
+      margin-top: 3px;
+      color: rgba(255,255,255,.76);
+      font-size: 10px;
+      line-height: 1.25;
+    }
+
+    .section {
+      margin-top: 24px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+
+      margin: 0 5px 9px;
+    }
+
+    .section-title {
+      margin: 0;
+      color: var(--secondary);
+      font-size: 12px;
+      line-height: 1.3;
+      font-weight: 760;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .section-action {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .card {
+      overflow: hidden;
+      border-radius: var(--radius-card);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .empty-card {
+      padding: 19px;
+    }
+
+    .empty-title {
+      margin: 0 0 5px;
+      font-size: 15px;
+      font-weight: 730;
+    }
+
+    .empty-text {
+      margin: 0;
+      color: var(--secondary);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 11px;
+    }
+
+    .quick-item {
+      min-height: 116px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      padding: 15px;
+
+      border: 0;
+      border-radius: 17px;
+
+      background: var(--surface);
+      color: var(--text);
+      text-align: left;
+
+      box-shadow: var(--shadow);
+      cursor: pointer;
+    }
+
+    .quick-code {
+      width: 38px;
+      height: 38px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 11px;
+      background: var(--primary-soft);
+      color: var(--primary);
+
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+
+    .quick-name {
+      margin-top: 13px;
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 720;
+    }
+
+    .list-row {
+      width: 100%;
+      min-height: 68px;
+
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      padding: 13px 16px;
+      border: 0;
+
+      background: var(--surface);
+      color: var(--text);
+      text-align: left;
+    }
+
+    .list-row + .list-row {
+      border-top: 1px solid var(--border);
+    }
+
+    button.list-row {
+      cursor: pointer;
+    }
+
+    .row-icon {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 12px;
+      background: var(--primary-soft);
+      color: var(--primary);
+
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .row-copy {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .row-title {
+      display: block;
+      font-size: 14px;
+      line-height: 1.3;
+      font-weight: 710;
+    }
+
+    .row-description {
+      display: block;
+      margin-top: 3px;
+      color: var(--secondary);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .row-chevron {
+      color: var(--muted);
+      font-size: 23px;
+      font-weight: 300;
+    }
+
+    .achievement-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .achievement {
+      min-height: 112px;
+      padding: 13px 9px;
+
+      border-radius: 16px;
+      background: var(--surface);
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .achievement-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 9px;
+
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: var(--primary);
+
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .achievement-name {
+      color: var(--secondary);
+      font-size: 10px;
+      line-height: 1.35;
+      font-weight: 680;
+    }
+
+    .primary-row .row-title {
+      color: var(--primary);
+    }
+
+    .version {
+      margin: 28px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      text-align: center;
+    }
+
+    @media (max-width: 370px) {
+      .app-page {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .user-card {
+        padding: 15px;
+      }
+
+      .avatar {
+        width: 56px;
+        height: 56px;
+        flex-basis: 56px;
+      }
+
+      .achievement-grid {
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app-page">
+    <header class="app-header">
+      <button
+        class="movespan-back"
+        type="button"
+        onclick="goBack()"
+        aria-label="Back"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M15 18l-6-6 6-6"></path>
+        </svg>
+      </button>
+
+      <h1 class="page-title">My Profile</h1>
+
+      <span aria-hidden="true"></span>
+    </header>
+
+    <section class="user-card">
+      <div class="avatar" id="profile-avatar">MS</div>
+
+      <div class="user-copy">
+        <h2 class="user-name" id="profile-name">MoveSpan Member</h2>
+        <p class="user-email" id="profile-email">Complete your profile</p>
+      </div>
+
+      <a class="edit-button" href="settings.html#profile">
+        Edit
+      </a>
+    </section>
+
+    <section class="progress-card">
+      <div class="level-line">
+        <div>
+          <div class="level-label">Your progress</div>
+          <div class="level-value">
+            Level <span id="profile-level">1</span>
+          </div>
+        </div>
+
+        <div class="points-value">
+          <span id="profile-points">0</span> /
+          <span id="profile-next-points">100</span> points
+        </div>
+      </div>
+
+      <div class="progress-track">
+        <div class="progress-fill" id="profile-progress-fill"></div>
+      </div>
+
+      <div class="progress-meta">
+        <div class="progress-stat">
+          <strong id="profile-streak">0</strong>
+          <span>day streak</span>
+        </div>
+
+        <div class="progress-stat">
+          <strong id="profile-sessions">0</strong>
+          <span>practices</span>
+        </div>
+
+        <div class="progress-stat">
+          <strong id="profile-minutes">0</strong>
+          <span>minutes</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <h2 class="section-title">Quick Access</h2>
+        <button class="section-action" type="button" onclick="openLibrary()">
+          Add
+        </button>
+      </div>
+
+      <div class="quick-grid" id="quick-access-grid">
+        <button class="quick-item" type="button" onclick="openLibrary()">
+          <span class="quick-code">+</span>
+          <span class="quick-name">Add a practice or exercise</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <h2 class="section-title">My Favorites</h2>
+        <button class="section-action" type="button" onclick="openLibrary()">
+          Browse
+        </button>
+      </div>
+
+      <div class="card empty-card" id="favorites-card">
+        <h3 class="empty-title">Nothing saved yet</h3>
+        <p class="empty-text">
+          Save useful practices and exercises to return to them quickly.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <h2 class="section-title">Recently Used</h2>
+      </div>
+
+      <div class="card empty-card" id="recent-card">
+        <h3 class="empty-title">Your recent activity will appear here</h3>
+        <p class="empty-text">
+          Completed practices and exercises will be added automatically.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <h2 class="section-title">Learned Resets</h2>
+      </div>
+
+      <div class="card">
+        <div class="list-row">
+          <span class="row-icon">BR</span>
+
+          <span class="row-copy">
+            <span class="row-title">Break Reset</span>
+            <span class="row-description">Available</span>
+          </span>
+        </div>
+
+        <div class="list-row">
+          <span class="row-icon">WR</span>
+
+          <span class="row-copy">
+            <span class="row-title">Walking Reset</span>
+            <span class="row-description">Not learned yet</span>
+          </span>
+        </div>
+
+        <div class="list-row">
+          <span class="row-icon">SR</span>
+
+          <span class="row-copy">
+            <span class="row-title">Sleep Reset</span>
+            <span class="row-description">Not learned yet</span>
+          </span>
+        </div>
+
+        <div class="list-row">
+          <span class="row-icon">TR</span>
+
+          <span class="row-copy">
+            <span class="row-title">Tree Pose Reset</span>
+            <span class="row-description">
+              Guided balance practice
+            </span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <h2 class="section-title">Achievements</h2>
+      </div>
+
+      <div class="achievement-grid">
+        <div class="achievement">
+          <div class="achievement-icon">1</div>
+          <div class="achievement-name">First Practice</div>
+        </div>
+
+        <div class="achievement">
+          <div class="achievement-icon">7</div>
+          <div class="achievement-name">7-Day Rhythm</div>
+        </div>
+
+        <div class="achievement">
+          <div class="achievement-icon">R</div>
+          <div class="achievement-name">First Reset</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <h2 class="section-title">Goals & Movement Profile</h2>
+      </div>
+
+      <div class="card">
+        <button
+          class="list-row"
+          type="button"
+          onclick="window.location.href='settings.html#profile'"
+        >
+          <span class="row-icon">GP</span>
+
+          <span class="row-copy">
+            <span class="row-title">Goals and preferences</span>
+            <span class="row-description">
+              Your goals, practice preferences and available time
+            </span>
+          </span>
+
+          <span class="row-chevron" aria-hidden="true">›</span>
+        </button>
+
+        <button
+          class="list-row"
+          type="button"
+          onclick="window.location.href='settings.html#profile'"
+        >
+          <span class="row-icon">MP</span>
+
+          <span class="row-copy">
+            <span class="row-title">Movement Profile</span>
+            <span class="row-description">
+              Body zones, movement experience and limitations
+            </span>
+          </span>
+
+          <span class="row-chevron" aria-hidden="true">›</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="card">
+        <button
+          class="list-row primary-row"
+          type="button"
+          onclick="window.location.href='settings.html#profile'"
+        >
+          <span class="row-icon">EP</span>
+
+          <span class="row-copy">
+            <span class="row-title">Edit Profile</span>
+            <span class="row-description">
+              Update your personal and movement information
+            </span>
+          </span>
+
+          <span class="row-chevron" aria-hidden="true">›</span>
+        </button>
+      </div>
+    </section>
+
+    <p class="version">MoveSpan · My Profile v1</p>
+  </main>
+
+  <script>
+    const PROFILE_KEYS = [
+      "movespan_profile",
+      "mwProfile",
+      "movespanProfile",
+      "onboardingProfile",
+      "userProfile",
+      "mwUser",
+      "mw_onb"
+    ];
+
+    function readJson(key) {
+      try {
+        return JSON.parse(localStorage.getItem(key) || "{}");
+      } catch (_) {
+        return {};
+      }
+    }
+
+    function collectProfile(user, profile) {
+      return Object.assign(
+        {},
+        ...PROFILE_KEYS.map(readJson),
+        window.mwProfile || {},
+        window.mwUser || {},
+        user || {},
+        profile || {}
+      );
+    }
+
+    function resolveName(data) {
+      const full =
+        data.fullName ||
+        data.full_name ||
+        data.displayName ||
+        data.name ||
+        data.userName ||
+        "";
+
+      if (String(full).trim()) {
+        return String(full).trim();
+      }
+
+      const first =
+        data.firstName ||
+        data.first_name ||
+        data.givenName ||
+        "";
+
+      const last =
+        data.lastName ||
+        data.last_name ||
+        data.familyName ||
+        "";
+
+      return [first, last].filter(Boolean).join(" ").trim();
+    }
+
+    function resolveEmail(data) {
+      return String(
+        data.email ||
+        data.userEmail ||
+        data.user_email ||
+        ""
+      ).trim();
+    }
+
+    function createInitials(name, email) {
+      const source =
+        name ||
+        email.split("@")[0] ||
+        "MoveSpan";
+
+      return source
+        .split(/\s+/)
+        .slice(0, 2)
+        .map(part => part.charAt(0).toUpperCase())
+        .join("") || "MS";
+    }
+
+    function readLevelState() {
+      try {
+        const saved = JSON.parse(
+          localStorage.getItem("movespan_level_state") || "{}"
+        );
+
+        return {
+          level: Number(saved.level) || 1,
+          points: Number(saved.points) || 0,
+          nextLevelPoints:
+            Number(saved.nextLevelPoints) || 100,
+          streak:
+            Number(saved.streak || saved.currentStreak) || 0,
+          minutes:
+            Number(saved.minutes || saved.totalMinutes) || 0
+        };
+      } catch (_) {
+        return {
+          level: 1,
+          points: 0,
+          nextLevelPoints: 100,
+          streak: 0,
+          minutes: 0
+        };
+      }
+    }
+
+    function renderProfile(user, profile) {
+      const data = collectProfile(user, profile);
+      const name = resolveName(data) || "MoveSpan Member";
+      const email = resolveEmail(data);
+
+      document.getElementById("profile-name").textContent = name;
+
+      document.getElementById("profile-email").textContent =
+        email || "Complete your profile";
+
+      document.getElementById("profile-avatar").textContent =
+        createInitials(name, email);
+
+      const levelState = readLevelState();
+
+      document.getElementById("profile-level").textContent =
+        String(levelState.level);
+
+      document.getElementById("profile-points").textContent =
+        String(levelState.points);
+
+      document.getElementById("profile-next-points").textContent =
+        String(levelState.nextLevelPoints);
+
+      document.getElementById("profile-streak").textContent =
+        String(levelState.streak);
+
+      document.getElementById("profile-minutes").textContent =
+        String(levelState.minutes);
+
+      document.getElementById("profile-sessions").textContent =
+        String(Number(data.sessions) || 0);
+
+      const percent = Math.max(
+        0,
+        Math.min(
+          100,
+          levelState.nextLevelPoints
+            ? (
+                levelState.points /
+                levelState.nextLevelPoints
+              ) * 100
+            : 0
+        )
+      );
+
+      document.getElementById("profile-progress-fill").style.width =
+        percent + "%";
+    }
+
+    function goBack() {
+      if (window.history.length > 1) {
+        window.history.back();
+        return;
+      }
+
+      window.location.href = "home.html";
+    }
+
+    function openLibrary() {
+      window.location.href = "practice-library.html";
+    }
+
+    const previousAuthReady = window.onMwAuthReady;
+
+    window.onMwAuthReady = function(user, profile) {
+      if (typeof previousAuthReady === "function") {
+        try {
+          previousAuthReady(user, profile);
+        } catch (_) {}
+      }
+
+      if (user) window.mwUser = user;
+      if (profile) window.mwProfile = profile;
+
+      renderProfile(user, profile);
+    };
+
+    renderProfile();
+  </script>
+
+  <script type="module" src="firebase-auth.js"></script>
+</body>
+</html>
