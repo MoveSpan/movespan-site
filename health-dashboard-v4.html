@@ -6,7 +6,7 @@
     name="viewport"
     content="width=device-width, initial-scale=1, viewport-fit=cover"
   >
-  <title>Health Snapshot — MoveSpan</title>
+  <title>Breath Snapshot — MoveSpan</title>
 
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -328,75 +328,6 @@
       line-height: 1.5;
     }
 
-    /* Breathing pattern */
-
-    .section-intro {
-      margin: -2px 0 12px;
-      color: var(--secondary);
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .patterns-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .pattern-card {
-      position: relative;
-      min-width: 0;
-      min-height: 130px;
-      padding: 15px;
-      border: 1.5px solid var(--border);
-      border-radius: 20px;
-      background: var(--surface);
-      color: var(--text);
-      text-align: left;
-      cursor: pointer;
-    }
-
-    .pattern-card.selected {
-      border-color: var(--green);
-      background: var(--green-soft);
-    }
-
-    .pattern-name {
-      display: block;
-      padding-right: 24px;
-      font-size: 15px;
-      line-height: 1.35;
-      font-weight: 700;
-    }
-
-    .pattern-description {
-      display: block;
-      margin-top: 8px;
-      color: var(--secondary);
-      font-size: 11px;
-      line-height: 1.45;
-    }
-
-    .pattern-check {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      width: 20px;
-      height: 20px;
-      display: grid;
-      place-items: center;
-      border: 1.5px solid #BCC5C0;
-      border-radius: 50%;
-      color: transparent;
-      font-size: 12px;
-    }
-
-    .pattern-card.selected .pattern-check {
-      border-color: var(--green);
-      background: var(--green);
-      color: #FFFFFF;
-    }
-
     /* Insight */
 
     .insight-card {
@@ -663,29 +594,525 @@
       }
     }
   </style>
+
+<style id="breath-measure-source-style">
+.measure-source-card {
+  padding: 20px;
+}
+
+.measure-source-label {
+  margin-bottom: 7px;
+  color: var(--green);
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.measure-source-title {
+  max-width: 330px;
+  margin: 0 0 8px;
+  color: var(--text);
+  font-size: 22px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -.025em;
+}
+
+.measure-source-intro {
+  max-width: 360px;
+  margin: 0 0 18px;
+  color: var(--secondary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.measure-source-options {
+  display: grid;
+  gap: 11px;
+}
+
+.measure-source-option {
+  position: relative;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 13px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--silver-2);
+}
+
+.measure-source-option.recommended {
+  padding-top: 34px;
+  border-color: rgba(45,125,82,.45);
+  background: var(--green-soft-2);
+}
+
+.measure-source-recommended {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.measure-source-option-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: #FFFFFF;
+  color: var(--green);
+}
+
+.measure-source-option-icon svg {
+  width: 21px;
+  height: 21px;
+}
+
+.measure-source-option-title {
+  margin-bottom: 5px;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+.measure-source-option-text {
+  color: var(--secondary);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.measure-source-availability {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.measure-source-availability span {
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: rgba(45,125,82,.09);
+  color: var(--green);
+  font-size: 9px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.measure-source-note {
+  margin: 14px 2px 0;
+  padding: 12px 13px;
+  border-radius: 14px;
+  background: #F4F7F5;
+  color: var(--secondary);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.measure-source-actions {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  gap: 9px;
+  margin-top: 15px;
+}
+
+.measure-source-primary,
+.measure-source-secondary {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.measure-source-primary {
+  gap: 8px;
+  border: 0;
+  background: var(--green);
+  color: #FFFFFF;
+  box-shadow: 0 7px 16px rgba(45,125,82,.17);
+}
+
+.measure-source-secondary {
+  padding: 0 15px;
+  border: 1px solid rgba(45,125,82,.28);
+  background: #FFFFFF;
+  color: var(--green);
+}
+
+@media (max-width: 390px) {
+  .measure-source-card {
+    padding: 18px;
+  }
+
+  .measure-source-title {
+    font-size: 20px;
+  }
+
+  .measure-source-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .measure-source-secondary {
+    width: 100%;
+  }
+}
+</style>
+
+
+<style id="clickable-measure-source-cards">
+.measure-source-clickable {
+  position: relative;
+  width: 100%;
+  appearance: none;
+  text-decoration: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  padding-right: 52px;
+  transition:
+    transform .16s ease,
+    border-color .16s ease,
+    box-shadow .16s ease,
+    background-color .16s ease;
+}
+
+.measure-source-clickable:hover {
+  border-color: rgba(45,125,82,.48);
+  box-shadow: 0 7px 18px rgba(35,79,52,.08);
+}
+
+.measure-source-clickable:active {
+  transform: scale(.985);
+}
+
+.measure-source-clickable:focus-visible {
+  outline: 3px solid rgba(45,125,82,.22);
+  outline-offset: 3px;
+}
+
+.measure-source-card-arrow {
+  position: absolute;
+  top: 50%;
+  right: 19px;
+  transform: translateY(-50%);
+  color: #77827C;
+  font-size: 37px;
+  line-height: 1;
+  font-weight: 300;
+}
+
+.measure-source-option.recommended .measure-source-card-arrow {
+  color: var(--green);
+}
+
+.measure-source-actions {
+  display: none !important;
+}
+</style>
+
+
+<style id="measure-source-cleanup-fix">
+.measure-source-actions {
+  display: none !important;
+}
+
+.measure-source-option:empty,
+.measure-source-option > .measure-source-card-arrow:only-child {
+  display: none !important;
+}
+</style>
+
+<style id="breath-education-entry-v1">
+.breath-education-entry-section {
+  margin-top: 20px;
+}
+
+.breath-education-entry {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid #D7E5DD;
+  border-radius: 24px;
+  background: linear-gradient(145deg, #EDF6F0 0%, #F8FAF8 100%);
+  color: #172019;
+  text-decoration: none;
+  box-shadow: 0 12px 30px rgba(41,83,58,.08);
+  transition:
+    transform .16s ease,
+    border-color .16s ease,
+    box-shadow .16s ease;
+}
+
+.breath-education-entry:hover {
+  border-color: rgba(45,125,82,.50);
+  box-shadow: 0 15px 34px rgba(45,125,82,.12);
+}
+
+.breath-education-entry:active {
+  transform: scale(.988);
+}
+
+.breath-education-entry-icon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: #FFFFFF;
+  color: #2D7D52;
+  box-shadow: 0 5px 15px rgba(45,125,82,.08);
+}
+
+.breath-education-entry-icon svg {
+  width: 27px;
+  height: 27px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.breath-education-entry-label {
+  display: block;
+  margin-bottom: 4px;
+  color: #2D7D52;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.breath-education-entry-copy strong {
+  display: block;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.breath-education-entry-copy small {
+  display: block;
+  margin-top: 5px;
+  color: #68736D;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.breath-education-entry-chevron {
+  color: #2D7D52;
+  font-size: 37px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+@media (max-width: 390px) {
+  .breath-education-entry {
+    grid-template-columns: 47px minmax(0, 1fr) 20px;
+    gap: 11px;
+    padding: 15px;
+  }
+
+  .breath-education-entry-icon {
+    width: 47px;
+    height: 47px;
+  }
+}
+</style>
+
+
+<style id="current-snapshot-primary-v1">
+#current-snapshot .snapshot-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.72);
+  background: #2D7D52;
+  color: #FFFFFF;
+  box-shadow:
+    0 0 0 4px rgba(255,255,255,.92),
+    0 0 0 6px rgba(45,125,82,.22),
+    0 16px 34px rgba(35,95,65,.20);
+}
+
+#current-snapshot .snapshot-card::before,
+#current-snapshot .snapshot-card::after {
+  content: "";
+  position: absolute;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+#current-snapshot .snapshot-card::before {
+  width: 240px;
+  height: 240px;
+  top: -155px;
+  right: -130px;
+}
+
+#current-snapshot .snapshot-card::after {
+  width: 190px;
+  height: 190px;
+  left: -115px;
+  bottom: -145px;
+}
+
+#current-snapshot .snapshot-header,
+#current-snapshot .metrics-grid {
+  position: relative;
+  z-index: 1;
+}
+
+#current-snapshot .snapshot-title,
+#current-snapshot .metric-value,
+#current-snapshot .metric-unit,
+#current-snapshot .metric-label {
+  color: #FFFFFF;
+}
+
+#current-snapshot .snapshot-time {
+  color: rgba(255,255,255,.72);
+}
+
+#current-snapshot .snapshot-status {
+  border-color: rgba(255,255,255,.40);
+  background: rgba(255,255,255,.15);
+  color: #FFFFFF;
+}
+
+#current-snapshot .metric {
+  border-color: rgba(255,255,255,.18);
+  background: rgba(255,255,255,.10);
+}
+</style>
+
+  <link rel="stylesheet" href="/assets/css/movespan-navigation.css">
 </head>
 
 <body>
   <main class="app">
     <header class="topbar">
-      <a
-        class="back-button"
-        href="home.html"
-        aria-label="Back"
-      >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
+      <a class="movespan-back" href="home.html" aria-label="Back">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <path d="M15 18l-6-6 6-6"></path>
         </svg>
       </a>
 
-      <h1 class="page-title">Health Snapshot</h1>
+      <h1 class="page-title">Breath Snapshot</h1>
 
       <div aria-hidden="true"></div>
     </header>
 
     <div class="content">
 
-      <section class="section">
+      <!-- MEASUREMENT SOURCE -->
+      <section class="section" id="breath-measure-source">
+        <article class="card measure-source-card">
+          <div class="measure-source-label">Breath Snapshot</div>
+
+          <h2 class="measure-source-title">
+            How would you like to add your measurements?
+          </h2>
+
+          <p class="measure-source-intro">
+            Use available data from a connected device, or complete a guided
+            manual check directly in MoveSpan.
+          </p>
+
+          <div class="measure-source-options">
+            <button
+              class="measure-source-option measure-source-clickable"
+              type="button"
+              id="connected-device-card"
+              aria-label="Use Connected Device">
+              <div class="measure-source-option-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round"
+                     stroke-linejoin="round">
+                  <rect x="7" y="2" width="10" height="20" rx="3"/>
+                  <path d="M10 6h4M10 18h4"/>
+                </svg>
+              </div>
+
+              <div class="measure-source-option-copy">
+                <div class="measure-source-option-title">
+                  Use Connected Device
+                </div>
+
+                <div class="measure-source-option-text">
+                  Import available pulse and breathing data from Apple Health,
+                  WHOOP, Fitbit, Garmin, or Oura.
+                </div>
+
+                <div class="measure-source-availability">
+                  <span>Pulse</span>
+                  <span>Breathing rate when available</span>
+                </div>
+              </div>
+            
+              <span class="measure-source-card-arrow" aria-hidden="true">›</span>
+            </button>
+
+
+            <a
+              class="measure-source-option recommended measure-source-clickable"
+              href="/measure.html"
+              aria-label="Measure Manually">
+              <div class="measure-source-recommended">Works without a device</div>
+
+              <div class="measure-source-option-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round"
+                     stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="9"/>
+                  <path d="M12 7v5l3 2"/>
+                </svg>
+              </div>
+
+              <div class="measure-source-option-copy">
+                <div class="measure-source-option-title">
+                  Measure Manually
+                </div>
+
+                <div class="measure-source-option-text">
+                  Check your breathing rate, breathing pattern, and resting
+                  pulse with step-by-step guidance.
+                </div>
+
+                <div class="measure-source-availability">
+                  <span>Breathing rate</span>
+                  <span>Breathing pattern</span>
+                  <span>Pulse</span>
+                </div>
+              </div>
+          
+              <span class="measure-source-card-arrow" aria-hidden="true">›</span>
+            </a>
+
+
+          <div class="measure-source-note">
+            Breathing pattern is checked manually because standard wearables
+            do not identify where your breathing movement begins.
+          </div>
+        </article>
+      </section>
+
+
+
+      <section class="section" id="current-snapshot">
         <article class="card snapshot-card">
           <div class="snapshot-header">
             <div>
@@ -718,167 +1145,41 @@
         </article>
       </section>
 
-      <section class="section">
-        <button
-          class="learn-button"
-          id="learnButton"
-          type="button"
-          aria-expanded="false"
-        >
-          <span class="learn-icon">i</span>
+<section class="section breath-education-entry-section">
+        <a
+          class="breath-education-entry"
+          href="/breath-education.html">
 
-          <span>
-            <span class="learn-title">Learn Why It Matters</span>
-            <span class="learn-subtitle">
-              CO₂, oxygen delivery and brain circulation
-            </span>
+          <span class="breath-education-entry-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 4v16"/>
+              <path d="M12 10c-2.5-3-6-3.2-8-1"/>
+              <path d="M12 10c2.5-3 6-3.2 8-1"/>
+              <path d="M12 14c-2.7 3.2-6.2 3.4-8.5 1"/>
+              <path d="M12 14c2.7 3.2 6.2 3.4 8.5 1"/>
+            </svg>
           </span>
 
-          <span class="chevron">›</span>
-        </button>
+          <span class="breath-education-entry-copy">
+            <span class="breath-education-entry-label">
+              Breath Education
+            </span>
 
-        <article
-          class="card education-panel"
-          id="educationPanel"
-        >
-          <h3>Efficient breathing supports the brain and body</h3>
+            <strong>Understand Your Breath</strong>
 
-          <p>
-            When ventilation exceeds the body’s current metabolic demand,
-            carbon dioxide may fall. Carbon dioxide helps regulate cerebral
-            blood flow and supports oxygen release from hemoglobin into
-            tissues.
-          </p>
+            <small>
+              Understand your results, breathing pattern, diaphragm,
+              nervous system, and recommended focus.
+            </small>
+          </span>
 
-          <div class="education-facts">
-            <div class="education-fact">
-              <strong>Brain circulation</strong>
-              <span>
-                CO₂ helps regulate blood-vessel diameter in the brain.
-              </span>
-            </div>
-
-            <div class="education-fact">
-              <strong>Oxygen delivery</strong>
-              <span>
-                CO₂ participates in releasing oxygen into active tissues.
-              </span>
-            </div>
-
-            <div class="education-fact">
-              <strong>Calm regulation</strong>
-              <span>
-                Quieter breathing may reduce unnecessary respiratory effort.
-              </span>
-            </div>
-          </div>
-
-          <div class="medical-note">
-            Breathing rate and movement pattern alone do not diagnose
-            hyperventilation or low CO₂. MoveSpan uses them as wellness
-            observations to personalize practices.
-          </div>
-        </article>
+          <span class="breath-education-entry-chevron" aria-hidden="true">
+            ›
+          </span>
+        </a>
       </section>
 
-      <section class="section">
-        <h2 class="section-heading">Breathing Pattern Check</h2>
-
-        <p class="section-intro">
-          Select where you feel the clearest movement during a calm,
-          natural breath.
-        </p>
-
-        <div class="patterns-grid" id="patternsGrid">
-          <button class="pattern-card" type="button" data-pattern="Upper chest">
-            <span class="pattern-check">✓</span>
-            <span class="pattern-name">Upper chest</span>
-            <span class="pattern-description">
-              Most movement is high in the chest and collarbone area.
-            </span>
-          </button>
-
-          <button class="pattern-card" type="button" data-pattern="Rib cage">
-            <span class="pattern-check">✓</span>
-            <span class="pattern-name">Rib cage</span>
-            <span class="pattern-description">
-              The ribs expand outward and slightly backward.
-            </span>
-          </button>
-
-          <button
-            class="pattern-card selected"
-            type="button"
-            data-pattern="Belly"
-          >
-            <span class="pattern-check">✓</span>
-            <span class="pattern-name">Belly</span>
-            <span class="pattern-description">
-              The abdomen moves gently with the diaphragm.
-            </span>
-          </button>
-
-          <button class="pattern-card" type="button" data-pattern="Low belly">
-            <span class="pattern-check">✓</span>
-            <span class="pattern-name">Low belly</span>
-            <span class="pattern-description">
-              Movement is felt mainly below the navel.
-            </span>
-          </button>
-        </div>
-      </section>
-
-      <section class="section">
-        <article class="card insight-card">
-          <button
-            class="insight-button"
-            id="insightButton"
-            type="button"
-            aria-expanded="true"
-          >
-            <span class="insight-icon">✦</span>
-
-            <span>
-              <span class="insight-label">MoveSpan Insight</span>
-              <span class="insight-title">
-                Your breathing is calm, with room to improve rib mobility
-              </span>
-            </span>
-
-            <span class="chevron">›</span>
-          </button>
-
-          <div class="insight-body open" id="insightBody">
-            <p class="insight-text">
-              Your pulse and breathing rate are within a comfortable range.
-              Belly movement is present. The next focus is freer lower-rib
-              expansion and less tension through the upper chest, neck and
-              shoulders.
-            </p>
-
-            <div class="focus-tags">
-              <span class="focus-tag accent">Belly breathing</span>
-              <span class="focus-tag">Lower-rib expansion</span>
-
-              <button
-                class="more-button"
-                id="moreFocusButton"
-                type="button"
-                aria-expanded="false"
-              >
-                +2 more
-              </button>
-
-              <div class="extra-focus" id="extraFocus">
-                <span class="focus-tag">Relax neck and shoulders</span>
-                <span class="focus-tag">Soft, longer exhalation</span>
-              </div>
-            </div>
-          </div>
-        </article>
-      </section>
-
-      <section class="section actions">
+<section class="section actions">
         <a class="primary-action" href="/program.html">
           Start Recommended Practice
         </a>
@@ -986,6 +1287,67 @@
         open ? "Show less" : "+2 more";
     });
   </script>
+
+<script id="clickable-measure-source-script">
+document.addEventListener("DOMContentLoaded", function () {
+  const deviceCard = document.getElementById("connected-device-card");
+
+  if (!deviceCard) return;
+
+  deviceCard.addEventListener("click", function () {
+    window.location.href = "/home.html#breath-snapshot";
+  });
+});
+</script>
+
+<script id="measure-source-dom-fix">
+document.addEventListener("DOMContentLoaded", function () {
+  const options = document.querySelector(".measure-source-options");
+  if (!options) return;
+
+  const cards = Array.from(
+    options.querySelectorAll(".measure-source-option")
+  );
+
+  const deviceCard = cards.find(function (card) {
+    return card.textContent.includes("Use Connected Device");
+  });
+
+  const manualCard = cards.find(function (card) {
+    return card.textContent.includes("Measure Manually");
+  });
+
+  /* Удаляем пустые элементы, появившиеся из-за неправильного закрытия тегов */
+  cards.forEach(function (card) {
+    const meaningfulText = card.textContent
+      .replace("›", "")
+      .trim();
+
+    if (!meaningfulText) {
+      card.remove();
+    }
+  });
+
+  function ensureArrow(card) {
+    if (!card) return;
+
+    /* Удаляем стрелки, которые могли оказаться не в том месте */
+    card.querySelectorAll(".measure-source-card-arrow").forEach(function (arrow) {
+      arrow.remove();
+    });
+
+    const arrow = document.createElement("span");
+    arrow.className = "measure-source-card-arrow";
+    arrow.setAttribute("aria-hidden", "true");
+    arrow.textContent = "›";
+
+    card.appendChild(arrow);
+  }
+
+  ensureArrow(deviceCard);
+  ensureArrow(manualCard);
+});
+</script>
 </body>
 </html>
 

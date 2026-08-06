@@ -197,7 +197,7 @@ img{max-width:100%;display:block}
 
 /* Today's Practice hero additions */
 #practice-hero{padding-top:1.5rem;padding-bottom:1.5rem}
-.practice-person{position:absolute;right:8px;bottom:10px;height:82%;width:auto;object-fit:contain;object-position:bottom right;pointer-events:none;z-index:0}
+
 #practice-hero .journey-eyebrow,#practice-hero .journey-title,#practice-hero .practice-meta,#practice-hero .practice-tags,#practice-hero .journey-cta{position:relative;z-index:2}
 #practice-hero .journey-title,#practice-hero .practice-meta,#practice-hero .practice-tags{max-width:60%}
 
@@ -210,7 +210,7 @@ img{max-width:100%;display:block}
 .practice-tag{display:flex;align-items:center;gap:4px;font-size:12px;color:rgba(255,255,255,.9)}
 .practice-tag svg{width:14px;height:14px}
 #practice-hero .journey-cta{max-width:62%}
-@media(max-width:400px){.practice-person{opacity:.3}#practice-hero .journey-title,#practice-hero .practice-meta,#practice-hero .practice-tags,#practice-hero .journey-cta{max-width:100%}}
+@media(max-width:400px){#practice-hero .journey-title,#practice-hero .practice-meta,#practice-hero .practice-tags,#practice-hero .journey-cta{max-width:100%}}
 
 @media(max-width:380px){
   .row2{grid-template-columns:1fr}
@@ -360,6 +360,51 @@ img{max-width:100%;display:block}
   }
 }
 
+
+/* === MOVESPAN BREATH SNAPSHOT WAVE === */
+.health-snapshot-collapsible{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  background:#2D7D52;
+}
+
+.health-snapshot-collapsible::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:34px;
+  width:100%;
+  height:118px;
+  z-index:0;
+  pointer-events:none;
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:100% 100%;
+  background-image:url("data:image/svg+xml,%3Csvg%20viewBox%3D%270%200%201200%20150%27%20preserveAspectRatio%3D%27none%27%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%3E%0A%20%20%3Cpath%20d%3D%27M0%2082%0A%20%20%20%20%20%20%20%20%20%20%20C130%2058%20245%2048%20360%2062%0A%20%20%20%20%20%20%20%20%20%20%20C490%2078%20585%2096%20700%2088%0A%20%20%20%20%20%20%20%20%20%20%20C830%2078%20920%2054%201030%2058%0A%20%20%20%20%20%20%20%20%20%20%20C1095%2060%201150%2070%201200%2076%0A%20%20%20%20%20%20%20%20%20%20%20L1200%20150%20L0%20150%20Z%27%0A%20%20%20%20%20%20%20%20fill%3D%27%23E6F2EB%27%20fill-opacity%3D%27.18%27/%3E%0A%20%20%3Cpath%20d%3D%27M0%20108%0A%20%20%20%20%20%20%20%20%20%20%20C150%2094%20275%2086%20395%2096%0A%20%20%20%20%20%20%20%20%20%20%20C525%20108%20630%20120%20750%20112%0A%20%20%20%20%20%20%20%20%20%20%20C875%20104%20980%2088%201080%2090%0A%20%20%20%20%20%20%20%20%20%20%20C1130%2091%201168%2096%201200%20100%0A%20%20%20%20%20%20%20%20%20%20%20L1200%20150%20L0%20150%20Z%27%0A%20%20%20%20%20%20%20%20fill%3D%27%23FFFFFF%27%20fill-opacity%3D%27.05%27/%3E%0A%3C/svg%3E");
+}
+
+.health-snapshot-collapsible::after{
+  content:none;
+}
+
+.health-snapshot-toggle,
+.health-snapshot-details{
+  position:relative;
+  z-index:2;
+}
+
+.health-snapshot-toggle-icon{
+  background:rgba(255,255,255,.14);
+  color:#FFFFFF;
+}
+
+.health-snapshot-toggle-title,
+.health-snapshot-toggle-subtitle,
+.health-snapshot-chevron{
+  color:#FFFFFF;
+}
 </style>
 <style id="movespan-hero-layout">
 /* MoveSpan fixed hero composition */
@@ -456,13 +501,80 @@ img{max-width:100%;display:block}
   min-height: 300px;
   padding-bottom: 104px;
   overflow: hidden;
+  isolation: isolate;
+  background: #2D7D52;
+}
+
+/* soft bottom wave in MoveSpan standard green family */
+#practice-hero::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  width:100%;
+  height:140px;
+  z-index:0;
+  pointer-events:none;
+  background-repeat:no-repeat;
+  background-position:center bottom;
+  background-size:100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg%20viewBox%3D%270%200%201200%20150%27%20preserveAspectRatio%3D%27none%27%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%3E%0A%20%20%3Cpath%20d%3D%27M0%20110%0A%20%20%20%20%20%20%20%20%20%20%20C115%20100%20220%2084%20330%2088%0A%20%20%20%20%20%20%20%20%20%20%20C445%2092%20530%20104%20630%2098%0A%20%20%20%20%20%20%20%20%20%20%20C740%2092%20820%2072%20900%2058%0A%20%20%20%20%20%20%20%20%20%20%20C1000%2040%201090%2036%201200%2022%0A%20%20%20%20%20%20%20%20%20%20%20L1200%20150%20L0%20150%20Z%27%0A%20%20%20%20%20%20%20%20fill%3D%27%23FFFFFF%27%20fill-opacity%3D%27.14%27/%3E%0A%20%20%3Cpath%20d%3D%27M0%20126%0A%20%20%20%20%20%20%20%20%20%20%20C125%20118%20242%20106%20352%20108%0A%20%20%20%20%20%20%20%20%20%20%20C470%20110%20570%20120%20680%20112%0A%20%20%20%20%20%20%20%20%20%20%20C792%20104%20880%2088%20966%2074%0A%20%20%20%20%20%20%20%20%20%20%20C1054%2060%201126%2052%201200%2044%0A%20%20%20%20%20%20%20%20%20%20%20L1200%20150%20L0%20150%20Z%27%0A%20%20%20%20%20%20%20%20fill%3D%27%23FFFFFF%27%20fill-opacity%3D%27.045%27/%3E%0A%3C/svg%3E");
+}
+
+#practice-hero::after {
+  content: none;
+}
+
+#practice-hero > :not(.practice-person-frame) {
+  position: relative;
+  z-index: 2;
+}
+
+#practice-hero .journey-eyebrow,
+#practice-hero .journey-title,
+#practice-hero .journey-desc,
+#practice-hero .practice-meta,
+#practice-hero .practice-tags,
+#practice-hero .practice-tag,
+#practice-hero .journey-pct,
+#practice-hero .journey-label,
+#practice-hero .journey-stat {
+  color: #FFFFFF;
+}
+
+#practice-hero .practice-mode-badge{
+  display:inline-flex;
+  width:auto;
+  align-items:center;
+  justify-content:center;
+  margin-top:2px;
+  padding:6px 15px;
+  border:1px solid rgba(255,255,255,.62);
+  border-radius:999px;
+  background:rgba(255,255,255,.14);
+  color:#FFFFFF;
+  font-size:11px;
+  font-weight:700;
+  line-height:1;
+  letter-spacing:.02em;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.18),
+    0 0 12px rgba(255,255,255,.16);
+}
+
+#practice-hero .personalized-badge,
+#practice-hero .practice-badge{
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.30);
+  color:rgba(255,255,255,.95);
 }
 
 #practice-hero .practice-focus {
   position: absolute;
   left: 44px;
   bottom: 88px;
-  width: 54%;
+  width: 56%;
   z-index: 4;
 }
 
@@ -473,14 +585,14 @@ img{max-width:100%;display:block}
   line-height: 1.2;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.68);
+  color: rgba(255,255,255,.70);
 }
 
 #practice-hero .practice-focus-text {
   font-size: 13px;
   font-weight: 500;
   line-height: 1.35;
-  color: rgba(255,255,255,.92);
+  color: rgba(255,255,255,.93);
 }
 
 #practice-hero .journey-cta {
@@ -490,27 +602,56 @@ img{max-width:100%;display:block}
   width: 56%;
   margin: 0;
   z-index: 4;
+  outline: 3px solid rgba(255,255,255,.92);
+  outline-offset: 4px;
+  box-shadow:
+    0 0 0 7px rgba(255,255,255,.18),
+    0 8px 24px rgba(0,0,0,.18);
+}
+
+/* frame controls image fitting; photo should never crop */
+.practice-person-frame {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 }
 
 .practice-person-frame.layout-vertical {
-  width: 38%;
-  height: 94%;
-  right: 2%;
-  bottom: 0;
+  width: 32%;
+  height: 82%;
+  right: 3%;
+  bottom: 6%;
 }
 
 .practice-person-frame.layout-balanced {
-  width: 43%;
-  height: 88%;
-  right: 1%;
-  bottom: 0;
+  width: 36%;
+  height: 76%;
+  right: 3%;
+  bottom: 6%;
 }
 
 .practice-person-frame.layout-horizontal {
-  width: 47%;
-  height: 58%;
-  right: 1%;
-  bottom: 5%;
+  width: 39%;
+  height: 48%;
+  right: 3%;
+  bottom: 8%;
+}
+
+.practice-person {
+  position: static !important;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 @media (max-width: 390px) {
@@ -529,6 +670,27 @@ img{max-width:100%;display:block}
     left: 28px;
     bottom: 24px;
     width: 58%;
+  }
+
+  .practice-person-frame.layout-vertical {
+    width: 30%;
+    height: 78%;
+    right: 3%;
+    bottom: 7%;
+  }
+
+  .practice-person-frame.layout-balanced {
+    width: 34%;
+    height: 72%;
+    right: 3%;
+    bottom: 7%;
+  }
+
+  .practice-person-frame.layout-horizontal {
+    width: 36%;
+    height: 44%;
+    right: 3%;
+    bottom: 9%;
   }
 }
 </style>
@@ -1540,84 +1702,511 @@ body.practice-sheet-open {
 
 
 <style id="onboarding-today-practice-focus-style">
+/*
+  Today’s Practice opens normally after onboarding.
+  No overlay, pulse animation, extra outline or persistent glow.
+*/
 .practice-focus-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9990;
-  background: rgba(15, 23, 19, 0.60);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  display: none !important;
+}
+
+#practice-hero.practice-focus-target,
+#practice-hero.practice-focus-animated,
+#practice-hero.practice-focus-static {
+  animation: none !important;
+}
+
+#practice-hero.practice-focus-animated .journey-cta,
+#practice-hero.practice-focus-static .journey-cta {
+  animation: none !important;
+  outline: 3px solid rgba(255, 255, 255, 0.92) !important;
+  outline-offset: 4px !important;
+  box-shadow:
+    0 0 0 7px rgba(255, 255, 255, 0.18),
+    0 8px 24px rgba(0, 0, 0, 0.18) !important;
+}
+</style>
+
+
+<style id="practice-note-layer-fix">
+/* Practice Note всегда располагается поверх Home Screen */
+.practice-sheet-backdrop {
+  z-index: 9998 !important;
+}
+
+.practice-sheet {
+  z-index: 9999 !important;
+  isolation: isolate;
+  background: #FFFFFF !important;
+}
+
+.practice-sheet-drag-zone {
+  z-index: 2;
+  background: #FFFFFF !important;
+}
+
+.practice-sheet-header,
+.practice-sheet-content {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+}
+</style>
+
+
+<style id="home-hero-spacing-fix">
+#practice-hero {
+  margin-top: 24px !important;
+  margin-bottom: 24px !important;
+}
+</style>
+
+
+
+
+
+<style id="home-card-levels-demo">
+/* Practice Note — фирменная волна MoveSpan */
+.card:has(.pnote),
+.card:has(.pnote).silver {
+  position: relative;
+  overflow: hidden;
+
+  border: 1px solid #DCE7E1 !important;
+  border-radius: 24px !important;
+
+  background-color: #FFFFFF !important;
+
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 240' preserveAspectRatio='none'%3E%3Cpath d='M0 145 C170 90 290 205 480 150 C640 103 760 128 900 78 L900 240 L0 240 Z' fill='%232D7D52' fill-opacity='.13'/%3E%3Cpath d='M0 185 C180 125 310 225 500 180 C665 142 785 160 900 120' fill='none' stroke='%232D7D52' stroke-opacity='.34' stroke-width='9'/%3E%3Cpath d='M0 212 C190 158 340 240 545 205 C690 180 800 188 900 164' fill='none' stroke='%236FAE78' stroke-opacity='.24' stroke-width='18'/%3E%3C/svg%3E") !important;
+
+  background-repeat: no-repeat !important;
+  background-position: center bottom !important;
+  background-size: 100% 58% !important;
+
+  box-shadow:
+    0 8px 24px rgba(31, 67, 47, .09) !important;
+}
+
+/* Отключаем старые серебряные и псевдо-эффекты */
+.card:has(.pnote)::before,
+.card:has(.pnote)::after,
+.card:has(.pnote).silver::before,
+.card:has(.pnote).silver::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Контент остаётся поверх волн */
+.card:has(.pnote) .pnote,
+.card:has(.pnote) .pnote-body {
+  position: relative;
+  z-index: 2;
+  background: transparent !important;
+}
+
+/* Даём тексту достаточно чистого пространства */
+.card:has(.pnote) .pnote-body {
+  padding-bottom: 54px !important;
+}
+
+/* Остальные карточки — чисто белые */
+.card:has(.checkin-head),
+.health-snapshot-toggle,
+.card:has(.hs-head) {
+  background-color: #FFFFFF !important;
+  background-image: none !important;
+  border: 1px solid #E1E8E4 !important;
+  box-shadow:
+    0 5px 16px rgba(31, 47, 39, .06) !important;
+}
+</style>
+
+<style id="breath-snapshot-real-style">
+.breath-snapshot {
+  margin: 0 0 24px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 25px;
+  background:
+    radial-gradient(circle at 90% 5%, rgba(255,255,255,.14), transparent 35%),
+    linear-gradient(140deg, #397f59 0%, #2d7d52 48%, #205f40 100%);
+  box-shadow:
+    0 15px 34px rgba(35,96,61,.19),
+    inset 0 1px 0 rgba(255,255,255,.16);
+}
+
+.breath-snapshot-summary {
+  position: relative;
+  min-height: 166px;
+  display: grid;
+  grid-template-columns: 52px minmax(0,1fr) 32px;
+  gap: 16px;
+  align-items: start;
+  padding: 27px 23px 25px;
+  color: #fff;
+  cursor: pointer;
+  list-style: none;
+}
+
+.breath-snapshot-summary::-webkit-details-marker {
+  display: none;
+}
+
+.breath-snapshot-summary::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 108px;
+  transform: none;
+  pointer-events: none;
+  z-index: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg%20viewBox%3D%270%200%201200%20150%27%20preserveAspectRatio%3D%27none%27%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%3E%0A%20%20%3Cpath%20d%3D%27M0%2086%0A%20%20%20%20%20%20%20%20%20%20%20C140%2062%20260%2054%20382%2068%0A%20%20%20%20%20%20%20%20%20%20%20C520%2084%20620%20100%20742%2092%0A%20%20%20%20%20%20%20%20%20%20%20C872%2084%20974%2062%201086%2068%0A%20%20%20%20%20%20%20%20%20%20%20C1132%2070%201170%2076%201200%2082%0A%20%20%20%20%20%20%20%20%20%20%20L1200%20150%20L0%20150%20Z%27%0A%20%20%20%20%20%20%20%20fill%3D%27%23FFFFFF%27%20fill-opacity%3D%27.14%27/%3E%0A%20%20%3Cpath%20d%3D%27M0%20112%0A%20%20%20%20%20%20%20%20%20%20%20C150%2098%20278%2092%20400%20102%0A%20%20%20%20%20%20%20%20%20%20%20C536%20114%20642%20124%20764%20116%0A%20%20%20%20%20%20%20%20%20%20%20C894%20108%20992%2094%201092%2096%0A%20%20%20%20%20%20%20%20%20%20%20C1138%2097%201174%20102%201200%20106%0A%20%20%20%20%20%20%20%20%20%20%20L1200%20150%20L0%20150%20Z%27%0A%20%20%20%20%20%20%20%20fill%3D%27%23FFFFFF%27%20fill-opacity%3D%27.045%27/%3E%0A%3C/svg%3E");
+}
+
+.breath-snapshot-icon {
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 16px;
+  background: rgba(255,255,255,.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.17),
+    0 8px 18px rgba(10,51,30,.13);
+}
+
+.breath-snapshot-icon svg {
+  width: 27px;
+  height: 27px;
+}
+
+.breath-snapshot-heading {
+  position: relative;
+  z-index: 1;
+  padding-top: 1px;
+}
+
+.breath-snapshot-title {
+  margin-bottom: 10px;
+  font-size: 22px;
+  line-height: 1.15;
+  font-weight: 760;
+  letter-spacing: -.025em;
+}
+
+.breath-snapshot-description {
+  max-width: 390px;
+  color: rgba(255,255,255,.85);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.breath-snapshot-chevron {
+  position: relative;
+  z-index: 1;
+  width: 31px;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  margin-top: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.12);
+  transition: transform .22s ease;
+}
+
+.breath-snapshot-chevron svg {
+  width: 18px;
+  height: 18px;
+}
+
+.breath-snapshot[open] .breath-snapshot-chevron {
+  transform: rotate(180deg);
+}
+
+.breath-snapshot-panel {
+  margin: 0 8px 8px;
+  padding: 22px 18px 18px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 10px 25px rgba(22,58,38,.14);
+}
+
+.breath-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 11px;
+}
+
+.breath-metric {
+  min-width: 0;
+  min-height: 126px;
+  padding: 14px 12px;
+  border: 1px solid #dfe7e2;
+  border-radius: 17px;
+  background: #fafcfb;
+}
+
+.breath-metric-icon {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background: #eaf4ed;
+  color: #2d7d52;
+}
+
+.breath-metric-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.breath-metric-label {
+  min-height: 34px;
+  color: #26332c;
+  font-size: 12px;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.breath-metric-value {
+  margin-top: 10px;
+  color: #151c18;
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 650;
+}
+
+.breath-metric-value span {
+  color: #8a958e;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.breath-dashboard-button {
+  width: 100%;
+  min-height: 53px;
+  margin: 15px 0 18px;
+  border: 0;
+  border-radius: 16px;
+  background: #2d7d52;
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 720;
+  box-shadow:
+    0 8px 18px rgba(45,125,82,.19),
+    inset 0 1px 0 rgba(255,255,255,.15);
+  cursor: pointer;
+}
+
+.breath-device-card {
+  position: relative;
+  min-height: 180px;
+  overflow: hidden;
+  padding: 23px 160px 28px 21px;
+  border: 1px solid #dce7e1;
+  border-radius: 21px;
+  background: #fff;
+  box-shadow: 0 7px 19px rgba(34,71,49,.08);
+}
+
+.breath-device-copy {
+  position: relative;
+  z-index: 4;
+}
+
+.breath-device-title {
+  margin-bottom: 8px;
+  color: #18231d;
+  font-size: 18px;
+  line-height: 1.2;
+  font-weight: 760;
+}
+
+.breath-device-text {
+  max-width: 285px;
+  margin-bottom: 16px;
+  color: #606c65;
+  font-size: 12px;
+  line-height: 1.48;
+}
+
+.breath-device-button {
+  min-height: 41px;
+  padding: 10px 15px;
+  border: 1px solid rgba(45,125,82,.22);
+  border-radius: 12px;
+  background: #edf7f0;
+  color: #2d7d52;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 720;
+  cursor: pointer;
+}
+
+.breath-watch {
+  position: absolute;
+  z-index: 3;
+  top: 19px;
+  right: 27px;
+  width: 106px;
+  height: 144px;
+  transform: rotate(1deg);
+}
+
+.breath-watch-face {
+  position: absolute;
+  top: 38px;
+  left: 13px;
+  width: 80px;
+  height: 75px;
+  border-radius: 21px;
+  background: linear-gradient(145deg,#252b29,#070908);
+  box-shadow:
+    0 14px 20px rgba(13,19,16,.23),
+    inset 0 0 0 4px #303633,
+    inset 0 0 0 6px #080a09;
+}
+
+.breath-watch-glass {
+  position: absolute;
+  inset: 8px;
+  border-radius: 15px;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.09),transparent 38%),
+    #050706;
+}
+
+.breath-watch-crown {
+  position: absolute;
+  right: -7px;
+  top: 23px;
+  width: 7px;
+  height: 17px;
+  border-radius: 5px;
+  background: #161b18;
+}
+
+.breath-watch-strap {
+  position: absolute;
+  left: 32px;
+  width: 42px;
+  background: linear-gradient(90deg,#121513,#242925,#101311);
+}
+
+.breath-watch-strap-top {
+  top: 0;
+  height: 48px;
+  border-radius: 20px 20px 8px 8px;
+}
+
+.breath-watch-strap-bottom {
+  bottom: 0;
+  height: 45px;
+  border-radius: 8px 8px 20px 20px;
+}
+
+.breath-device-wave {
+  position: absolute;
+  z-index: 1;
+  left: -10%;
+  width: 120%;
+  border-radius: 50%;
   pointer-events: none;
 }
 
-.practice-focus-overlay.is-visible {
-  opacity: 1;
+.breath-device-wave-one {
+  bottom: -78px;
+  height: 132px;
+  background: rgba(45,125,82,.11);
+  transform: rotate(2deg);
 }
 
-/* Яркое постоянное выделение */
-#practice-hero.practice-focus-target {
-  position: relative;
-  z-index: 9992 !important;
-  outline: 5px solid #ffffff;
-  outline-offset: 8px;
-  box-shadow:
-    0 0 0 15px rgba(45, 125, 82, 0.72),
-    0 0 34px 12px rgba(45, 125, 82, 0.38),
-    0 24px 65px rgba(0, 0, 0, 0.34);
+.breath-device-wave-two {
+  bottom: -94px;
+  height: 137px;
+  background: rgba(45,125,82,.07);
+  transform: rotate(-2deg);
 }
 
-/* Пульсация только при первом переходе из onboarding */
-#practice-hero.practice-focus-animated {
-  animation: practiceCardPulse 1.3s ease-in-out infinite;
-}
-
-#practice-hero.practice-focus-animated .journey-cta {
-  position: relative;
-  z-index: 9993;
-  animation: practiceButtonPulse 0.9s ease-in-out infinite;
-}
-
-/* После анимации и при возврате из Practice Player */
-#practice-hero.practice-focus-static .journey-cta {
-  position: relative;
-  z-index: 9993;
-  outline: 3px solid rgba(255, 255, 255, 0.92);
-  outline-offset: 4px;
-  box-shadow:
-    0 0 0 7px rgba(255, 255, 255, 0.18),
-    0 8px 24px rgba(0, 0, 0, 0.18);
-}
-
-@keyframes practiceCardPulse {
-  0%, 100% {
-    transform: scale(1);
+@media (max-width: 520px) {
+  .breath-snapshot-summary {
+    min-height: 160px;
+    grid-template-columns: 46px minmax(0,1fr) 29px;
+    gap: 13px;
+    padding: 24px 18px 23px;
   }
 
-  50% {
-    transform: scale(1.012);
-  }
-}
-
-@keyframes practiceButtonPulse {
-  0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  .breath-snapshot-icon {
+    width: 45px;
+    height: 45px;
   }
 
-  50% {
-    transform: scale(1.035);
-    box-shadow: 0 0 0 9px rgba(255, 255, 255, 0.28);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  #practice-hero.practice-focus-animated,
-  #practice-hero.practice-focus-animated .journey-cta {
-    animation: none;
+  .breath-snapshot-title {
+    font-size: 20px;
   }
 
-  .practice-focus-overlay {
-    transition: none;
+  .breath-snapshot-description {
+    font-size: 13px;
+    line-height: 1.46;
+  }
+
+  .breath-snapshot-panel {
+    margin: 0 6px 6px;
+    padding: 17px 14px 15px;
+  }
+
+  .breath-metrics {
+    gap: 7px;
+  }
+
+  .breath-metric {
+    min-height: 119px;
+    padding: 12px 8px;
+  }
+
+  .breath-metric-label {
+    font-size: 10px;
+  }
+
+  .breath-metric-value {
+    font-size: 21px;
+  }
+
+  .breath-metric-value span {
+    display: block;
+    margin-top: 5px;
+    font-size: 9px;
+  }
+
+  .breath-device-card {
+    min-height: 172px;
+    padding: 20px 117px 25px 17px;
+  }
+
+  .breath-device-title {
+    font-size: 16px;
+  }
+
+  .breath-device-text {
+    font-size: 11px;
+  }
+
+  .breath-watch {
+    right: 8px;
+    top: 24px;
+    transform: scale(.83);
+    transform-origin: top right;
   }
 }
 </style>
@@ -1642,36 +2231,6 @@ body.practice-sheet-open {
   <h1 class="greet" id="home-greeting">Good morning, Dmitry! &#128075;</h1>
   <p class="greet-sub">Let's take a good step for your body and mind today.</p>
 
-  <!-- PRACTICE NOTE (silver) -->
-  <div class="card silver">
-    <div class="pnote">
-      <div class="pnote-body">
-        <span class="eyebrow">Practice Note</span>
-        <div class="pnote-title">Small, regular practice matters
-<div class="practice-note-inline-detail" id="practice-note-inline-detail" hidden>
-  <p>
-    More is not always better. The body responds especially well to
-    movement that is regular, manageable and easy to repeat.
-  </p>
-
-  <p>
-    A short daily practice can support mobility, coordination and nervous
-    system regulation more effectively than occasional intense sessions.
-  </p>
-
-  <div class="practice-note-inline-principle">
-    Small daily practice beats occasional intensity.
-  </div>
-</div>
-</div>
-        <div class="pnote-text">Move within a comfortable range today. Consistency is more valuable than intensity.</div>
-        <div class="pnote-actions">
-          <button class="pnote-link" onclick="dismissNote()">Got it</button>
-          <button class="pnote-link" onclick="go('practice-note')">Read more &rarr;</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- TODAY'S PRACTICE (green hero — same design as Journey) -->
   <div class="journey" id="practice-hero">
@@ -1690,12 +2249,7 @@ body.practice-sheet-open {
       <span class="personalized-badge">Personalized</span>
     </div>
     <div class="journey-title" style="margin:6px 0 8px">Joint Recovery</div>
-    <div class="practice-meta">Session 1 &middot; 30 min &middot; 8 exercises <span class="practice-badge">Restore</span></div>
-    <div class="practice-tags">
-      <span class="practice-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 8v9M13 5v12M8 11v6"/></svg>Mobility</span>
-      <span class="practice-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6M12 8c-2 0-4 1-4 4v6a2 2 0 0 0 4 0M12 8c2 0 4 1 4 4v6a2 2 0 0 1-4 0"/></svg>Breath</span>
-      <span class="practice-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="4" r="2"/><path d="M12 6v6M8 9l4 1 4-1M9 21l3-9 3 9"/></svg>Balance</span>
-    </div>
+    <div class="practice-mode-badge">Restore</div>
     <div class="practice-focus">
   <div class="practice-focus-label">Practice focus</div>
   <div class="practice-focus-text">
@@ -1739,34 +2293,148 @@ body.practice-sheet-open {
     </div>
   </div>
 
-  <!-- HEALTH SNAPSHOT -->
-  <div class="card card-pad">
-    <div class="hs-head">
-      <span class="eyebrow">Health Snapshot</span>
-      <span class="sec-link" onclick="go('health')">Details &rsaquo;</span>
-    </div>
-    <div class="hs-scroll">
-      <div class="hs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-      <div class="hs-metrics">
-        <div class="hs-metric"><div class="hs-mlabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Pulse</div><div class="hs-mval">&mdash; <span class="hs-munit">bpm</span></div></div>
-        <div class="hs-metric"><div class="hs-mlabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h4l3-9 6 18 3-9h4"/></svg>Breathing rate</div><div class="hs-mval">&mdash; <span class="hs-munit">breaths/min</span></div></div>
-        <div class="hs-metric"><div class="hs-mlabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Recovery</div><div class="hs-mval">&mdash; <span class="hs-munit">%</span></div></div>
-        <div class="hs-metric"><div class="hs-mlabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l2-8 4 16 2-8h6"/></svg>HRV</div><div class="hs-mval">&mdash; <span class="hs-munit">ms</span></div></div>
-        <div class="hs-metric"><div class="hs-mlabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Sleep</div><div class="hs-mval">&mdash; <span class="hs-munit">h</span></div></div>
+  <!-- PRACTICE NOTE (silver) -->
+  <div class="card silver">
+    <div class="pnote">
+      <div class="pnote-body">
+        <span class="eyebrow">Practice Note</span>
+        <div class="pnote-title">Small, regular practice matters
+<div class="practice-note-inline-detail" id="practice-note-inline-detail" hidden>
+  <p>
+    More is not always better. The body responds especially well to
+    movement that is regular, manageable and easy to repeat.
+  </p>
+
+  <p>
+    A short daily practice can support mobility, coordination and nervous
+    system regulation more effectively than occasional intense sessions.
+  </p>
+
+  <div class="practice-note-inline-principle">
+    Small daily practice beats occasional intensity.
+  </div>
+</div>
+</div>
+        <div class="pnote-text">Move within a comfortable range today. Consistency is more valuable than intensity.</div>
+        <div class="pnote-actions">
+          <button class="pnote-link" onclick="dismissNote()">Got it</button>
+          <button class="pnote-link" onclick="go('practice-note')">Read more &rarr;</button>
+        </div>
       </div>
     </div>
-    <button class="hs-cta" onclick="window.location.href='health-dashboard-v4.html'">Open Health Dashboard &rarr;</button>
   </div>
 
-  <!-- CONNECT DEVICE (conditional) -->
-  <div class="dcard" id="device-card">
-    <div class="dcard-left">
-      <div class="dtitle">Connect your health device</div>
-      <div class="dtext">Apple Health, WHOOP, Fitbit, Garmin and Oura are supported in this MVP.</div>
-      <button class="dcta" onclick="go('device')">Connect a device &rarr;</button>
+  <!-- HEALTH SNAPSHOT -->
+  
+  <!-- BREATH SNAPSHOT -->
+  <details class="breath-snapshot" id="breath-snapshot">
+    <summary class="breath-snapshot-summary">
+      <div class="breath-snapshot-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 12h4l3-8 5 16 3-8h5"/>
+        </svg>
+      </div>
+
+      <div class="breath-snapshot-heading">
+        <div class="breath-snapshot-title">Breath Snapshot</div>
+        <div class="breath-snapshot-description">
+          Discover how your breathing influences your energy,
+          recovery, and nervous system.
+        </div>
+      </div>
+
+      <div class="breath-snapshot-chevron" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m7 10 5 5 5-5"/>
+        </svg>
+      </div>
+    </summary>
+
+    <div class="breath-snapshot-panel">
+      <div class="breath-metrics">
+        <div class="breath-metric">
+          <div class="breath-metric-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round">
+              <path d="M3 12h4l2-7 5 14 3-7h4"/>
+            </svg>
+          </div>
+          <div class="breath-metric-label">Breathing Rate</div>
+          <div class="breath-metric-value">
+            — <span>breaths/min</span>
+          </div>
+        </div>
+
+        <div class="breath-metric">
+          <div class="breath-metric-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round">
+              <path d="M4 8c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3"/>
+              <path d="M4 16c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3"/>
+            </svg>
+          </div>
+          <div class="breath-metric-label">Breathing Pattern</div>
+          <div class="breath-metric-value">
+            — <span>not measured</span>
+          </div>
+        </div>
+
+        <div class="breath-metric">
+          <div class="breath-metric-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21.2l8.8-8.8a5.5 5.5 0 0 0 0-7.8z"/>
+            </svg>
+          </div>
+          <div class="breath-metric-label">Pulse</div>
+          <div class="breath-metric-value">
+            — <span>bpm</span>
+          </div>
+        </div>
+      </div>
+
+      <button
+        class="breath-dashboard-button"
+        type="button"
+        onclick="window.location.href='health-dashboard-v4.html'">
+        Open Breath Snapshot
+        <span aria-hidden="true">→</span>
+      </button>
+
+      <div class="breath-device-card">
+        <div class="breath-device-copy">
+          <div class="breath-device-title">Connect Your Device</div>
+
+          <div class="breath-device-text">
+            Add data from Apple Health, WHOOP, Fitbit, Garmin, or Oura
+            for a more complete view of your health trends.
+          </div>
+
+          <button
+            class="breath-device-button"
+            type="button"
+            onclick="go('device')">
+            Connect Device <span aria-hidden="true">→</span>
+          </button>
+        </div>
+
+        <div class="breath-watch" aria-hidden="true">
+          <div class="breath-watch-strap breath-watch-strap-top"></div>
+          <div class="breath-watch-face">
+            <div class="breath-watch-glass"></div>
+            <div class="breath-watch-crown"></div>
+          </div>
+          <div class="breath-watch-strap breath-watch-strap-bottom"></div>
+        </div>
+
+        <div class="breath-device-wave breath-device-wave-one"></div>
+        <div class="breath-device-wave breath-device-wave-two"></div>
+      </div>
     </div>
-    <div class="dcard-right"><img src="images/connect-device-woman.png" alt="Connect your device"></div>
-  </div>
+  </details>
+
 
   <!-- TODAY'S JOURNEY (regular card) -->
   <div class="card card-pad">
@@ -2368,11 +3036,11 @@ applyMockState();
 
       <span class="health-snapshot-toggle-copy">
         <span class="health-snapshot-toggle-title">
-          Health Snapshot
+          Breath Snapshot
         </span>
 
         <span class="health-snapshot-toggle-subtitle">
-          Pulse, breathing and recovery data
+          Discover how your breathing influences your energy, recovery, and nervous system.
         </span>
       </span>
 
@@ -2397,7 +3065,7 @@ applyMockState();
     const card = findHealthSnapshotCard();
 
     if (!card) {
-      console.warn("MoveSpan: Health Snapshot card not found");
+      console.warn("MoveSpan: Breath Snapshot card not found");
       return;
     }
 
@@ -2468,7 +3136,6 @@ applyMockState();
 
 <script id="onboarding-today-practice-focus-script">
 (function () {
-  const INTRO_SHOWN_KEY = 'ms_today_practice_intro_shown';
   const ONBOARDING_FOCUS_KEY = 'ms_focus_todays_practice';
 
   function cleanFocusParameter() {
@@ -2491,20 +3158,17 @@ applyMockState();
     );
   }
 
-  function activateTodaysPractice(attempt) {
+  function openTodaysPractice(attempt) {
     const hero = document.getElementById('practice-hero');
-    const button = hero
-      ? hero.querySelector('.journey-cta')
-      : null;
 
-    if ((!hero || !button) && attempt < 20) {
+    if (!hero && attempt < 20) {
       window.setTimeout(function () {
-        activateTodaysPractice(attempt + 1);
+        openTodaysPractice(attempt + 1);
       }, 150);
       return;
     }
 
-    if (!hero || !button) {
+    if (!hero) {
       return;
     }
 
@@ -2512,81 +3176,109 @@ applyMockState();
       new URLSearchParams(window.location.search).get('focus') === 'today' ||
       sessionStorage.getItem(ONBOARDING_FOCUS_KEY) === '1';
 
-    const introAlreadyShown =
-      sessionStorage.getItem(INTRO_SHOWN_KEY) === '1';
-
-    const shouldAnimate =
-      cameFromOnboarding && !introAlreadyShown;
+    if (!cameFromOnboarding) {
+      return;
+    }
 
     hero.scrollIntoView({
       behavior: 'auto',
       block: 'center'
     });
 
-    hero.classList.add('practice-focus-target');
-
-    if (shouldAnimate) {
-      const overlay = document.createElement('div');
-      overlay.className = 'practice-focus-overlay';
-      document.body.appendChild(overlay);
-
-      hero.classList.add('practice-focus-animated');
-
-      requestAnimationFrame(function () {
-        overlay.classList.add('is-visible');
-      });
-
-      sessionStorage.setItem(INTRO_SHOWN_KEY, '1');
-
-      window.setTimeout(function () {
-        overlay.classList.remove('is-visible');
-
-        hero.classList.remove('practice-focus-animated');
-        hero.classList.add('practice-focus-static');
-
-        window.setTimeout(function () {
-          overlay.remove();
-        }, 300);
-      }, 7000);
-    } else {
-      /* При возврате с практики — сразу статичное выделение */
-      hero.classList.add('practice-focus-static');
-    }
-
-    button.addEventListener(
-      'click',
-      function () {
-        /*
-         * Убираем выделение перед переходом, но сохраняем информацию,
-         * что вводная пульсация уже была показана.
-         */
-        hero.classList.remove(
-          'practice-focus-target',
-          'practice-focus-animated',
-          'practice-focus-static'
-        );
-      },
-      { once: true }
-    );
-
-    cleanFocusParameter();
     sessionStorage.removeItem(ONBOARDING_FOCUS_KEY);
-  }
-
-  function start() {
-    window.setTimeout(function () {
-      activateTodaysPractice(0);
-    }, 300);
+    cleanFocusParameter();
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener(
-      'DOMContentLoaded',
-      start,
-      { once: true }
-    );
+    document.addEventListener('DOMContentLoaded', function () {
+      openTodaysPractice(0);
+    });
   } else {
-    start();
+    openTodaysPractice(0);
+  }
+})();
+</script>
+
+
+<script id="health-snapshot-device-merge-script">
+(function () {
+  function mergeDeviceCard(attempt) {
+    const healthCard =
+      document.querySelector('.health-snapshot-collapsible');
+
+    const deviceCard =
+      document.querySelector('.dcard');
+
+    if ((!healthCard || !deviceCard) && attempt < 30) {
+      window.setTimeout(function () {
+        mergeDeviceCard(attempt + 1);
+      }, 100);
+      return;
+    }
+
+    if (!healthCard || !deviceCard) {
+      return;
+    }
+
+    if (healthCard.dataset.deviceMerged === '1') {
+      return;
+    }
+
+    const detailsInner =
+      healthCard.querySelector('.health-snapshot-details-inner');
+
+    if (!detailsInner) {
+      if (attempt < 30) {
+        window.setTimeout(function () {
+          mergeDeviceCard(attempt + 1);
+        }, 100);
+      }
+      return;
+    }
+
+    const existingAction =
+      deviceCard.querySelector('.dcta, a, button');
+
+    const connectBlock = document.createElement('div');
+    connectBlock.className = 'health-device-connect';
+
+    const title = document.createElement('div');
+    title.className = 'health-device-connect-title';
+    title.textContent = 'No device connected';
+
+    const description = document.createElement('div');
+    description.className = 'health-device-connect-text';
+    description.textContent =
+      'Connect Apple Health, WHOOP, Fitbit, Garmin or Oura';
+
+    connectBlock.appendChild(title);
+    connectBlock.appendChild(description);
+
+    if (existingAction) {
+      existingAction.textContent = 'Connect device';
+      connectBlock.appendChild(existingAction);
+    } else {
+      const fallbackButton = document.createElement('button');
+      fallbackButton.type = 'button';
+      fallbackButton.textContent = 'Connect device';
+      fallbackButton.addEventListener('click', function () {
+        window.location.href = 'settings.html';
+      });
+      connectBlock.appendChild(fallbackButton);
+    }
+
+    detailsInner.appendChild(connectBlock);
+    deviceCard.remove();
+
+    healthCard.dataset.deviceMerged = '1';
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      mergeDeviceCard(0);
+    });
+  } else {
+    mergeDeviceCard(0);
   }
 })();
 </script>
