@@ -350,6 +350,109 @@ img{max-width:100%;display:block}
 
 
 
+
+/* Practice Library — silver quick access */
+.practice-library-card{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  width:100%;
+  margin:0 0 18px;
+  padding:16px 18px;
+  border:1px solid rgba(255,255,255,.26);
+  border-radius:22px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(255,255,255,.28) 0%, rgba(255,255,255,0) 34%),
+    linear-gradient(118deg, #B8BDC2 0%, #91979E 18%, #C9CDD1 34%, #727980 52%, #AEB3B8 70%, #616870 100%);
+  box-shadow:
+    0 10px 24px rgba(31,47,39,.10),
+    inset 0 1px 0 rgba(255,255,255,.30);
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.practice-library-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(110deg,
+      transparent 0%,
+      rgba(255,255,255,.06) 18%,
+      rgba(255,255,255,.22) 34%,
+      rgba(255,255,255,.05) 51%,
+      transparent 70%);
+}
+
+.practice-library-card::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:56px;
+  pointer-events:none;
+  background-repeat:no-repeat;
+  background-position:center bottom;
+  background-size:100% 100%;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 90' preserveAspectRatio='none'%3E%3Cpath d='M0 46 C145 22 280 24 430 43 C585 62 718 63 868 42 C996 24 1094 22 1200 34' fill='none' stroke='%23E7EBEE' stroke-opacity='.36' stroke-width='8' stroke-linecap='round'/%3E%3Cpath d='M0 63 C152 43 294 44 448 59 C597 74 727 74 874 58 C1002 45 1100 44 1200 52' fill='none' stroke='%23F8FAFB' stroke-opacity='.18' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.practice-library-card > *{
+  position:relative;
+  z-index:1;
+}
+
+.practice-library-icon{
+  flex:0 0 auto;
+  width:46px;
+  height:46px;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#2D7D52;
+  background:rgba(255,255,255,.20);
+  border:1px solid rgba(255,255,255,.26);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.28),
+    0 6px 16px rgba(31,47,39,.10);
+}
+
+.practice-library-icon svg{
+  width:22px;
+  height:22px;
+}
+
+.practice-library-label{
+  font-size:16px;
+  font-weight:700;
+  letter-spacing:-.02em;
+  color:#2D7D52;
+}
+
+@media (max-width:390px){
+  .practice-library-card{
+    margin:0 0 16px;
+    padding:15px 16px;
+    border-radius:20px;
+  }
+
+  .practice-library-icon{
+    width:42px;
+    height:42px;
+    border-radius:13px;
+  }
+
+  .practice-library-label{
+    font-size:15px;
+  }
+}
+
+
 /* Today's Practice hero additions */
 #practice-hero{padding-top:1.5rem;padding-bottom:1.5rem}
 
@@ -2752,6 +2855,24 @@ body.assessments-info-open {
 </div>
 <button class="journey-cta" onclick="location.href='practice-player.html'">Start practice &rarr;</button>
   </div>
+
+
+  <!-- PRACTICE LIBRARY -->
+  <button
+    class="practice-library-card"
+    type="button"
+    onclick="window.location.href='program.html'"
+    aria-label="Open Practice Library">
+    <span class="practice-library-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="4" width="6" height="6" rx="1.5"></rect>
+        <rect x="14" y="4" width="6" height="6" rx="1.5"></rect>
+        <rect x="4" y="14" width="6" height="6" rx="1.5"></rect>
+        <rect x="14" y="14" width="6" height="6" rx="1.5"></rect>
+      </svg>
+    </span>
+    <span class="practice-library-label">Practice Library</span>
+  </button>
 
   <!-- DAILY CHECK-IN -->
   <div class="card card-pad">
