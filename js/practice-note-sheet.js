@@ -26,6 +26,27 @@
 
   if (!note || !card) return;
 
+
+  function moveCardBelowPracticeLibrary() {
+    const practiceLibraryCard = Array.from(
+      document.querySelectorAll(".card")
+    ).find(function (candidate) {
+      const text = candidate.textContent
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLowerCase();
+
+      return text.includes("practice library");
+    });
+
+    if (!practiceLibraryCard || !card) return;
+
+    practiceLibraryCard.insertAdjacentElement(
+      "afterend",
+      card
+    );
+  }
+
   function isDismissed() {
     return localStorage.getItem(STORAGE_KEY) === "1";
   }
@@ -202,6 +223,7 @@
     return;
   }
 
+  moveCardBelowPracticeLibrary();
   renderCard();
 
   card
