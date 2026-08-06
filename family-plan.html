@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Family Plan — MoveSpan</title>
+  <style>
+
+:root {
+  --green: #2D7D52;
+  --green-soft: #EAF4EE;
+  --bg: #F4F6F4;
+  --surface: #FFFFFF;
+  --text: #18211B;
+  --secondary: #6D7971;
+  --muted: #98A19B;
+  --border: #E2E8E4;
+  --shadow:
+    0 1px 2px rgba(22,45,31,.03),
+    0 8px 24px rgba(22,45,31,.055);
+  --font:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "SF Pro Text",
+    "Segoe UI",
+    sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--bg); }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input { font: inherit; }
+
+.app-page {
+  width: min(100%, 520px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding:
+    calc(12px + env(safe-area-inset-top))
+    16px
+    calc(34px + env(safe-area-inset-bottom));
+}
+
+.app-header {
+  min-height: 46px;
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.movespan-back {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: var(--green);
+  cursor: pointer;
+}
+
+.movespan-back svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.page-title {
+  margin: 0;
+  text-align: center;
+  font-size: 19px;
+  font-weight: 760;
+}
+
+.hero {
+  padding: 20px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #FFFFFF, #F0F6F2);
+  box-shadow: var(--shadow);
+}
+
+.eyebrow {
+  margin-bottom: 7px;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.hero h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.hero p {
+  margin: 0;
+  color: var(--secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.section { margin-top: 22px; }
+
+.section-title {
+  margin: 0 5px 9px;
+  color: var(--secondary);
+  font-size: 12px;
+  font-weight: 760;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.card {
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.info-row {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 15px;
+}
+
+.info-row + .info-row {
+  border-top: 1px solid var(--border);
+}
+
+.info-icon {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--green-soft);
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.info-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.info-title {
+  display: block;
+  font-size: 14px;
+  line-height: 1.3;
+  font-weight: 710;
+}
+
+.info-description {
+  display: block;
+  margin-top: 3px;
+  color: var(--secondary);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.status {
+  margin-left: auto;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.button-stack {
+  display: grid;
+  gap: 10px;
+}
+
+.primary-button,
+.secondary-button {
+  width: 100%;
+  min-height: 48px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 720;
+  cursor: pointer;
+}
+
+.primary-button {
+  border: 0;
+  background: linear-gradient(
+    118deg,
+    #286F49 0%,
+    #347F58 20%,
+    #246744 39%,
+    #3B8660 56%,
+    #245F41 76%,
+    #2D7D52 100%
+  );
+  color: #FFFFFF;
+}
+
+.secondary-button {
+  border: 1px solid rgba(45,125,82,.22);
+  background: var(--surface);
+  color: var(--green);
+}
+
+.input-row {
+  display: flex;
+  gap: 9px;
+}
+
+.text-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 46px;
+  padding: 0 13px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+}
+
+.mini-button {
+  min-height: 46px;
+  padding: 0 15px;
+  border: 0;
+  border-radius: 13px;
+  background: var(--green);
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.note {
+  margin: 12px 5px 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(24px + env(safe-area-inset-bottom));
+  width: min(calc(100% - 32px), 430px);
+  padding: 13px 16px;
+  border-radius: 14px;
+  background: rgba(24,33,27,.94);
+  color: #FFFFFF;
+  font-size: 13px;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 12px);
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.toast.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@media (max-width: 370px) {
+  .app-page {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .hero {
+    padding: 17px;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+<main class="app-page">
+  <header class="app-header">
+    <button class="movespan-back" type="button"
+      onclick="goBack()" aria-label="Back">
+      <svg viewBox="0 0 24 24">
+        <path d="M15 18l-6-6 6-6"></path>
+      </svg>
+    </button>
+    <h1 class="page-title">Family Plan</h1>
+    <span></span>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">MoveSpan Family</div>
+    <h2>Move better together</h2>
+    <p>
+      Train together, stay motivated, and manage one family
+      membership in one place.
+    </p>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Why join as a family</h2>
+    <div class="card">
+      <div class="info-row">
+        <span class="info-icon">IN</span>
+        <span class="info-copy">
+          <span class="info-title">Invite family members</span>
+          <span class="info-description">
+            Add new or existing MoveSpan members.
+          </span>
+        </span>
+      </div>
+
+      <div class="info-row">
+        <span class="info-icon">SM</span>
+        <span class="info-copy">
+          <span class="info-title">Shared motivation</span>
+          <span class="info-description">
+            Support one another while keeping individual progress.
+          </span>
+        </span>
+      </div>
+
+      <div class="info-row">
+        <span class="info-icon">AC</span>
+        <span class="info-copy">
+          <span class="info-title">Simple management</span>
+          <span class="info-description">
+            Manage membership and invitations in one place.
+          </span>
+        </span>
+      </div>
+
+      <div class="info-row">
+        <span class="info-icon">BN</span>
+        <span class="info-copy">
+          <span class="info-title">Future family benefits</span>
+          <span class="info-description">
+            Discounts, bonus points and shared challenges.
+          </span>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Family size</h2>
+    <div class="card">
+      <div class="info-row"><span class="info-title">2 members</span><span class="status">Details later</span></div>
+      <div class="info-row"><span class="info-title">3 members</span><span class="status">Details later</span></div>
+      <div class="info-row"><span class="info-title">4 members</span><span class="status">Details later</span></div>
+      <div class="info-row"><span class="info-title">5 members</span><span class="status">Details later</span></div>
+      <div class="info-row"><span class="info-title">6 members</span><span class="status">Details later</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Add family members</h2>
+    <div class="card" style="padding:15px">
+      <p style="margin:0 0 13px;color:var(--secondary);font-size:13px;line-height:1.5">
+        Invite people by email or link. Each person keeps their own
+        profile, progress and recommendations.
+      </p>
+
+      <div class="input-row">
+        <input class="text-input" id="family-email"
+          type="email" placeholder="Email address">
+        <button class="mini-button" type="button"
+          onclick="sendFamilyInvite()">Invite</button>
+      </div>
+
+      <div class="button-stack" style="margin-top:10px">
+        <button class="secondary-button" type="button"
+          onclick="copyFamilyLink()">Copy invite link</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Who can join?</h2>
+    <div class="card">
+      <div class="info-row"><span class="info-icon">NM</span><span class="info-title">New MoveSpan members</span></div>
+      <div class="info-row"><span class="info-icon">EM</span><span class="info-title">Existing MoveSpan members</span></div>
+      <div class="info-row">
+        <span class="info-icon">PR</span>
+        <span class="info-copy">
+          <span class="info-title">Personal progress stays individual</span>
+          <span class="info-description">
+            Each member keeps personal recommendations and history.
+          </span>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Future benefits</h2>
+    <div class="card">
+      <div class="info-row"><span class="info-title">Family discounts</span></div>
+      <div class="info-row"><span class="info-title">Bonus points</span></div>
+      <div class="info-row"><span class="info-title">Shared challenges</span></div>
+      <div class="info-row"><span class="info-title">Referral rewards</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <button class="primary-button" type="button"
+      onclick="joinWaitlist()">Notify me when available</button>
+    <p class="note">
+      Pricing and final conditions will be announced later.
+    </p>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+function goBack() {
+  if (history.length > 1) history.back();
+  else location.href = "my-profile.html";
+}
+
+let toastTimer;
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("visible");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("visible"), 2200);
+}
+
+async function copyFamilyLink() {
+  try {
+    await navigator.clipboard.writeText(
+      location.origin + "/family-plan.html?invite=family"
+    );
+    showToast("Family invite link copied");
+  } catch (_) {
+    showToast("Copying is not available in this browser");
+  }
+}
+
+function sendFamilyInvite() {
+  const email = document.getElementById("family-email").value.trim();
+  showToast(
+    email
+      ? "Family invitations will be enabled soon"
+      : "Enter an email address first"
+  );
+}
+
+function joinWaitlist() {
+  localStorage.setItem(
+    "movespan_family_waitlist",
+    new Date().toISOString()
+  );
+  showToast("Family Plan interest saved");
+}
+</script>
+
+</body>
+</html>

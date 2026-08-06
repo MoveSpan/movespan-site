@@ -508,24 +508,109 @@
       text-align: center;
     }
 
-    @media (max-width: 370px) {
+    @media (max-width: 520px) {
       .app-page {
-        padding-left: 14px;
-        padding-right: 14px;
+        padding:
+          calc(10px + env(safe-area-inset-top))
+          14px
+          calc(30px + env(safe-area-inset-bottom));
+      }
+
+      .app-header {
+        min-height: 44px;
+        margin-bottom: 14px;
+      }
+
+      .page-title {
+        font-size: 18px;
       }
 
       .user-card {
-        padding: 15px;
+        gap: 12px;
+        padding: 14px;
+        border-radius: 18px;
       }
 
       .avatar {
-        width: 56px;
-        height: 56px;
-        flex-basis: 56px;
+        width: 54px;
+        height: 54px;
+        flex-basis: 54px;
+        font-size: 21px;
+      }
+
+      .user-name {
+        font-size: 16px;
+      }
+
+      .user-email {
+        font-size: 12px;
+      }
+
+      .edit-button {
+        padding: 7px 10px;
+        font-size: 11px;
+      }
+
+      .progress-card {
+        margin-top: 12px;
+        padding: 15px;
+        border-radius: 18px;
+      }
+
+      .level-value {
+        font-size: 22px;
+      }
+
+      .points-value {
+        font-size: 12px;
+      }
+
+      .progress-meta {
+        gap: 8px;
+        margin-top: 13px;
+      }
+
+      .progress-stat {
+        padding: 9px 5px;
+      }
+
+      .progress-stat strong {
+        font-size: 15px;
+      }
+
+      .progress-stat span {
+        font-size: 9px;
+      }
+
+      .section {
+        margin-top: 20px;
+      }
+
+      .quick-item {
+        min-height: 96px;
+        padding: 13px;
+      }
+
+      .list-row {
+        min-height: 63px;
+        padding: 12px 14px;
+      }
+    }
+
+    @media (max-width: 370px) {
+      .app-page {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .avatar {
+        width: 50px;
+        height: 50px;
+        flex-basis: 50px;
       }
 
       .achievement-grid {
-        gap: 8px;
+        gap: 7px;
       }
     }
   </style>
@@ -716,6 +801,62 @@
 
     <section class="section">
       <div class="section-heading">
+        <h2 class="section-title">Membership & Benefits</h2>
+      </div>
+
+      <div class="card">
+        <button class="list-row" type="button"
+          onclick="window.location.href='settings.html#membership'">
+          <span class="row-icon">PL</span>
+          <span class="row-copy">
+            <span class="row-title">Current Plan</span>
+            <span class="row-description">
+              View your plan and future upgrade options
+            </span>
+          </span>
+          <span class="row-chevron" aria-hidden="true">›</span>
+        </button>
+
+        <button class="list-row" type="button"
+          onclick="window.location.href='settings.html#rewards'">
+          <span class="row-icon">RW</span>
+          <span class="row-copy">
+            <span class="row-title">Rewards & Discounts</span>
+            <span class="row-description">
+              Earn points and use them for real benefits
+            </span>
+          </span>
+          <span class="row-chevron" aria-hidden="true">›</span>
+        </button>
+
+        <button class="list-row" type="button"
+          onclick="window.location.href='family-plan.html'">
+          <span class="row-icon">FP</span>
+          <span class="row-copy">
+            <span class="row-title">Family Plan</span>
+            <span class="row-description">
+              Invite family members and manage one membership
+            </span>
+          </span>
+          <span class="row-chevron" aria-hidden="true">›</span>
+        </button>
+
+        <button class="list-row" type="button"
+          onclick="window.location.href='referral.html'">
+          <span class="row-icon">RF</span>
+          <span class="row-copy">
+            <span class="row-title">Refer a Friend</span>
+            <span class="row-description">
+              Invite friends and earn points, discounts or credit
+            </span>
+          </span>
+          <span class="row-chevron" aria-hidden="true">›</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
         <h2 class="section-title">Goals & Movement Profile</h2>
       </div>
 
@@ -777,7 +918,7 @@
       </div>
     </section>
 
-    <p class="version">MoveSpan · My Profile v1</p>
+    <p class="version">MoveSpan · My Profile v2</p>
   </main>
 
   <script>

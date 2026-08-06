@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Refer a Friend — MoveSpan</title>
+  <style>
+
+:root {
+  --green: #2D7D52;
+  --green-soft: #EAF4EE;
+  --bg: #F4F6F4;
+  --surface: #FFFFFF;
+  --text: #18211B;
+  --secondary: #6D7971;
+  --muted: #98A19B;
+  --border: #E2E8E4;
+  --shadow:
+    0 1px 2px rgba(22,45,31,.03),
+    0 8px 24px rgba(22,45,31,.055);
+  --font:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "SF Pro Text",
+    "Segoe UI",
+    sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--bg); }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input { font: inherit; }
+
+.app-page {
+  width: min(100%, 520px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding:
+    calc(12px + env(safe-area-inset-top))
+    16px
+    calc(34px + env(safe-area-inset-bottom));
+}
+
+.app-header {
+  min-height: 46px;
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.movespan-back {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: var(--green);
+  cursor: pointer;
+}
+
+.movespan-back svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.page-title {
+  margin: 0;
+  text-align: center;
+  font-size: 19px;
+  font-weight: 760;
+}
+
+.hero {
+  padding: 20px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #FFFFFF, #F0F6F2);
+  box-shadow: var(--shadow);
+}
+
+.eyebrow {
+  margin-bottom: 7px;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.hero h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.hero p {
+  margin: 0;
+  color: var(--secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.section { margin-top: 22px; }
+
+.section-title {
+  margin: 0 5px 9px;
+  color: var(--secondary);
+  font-size: 12px;
+  font-weight: 760;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.card {
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.info-row {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 15px;
+}
+
+.info-row + .info-row {
+  border-top: 1px solid var(--border);
+}
+
+.info-icon {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--green-soft);
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.info-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.info-title {
+  display: block;
+  font-size: 14px;
+  line-height: 1.3;
+  font-weight: 710;
+}
+
+.info-description {
+  display: block;
+  margin-top: 3px;
+  color: var(--secondary);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.status {
+  margin-left: auto;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.button-stack {
+  display: grid;
+  gap: 10px;
+}
+
+.primary-button,
+.secondary-button {
+  width: 100%;
+  min-height: 48px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 720;
+  cursor: pointer;
+}
+
+.primary-button {
+  border: 0;
+  background: linear-gradient(
+    118deg,
+    #286F49 0%,
+    #347F58 20%,
+    #246744 39%,
+    #3B8660 56%,
+    #245F41 76%,
+    #2D7D52 100%
+  );
+  color: #FFFFFF;
+}
+
+.secondary-button {
+  border: 1px solid rgba(45,125,82,.22);
+  background: var(--surface);
+  color: var(--green);
+}
+
+.input-row {
+  display: flex;
+  gap: 9px;
+}
+
+.text-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 46px;
+  padding: 0 13px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+}
+
+.mini-button {
+  min-height: 46px;
+  padding: 0 15px;
+  border: 0;
+  border-radius: 13px;
+  background: var(--green);
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.note {
+  margin: 12px 5px 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(24px + env(safe-area-inset-bottom));
+  width: min(calc(100% - 32px), 430px);
+  padding: 13px 16px;
+  border-radius: 14px;
+  background: rgba(24,33,27,.94);
+  color: #FFFFFF;
+  font-size: 13px;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 12px);
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.toast.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@media (max-width: 370px) {
+  .app-page {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .hero {
+    padding: 17px;
+  }
+}
+
+.referral-code {
+  margin-top: 14px;
+  padding: 15px;
+  border: 1px dashed rgba(45,125,82,.34);
+  border-radius: 15px;
+  background: var(--green-soft);
+  text-align: center;
+}
+
+.referral-code-label {
+  color: var(--secondary);
+  font-size: 10px;
+  font-weight: 760;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.referral-code-value {
+  margin-top: 5px;
+  color: var(--green);
+  font-size: 20px;
+  font-weight: 820;
+  letter-spacing: .08em;
+}
+
+.referral-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.referral-stat {
+  padding: 17px 12px;
+  border-radius: 17px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.referral-stat strong {
+  display: block;
+  font-size: 22px;
+}
+
+.referral-stat span {
+  display: block;
+  margin-top: 4px;
+  color: var(--secondary);
+  font-size: 11px;
+}
+
+  </style>
+</head>
+<body>
+
+<main class="app-page">
+  <header class="app-header">
+    <button class="movespan-back" type="button"
+      onclick="goBack()" aria-label="Back">
+      <svg viewBox="0 0 24 24">
+        <path d="M15 18l-6-6 6-6"></path>
+      </svg>
+    </button>
+    <h1 class="page-title">Refer a Friend</h1>
+    <span></span>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">MoveSpan Rewards</div>
+    <h2>Share MoveSpan</h2>
+    <p>
+      Invite friends. Successful referrals can earn points,
+      discounts or future subscription credit.
+    </p>
+
+    <div class="referral-code">
+      <div class="referral-code-label">Your referral code</div>
+      <div class="referral-code-value" id="referral-code">MOVESPAN</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Your referral activity</h2>
+    <div class="referral-stats">
+      <div class="referral-stat">
+        <strong id="referral-count">0</strong>
+        <span>friends invited</span>
+      </div>
+      <div class="referral-stat">
+        <strong id="referral-points">0</strong>
+        <span>reward points</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Invite a friend</h2>
+    <div class="button-stack">
+      <button class="primary-button" type="button"
+        onclick="shareReferral()">Share invitation</button>
+      <button class="secondary-button" type="button"
+        onclick="copyReferralLink()">Copy referral link</button>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">How rewards will work</h2>
+    <div class="card">
+      <div class="info-row">
+        <span class="info-icon">1</span>
+        <span class="info-copy">
+          <span class="info-title">Invite a friend</span>
+          <span class="info-description">
+            Share your personal link or code.
+          </span>
+        </span>
+      </div>
+
+      <div class="info-row">
+        <span class="info-icon">2</span>
+        <span class="info-copy">
+          <span class="info-title">Your friend joins MoveSpan</span>
+          <span class="info-description">
+            The referral is linked to your account.
+          </span>
+        </span>
+      </div>
+
+      <div class="info-row">
+        <span class="info-icon">3</span>
+        <span class="info-copy">
+          <span class="info-title">Receive a real benefit</span>
+          <span class="info-description">
+            Points, discounts or subscription credit.
+          </span>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Referral history</h2>
+    <div class="card" style="padding:18px">
+      <strong>No referrals yet</strong>
+      <p style="margin:5px 0 0;color:var(--secondary);font-size:12px;line-height:1.5">
+        Invited friends and earned rewards will appear here.
+      </p>
+    </div>
+
+    <p class="note">
+      Final reward values and eligibility rules will be added later.
+    </p>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+function goBack() {
+  if (history.length > 1) history.back();
+  else location.href = "my-profile.html";
+}
+
+function getReferralCode() {
+  let code = localStorage.getItem("movespan_referral_code");
+
+  if (!code) {
+    code = "MOVESPAN" + Math.floor(100 + Math.random() * 900);
+    localStorage.setItem("movespan_referral_code", code);
+  }
+
+  return code;
+}
+
+function getReferralLink() {
+  return location.origin + "/auth.html?ref=" +
+    encodeURIComponent(getReferralCode());
+}
+
+let toastTimer;
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("visible");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("visible"), 2200);
+}
+
+async function copyReferralLink() {
+  try {
+    await navigator.clipboard.writeText(getReferralLink());
+    showToast("Referral link copied");
+  } catch (_) {
+    showToast("Copying is not available in this browser");
+  }
+}
+
+async function shareReferral() {
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: "Join me on MoveSpan",
+        text: "Join MoveSpan and build a healthier daily practice.",
+        url: getReferralLink()
+      });
+      return;
+    } catch (error) {
+      if (error.name === "AbortError") return;
+    }
+  }
+
+  copyReferralLink();
+}
+
+document.getElementById("referral-code").textContent =
+  getReferralCode();
+
+try {
+  const state = JSON.parse(
+    localStorage.getItem("movespan_referral_state") || "{}"
+  );
+
+  document.getElementById("referral-count").textContent =
+    Number(state.invited) || 0;
+
+  document.getElementById("referral-points").textContent =
+    Number(state.points) || 0;
+} catch (_) {}
+</script>
+
+</body>
+</html>
