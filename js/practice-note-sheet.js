@@ -1,92 +1,44 @@
-(function () {
+(function initializePracticeNoteInsight() {
   "use strict";
 
-  const sheet = document.getElementById("practice-sheet");
-  const backdrop = document.getElementById("practice-sheet-backdrop");
-  const closeButton = document.getElementById("practice-sheet-close");
-  const gotItButton = document.getElementById("practice-sheet-got-it");
-  const dragZone = document.getElementById("practice-sheet-drag-zone");
+  const STORAGE_KEY =
+    "movespan_practice_note_small_regular_v1_dismissed";
 
-  let startY = 0;
-  let currentY = 0;
-  let dragging = false;
+  const note = document.querySelector(".pnote");
+  const card = note ? note.closest(".card") : null;
 
-  function getCard() {
-    const note = document.querySelector(".pnote");
-    return note ? note.closest(".card") : null;
-  }
+  const sheet = document.getElementById("practice-note-sheet");
+  const backdrop = document.getElementById(
+    "practice-note-sheet-backdrop"
+  );
 
-  function prepareCard() {
-    const card = getCard();
-    if (!card) return;
+  const closeButton = document.getElementById(
+    "practice-sheet-close"
+  );
 
-    card.hidden = false;
-    card.classList.remove(
-      "practice-note-card-compact",
-      "practice-note-is-compact",
-      "practice-note-is-expanded",
-      "is-compact"
-    );
+  const gotItButton = document.getElementById(
+    "practice-sheet-got-it"
+  );
 
-    card.tabIndex = 0;
-    card.setAttribute("role", "button");
-    card.setAttribute(
-      "aria-label",
-      "Open today’s Practice Note"
-    );
+  const dragZone = sheet
+    ? sheet.querySelector(".practice-sheet-drag-zone")
+    : null;
 
-    const figure = card.querySelector(".pnote-fig");
+  if (!note || !card) return;
 
-    if (figure) {
-      figure.innerHTML = `
-        <span class="practice-note-knowledge-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path
-              d="M4.75 5.5A2.75 2.75 0 0 1 7.5 2.75H11v16.5H7.5a2.75 2.75 0 0 0-2.75 2.75V5.5Z"
-              stroke="currentColor"
-              stroke-width="1.7"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M19.25 5.5a2.75 2.75 0 0 0-2.75-2.75H13v16.5h3.5A2.75 2.75 0 0 1 19.25 22V5.5Z"
-              stroke="currentColor"
-              stroke-width="1.7"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </span>
-      `;
-    }
-
-    if (!card.querySelector(".practice-note-chevron")) {
-      card.insertAdjacentHTML(
-        "beforeend",
-        `
-          <span class="practice-note-chevron" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path
-                d="m9 6 6 6-6 6"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </span>
-        `
-      );
-    }
+  function isDismissed() {
+    return localStorage.getItem(STORAGE_KEY) === "1";
   }
 
   function openSheet() {
     if (!sheet || !backdrop) return;
 
-    sheet.style.transform = "";
     backdrop.hidden = false;
     sheet.hidden = false;
+
     document.body.classList.add("practice-sheet-open");
 
-    requestAnimationFrame(() => {
+    window.requestAnimationFrame(function () {
       closeButton?.focus();
     });
   }
@@ -96,40 +48,183 @@
 
     sheet.style.transform = "";
     sheet.classList.remove("is-dragging");
+
     sheet.hidden = true;
     backdrop.hidden = true;
+
     document.body.classList.remove("practice-sheet-open");
   }
 
-  document.addEventListener(
-    "click",
-    function (event) {
-      const card = getCard();
+  function renderCard() {
+    card.classList.remove(
+      "silver",
+      "practice-note-card-compact",
+      "practice-note-is-compact",
+      "practice-note-is-expanded",
+      "is-compact"
+    );
 
-      if (!card || !card.contains(event.target)) return;
+    card.removeAttribute("role");
+    card.removeAttribute("tabindex");
+    card.removeAttribute("aria-label");
 
-      event.preventDefault();
-      event.stopPropagation();
-      event.stopImmediatePropagation();
+    card.innerHTML = `
+      <div class="pnote practice-note-whoop">
+        <div class="practice-note-whoop-main">
+          <div class="practice-note-whoop-eyebrow">
+            Practice Note
+          </div>
 
-      openSheet();
-    },
-    true
-  );
+          <h2 class="practice-note-whoop-title">
+            Small, regular practice matters
+          </h2>
 
-  document.addEventListener("keydown", function (event) {
-    const card = getCard();
+          <p class="practice-note-whoop-text">
+            A short practice you can repeat consistently
+            is more valuable than occasional intensity.
+          </p>
 
-    if (
-      card &&
-      document.activeElement === card &&
-      (event.key === "Enter" || event.key === " ")
-    ) {
-      event.preventDefault();
-      openSheet();
+          <button
+            class="practice-note-whoop-read"
+            type="button"
+            data-practice-note-read
+          >
+            Read today’s note
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+
+        <div class="practice-note-whoop-visual" aria-hidden="true">
+          <div class="practice-note-whoop-figure">
+            <svg viewBox="0 0 64 64" fill="none">
+              <path
+                d="M20 45c8-2 14-8 17-18"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+              <path
+                d="M35 29c5-8 12-11 20-10-1 9-7 15-17 17"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M29 39c-5-8-12-11-20-10 1 9 7 15 17 17"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <circle
+                cx="31"
+                cy="16"
+                r="5"
+                stroke="currentColor"
+                stroke-width="3"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <button
+          class="practice-note-dismiss"
+          type="button"
+          data-practice-note-dismiss
+          aria-label="Mark Practice Note as complete"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m5 12 4 4L19 6"></path>
+          </svg>
+        </button>
+
+        <div
+          class="practice-note-complete-state"
+          aria-live="polite"
+        >
+          <div class="practice-note-complete-check">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m5 12 4 4L19 6"></path>
+            </svg>
+          </div>
+
+          <div class="practice-note-complete-label">
+            You’re set
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function dismissCard() {
+    if (card.classList.contains("practice-note-completing")) {
       return;
     }
 
+    const dismissButton = card.querySelector(
+      "[data-practice-note-dismiss]"
+    );
+
+    const completeState = card.querySelector(
+      ".practice-note-complete-state"
+    );
+
+    card.classList.add("practice-note-completing");
+
+    if (dismissButton) {
+      dismissButton.innerHTML =
+        '<span class="practice-note-spinner" aria-hidden="true"></span>';
+
+      dismissButton.setAttribute(
+        "aria-label",
+        "Completing Practice Note"
+      );
+    }
+
+    window.setTimeout(function () {
+      completeState?.classList.add("is-visible");
+    }, 380);
+
+    window.setTimeout(function () {
+      localStorage.setItem(STORAGE_KEY, "1");
+      card.classList.add("practice-note-removing");
+    }, 1050);
+
+    window.setTimeout(function () {
+      card.classList.add("practice-note-hidden");
+      card.remove();
+    }, 1500);
+  }
+
+  if (isDismissed()) {
+    card.remove();
+    return;
+  }
+
+  renderCard();
+
+  card
+    .querySelector("[data-practice-note-read]")
+    ?.addEventListener("click", function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      openSheet();
+    });
+
+  card
+    .querySelector("[data-practice-note-dismiss]")
+    ?.addEventListener("click", function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      dismissCard();
+    });
+
+  closeButton?.addEventListener("click", closeSheet);
+  gotItButton?.addEventListener("click", closeSheet);
+  backdrop?.addEventListener("click", closeSheet);
+
+  document.addEventListener("keydown", function (event) {
     if (
       event.key === "Escape" &&
       sheet &&
@@ -139,9 +234,9 @@
     }
   });
 
-  closeButton?.addEventListener("click", closeSheet);
-  gotItButton?.addEventListener("click", closeSheet);
-  backdrop?.addEventListener("click", closeSheet);
+  let dragging = false;
+  let startY = 0;
+  let currentY = 0;
 
   function beginDrag(clientY) {
     if (window.innerWidth >= 700) return;
@@ -149,11 +244,12 @@
     dragging = true;
     startY = clientY;
     currentY = clientY;
-    sheet.classList.add("is-dragging");
+
+    sheet?.classList.add("is-dragging");
   }
 
   function moveDrag(clientY) {
-    if (!dragging) return;
+    if (!dragging || !sheet) return;
 
     currentY = clientY;
 
@@ -166,7 +262,7 @@
   }
 
   function endDrag() {
-    if (!dragging) return;
+    if (!dragging || !sheet) return;
 
     dragging = false;
 
@@ -197,9 +293,4 @@
 
   dragZone?.addEventListener("pointerup", endDrag);
   dragZone?.addEventListener("pointercancel", endDrag);
-
-  localStorage.removeItem("movespanPracticeNoteCompactDate");
-  localStorage.removeItem("movespanPracticeNoteDismissedDate");
-
-  prepareCard();
 })();
