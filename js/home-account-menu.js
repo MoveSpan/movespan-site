@@ -151,7 +151,7 @@
 
   function openProfile() {
     window.location.href =
-      "settings.html#profile";
+      "my-profile.html";
   }
 
   function openSettings() {
