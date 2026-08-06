@@ -197,7 +197,7 @@ img{max-width:100%;display:block}
 
 /* Today's Practice hero additions */
 #practice-hero{padding-top:1.5rem;padding-bottom:1.5rem}
-.practice-person{position:absolute;right:8px;bottom:10px;height:82%;width:auto;object-fit:contain;object-position:bottom right;pointer-events:none;z-index:0}
+
 #practice-hero .journey-eyebrow,#practice-hero .journey-title,#practice-hero .practice-meta,#practice-hero .practice-tags,#practice-hero .journey-cta{position:relative;z-index:2}
 #practice-hero .journey-title,#practice-hero .practice-meta,#practice-hero .practice-tags{max-width:60%}
 
@@ -210,7 +210,7 @@ img{max-width:100%;display:block}
 .practice-tag{display:flex;align-items:center;gap:4px;font-size:12px;color:rgba(255,255,255,.9)}
 .practice-tag svg{width:14px;height:14px}
 #practice-hero .journey-cta{max-width:62%}
-@media(max-width:400px){.practice-person{opacity:.3}#practice-hero .journey-title,#practice-hero .practice-meta,#practice-hero .practice-tags,#practice-hero .journey-cta{max-width:100%}}
+@media(max-width:400px){#practice-hero .journey-title,#practice-hero .practice-meta,#practice-hero .practice-tags,#practice-hero .journey-cta{max-width:100%}}
 
 @media(max-width:380px){
   .row2{grid-template-columns:1fr}
@@ -360,6 +360,51 @@ img{max-width:100%;display:block}
   }
 }
 
+
+/* === MOVESPAN BREATH SNAPSHOT WAVE === */
+.health-snapshot-collapsible{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  background:#2D7D52;
+}
+
+.health-snapshot-collapsible::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:34px;
+  width:100%;
+  height:118px;
+  z-index:0;
+  pointer-events:none;
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:100% 100%;
+  background-image:url("data:image/svg+xml,%3Csvg%20viewBox%3D%270%200%201200%20150%27%20preserveAspectRatio%3D%27none%27%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%3E%0A%20%20%3Cpath%20d%3D%27M0%2082%0A%20%20%20%20%20%20%20%20%20%20%20C130%2058%20245%2048%20360%2062%0A%20%20%20%20%20%20%20%20%20%20%20C490%2078%20585%2096%20700%2088%0A%20%20%20%20%20%20%20%20%20%20%20C830%2078%20920%2054%201030%2058%0A%20%20%20%20%20%20%20%20%20%20%20C1095%2060%201150%2070%201200%2076%0A%20%20%20%20%20%20%20%20%20%20%20L1200%20150%20L0%20150%20Z%27%0A%20%20%20%20%20%20%20%20fill%3D%27%23E6F2EB%27%20fill-opacity%3D%27.18%27/%3E%0A%20%20%3Cpath%20d%3D%27M0%20108%0A%20%20%20%20%20%20%20%20%20%20%20C150%2094%20275%2086%20395%2096%0A%20%20%20%20%20%20%20%20%20%20%20C525%20108%20630%20120%20750%20112%0A%20%20%20%20%20%20%20%20%20%20%20C875%20104%20980%2088%201080%2090%0A%20%20%20%20%20%20%20%20%20%20%20C1130%2091%201168%2096%201200%20100%0A%20%20%20%20%20%20%20%20%20%20%20L1200%20150%20L0%20150%20Z%27%0A%20%20%20%20%20%20%20%20fill%3D%27%23FFFFFF%27%20fill-opacity%3D%27.05%27/%3E%0A%3C/svg%3E");
+}
+
+.health-snapshot-collapsible::after{
+  content:none;
+}
+
+.health-snapshot-toggle,
+.health-snapshot-details{
+  position:relative;
+  z-index:2;
+}
+
+.health-snapshot-toggle-icon{
+  background:rgba(255,255,255,.14);
+  color:#FFFFFF;
+}
+
+.health-snapshot-toggle-title,
+.health-snapshot-toggle-subtitle,
+.health-snapshot-chevron{
+  color:#FFFFFF;
+}
 </style>
 <style id="movespan-hero-layout">
 /* MoveSpan fixed hero composition */
@@ -456,22 +501,73 @@ img{max-width:100%;display:block}
   min-height: 300px;
   padding-bottom: 104px;
   overflow: hidden;
+  isolation: isolate;
+  background: #2D7D52;
 }
 
-#practice-hero .practice-mode-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2px;
-  padding: 5px 13px;
-  border: 1px solid rgba(255,255,255,.32);
-  border-radius: 999px;
-  background: rgba(255,255,255,.14);
-  color: rgba(255,255,255,.94);
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: .03em;
+/* soft bottom wave in MoveSpan standard green family */
+#practice-hero::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  width:100%;
+  height:140px;
+  z-index:0;
+  pointer-events:none;
+  background-repeat:no-repeat;
+  background-position:center bottom;
+  background-size:100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg%20viewBox%3D%270%200%201200%20150%27%20preserveAspectRatio%3D%27none%27%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%3E%0A%20%20%3Cpath%20d%3D%27M0%20110%0A%20%20%20%20%20%20%20%20%20%20%20C115%20100%20220%2084%20330%2088%0A%20%20%20%20%20%20%20%20%20%20%20C445%2092%20530%20104%20630%2098%0A%20%20%20%20%20%20%20%20%20%20%20C740%2092%20820%2072%20900%2058%0A%20%20%20%20%20%20%20%20%20%20%20C1000%2040%201090%2036%201200%2022%0A%20%20%20%20%20%20%20%20%20%20%20L1200%20150%20L0%20150%20Z%27%0A%20%20%20%20%20%20%20%20fill%3D%27%23FFFFFF%27%20fill-opacity%3D%27.14%27/%3E%0A%20%20%3Cpath%20d%3D%27M0%20126%0A%20%20%20%20%20%20%20%20%20%20%20C125%20118%20242%20106%20352%20108%0A%20%20%20%20%20%20%20%20%20%20%20C470%20110%20570%20120%20680%20112%0A%20%20%20%20%20%20%20%20%20%20%20C792%20104%20880%2088%20966%2074%0A%20%20%20%20%20%20%20%20%20%20%20C1054%2060%201126%2052%201200%2044%0A%20%20%20%20%20%20%20%20%20%20%20L1200%20150%20L0%20150%20Z%27%0A%20%20%20%20%20%20%20%20fill%3D%27%23FFFFFF%27%20fill-opacity%3D%27.045%27/%3E%0A%3C/svg%3E");
+}
+
+#practice-hero::after {
+  content: none;
+}
+
+#practice-hero > :not(.practice-person-frame) {
+  position: relative;
+  z-index: 2;
+}
+
+#practice-hero .journey-eyebrow,
+#practice-hero .journey-title,
+#practice-hero .journey-desc,
+#practice-hero .practice-meta,
+#practice-hero .practice-tags,
+#practice-hero .practice-tag,
+#practice-hero .journey-pct,
+#practice-hero .journey-label,
+#practice-hero .journey-stat {
+  color: #FFFFFF;
+}
+
+#practice-hero .practice-mode-badge{
+  display:inline-flex;
+  width:auto;
+  align-items:center;
+  justify-content:center;
+  margin-top:2px;
+  padding:6px 15px;
+  border:1px solid rgba(255,255,255,.62);
+  border-radius:999px;
+  background:rgba(255,255,255,.14);
+  color:#FFFFFF;
+  font-size:11px;
+  font-weight:700;
+  line-height:1;
+  letter-spacing:.02em;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.18),
+    0 0 12px rgba(255,255,255,.16);
+}
+
+#practice-hero .personalized-badge,
+#practice-hero .practice-badge{
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.30);
+  color:rgba(255,255,255,.95);
 }
 
 #practice-hero .practice-focus {
@@ -489,14 +585,14 @@ img{max-width:100%;display:block}
   line-height: 1.2;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.68);
+  color: rgba(255,255,255,.70);
 }
 
 #practice-hero .practice-focus-text {
   font-size: 13px;
   font-weight: 500;
   line-height: 1.35;
-  color: rgba(255,255,255,.92);
+  color: rgba(255,255,255,.93);
 }
 
 #practice-hero .journey-cta {
@@ -513,25 +609,49 @@ img{max-width:100%;display:block}
     0 8px 24px rgba(0,0,0,.18);
 }
 
+/* frame controls image fitting; photo should never crop */
+.practice-person-frame {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
 .practice-person-frame.layout-vertical {
-  width: 34%;
-  height: 90%;
-  right: 2%;
-  bottom: 0;
+  width: 32%;
+  height: 82%;
+  right: 3%;
+  bottom: 6%;
 }
 
 .practice-person-frame.layout-balanced {
-  width: 39%;
-  height: 84%;
-  right: 1.5%;
-  bottom: 0;
+  width: 36%;
+  height: 76%;
+  right: 3%;
+  bottom: 6%;
 }
 
 .practice-person-frame.layout-horizontal {
-  width: 40%;
-  height: 50%;
-  right: 2%;
-  bottom: 5%;
+  width: 39%;
+  height: 48%;
+  right: 3%;
+  bottom: 8%;
+}
+
+.practice-person {
+  position: static !important;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 @media (max-width: 390px) {
@@ -551,32 +671,28 @@ img{max-width:100%;display:block}
     bottom: 24px;
     width: 58%;
   }
-}
 
-/* Final mobile image sizing */
-@media (max-width: 390px) {
   .practice-person-frame.layout-vertical {
-    width: 31%;
-    height: 84%;
-    right: 1%;
-    bottom: 0;
+    width: 30%;
+    height: 78%;
+    right: 3%;
+    bottom: 7%;
   }
 
   .practice-person-frame.layout-balanced {
-    width: 35%;
-    height: 78%;
-    right: 1%;
-    bottom: 0;
+    width: 34%;
+    height: 72%;
+    right: 3%;
+    bottom: 7%;
   }
 
   .practice-person-frame.layout-horizontal {
-    width: 38%;
+    width: 36%;
     height: 44%;
-    right: 1%;
-    bottom: 7%;
+    right: 3%;
+    bottom: 9%;
   }
 }
-
 </style>
 <style id="movespan-home-sheets-style">
 body.home-sheet-open {
@@ -1740,20 +1856,18 @@ body.practice-sheet-open {
 .breath-snapshot-summary::after {
   content: "";
   position: absolute;
-  left: -8%;
-  right: -8%;
-  bottom: -65px;
-  height: 115px;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 108px;
+  transform: none;
   pointer-events: none;
-  background:
-    radial-gradient(70% 90% at 24% 0%,
-      rgba(255,255,255,.16) 0%,
-      rgba(255,255,255,.06) 43%,
-      transparent 44%),
-    radial-gradient(72% 90% at 78% 8%,
-      rgba(255,255,255,.10) 0%,
-      rgba(255,255,255,.04) 45%,
-      transparent 46%);
+  z-index: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg%20viewBox%3D%270%200%201200%20150%27%20preserveAspectRatio%3D%27none%27%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%3E%0A%20%20%3Cpath%20d%3D%27M0%2086%0A%20%20%20%20%20%20%20%20%20%20%20C140%2062%20260%2054%20382%2068%0A%20%20%20%20%20%20%20%20%20%20%20C520%2084%20620%20100%20742%2092%0A%20%20%20%20%20%20%20%20%20%20%20C872%2084%20974%2062%201086%2068%0A%20%20%20%20%20%20%20%20%20%20%20C1132%2070%201170%2076%201200%2082%0A%20%20%20%20%20%20%20%20%20%20%20L1200%20150%20L0%20150%20Z%27%0A%20%20%20%20%20%20%20%20fill%3D%27%23FFFFFF%27%20fill-opacity%3D%27.14%27/%3E%0A%20%20%3Cpath%20d%3D%27M0%20112%0A%20%20%20%20%20%20%20%20%20%20%20C150%2098%20278%2092%20400%20102%0A%20%20%20%20%20%20%20%20%20%20%20C536%20114%20642%20124%20764%20116%0A%20%20%20%20%20%20%20%20%20%20%20C894%20108%20992%2094%201092%2096%0A%20%20%20%20%20%20%20%20%20%20%20C1138%2097%201174%20102%201200%20106%0A%20%20%20%20%20%20%20%20%20%20%20L1200%20150%20L0%20150%20Z%27%0A%20%20%20%20%20%20%20%20fill%3D%27%23FFFFFF%27%20fill-opacity%3D%27.045%27/%3E%0A%3C/svg%3E");
 }
 
 .breath-snapshot-icon {
