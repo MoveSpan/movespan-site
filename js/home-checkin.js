@@ -31,6 +31,83 @@
     }
   ];
 
+  const RECOMMENDATIONS = {
+    "poor": [
+      {
+        title: "Shift your attention",
+        text: "A simple reset can help you step away from a heavy thought and reconnect with the present."
+      },
+      {
+        title: "Use a calming sound",
+        text: "A steady sound or gentle humming can give your attention something simple to follow."
+      },
+      {
+        title: "Take one easy breath at a time",
+        text: "Keep the breath natural and unforced while you let the emotional intensity settle."
+      }
+    ],
+
+    "not-good": [
+      {
+        title: "Give yourself a gentle reset",
+        text: "A short pause can help you change pace without asking too much from yourself."
+      },
+      {
+        title: "Try a humming reset",
+        text: "A soft sustained sound may help settle tension and reconnect you with your breath."
+      },
+      {
+        title: "Change your surroundings",
+        text: "A brief mindful walk can help your attention move away from emotional heaviness."
+      }
+    ],
+
+    "okay": [
+      {
+        title: "Keep your balance",
+        text: "A short mindful pause can help you stay steady and present."
+      },
+      {
+        title: "Follow a simple rhythm",
+        text: "A metronome or repeated sound can gently organize attention and reduce mental noise."
+      },
+      {
+        title: "Notice your natural breath",
+        text: "No need to change it. Simply follow a few comfortable breaths."
+      }
+    ],
+
+    "good": [
+      {
+        title: "Support this good state",
+        text: "A short sound or breathing reset can help you carry this balance into the rest of your day."
+      },
+      {
+        title: "Pause and listen",
+        text: "A few minutes of mindful sound can strengthen calm focus."
+      },
+      {
+        title: "Take a mindful walk",
+        text: "Let your attention rest on your steps, breathing, and surroundings."
+      }
+    ],
+
+    "great": [
+      {
+        title: "Carry this energy forward",
+        text: "Use a light energizing reset to support your positive state."
+      },
+      {
+        title: "Use your voice",
+        text: "Humming, toning, or a simple sound practice can help express and sustain your energy."
+      },
+      {
+        title: "Move with the moment",
+        text: "A light walk with attention to rhythm can help this good energy continue."
+      }
+    ]
+  };
+
   function getLocalDateKey(date = new Date()) {
     return [
       date.getFullYear(),
@@ -142,6 +219,129 @@
     moodRow.insertAdjacentElement("afterend", scale);
 
     return scale;
+  }
+
+  function ensureRecommendationCard(scale) {
+    let card = document.getElementById(
+      "daily-checkin-recommendation"
+    );
+
+    if (card) return card;
+
+    card = document.createElement("div");
+    card.id = "daily-checkin-recommendation";
+    card.className = "daily-checkin-recommendation";
+    card.hidden = true;
+
+    card.innerHTML = `
+      <div class="daily-checkin-recommendation-eyebrow">
+        This may help right now
+      </div>
+
+      <div class="daily-checkin-recommendation-title"></div>
+
+      <div class="daily-checkin-recommendation-text"></div>
+
+      <div class="daily-checkin-recommendation-actions">
+        <button
+          class="daily-checkin-recommendation-start"
+          type="button"
+        >
+          Start Reset
+        </button>
+
+        <button
+          class="daily-checkin-recommendation-more"
+          type="button"
+        >
+          Show another option
+        </button>
+      </div>
+    `;
+
+    scale.insertAdjacentElement("afterend", card);
+
+    card
+      .querySelector(".daily-checkin-recommendation-start")
+      .addEventListener("click", function () {
+        window.location.href = "/reset.html";
+      });
+
+    card
+      .querySelector(".daily-checkin-recommendation-more")
+      .addEventListener("click", function () {
+        const moodId = card.dataset.mood;
+        const recommendations =
+          RECOMMENDATIONS[moodId] || [];
+
+        if (!recommendations.length) return;
+
+        const currentIndex =
+          Number(card.dataset.optionIndex || 0);
+
+        const nextIndex =
+          (currentIndex + 1) % recommendations.length;
+
+        renderRecommendationById(
+          moodId,
+          nextIndex
+        );
+      });
+
+    return card;
+  }
+
+  function renderRecommendationById(
+    moodId,
+    optionIndex = 0
+  ) {
+    const mood = MOODS.find(
+      (item) => item.id === moodId
+    );
+
+    const options =
+      RECOMMENDATIONS[moodId] || [];
+
+    const option =
+      options[optionIndex] || options[0];
+
+    const scale =
+      document.getElementById("daily-checkin-scale");
+
+    if (!mood || !option || !scale) return;
+
+    const card = ensureRecommendationCard(scale);
+
+    card.dataset.mood = moodId;
+    card.dataset.optionIndex = String(optionIndex);
+    card.style.setProperty(
+      "--recommendation-color",
+      mood.color
+    );
+
+    card.querySelector(
+      ".daily-checkin-recommendation-title"
+    ).textContent = option.title;
+
+    card.querySelector(
+      ".daily-checkin-recommendation-text"
+    ).textContent = option.text;
+
+    card.hidden = false;
+
+    card.classList.remove(
+      "daily-checkin-recommendation-visible"
+    );
+
+    void card.offsetWidth;
+
+    card.classList.add(
+      "daily-checkin-recommendation-visible"
+    );
+  }
+
+  function renderRecommendation(mood) {
+    renderRecommendationById(mood.id, 0);
   }
 
   function configureButtons(buttons) {
@@ -336,6 +536,8 @@
      * Старое поле label в localStorage не используется.
      */
     summaryLabel.textContent = mood.label;
+
+    renderRecommendation(mood);
 
     if (animate) {
       scale.classList.remove("daily-checkin-just-saved");
