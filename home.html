@@ -140,6 +140,161 @@ img{max-width:100%;display:block}
 .assess-text{font-size:12px;color:#4A5560;line-height:1.45}
 .assess-cta{background:var(--green);color:#fff;border:none;border-radius:11px;padding:11px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);white-space:nowrap;flex-shrink:0}
 
+/* Assessments — dark stainless steel card */
+.assessments-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  min-height: 255px;
+  padding: 22px !important;
+
+  border: 1px solid rgba(255,255,255,.24);
+  border-radius: 25px;
+
+  background:
+    radial-gradient(circle at 15% 2%,
+      rgba(255,255,255,.26) 0%,
+      rgba(255,255,255,.08) 23%,
+      transparent 44%),
+    linear-gradient(
+      124deg,
+      #7C8489 0%,
+      #555C61 24%,
+      #747B80 43%,
+      #464D52 67%,
+      #686F74 84%,
+      #3F464B 100%
+    );
+
+  box-shadow:
+    0 15px 34px rgba(36,43,47,.20),
+    inset 0 1px 0 rgba(255,255,255,.30),
+    inset 0 -1px 0 rgba(20,25,28,.22);
+}
+
+.assessments-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      112deg,
+      transparent 0%,
+      rgba(255,255,255,.05) 21%,
+      rgba(255,255,255,.24) 37%,
+      rgba(255,255,255,.06) 50%,
+      transparent 66%
+    );
+}
+
+.assessments-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 82px;
+  z-index: 0;
+
+  width: 100%;
+  height: 82px;
+
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%0A%20%20%20%20%20viewBox%3D%270%200%201200%20120%27%0A%20%20%20%20%20preserveAspectRatio%3D%27none%27%3E%0A%20%20%3Cpath%20d%3D%27M0%2052%0A%20%20%20%20%20%20%20%20%20%20%20C150%2018%20280%2020%20420%2049%0A%20%20%20%20%20%20%20%20%20%20%20C560%2078%20675%2082%20805%2057%0A%20%20%20%20%20%20%20%20%20%20%20C940%2031%201065%2028%201200%2053%27%0A%20%20%20%20%20%20%20%20fill%3D%27none%27%0A%20%20%20%20%20%20%20%20stroke%3D%27%23E3E6E8%27%0A%20%20%20%20%20%20%20%20stroke-opacity%3D%27.30%27%0A%20%20%20%20%20%20%20%20stroke-width%3D%279%27%0A%20%20%20%20%20%20%20%20stroke-linecap%3D%27round%27/%3E%0A%20%20%3Cpath%20d%3D%27M0%2078%0A%20%20%20%20%20%20%20%20%20%20%20C165%2048%20300%2052%20438%2076%0A%20%20%20%20%20%20%20%20%20%20%20C575%20100%20700%20101%20830%2080%0A%20%20%20%20%20%20%20%20%20%20%20C970%2057%201080%2056%201200%2076%27%0A%20%20%20%20%20%20%20%20fill%3D%27none%27%0A%20%20%20%20%20%20%20%20stroke%3D%27%23F7F8F9%27%0A%20%20%20%20%20%20%20%20stroke-opacity%3D%27.15%27%0A%20%20%20%20%20%20%20%20stroke-width%3D%276%27%0A%20%20%20%20%20%20%20%20stroke-linecap%3D%27round%27/%3E%0A%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+}
+
+.assessments-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.assessments-card .sec-label {
+  margin-bottom: 20px;
+  color: rgba(255,255,255,.94);
+}
+
+.assessments-card .sec-link {
+  color: rgba(255,255,255,.82);
+}
+
+.assessments-card .assess {
+  display: grid;
+  grid-template-columns: minmax(0,1fr);
+  align-items: start;
+  gap: 16px;
+}
+
+.assessments-card .assess-icon {
+  display: none !important;
+}
+
+.assessments-card .assess-icon svg {
+  display: none;
+}
+
+.assessments-card .assess-title {
+  max-width: 100%;
+  margin-bottom: 7px;
+  color: #FFFFFF;
+  font-size: 19px;
+  line-height: 1.22;
+  letter-spacing: -.015em;
+}
+
+.assessments-card .assess-body {
+  width: 100%;
+  min-width: 0;
+}
+
+.assessments-card .assess-text {
+  max-width: 100%;
+  color: rgba(255,255,255,.76);
+  font-size: 13px;
+  line-height: 1.48;
+}
+
+.assessments-card .assess-cta {
+  grid-column: 1 / -1;
+
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px 18px;
+
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 13px;
+
+  background: #2D7D52;
+  color: #FFFFFF;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  box-shadow:
+    0 8px 18px rgba(25,67,45,.24),
+    inset 0 1px 0 rgba(255,255,255,.15);
+}
+
+@media (min-width: 980px) {
+  .assessments-card .assess {
+    grid-template-columns: minmax(0,1fr) auto;
+    align-items: end;
+    column-gap: 24px;
+  }
+
+  .assessments-card .assess-cta {
+    grid-column: auto;
+    width: auto;
+    min-width: 190px;
+    margin-top: 0;
+  }
+}
+
 /* Progress */
 .prog-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .prog-row{display:flex;align-items:center;gap:12px}
@@ -502,7 +657,22 @@ img{max-width:100%;display:block}
   padding-bottom: 104px;
   overflow: hidden;
   isolation: isolate;
-  background: #2D7D52;
+  background:
+    radial-gradient(
+      circle at 14% 4%,
+      rgba(255,255,255,.16) 0%,
+      rgba(255,255,255,.05) 23%,
+      transparent 44%
+    ),
+    linear-gradient(
+      112deg,
+      #286F49 0%,
+      #347F58 20%,
+      #246744 39%,
+      #3B8660 56%,
+      #245F41 76%,
+      #2D7D52 100%
+    );
 }
 
 /* soft bottom wave in MoveSpan standard green family */
@@ -511,15 +681,15 @@ img{max-width:100%;display:block}
   position:absolute;
   left:0;
   right:0;
-  bottom:0;
+  bottom:18px;
   width:100%;
-  height:140px;
+  height:118px;
   z-index:0;
   pointer-events:none;
   background-repeat:no-repeat;
   background-position:center bottom;
   background-size:100% 100%;
-  background-image: url("data:image/svg+xml,%3Csvg%20viewBox%3D%270%200%201200%20150%27%20preserveAspectRatio%3D%27none%27%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%3E%0A%20%20%3Cpath%20d%3D%27M0%20110%0A%20%20%20%20%20%20%20%20%20%20%20C115%20100%20220%2084%20330%2088%0A%20%20%20%20%20%20%20%20%20%20%20C445%2092%20530%20104%20630%2098%0A%20%20%20%20%20%20%20%20%20%20%20C740%2092%20820%2072%20900%2058%0A%20%20%20%20%20%20%20%20%20%20%20C1000%2040%201090%2036%201200%2022%0A%20%20%20%20%20%20%20%20%20%20%20L1200%20150%20L0%20150%20Z%27%0A%20%20%20%20%20%20%20%20fill%3D%27%23FFFFFF%27%20fill-opacity%3D%27.14%27/%3E%0A%20%20%3Cpath%20d%3D%27M0%20126%0A%20%20%20%20%20%20%20%20%20%20%20C125%20118%20242%20106%20352%20108%0A%20%20%20%20%20%20%20%20%20%20%20C470%20110%20570%20120%20680%20112%0A%20%20%20%20%20%20%20%20%20%20%20C792%20104%20880%2088%20966%2074%0A%20%20%20%20%20%20%20%20%20%20%20C1054%2060%201126%2052%201200%2044%0A%20%20%20%20%20%20%20%20%20%20%20L1200%20150%20L0%20150%20Z%27%0A%20%20%20%20%20%20%20%20fill%3D%27%23FFFFFF%27%20fill-opacity%3D%27.045%27/%3E%0A%3C/svg%3E");
+  background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%0A%20%20%20%20%20viewBox%3D%270%200%201200%20130%27%0A%20%20%20%20%20preserveAspectRatio%3D%27none%27%3E%0A%20%20%3Cpath%20d%3D%27M0%2050%0A%20%20%20%20%20%20%20%20%20%20%20C145%2018%20278%2022%20414%2049%0A%20%20%20%20%20%20%20%20%20%20%20C554%2077%20674%2082%20804%2058%0A%20%20%20%20%20%20%20%20%20%20%20C938%2034%201060%2030%201200%2051%27%0A%20%20%20%20%20%20%20%20fill%3D%27none%27%0A%20%20%20%20%20%20%20%20stroke%3D%27%23B9D9C6%27%0A%20%20%20%20%20%20%20%20stroke-opacity%3D%27.30%27%0A%20%20%20%20%20%20%20%20stroke-width%3D%279%27%0A%20%20%20%20%20%20%20%20stroke-linecap%3D%27round%27/%3E%0A%20%20%3Cpath%20d%3D%27M0%2082%0A%20%20%20%20%20%20%20%20%20%20%20C160%2054%20294%2058%20432%2080%0A%20%20%20%20%20%20%20%20%20%20%20C570%20102%20694%20106%20824%2086%0A%20%20%20%20%20%20%20%20%20%20%20C958%2066%201078%2063%201200%2080%27%0A%20%20%20%20%20%20%20%20fill%3D%27none%27%0A%20%20%20%20%20%20%20%20stroke%3D%27%23E5F0E9%27%0A%20%20%20%20%20%20%20%20stroke-opacity%3D%27.15%27%0A%20%20%20%20%20%20%20%20stroke-width%3D%276%27%0A%20%20%20%20%20%20%20%20stroke-linecap%3D%27round%27/%3E%0A%3C/svg%3E");
 }
 
 #practice-hero::after {
@@ -2211,6 +2381,218 @@ body.practice-sheet-open {
 }
 </style>
 
+<style id="assessments-learn-more-style">
+/* Assessments Learn More bottom sheet */
+.assessments-learn-more-link {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  padding: 6px 0 6px 10px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+}
+
+.assessments-info-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 18px 12px max(18px, env(safe-area-inset-bottom));
+  background: rgba(18, 24, 21, .40);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity .24s ease,
+    visibility .24s ease;
+}
+
+.assessments-info-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.assessments-info-sheet {
+  position: relative;
+  width: min(100%, 456px);
+  max-height: min(82vh, 680px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding:
+    13px 22px
+    calc(24px + env(safe-area-inset-bottom));
+
+  border: 1px solid #DCE4DF;
+  border-radius: 28px;
+  background: #FFFFFF;
+  box-shadow:
+    0 24px 70px rgba(20, 34, 27, .24),
+    0 2px 8px rgba(20, 34, 27, .08);
+
+  transform: translateY(calc(100% + 30px));
+  transition: transform .30s cubic-bezier(.22,.78,.25,1);
+  touch-action: pan-y;
+}
+
+.assessments-info-overlay.is-open .assessments-info-sheet {
+  transform: translateY(0);
+}
+
+.assessments-info-sheet.is-dragging {
+  transition: none;
+}
+
+.assessments-info-handle {
+  width: 42px;
+  height: 5px;
+  margin: 0 auto 16px;
+  border-radius: 999px;
+  background: #D3DAD6;
+}
+
+.assessments-info-close {
+  position: absolute;
+  top: 17px;
+  right: 17px;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: #F2F5F3;
+  color: #26342C;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.assessments-info-close svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.assessments-info-eyebrow {
+  margin: 2px 54px 8px 0;
+  color: #2D7D52;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.assessments-info-title {
+  margin: 0 52px 12px 0;
+  color: #18211B;
+  font-size: 25px;
+  font-weight: 750;
+  line-height: 1.15;
+  letter-spacing: -.025em;
+}
+
+.assessments-info-intro {
+  margin: 0 0 20px;
+  color: #536159;
+  font-size: 14px;
+  line-height: 1.58;
+}
+
+.assessments-info-subtitle {
+  margin: 0 0 10px;
+  color: #18211B;
+  font-size: 16px;
+  font-weight: 750;
+}
+
+.assessments-info-benefits {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.assessments-info-benefits li {
+  position: relative;
+  padding: 12px 14px 12px 42px;
+  border: 1px solid #E1E8E4;
+  border-radius: 15px;
+  background: #F7F9F8;
+  color: #34433A;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.assessments-info-benefits li::before {
+  content: "✓";
+  position: absolute;
+  left: 14px;
+  top: 11px;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #E3F1E9;
+  color: #2D7D52;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.assessments-info-meta {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 14px 15px;
+  border-radius: 16px;
+  background: #EEF5F1;
+  color: #425148;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.assessments-info-meta strong {
+  color: #203028;
+}
+
+.assessments-info-action {
+  width: 100%;
+  min-height: 50px;
+  padding: 13px 18px;
+  border: 0;
+  border-radius: 14px;
+  background: #2D7D52;
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 750;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(45,125,82,.20);
+}
+
+body.assessments-info-open {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .assessments-info-overlay,
+  .assessments-info-sheet {
+    transition: none;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="wrap">
@@ -2478,8 +2860,8 @@ body.practice-sheet-open {
   </div>
 
   <!-- ASSESSMENTS -->
-  <div class="card silver card-pad">
-    <div class="sec-label">Assessments <span class="sec-link" onclick="go('assessments-info')">Learn more &rsaquo;</span></div>
+  <div class="card silver card-pad assessments-card">
+    <div class="sec-label">Assessments <button class="sec-link assessments-learn-more-link" type="button" onclick="openAssessmentsInfo()">Learn more &rsaquo;</button></div>
     <div class="assess">
       <div class="assess-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 2h6a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v0a2 2 0 0 1 2-2z"/><path d="M9 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3"/><path d="M9 12h6M9 16h4"/></svg></div>
       <div class="assess-body">
@@ -2520,6 +2902,68 @@ body.practice-sheet-open {
     </div>
   </div>
 
+</div>
+
+<div
+  class="assessments-info-overlay"
+  id="assessments-info-overlay"
+  aria-hidden="true"
+>
+  <section
+    class="assessments-info-sheet"
+    id="assessments-info-sheet"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="assessments-info-title"
+  >
+    <div class="assessments-info-handle" aria-hidden="true"></div>
+
+    <button
+      class="assessments-info-close"
+      type="button"
+      onclick="closeAssessmentsInfo()"
+      aria-label="Close"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18"></path>
+      </svg>
+    </button>
+
+    <div class="assessments-info-eyebrow">Assessments</div>
+
+    <h2 class="assessments-info-title" id="assessments-info-title">
+      Why take assessments?
+    </h2>
+
+    <p class="assessments-info-intro">
+      Assessments help MoveSpan understand your current mobility,
+      balance, strength, recovery, and functional age. Your results
+      are used to adjust practice intensity, exercise selection,
+      and progress tracking.
+    </p>
+
+    <h3 class="assessments-info-subtitle">What you’ll get</h3>
+
+    <ul class="assessments-info-benefits">
+      <li>A clearer picture of your current abilities</li>
+      <li>More accurate practice recommendations</li>
+      <li>Baseline results for tracking progress</li>
+      <li>Suggestions for areas that need attention</li>
+    </ul>
+
+    <div class="assessments-info-meta">
+      <div><strong>Time required:</strong> about 5–10 minutes</div>
+      <div>You can complete assessments one at a time.</div>
+    </div>
+
+    <button
+      class="assessments-info-action"
+      type="button"
+      onclick="window.location.href='assessments.html'"
+    >
+      Take Assessments →
+    </button>
+  </section>
 </div>
 
 <!-- BOTTOM NAV -->
@@ -3280,6 +3724,85 @@ applyMockState();
   } else {
     mergeDeviceCard(0);
   }
+})();
+</script>
+
+<script id="assessments-learn-more-script">
+(function () {
+  const overlay = document.getElementById('assessments-info-overlay');
+  const sheet = document.getElementById('assessments-info-sheet');
+
+  if (!overlay || !sheet) return;
+
+  let startY = 0;
+  let currentY = 0;
+  let dragging = false;
+
+  window.openAssessmentsInfo = function () {
+    overlay.classList.add('is-open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('assessments-info-open');
+
+    window.setTimeout(function () {
+      const closeButton = overlay.querySelector('.assessments-info-close');
+      if (closeButton) closeButton.focus({ preventScroll: true });
+    }, 80);
+  };
+
+  window.closeAssessmentsInfo = function () {
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('assessments-info-open');
+
+    sheet.classList.remove('is-dragging');
+    sheet.style.transform = '';
+    dragging = false;
+  };
+
+  overlay.addEventListener('click', function (event) {
+    if (event.target === overlay) {
+      window.closeAssessmentsInfo();
+    }
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && overlay.classList.contains('is-open')) {
+      window.closeAssessmentsInfo();
+    }
+  });
+
+  sheet.addEventListener('touchstart', function (event) {
+    if (!overlay.classList.contains('is-open')) return;
+    if (sheet.scrollTop > 0) return;
+
+    startY = event.touches[0].clientY;
+    currentY = startY;
+    dragging = true;
+    sheet.classList.add('is-dragging');
+  }, { passive: true });
+
+  sheet.addEventListener('touchmove', function (event) {
+    if (!dragging) return;
+
+    currentY = event.touches[0].clientY;
+    const delta = Math.max(0, currentY - startY);
+
+    sheet.style.transform = 'translateY(' + delta + 'px)';
+  }, { passive: true });
+
+  sheet.addEventListener('touchend', function () {
+    if (!dragging) return;
+
+    const delta = Math.max(0, currentY - startY);
+
+    sheet.classList.remove('is-dragging');
+    sheet.style.transform = '';
+    dragging = false;
+
+    if (delta > 90) {
+      window.closeAssessmentsInfo();
+    }
+  }, { passive: true });
 })();
 </script>
 
