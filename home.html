@@ -3767,6 +3767,113 @@ body.assessments-info-open {
 }
 </style>
 
+
+<style id="practice-note-final-position-and-clip-fix">
+.card:has(.pnote) {
+  position: relative !important;
+
+  width: 100% !important;
+  max-width: 100% !important;
+
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 18px !important;
+
+  padding: 0 !important;
+
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+
+  transform: none !important;
+
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+.card:has(.pnote) .pnote,
+.card:has(.pnote) .practice-note-whoop {
+  position: relative !important;
+
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+
+  margin: 0 !important;
+
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+
+  transform: none !important;
+
+  box-sizing: border-box !important;
+}
+
+.card:has(.pnote) .practice-note-whoop {
+  min-height: 196px !important;
+  padding: 22px 18px 18px !important;
+
+  overflow: visible !important;
+}
+
+.card:has(.pnote) .practice-note-whoop-main {
+  min-width: 0 !important;
+  overflow: visible !important;
+}
+
+.card:has(.pnote) .practice-note-whoop-eyebrow {
+  position: static !important;
+
+  display: block !important;
+
+  margin: 0 0 9px !important;
+  padding: 0 !important;
+
+  transform: none !important;
+}
+
+.card:has(.pnote) .practice-note-whoop-title {
+  position: static !important;
+
+  margin: 0 0 9px !important;
+  padding: 0 !important;
+
+  transform: none !important;
+}
+
+.card:has(.pnote) .practice-note-whoop-text {
+  position: static !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.card:has(.pnote) .practice-note-chevron,
+.card:has(.pnote) .pnote-fig,
+.card:has(.pnote) .pnote-body,
+.card:has(.pnote) .pnote-actions,
+.card:has(.pnote) .practice-note-inline-detail {
+  all: unset;
+}
+
+.card:has(.pnote) .practice-note-whoop-main,
+.card:has(.pnote) .practice-note-whoop-visual,
+.card:has(.pnote) .practice-note-dismiss,
+.card:has(.pnote) .practice-note-complete-state {
+  box-sizing: border-box;
+}
+
+@media (max-width: 520px) {
+  .card:has(.pnote) .practice-note-whoop {
+    min-height: 184px !important;
+    padding: 20px 15px 16px !important;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="wrap">
