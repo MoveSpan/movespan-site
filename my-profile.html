@@ -614,6 +614,230 @@
       }
     }
   </style>
+<style id="my-profile-mobile-final">
+@media (max-width: 520px) {
+  html,
+  body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .app-page {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding:
+      calc(8px + env(safe-area-inset-top))
+      12px
+      calc(28px + env(safe-area-inset-bottom));
+  }
+
+  .app-header {
+    min-height: 42px;
+    margin-bottom: 12px;
+  }
+
+  .movespan-back {
+    width: 42px;
+    height: 42px;
+  }
+
+  .page-title {
+    font-size: 18px;
+  }
+
+  .user-card {
+    gap: 11px;
+    padding: 13px;
+    border-radius: 17px;
+  }
+
+  .avatar {
+    width: 50px;
+    height: 50px;
+    flex-basis: 50px;
+    font-size: 19px;
+  }
+
+  .user-name {
+    margin-bottom: 2px;
+    font-size: 15px;
+  }
+
+  .user-email {
+    font-size: 11px;
+  }
+
+  .edit-button {
+    padding: 7px 9px;
+    font-size: 11px;
+  }
+
+  .progress-card {
+    margin-top: 10px;
+    padding: 14px;
+    border-radius: 17px;
+  }
+
+  .level-value {
+    font-size: 21px;
+  }
+
+  .points-value {
+    font-size: 11px;
+  }
+
+  .progress-track {
+    margin-top: 11px;
+  }
+
+  .progress-meta {
+    gap: 7px;
+    margin-top: 12px;
+  }
+
+  .progress-stat {
+    min-width: 0;
+    padding: 8px 4px;
+    border-radius: 11px;
+  }
+
+  .progress-stat strong {
+    font-size: 15px;
+  }
+
+  .progress-stat span {
+    font-size: 9px;
+  }
+
+  .section {
+    margin-top: 18px;
+  }
+
+  .section-heading {
+    margin-bottom: 7px;
+  }
+
+  .section-title {
+    font-size: 11px;
+  }
+
+  .section-action {
+    font-size: 11px;
+  }
+
+  .quick-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .quick-item {
+    min-width: 0;
+    min-height: 88px;
+    padding: 12px;
+    border-radius: 15px;
+  }
+
+  .quick-code {
+    width: 34px;
+    height: 34px;
+  }
+
+  .quick-name {
+    margin-top: 10px;
+    font-size: 11px;
+  }
+
+  .card {
+    border-radius: 16px;
+  }
+
+  .empty-card {
+    padding: 16px;
+  }
+
+  .empty-title {
+    font-size: 14px;
+  }
+
+  .empty-text {
+    font-size: 11px;
+  }
+
+  .list-row {
+    min-height: 60px;
+    gap: 10px;
+    padding: 11px 12px;
+  }
+
+  .row-icon {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+    border-radius: 11px;
+    font-size: 10px;
+  }
+
+  .row-title {
+    font-size: 13px;
+  }
+
+  .row-description {
+    font-size: 10px;
+  }
+
+  .row-chevron {
+    font-size: 21px;
+  }
+
+  .achievement-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .achievement {
+    min-width: 0;
+    min-height: 92px;
+    padding: 10px 6px;
+    border-radius: 14px;
+  }
+
+  .achievement-icon {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 7px;
+    font-size: 14px;
+  }
+
+  .achievement-name {
+    font-size: 9px;
+  }
+
+  .version {
+    margin-top: 22px;
+  }
+}
+
+@media (max-width: 360px) {
+  .app-page {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .progress-meta {
+    gap: 5px;
+  }
+
+  .quick-grid {
+    gap: 6px;
+  }
+
+  .achievement-grid {
+    gap: 5px;
+  }
+}
+</style>
+
 </head>
 
 <body>
