@@ -1182,10 +1182,10 @@ body.home-sheet-open {
     left: 50%;
     top: 50%;
     bottom: auto;
-    width: min(520px, calc(100vw - 48px));
-    max-height: min(720px, calc(100vh - 64px));
-    padding: 14px 24px 28px;
-    border-radius: 26px;
+    width: min(430px, calc(100vw - 32px));
+    max-height: min(680px, calc(100vh - 48px));
+    padding: 14px 20px 24px;
+    border-radius: 24px;
     transform: translate(-50%, -50%);
   }
 
@@ -1203,6 +1203,50 @@ body.home-sheet-open {
     overflow-y: auto;
     overscroll-behavior: contain;
     padding-bottom: calc(28px + env(safe-area-inset-bottom));
+  }
+}
+</style>
+
+<style id="movespan-account-menu-compact-width">
+@media (min-width: 700px) {
+  .home-sheet-header {
+    margin-bottom: 18px;
+  }
+
+  .home-account-summary {
+    margin-bottom: 14px;
+    padding: 13px;
+  }
+
+  .home-account-avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 19px;
+  }
+
+  .home-menu-row {
+    min-height: 52px;
+    padding: 13px 14px;
+  }
+}
+
+@media (max-width: 699px) {
+  .home-sheet {
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-width: 430px;
+    margin: 0 auto;
+    border-radius: 24px 24px 0 0;
+  }
+
+  .home-account-summary {
+    padding: 13px;
+  }
+
+  .home-menu-row {
+    min-height: 52px;
+    padding: 13px 14px;
   }
 }
 </style>
