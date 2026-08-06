@@ -2140,7 +2140,7 @@ body.practice-sheet-open {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
-  background-image: url("data:image/svg+xml,%3Csvg%20viewBox%3D%270%200%201200%20150%27%20preserveAspectRatio%3D%27none%27%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%3E%0A%20%20%3Cpath%20d%3D%27M0%2086%0A%20%20%20%20%20%20%20%20%20%20%20C140%2062%20260%2054%20382%2068%0A%20%20%20%20%20%20%20%20%20%20%20C520%2084%20620%20100%20742%2092%0A%20%20%20%20%20%20%20%20%20%20%20C872%2084%20974%2062%201086%2068%0A%20%20%20%20%20%20%20%20%20%20%20C1132%2070%201170%2076%201200%2082%0A%20%20%20%20%20%20%20%20%20%20%20L1200%20150%20L0%20150%20Z%27%0A%20%20%20%20%20%20%20%20fill%3D%27%23FFFFFF%27%20fill-opacity%3D%27.14%27/%3E%0A%20%20%3Cpath%20d%3D%27M0%20112%0A%20%20%20%20%20%20%20%20%20%20%20C150%2098%20278%2092%20400%20102%0A%20%20%20%20%20%20%20%20%20%20%20C536%20114%20642%20124%20764%20116%0A%20%20%20%20%20%20%20%20%20%20%20C894%20108%20992%2094%201092%2096%0A%20%20%20%20%20%20%20%20%20%20%20C1138%2097%201174%20102%201200%20106%0A%20%20%20%20%20%20%20%20%20%20%20L1200%20150%20L0%20150%20Z%27%0A%20%20%20%20%20%20%20%20fill%3D%27%23FFFFFF%27%20fill-opacity%3D%27.045%27/%3E%0A%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg%20viewBox%3D%270%200%201200%20150%27%20preserveAspectRatio%3D%27none%27%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%3E%0A%20%20%3Cpath%20d%3D%27M0%2086%0A%20%20%20%20%20%20%20%20%20%20%20C140%2062%20260%2054%20382%2068%0A%20%20%20%20%20%20%20%20%20%20%20C520%2084%20620%20100%20742%2092%0A%20%20%20%20%20%20%20%20%20%20%20C872%2084%20974%2062%201086%2068%0A%20%20%20%20%20%20%20%20%20%20%20C1132%2070%201170%2076%201200%2082%0A%20%20%20%20%20%20%20%20%20%20%20L1200%20150%20L0%20150%20Z%27%0A%20%20%20%20%20%20%20%20fill%3D%27%234FA36F%27%20fill-opacity%3D%27.42%27/%3E%0A%20%20%3Cpath%20d%3D%27M0%20112%0A%20%20%20%20%20%20%20%20%20%20%20C150%2098%20278%2092%20400%20102%0A%20%20%20%20%20%20%20%20%20%20%20C536%20114%20642%20124%20764%20116%0A%20%20%20%20%20%20%20%20%20%20%20C894%20108%20992%2094%201092%2096%0A%20%20%20%20%20%20%20%20%20%20%20C1138%2097%201174%20102%201200%20106%0A%20%20%20%20%20%20%20%20%20%20%20L1200%20150%20L0%20150%20Z%27%0A%20%20%20%20%20%20%20%20fill%3D%27%2376B98E%27%20fill-opacity%3D%27.22%27/%3E%0A%3C/svg%3E");
 }
 
 .breath-snapshot-icon {
@@ -2904,7 +2904,23 @@ body.assessments-info-open {
   border:1px solid rgba(255,255,255,.18) !important;
   border-radius:18px !important;
 
-  background:#2D7D52 !important;
+  position:relative !important;
+  isolation:isolate !important;
+  overflow:hidden !important;
+
+  background:
+    radial-gradient(
+      circle at 18% 8%,
+      rgba(255,255,255,.13) 0%,
+      transparent 34%
+    ),
+    linear-gradient(
+      135deg,
+      #2D7D52 0%,
+      #255E42 60%,
+      #1C4A34 100%
+    ) !important;
+
   color:#FFFFFF !important;
 
   font-size:18px !important;
@@ -2922,7 +2938,24 @@ body.assessments-info-open {
     inset 0 -1px 0 rgba(15,55,34,.22) !important;
 }
 
-.practice-library-label::before,
+.practice-library-label::before{
+  content:"" !important;
+  position:absolute !important;
+  left:0 !important;
+  right:0 !important;
+  bottom:-1px !important;
+  z-index:-1 !important;
+
+  width:100% !important;
+  height:100% !important;
+
+  pointer-events:none !important;
+  background-image:url("data:image/svg+xml,%3Csvg%20viewBox%3D%270%200%201200%20150%27%20preserveAspectRatio%3D%27none%27%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%3E%3Cpath%20d%3D%27M0%2070%20C150%2035%20285%2030%20430%2060%20C575%2090%20690%20100%20825%2070%20C960%2040%201075%2038%201200%2064%20L1200%20150%20L0%20150%20Z%27%20fill%3D%27%234FA36F%27%20fill-opacity%3D%27.46%27/%3E%3Cpath%20d%3D%27M0%20102%20C160%2072%20305%2070%20455%2094%20C600%20118%20725%20124%20850%20102%20C980%2079%201090%2078%201200%2096%20L1200%20150%20L0%20150%20Z%27%20fill%3D%27%2376B98E%27%20fill-opacity%3D%27.24%27/%3E%3C/svg%3E") !important;
+  background-repeat:no-repeat !important;
+  background-position:center bottom !important;
+  background-size:100% 100% !important;
+}
+
 .practice-library-label::after{
   content:none !important;
 }
