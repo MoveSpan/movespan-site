@@ -2817,10 +2817,10 @@ body.assessments-info-open {
 
   display:flex !important;
   align-items:center !important;
-  gap:14px !important;
+  justify-content:center !important;
 
   width:100% !important;
-  min-height:80px !important;
+  min-height:78px !important;
   margin:0 0 18px !important;
   padding:13px 18px !important;
 
@@ -2872,17 +2872,16 @@ body.assessments-info-open {
 .practice-library-card::after{
   content:"" !important;
   position:absolute !important;
-  left:-4% !important;
-  right:-4% !important;
-  top:14px !important;
-  bottom:auto !important;
+  left:0 !important;
+  right:0 !important;
+  top:10px !important;
   z-index:0 !important;
 
-  width:108% !important;
-  height:62px !important;
+  width:100% !important;
+  height:64px !important;
 
   pointer-events:none !important;
-  background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%201200%20120%27%20preserveAspectRatio%3D%27none%27%3E%3Cpath%20d%3D%27M-40%2055%20C150%2018%20320%2021%20485%2050%20C630%2077%20735%2082%20855%2057%20C970%2032%201080%2029%201250%2053%27%20fill%3D%27none%27%20stroke%3D%27%23D9DDE0%27%20stroke-opacity%3D%27.46%27%20stroke-width%3D%2710%27%20stroke-linecap%3D%27round%27/%3E%3Cpath%20d%3D%27M-40%2080%20C170%2049%20340%2054%20500%2077%20C645%2099%20755%20101%20875%2080%20C995%2058%201100%2057%201250%2075%27%20fill%3D%27none%27%20stroke%3D%27%23F4F6F7%27%20stroke-opacity%3D%27.20%27%20stroke-width%3D%276%27%20stroke-linecap%3D%27round%27/%3E%3C/svg%3E") !important;
+  background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%201200%20120%27%20preserveAspectRatio%3D%27none%27%3E%3Cpath%20d%3D%27M0%2052%20C150%2018%20280%2020%20420%2049%20C560%2078%20675%2082%20805%2057%20C940%2031%201065%2028%201200%2053%27%20fill%3D%27none%27%20stroke%3D%27%23E3E6E8%27%20stroke-opacity%3D%27.30%27%20stroke-width%3D%279%27%20stroke-linecap%3D%27round%27/%3E%3Cpath%20d%3D%27M0%2078%20C165%2048%20300%2052%20438%2076%20C575%20100%20700%20101%20830%2080%20C970%2057%201080%2056%201200%2076%27%20fill%3D%27none%27%20stroke%3D%27%23F7F8F9%27%20stroke-opacity%3D%27.15%27%20stroke-width%3D%276%27%20stroke-linecap%3D%27round%27/%3E%3C/svg%3E") !important;
   background-repeat:no-repeat !important;
   background-position:center !important;
   background-size:100% 100% !important;
@@ -2893,136 +2892,54 @@ body.assessments-info-open {
   z-index:1 !important;
 }
 
-.practice-library-icon{
-  flex:0 0 auto !important;
-  width:48px !important;
-  height:48px !important;
-  border-radius:14px !important;
-
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-
-  color:#FFFFFF !important;
-  background:rgba(255,255,255,.13) !important;
-  border:1px solid rgba(255,255,255,.26) !important;
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.22),
-    0 5px 13px rgba(24,29,32,.12) !important;
-}
-
-.practice-library-icon svg{
-  width:23px !important;
-  height:23px !important;
-}
-
 .practice-library-label{
-  position:absolute !important;
-  left:50% !important;
-  top:50% !important;
-  transform:translate(-50%,-50%) !important;
-
-  display:inline-block !important;
-  width:max-content !important;
-  max-width:52% !important;
-
-  color:transparent !important;
-  font-size:19px !important;
-  font-weight:800 !important;
-  line-height:1.1 !important;
-  letter-spacing:-.025em !important;
-  text-align:center !important;
-  white-space:nowrap !important;
-  pointer-events:none !important;
-}
-
-.practice-library-label::before,
-.practice-library-label::after{
-  content:attr(data-text);
-  position:absolute;
-  inset:0;
-  display:block;
-  width:max-content;
-  color:#FFFFFF;
-  font:inherit;
-  letter-spacing:inherit;
-  white-space:nowrap;
-}
-
-.practice-library-label::before{
-  z-index:0;
-  -webkit-text-stroke:3.2px rgba(255,255,255,.92);
-  paint-order:stroke fill;
-  text-shadow:
-    0 1px 0 rgba(255,255,255,.50),
-    0 3px 5px rgba(23,31,27,.18);
-}
-
-.practice-library-label::after{
-  z-index:1;
-  -webkit-text-stroke:1.25px #2D7D52;
-  paint-order:stroke fill;
-  text-shadow:
-    0 1px 0 rgba(24,76,49,.76),
-    0 2px 2px rgba(17,47,32,.34),
-    0 -1px 0 rgba(255,255,255,.34);
-}
-
-.practice-library-cta{
-  flex:0 0 auto !important;
-  margin-left:auto !important;
-
   display:inline-flex !important;
   align-items:center !important;
   justify-content:center !important;
 
-  min-width:76px !important;
-  padding:10px 15px !important;
+  width:min(72%,330px) !important;
+  min-height:48px !important;
+  padding:12px 24px !important;
 
-  border:1px solid rgba(255,255,255,.16) !important;
-  border-radius:12px !important;
+  border:1px solid rgba(255,255,255,.18) !important;
+  border-radius:18px !important;
+
   background:#2D7D52 !important;
   color:#FFFFFF !important;
 
-  font-size:13px !important;
-  font-weight:700 !important;
+  font-size:18px !important;
+  font-weight:800 !important;
   line-height:1 !important;
+  letter-spacing:-.01em !important;
+  text-align:center !important;
   white-space:nowrap !important;
 
+  text-shadow:0 1px 2px rgba(16,44,29,.28) !important;
+
   box-shadow:
-    0 7px 16px rgba(25,67,45,.26),
-    inset 0 1px 0 rgba(255,255,255,.15) !important;
+    0 8px 18px rgba(25,67,45,.28),
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -1px 0 rgba(15,55,34,.22) !important;
+}
+
+.practice-library-label::before,
+.practice-library-label::after{
+  content:none !important;
 }
 
 @media (max-width:430px){
   .practice-library-card{
-    min-height:74px !important;
+    min-height:72px !important;
     padding:11px 14px !important;
-    gap:12px !important;
     border-radius:20px !important;
   }
 
-  .practice-library-icon{
-    width:44px !important;
-    height:44px !important;
-    border-radius:13px !important;
-  }
-
-  .practice-library-icon svg{
-    width:21px !important;
-    height:21px !important;
-  }
-
   .practice-library-label{
-    max-width:48% !important;
+    width:min(76%,290px) !important;
+    min-height:46px !important;
+    padding:11px 20px !important;
+    border-radius:17px !important;
     font-size:17px !important;
-  }
-
-  .practice-library-cta{
-    min-width:68px !important;
-    padding:9px 13px !important;
-    font-size:12px !important;
   }
 }
 </style>
@@ -3082,16 +2999,7 @@ body.assessments-info-open {
     type="button"
     onclick="window.location.href='program.html'"
     aria-label="Open Practice Library">
-    <span class="practice-library-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="4" y="4" width="6" height="6" rx="1.5"></rect>
-        <rect x="14" y="4" width="6" height="6" rx="1.5"></rect>
-        <rect x="4" y="14" width="6" height="6" rx="1.5"></rect>
-        <rect x="14" y="14" width="6" height="6" rx="1.5"></rect>
-      </svg>
-    </span>
-    <span class="practice-library-label" data-text="Practice Library">Practice Library</span>
-    <span class="practice-library-cta">Open</span>
+    <span class="practice-library-label">Practice Library</span>
   </button>
 
   <!-- DAILY CHECK-IN -->
