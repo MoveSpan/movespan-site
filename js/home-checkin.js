@@ -391,8 +391,7 @@
 
         renderRecommendationById(
           moodId,
-          nextIndex,
-          true
+          nextIndex
         );
       });
 
@@ -401,8 +400,7 @@
 
   function renderRecommendationById(
     moodId,
-    optionIndex = 0,
-    expandRecommendation = true
+    optionIndex = 0
   ) {
     const mood = MOODS.find(
       (item) => item.id === moodId
@@ -438,12 +436,10 @@
 
     card.hidden = false;
 
-    const shouldCollapse =
-      !expandRecommendation;
+    const shouldCollapse = true;
 
-    card.classList.toggle(
-      "daily-checkin-recommendation-collapsed",
-      shouldCollapse
+    card.classList.add(
+      "daily-checkin-recommendation-collapsed"
     );
 
     const toggleButton = card.querySelector(
@@ -475,14 +471,10 @@
     );
   }
 
-  function renderRecommendation(
-    mood,
-    expandRecommendation
-  ) {
+  function renderRecommendation(mood) {
     renderRecommendationById(
       mood.id,
-      0,
-      expandRecommendation
+      0
     );
   }
 
@@ -616,8 +608,7 @@
   function renderMood(
     index,
     persist,
-    animate,
-    expandRecommendation = persist
+    animate
   ) {
     const mood = MOODS[index];
     const buttons = getButtons();
@@ -684,10 +675,7 @@
      */
     summaryLabel.textContent = mood.label;
 
-    renderRecommendation(
-      mood,
-      expandRecommendation
-    );
+    renderRecommendation(mood);
 
     if (animate) {
       scale.classList.remove("daily-checkin-just-saved");
