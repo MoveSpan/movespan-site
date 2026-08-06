@@ -234,32 +234,139 @@
     card.hidden = true;
 
     card.innerHTML = `
-      <div class="daily-checkin-recommendation-eyebrow">
-        This may help right now
-      </div>
+      <button
+        class="daily-checkin-recommendation-toggle"
+        type="button"
+        aria-expanded="true"
+        aria-label="Collapse recommendation"
+      >
+        <span class="daily-checkin-recommendation-heading">
+          <span class="daily-checkin-recommendation-eyebrow">
+            This may help right now
+          </span>
 
-      <div class="daily-checkin-recommendation-title"></div>
+          <span class="daily-checkin-recommendation-title"></span>
+        </span>
 
-      <div class="daily-checkin-recommendation-text"></div>
-
-      <div class="daily-checkin-recommendation-actions">
-        <button
-          class="daily-checkin-recommendation-start"
-          type="button"
+        <span
+          class="daily-checkin-recommendation-chevron"
+          aria-hidden="true"
         >
-          Start Reset
-        </button>
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="m7 14 5-5 5 5"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+      </button>
 
-        <button
-          class="daily-checkin-recommendation-more"
-          type="button"
-        >
-          Show another option
-        </button>
+      <div class="daily-checkin-recommendation-body">
+        <div class="daily-checkin-recommendation-text"></div>
+
+        <div class="daily-checkin-recommendation-actions">
+          <button
+            class="daily-checkin-recommendation-start"
+            type="button"
+          >
+            Start Reset
+          </button>
+
+          <button
+            class="daily-checkin-recommendation-more"
+            type="button"
+          >
+            Show another option
+          </button>
+        </div>
       </div>
     `;
 
     scale.insertAdjacentElement("afterend", card);
+
+    const toggleButton = card.querySelector(
+      ".daily-checkin-recommendation-toggle"
+    );
+
+    function setRecommendationCollapsed(collapsed) {
+      card.classList.toggle(
+        "daily-checkin-recommendation-collapsed",
+        collapsed
+      );
+
+      toggleButton.setAttribute(
+        "aria-expanded",
+        collapsed ? "false" : "true"
+      );
+
+      toggleButton.setAttribute(
+        "aria-label",
+        collapsed
+          ? "Expand recommendation"
+          : "Collapse recommendation"
+      );
+    }
+
+    toggleButton.addEventListener("click", function () {
+      setRecommendationCollapsed(
+        !card.classList.contains(
+          "daily-checkin-recommendation-collapsed"
+        )
+      );
+    });
+
+    let swipeStartY = null;
+    let swipeStartX = null;
+
+    card.addEventListener(
+      "touchstart",
+      function (event) {
+        const touch = event.touches?.[0];
+
+        if (!touch) return;
+
+        swipeStartY = touch.clientY;
+        swipeStartX = touch.clientX;
+      },
+      { passive: true }
+    );
+
+    card.addEventListener(
+      "touchend",
+      function (event) {
+        const touch = event.changedTouches?.[0];
+
+        if (
+          !touch ||
+          swipeStartY === null ||
+          swipeStartX === null
+        ) {
+          return;
+        }
+
+        const deltaY = touch.clientY - swipeStartY;
+        const deltaX = Math.abs(
+          touch.clientX - swipeStartX
+        );
+
+        swipeStartY = null;
+        swipeStartX = null;
+
+        if (
+          deltaY > 42 &&
+          deltaX < 55 &&
+          !card.classList.contains(
+            "daily-checkin-recommendation-collapsed"
+          )
+        ) {
+          setRecommendationCollapsed(true);
+        }
+      },
+      { passive: true }
+    );
 
     card
       .querySelector(".daily-checkin-recommendation-start")
@@ -328,6 +435,26 @@
     ).textContent = option.text;
 
     card.hidden = false;
+
+    card.classList.remove(
+      "daily-checkin-recommendation-collapsed"
+    );
+
+    const toggleButton = card.querySelector(
+      ".daily-checkin-recommendation-toggle"
+    );
+
+    if (toggleButton) {
+      toggleButton.setAttribute(
+        "aria-expanded",
+        "true"
+      );
+
+      toggleButton.setAttribute(
+        "aria-label",
+        "Collapse recommendation"
+      );
+    }
 
     card.classList.remove(
       "daily-checkin-recommendation-visible"
