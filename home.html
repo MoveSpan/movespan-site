@@ -2808,6 +2808,143 @@ body.assessments-info-open {
 }
 </style>
 
+
+<style id="practice-library-refine-v2">
+.practice-library-card{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  gap:18px !important;
+  min-height:108px !important;
+  padding:18px 26px !important;
+  background:
+    radial-gradient(circle at 14% 8%, rgba(255,255,255,.28) 0%, rgba(255,255,255,.12) 16%, rgba(255,255,255,0) 34%),
+    linear-gradient(118deg,
+      #90969E 0%,
+      #B4B8BE 17%,
+      #686F77 42%,
+      #9FA4AB 60%,
+      #596068 83%,
+      #878D95 100%) !important;
+  border:1px solid rgba(255,255,255,.24) !important;
+  box-shadow:
+    0 14px 28px rgba(36,43,47,.16),
+    inset 0 1px 0 rgba(255,255,255,.26) !important;
+}
+
+.practice-library-card::before{
+  background:
+    linear-gradient(
+      112deg,
+      transparent 0%,
+      rgba(255,255,255,.05) 21%,
+      rgba(255,255,255,.24) 37%,
+      rgba(255,255,255,.06) 50%,
+      transparent 66%
+    ) !important;
+}
+
+.practice-library-card::after{
+  top:auto !important;
+  bottom:14px !important;
+  height:58px !important;
+  background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%201200%20120%27%20preserveAspectRatio%3D%27none%27%3E%3Cpath%20d%3D%27M0%2052%20C150%2018%20280%2020%20420%2049%20C560%2078%20675%2082%20805%2057%20C940%2031%201065%2028%201200%2053%27%20fill%3D%27none%27%20stroke%3D%27%23E3E6E8%27%20stroke-opacity%3D%27.30%27%20stroke-width%3D%279%27%20stroke-linecap%3D%27round%27/%3E%3Cpath%20d%3D%27M0%2078%20C165%2048%20300%2052%20438%2076%20C575%20100%20700%20101%20830%2080%20C970%2057%201080%2056%201200%2076%27%20fill%3D%27none%27%20stroke%3D%27%23F7F8F9%27%20stroke-opacity%3D%27.15%27%20stroke-width%3D%276%27%20stroke-linecap%3D%27round%27/%3E%3C/svg%3E") !important;
+  background-repeat:no-repeat !important;
+  background-position:center !important;
+  background-size:100% 100% !important;
+}
+
+.practice-library-card > *{
+  position:relative;
+  z-index:1;
+}
+
+.practice-library-icon{
+  width:88px !important;
+  height:88px !important;
+  border-radius:22px !important;
+  background:rgba(255,255,255,.14) !important;
+  border:1px solid rgba(255,255,255,.34) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.27),
+    0 7px 18px rgba(24,29,32,.14) !important;
+  color:#2D7D52 !important;
+  flex-shrink:0 !important;
+}
+
+.practice-library-icon svg{
+  width:34px !important;
+  height:34px !important;
+}
+
+.practice-library-label{
+  font-size:21px !important;
+  font-weight:800 !important;
+  line-height:1.12 !important;
+  letter-spacing:-.02em !important;
+  color:#2D7D52 !important;
+  text-shadow:
+    -1px 0 rgba(255,255,255,.78),
+    1px 0 rgba(255,255,255,.78),
+    0 -1px rgba(255,255,255,.78),
+    0 1px rgba(255,255,255,.78),
+    0 0 10px rgba(255,255,255,.20) !important;
+}
+
+.practice-library-cta{
+  margin-left:auto !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  min-width:92px !important;
+  padding:12px 18px !important;
+  border-radius:14px !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+  background:#2D7D52 !important;
+  color:#FFFFFF !important;
+  font-size:14px !important;
+  font-weight:700 !important;
+  line-height:1 !important;
+  white-space:nowrap !important;
+  box-shadow:
+    0 8px 18px rgba(25,67,45,.24),
+    inset 0 1px 0 rgba(255,255,255,.15) !important;
+}
+
+@media (max-width: 720px){
+  .practice-library-card{
+    min-height:100px !important;
+    padding:16px 20px !important;
+  }
+
+  .practice-library-icon{
+    width:76px !important;
+    height:76px !important;
+  }
+
+  .practice-library-label{
+    font-size:19px !important;
+  }
+
+  .practice-library-cta{
+    min-width:82px !important;
+    padding:11px 16px !important;
+    font-size:13px !important;
+  }
+}
+
+@media (max-width: 430px){
+  .practice-library-icon{
+    width:68px !important;
+    height:68px !important;
+  }
+
+  .practice-library-label{
+    font-size:18px !important;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="wrap">
@@ -2872,6 +3009,7 @@ body.assessments-info-open {
       </svg>
     </span>
     <span class="practice-library-label">Practice Library</span>
+    <span class="practice-library-cta">Open</span>
   </button>
 
   <!-- DAILY CHECK-IN -->
