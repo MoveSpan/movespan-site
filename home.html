@@ -3976,7 +3976,53 @@ applyMockState();
       }
 
       const manifest = await response.json();
-      const gender = getGender();
+      const now = new Date();
+
+      const dateKey = [
+        now.getFullYear(),
+        String(now.getMonth() + 1).padStart(2, "0"),
+        String(now.getDate()).padStart(2, "0")
+      ].join("-");
+
+      const period = getPeriod(now.getHours());
+
+      /*
+       * The Today’s Practice hero changes with the time of day
+       * and alternates male → female continuously for every user.
+       *
+       * Morning, daytime and evening are consecutive display slots.
+       * Profile gender does not affect the selected image.
+       */
+      const periodOrder = {
+        morning: 0,
+        day: 1,
+        daytime: 1,
+        afternoon: 1,
+        evening: 2,
+        night: 2
+      };
+
+      const periodIndex = Object.prototype.hasOwnProperty.call(
+        periodOrder,
+        period
+      )
+        ? periodOrder[period]
+        : 0;
+
+      const calendarDay = Math.floor(
+        Date.UTC(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate()
+        ) / 86400000
+      );
+
+      const displaySlot = calendarDay * 3 + periodIndex;
+
+      const gender = displaySlot % 2 === 0
+        ? "male"
+        : "female";
+
       const pool = Array.isArray(manifest[gender])
         ? manifest[gender]
         : [];
@@ -3987,15 +4033,6 @@ applyMockState();
         );
       }
 
-      const now = new Date();
-
-      const dateKey = [
-        now.getFullYear(),
-        String(now.getMonth() + 1).padStart(2, "0"),
-        String(now.getDate()).padStart(2, "0")
-      ].join("-");
-
-      const period = getPeriod(now.getHours());
       const seed = gender + ":" + dateKey + ":" + period;
       const selected = pool[stableIndex(seed, pool.length)];
 
