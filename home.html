@@ -3350,6 +3350,423 @@ body.assessments-info-open {
 }
 </style>
 
+
+<style id="practice-note-whoop-card-style">
+/* Practice Note — dismissible insight card */
+
+.card:has(.pnote) {
+  position: relative !important;
+  min-height: 196px !important;
+  margin-bottom: 18px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+
+  border: 1px solid rgba(45, 125, 82, .12) !important;
+  border-radius: 22px !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      #FFFFFF 0%,
+      #F5FAF7 58%,
+      #EAF4EE 100%
+    ) !important;
+
+  box-shadow:
+    0 1px 2px rgba(22, 45, 31, .03),
+    0 12px 30px rgba(22, 45, 31, .08) !important;
+
+  cursor: default !important;
+
+  transition:
+    max-height .42s ease,
+    min-height .42s ease,
+    margin .42s ease,
+    opacity .32s ease,
+    transform .32s ease,
+    padding .42s ease !important;
+}
+
+/* Remove all previous decorative waves */
+.card:has(.pnote)::before,
+.card:has(.pnote)::after,
+.card:has(.pnote).silver::before,
+.card:has(.pnote).silver::after,
+.card:has(.pnote) .silver::before,
+.card:has(.pnote) .silver::after {
+  display: none !important;
+  content: none !important;
+}
+
+.card:has(.pnote):hover {
+  transform: none !important;
+}
+
+.card:has(.pnote):active {
+  transform: none !important;
+}
+
+.practice-note-whoop {
+  position: relative;
+  min-height: 196px;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 94px;
+  gap: 16px;
+
+  padding: 20px 20px 19px;
+}
+
+.practice-note-whoop-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.practice-note-whoop-eyebrow {
+  margin-bottom: 9px;
+
+  color: #2D7D52;
+
+  font-size: 10px;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.practice-note-whoop-title {
+  max-width: 270px;
+  margin: 0 0 9px;
+
+  color: #18211B;
+
+  font-size: 20px;
+  line-height: 1.18;
+  font-weight: 760;
+  letter-spacing: -.025em;
+}
+
+.practice-note-whoop-text {
+  max-width: 300px;
+  margin: 0;
+
+  color: #69756D;
+
+  font-size: 13px;
+  line-height: 1.48;
+}
+
+.practice-note-whoop-read {
+  align-self: flex-start;
+
+  margin-top: auto;
+  padding: 13px 0 0;
+
+  border: 0;
+  background: transparent;
+
+  color: #2D7D52;
+
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: 760;
+  letter-spacing: .025em;
+
+  cursor: pointer;
+}
+
+.practice-note-whoop-read span {
+  display: inline-block;
+  margin-left: 4px;
+  transition: transform .18s ease;
+}
+
+.practice-note-whoop-read:hover span {
+  transform: translateX(3px);
+}
+
+.practice-note-whoop-visual {
+  position: relative;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  padding-top: 37px;
+}
+
+.practice-note-whoop-figure {
+  width: 84px;
+  height: 84px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50% 50% 44% 56% / 45% 48% 52% 55%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #FFFFFF 0%,
+      #DCEDE3 34%,
+      #BFDCCB 100%
+    );
+
+  color: #2D7D52;
+
+  transform: rotate(-4deg);
+}
+
+.practice-note-whoop-figure svg {
+  width: 47px;
+  height: 47px;
+  transform: rotate(4deg);
+}
+
+.practice-note-dismiss {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  padding: 0;
+
+  border: 1px solid rgba(45, 125, 82, .18);
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, .88);
+  color: #2D7D52;
+
+  box-shadow:
+    0 4px 12px rgba(22, 45, 31, .07);
+
+  cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
+
+  transition:
+    background-color .18s ease,
+    transform .18s ease,
+    border-color .18s ease;
+}
+
+.practice-note-dismiss:hover {
+  background: #FFFFFF;
+  border-color: rgba(45, 125, 82, .32);
+}
+
+.practice-note-dismiss:active {
+  transform: scale(.94);
+}
+
+.practice-note-dismiss:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba(45, 125, 82, .17);
+}
+
+.practice-note-dismiss svg {
+  width: 21px;
+  height: 21px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.practice-note-spinner {
+  width: 19px;
+  height: 19px;
+
+  border: 2px solid rgba(45, 125, 82, .22);
+  border-top-color: #2D7D52;
+  border-radius: 50%;
+
+  animation: practice-note-spin .68s linear infinite;
+}
+
+@keyframes practice-note-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.card:has(.pnote).practice-note-completing {
+  pointer-events: none;
+}
+
+.card:has(.pnote).practice-note-completing
+.practice-note-whoop-main,
+.card:has(.pnote).practice-note-completing
+.practice-note-whoop-visual {
+  opacity: .22;
+  transition: opacity .2s ease;
+}
+
+.practice-note-complete-state {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  transform: scale(.96);
+
+  color: #2D7D52;
+
+  transition:
+    opacity .24s ease,
+    transform .24s ease;
+}
+
+.practice-note-complete-state.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.practice-note-complete-check {
+  width: 46px;
+  height: 46px;
+
+  display: grid;
+  place-items: center;
+
+  margin-bottom: 9px;
+
+  border-radius: 50%;
+
+  background: #2D7D52;
+  color: #FFFFFF;
+}
+
+.practice-note-complete-check svg {
+  width: 24px;
+  height: 24px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.practice-note-complete-label {
+  font-size: 16px;
+  font-weight: 760;
+}
+
+.card:has(.pnote).practice-note-removing {
+  max-height: 0 !important;
+  min-height: 0 !important;
+
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+
+  padding: 0 !important;
+
+  border-width: 0 !important;
+
+  opacity: 0 !important;
+  transform: translateY(-8px) scale(.985) !important;
+}
+
+.card:has(.pnote).practice-note-hidden {
+  display: none !important;
+}
+
+@media (max-width: 520px) {
+  .card:has(.pnote) {
+    min-height: 184px !important;
+    border-radius: 19px !important;
+  }
+
+  .practice-note-whoop {
+    min-height: 184px;
+
+    grid-template-columns: minmax(0, 1fr) 78px;
+    gap: 10px;
+
+    padding: 17px 16px 16px;
+  }
+
+  .practice-note-whoop-title {
+    max-width: 245px;
+    font-size: 18px;
+  }
+
+  .practice-note-whoop-text {
+    max-width: 255px;
+    font-size: 12px;
+  }
+
+  .practice-note-whoop-read {
+    font-size: 11px;
+  }
+
+  .practice-note-whoop-visual {
+    padding-top: 40px;
+  }
+
+  .practice-note-whoop-figure {
+    width: 70px;
+    height: 70px;
+  }
+
+  .practice-note-whoop-figure svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .practice-note-dismiss {
+    top: 12px;
+    right: 12px;
+
+    width: 39px;
+    height: 39px;
+  }
+}
+
+@media (max-width: 360px) {
+  .practice-note-whoop {
+    grid-template-columns: minmax(0, 1fr) 66px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .practice-note-whoop-title {
+    font-size: 17px;
+  }
+
+  .practice-note-whoop-figure {
+    width: 62px;
+    height: 62px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .practice-note-spinner {
+    animation-duration: 1.4s;
+  }
+
+  .card:has(.pnote),
+  .practice-note-complete-state {
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="wrap">
