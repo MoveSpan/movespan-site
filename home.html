@@ -1976,6 +1976,224 @@ body.practice-sheet-open {
     transform: translateY(-4px) scale(1.07);
   }
 }
+
+
+/* Daily Check-in compact adaptive recommendation */
+.daily-checkin-card {
+  padding: 16px 18px !important;
+}
+
+.daily-checkin-card .checkin-head {
+  margin-bottom: 12px;
+}
+
+.daily-checkin-card .checkin-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+}
+
+.daily-checkin-card .checkin-icon svg {
+  width: 23px;
+  height: 23px;
+}
+
+.daily-checkin-card .checkin-q {
+  font-size: 16px;
+}
+
+.daily-checkin-card .checkin-sub {
+  font-size: 12px;
+}
+
+.daily-checkin-card .checkin-meta {
+  font-size: 11px;
+}
+
+.daily-checkin-card .mood {
+  gap: 6px;
+}
+
+.daily-checkin-card .mood-face {
+  width: 46px;
+  height: 46px;
+}
+
+.daily-checkin-card .mood-face svg {
+  width: 23px;
+  height: 23px;
+}
+
+.daily-checkin-card .mood-label {
+  font-size: 11px;
+}
+
+.daily-checkin-card .daily-checkin-scale {
+  margin-top: 14px;
+}
+
+.daily-checkin-recommendation {
+  --recommendation-color: #2D7D52;
+
+  margin-top: 15px;
+  padding: 14px;
+
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--recommendation-color) 24%,
+      #DDE6E1
+    );
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(
+        in srgb,
+        var(--recommendation-color) 9%,
+        #FFFFFF
+      ),
+      #FFFFFF 72%
+    );
+
+  box-shadow:
+    0 7px 20px rgba(30, 63, 45, .07);
+
+  animation:
+    daily-checkin-recommendation-in
+    .24s ease both;
+}
+
+.daily-checkin-recommendation-eyebrow {
+  margin-bottom: 5px;
+
+  color: var(--recommendation-color);
+
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: .075em;
+  text-transform: uppercase;
+}
+
+.daily-checkin-recommendation-title {
+  margin-bottom: 5px;
+
+  color: #1F2A24;
+
+  font-size: 15px;
+  font-weight: 780;
+  line-height: 1.2;
+}
+
+.daily-checkin-recommendation-text {
+  margin-bottom: 12px;
+
+  color: #59655E;
+
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.daily-checkin-recommendation-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.daily-checkin-recommendation-start {
+  min-height: 39px;
+  padding: 10px 18px;
+
+  border: 0;
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      118deg,
+      #286F49 0%,
+      #347F58 20%,
+      #246744 39%,
+      #3B8660 56%,
+      #245F41 76%,
+      #2D7D52 100%
+    );
+
+  color: #FFFFFF;
+
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 750;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 7px 16px rgba(28, 84, 54, .20),
+    inset 0 1px 0 rgba(255,255,255,.17);
+}
+
+.daily-checkin-recommendation-more {
+  padding: 8px 0;
+
+  border: 0;
+  background: transparent;
+
+  color: #2D7D52;
+
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+@keyframes daily-checkin-recommendation-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 430px) {
+  .daily-checkin-card {
+    padding: 14px !important;
+  }
+
+  .daily-checkin-card .checkin-head {
+    gap: 10px;
+  }
+
+  .daily-checkin-card .checkin-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .daily-checkin-card .checkin-meta {
+    max-width: 62px;
+    white-space: normal;
+    text-align: right;
+  }
+
+  .daily-checkin-card .mood-face {
+    width: 42px;
+    height: 42px;
+  }
+
+  .daily-checkin-card .mood-label {
+    font-size: 10px;
+  }
+
+  .daily-checkin-recommendation {
+    padding: 13px;
+  }
+}
 </style>
 
 
@@ -3033,7 +3251,7 @@ body.assessments-info-open {
   </button>
 
   <!-- DAILY CHECK-IN -->
-  <div class="card card-pad">
+  <div class="card card-pad daily-checkin-card">
     <div class="checkin-head">
       <div class="checkin-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
       <div style="flex:1">
