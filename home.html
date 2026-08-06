@@ -2918,17 +2918,55 @@ body.assessments-info-open {
 }
 
 .practice-library-label{
-  flex:1 1 auto !important;
-  min-width:0 !important;
+  position:absolute !important;
+  left:50% !important;
+  top:50% !important;
+  transform:translate(-50%,-50%) !important;
 
-  color:#FFFFFF !important;
+  display:inline-block !important;
+  width:max-content !important;
+  max-width:52% !important;
+
+  color:transparent !important;
   font-size:19px !important;
-  font-weight:750 !important;
+  font-weight:800 !important;
   line-height:1.1 !important;
-  letter-spacing:-.02em !important;
-  text-align:left !important;
+  letter-spacing:-.025em !important;
+  text-align:center !important;
   white-space:nowrap !important;
-  text-shadow:0 1px 4px rgba(15,20,18,.20) !important;
+  pointer-events:none !important;
+}
+
+.practice-library-label::before,
+.practice-library-label::after{
+  content:attr(data-text);
+  position:absolute;
+  inset:0;
+  display:block;
+  width:max-content;
+  color:#FFFFFF;
+  font:inherit;
+  letter-spacing:inherit;
+  white-space:nowrap;
+}
+
+.practice-library-label::before{
+  z-index:0;
+  -webkit-text-stroke:3.2px rgba(255,255,255,.92);
+  paint-order:stroke fill;
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.50),
+    0 3px 5px rgba(23,31,27,.18);
+}
+
+.practice-library-label::after{
+  z-index:1;
+  -webkit-text-stroke:1.25px #2D7D52;
+  paint-order:stroke fill;
+  text-shadow:
+    0 1px 0 rgba(24,76,49,.76),
+    0 2px 2px rgba(17,47,32,.34),
+    0 -1px 0 rgba(255,255,255,.34);
 }
 
 .practice-library-cta{
@@ -2977,6 +3015,7 @@ body.assessments-info-open {
   }
 
   .practice-library-label{
+    max-width:48% !important;
     font-size:17px !important;
   }
 
@@ -3051,7 +3090,7 @@ body.assessments-info-open {
         <rect x="14" y="14" width="6" height="6" rx="1.5"></rect>
       </svg>
     </span>
-    <span class="practice-library-label">Practice Library</span>
+    <span class="practice-library-label" data-text="Practice Library">Practice Library</span>
     <span class="practice-library-cta">Open</span>
   </button>
 
