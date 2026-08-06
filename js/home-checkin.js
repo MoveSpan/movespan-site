@@ -391,7 +391,8 @@
 
         renderRecommendationById(
           moodId,
-          nextIndex
+          nextIndex,
+          true
         );
       });
 
@@ -400,7 +401,8 @@
 
   function renderRecommendationById(
     moodId,
-    optionIndex = 0
+    optionIndex = 0,
+    expandRecommendation = true
   ) {
     const mood = MOODS.find(
       (item) => item.id === moodId
@@ -436,8 +438,12 @@
 
     card.hidden = false;
 
-    card.classList.remove(
-      "daily-checkin-recommendation-collapsed"
+    const shouldCollapse =
+      !expandRecommendation;
+
+    card.classList.toggle(
+      "daily-checkin-recommendation-collapsed",
+      shouldCollapse
     );
 
     const toggleButton = card.querySelector(
@@ -447,12 +453,14 @@
     if (toggleButton) {
       toggleButton.setAttribute(
         "aria-expanded",
-        "true"
+        shouldCollapse ? "false" : "true"
       );
 
       toggleButton.setAttribute(
         "aria-label",
-        "Collapse recommendation"
+        shouldCollapse
+          ? "Expand recommendation"
+          : "Collapse recommendation"
       );
     }
 
@@ -467,8 +475,15 @@
     );
   }
 
-  function renderRecommendation(mood) {
-    renderRecommendationById(mood.id, 0);
+  function renderRecommendation(
+    mood,
+    expandRecommendation
+  ) {
+    renderRecommendationById(
+      mood.id,
+      0,
+      expandRecommendation
+    );
   }
 
   function configureButtons(buttons) {
@@ -598,7 +613,12 @@
     });
   }
 
-  function renderMood(index, persist, animate) {
+  function renderMood(
+    index,
+    persist,
+    animate,
+    expandRecommendation = persist
+  ) {
     const mood = MOODS[index];
     const buttons = getButtons();
     const scale = ensureScale(buttons);
@@ -664,7 +684,10 @@
      */
     summaryLabel.textContent = mood.label;
 
-    renderRecommendation(mood);
+    renderRecommendation(
+      mood,
+      expandRecommendation
+    );
 
     if (animate) {
       scale.classList.remove("daily-checkin-just-saved");
