@@ -837,6 +837,25 @@ body.individual-measure-mode #s-measure-result{
 }
 </style>
 
+
+<!-- MoveSpan: prevent legacy Functional Age flash in individual measurement mode -->
+<script id="functional-age-no-flash-boot">
+(function(){
+  try{
+    if (new URLSearchParams(window.location.search).get("measure")) {
+      document.documentElement.classList.add("functional-age-individual-boot");
+    }
+  }catch(e){}
+})();
+</script>
+
+<style id="functional-age-no-flash-style">
+html.functional-age-individual-boot #s-intro,
+html.functional-age-individual-boot #s-retake{
+  display:none !important;
+}
+</style>
+
 </head>
 <body class="functional-age-test-root">
 <div class="wrap">
@@ -2524,6 +2543,133 @@ document.addEventListener("DOMContentLoaded", function () {
     );
   }
 });
+</script>
+
+
+<script id="functional-age-result-actions-v2">
+(function(){
+
+  const measureOrder = [
+    "breathing",
+    "resting-hr",
+    "flexibility",
+    "balance",
+    "shoulders",
+    "srt",
+    "hrr"
+  ];
+
+  function configureResultActions(measure){
+    const nextButton = document.getElementById("measure-result-next");
+    const profileButton = document.getElementById("measure-result-profile");
+
+    if (!nextButton || !profileButton) return;
+
+    let saveButton = document.getElementById("measure-result-save");
+
+    if (!saveButton) {
+      saveButton = document.createElement("button");
+      saveButton.id = "measure-result-save";
+      saveButton.className = "fa-primary-button";
+      saveButton.type = "button";
+      saveButton.textContent = "Save Result";
+      saveButton.style.width = "100%";
+      saveButton.style.marginTop = "12px";
+
+      nextButton.parentNode.insertBefore(saveButton, nextButton);
+    }
+
+    const currentIndex = measureOrder.indexOf(measure);
+    const nextMeasure = currentIndex >= 0 ? measureOrder[currentIndex + 1] : null;
+
+    nextButton.textContent = nextMeasure
+      ? "Next Measurement →"
+      : "Return to Functional Age Profile";
+
+    profileButton.textContent = "Back to Functional Age Profile";
+
+    nextButton.style.marginTop = "10px";
+
+    function lockNavigation(){
+      nextButton.disabled = true;
+      nextButton.style.opacity = ".45";
+      nextButton.style.pointerEvents = "none";
+
+      profileButton.disabled = true;
+      profileButton.style.opacity = ".45";
+      profileButton.style.pointerEvents = "none";
+    }
+
+    function unlockNavigation(){
+      nextButton.disabled = false;
+      nextButton.style.opacity = "1";
+      nextButton.style.pointerEvents = "auto";
+
+      profileButton.disabled = false;
+      profileButton.style.opacity = "1";
+      profileButton.style.pointerEvents = "auto";
+    }
+
+    lockNavigation();
+
+    saveButton.disabled = false;
+    saveButton.textContent = "Save Result";
+
+    saveButton.onclick = function(){
+      saveButton.textContent = "Saved ✓";
+      saveButton.disabled = true;
+      unlockNavigation();
+    };
+
+    if (nextMeasure) {
+      nextButton.onclick = function(){
+        window.location.href = "test.html?measure=" + nextMeasure;
+      };
+    } else {
+      nextButton.onclick = function(){
+        window.location.href = "functional-age-profile.html";
+      };
+    }
+
+    profileButton.onclick = function(){
+      window.location.href = "functional-age-profile.html";
+    };
+  }
+
+  const originalShowResult = window.showIndividualMeasurementResult;
+
+  if (typeof originalShowResult === "function") {
+    window.showIndividualMeasurementResult = function(measure){
+      originalShowResult(measure);
+      configureResultActions(measure);
+    };
+  }
+
+  document.addEventListener("DOMContentLoaded", function(){
+    const measure = new URLSearchParams(window.location.search).get("measure");
+    if (!measure) return;
+
+    /* HRR previously used its own legacy result navigation.
+       Route it through the same modular result screen. */
+    if (measure === "hrr") {
+      const hrrResult = document.getElementById("s-hrr-res");
+
+      if (hrrResult) {
+        const primary = hrrResult.querySelector(".fa-primary-button");
+
+        if (primary) {
+          primary.textContent = "See Result →";
+          primary.onclick = function(){
+            if (typeof window.showIndividualMeasurementResult === "function") {
+              window.showIndividualMeasurementResult("hrr");
+            }
+          };
+        }
+      }
+    }
+  });
+
+})();
 </script>
 
 </body>
