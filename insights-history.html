@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1"
+>
+<title>Insights History · MoveSpan</title>
+
+<style>
+:root {
+  --green:#2D7D52;
+  --text:#17221B;
+  --secondary:#6B776F;
+  --border:#E3EAE6;
+  --surface:#F6F8F7;
+}
+
+* {
+  box-sizing:border-box;
+}
+
+body {
+  margin:0;
+  background:#fff;
+  color:var(--text);
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.page {
+  width:min(100%,430px);
+  margin:0 auto;
+  padding:18px 12px 48px;
+}
+
+.top {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:24px;
+}
+
+.back {
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+
+  border:1px solid var(--border);
+  border-radius:50%;
+
+  background:#fff;
+  color:var(--text);
+
+  font-size:20px;
+  text-decoration:none;
+}
+
+.eyebrow {
+  color:var(--green);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+
+h1 {
+  margin:3px 0 0;
+  font-size:25px;
+  line-height:1.15;
+  letter-spacing:-.035em;
+}
+
+.intro {
+  margin:0 0 20px;
+  color:var(--secondary);
+  font-size:13px;
+  line-height:1.5;
+}
+
+.list {
+  display:grid;
+  gap:12px;
+}
+
+.item {
+  padding:17px;
+
+  border:1px solid var(--border);
+  border-radius:20px;
+
+  background:#fff;
+
+  box-shadow:
+    0 5px 18px rgba(23,34,27,.045);
+}
+
+.meta {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+
+  margin-bottom:8px;
+
+  color:var(--green);
+
+  font-size:9px;
+  line-height:1.2;
+  font-weight:800;
+  letter-spacing:.075em;
+  text-transform:uppercase;
+}
+
+.title {
+  margin:0 0 7px;
+
+  font-size:17px;
+  line-height:1.25;
+  font-weight:750;
+  letter-spacing:-.02em;
+}
+
+.text {
+  margin:0;
+
+  color:var(--secondary);
+
+  font-size:12.5px;
+  line-height:1.48;
+}
+
+.empty {
+  padding:28px 20px;
+
+  border:1px solid var(--border);
+  border-radius:20px;
+
+  background:var(--surface);
+
+  text-align:center;
+
+  color:var(--secondary);
+
+  font-size:13px;
+  line-height:1.5;
+}
+
+.dev {
+  margin-top:22px;
+  padding-top:16px;
+
+  border-top:1px solid var(--border);
+}
+
+.dev button {
+  padding:9px 12px;
+
+  border:1px solid var(--border);
+  border-radius:10px;
+
+  background:#fff;
+  color:var(--secondary);
+
+  font:inherit;
+  font-size:11px;
+
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+<main class="page">
+
+  <header class="top">
+    <a
+      class="back"
+      href="journal.html"
+      aria-label="Back to Journal"
+    >
+      ←
+    </a>
+
+    <div>
+      <div class="eyebrow">
+        Journal
+      </div>
+
+      <h1>
+        Insights History
+      </h1>
+    </div>
+  </header>
+
+  <p class="intro">
+    Practice Notes and personal insights you have already reviewed.
+  </p>
+
+  <section
+    class="list"
+    id="insights-history-list"
+  ></section>
+
+  <div class="dev">
+    <button
+      type="button"
+      id="clear-history"
+    >
+      Clear local history
+    </button>
+  </div>
+
+</main>
+
+<script>
+(function () {
+  "use strict";
+
+  const HISTORY_KEY =
+    "movespanHomeInsightHistoryV1";
+
+  const list =
+    document.getElementById(
+      "insights-history-list"
+    );
+
+  function escapeHTML(value) {
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  function readHistory() {
+    try {
+      const parsed =
+        JSON.parse(
+          localStorage.getItem(
+            HISTORY_KEY
+          ) || "[]"
+        );
+
+      return Array.isArray(parsed)
+        ? parsed
+        : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function dateLabel(value) {
+    if (!value) return "";
+
+    const date =
+      new Date(value);
+
+    if (
+      Number.isNaN(
+        date.getTime()
+      )
+    ) {
+      return value;
+    }
+
+    return new Intl.DateTimeFormat(
+      undefined,
+      {
+        month:"short",
+        day:"numeric"
+      }
+    ).format(date);
+  }
+
+  function render() {
+    const history =
+      readHistory();
+
+    if (!history.length) {
+      list.innerHTML = `
+        <div class="empty">
+          No reviewed insights yet.
+          Insights you dismiss with
+          <strong>All set!</strong>
+          will appear here.
+        </div>
+      `;
+
+      return;
+    }
+
+    list.innerHTML =
+      history.map(
+        function (item) {
+          return `
+            <article class="item">
+              <div class="meta">
+                <span>
+                  ${escapeHTML(item.type)}
+                </span>
+
+                <span>
+                  ${escapeHTML(
+                    dateLabel(
+                      item.dismissedAt ||
+                      item.date
+                    )
+                  )}
+                </span>
+              </div>
+
+              <h2 class="title">
+                ${escapeHTML(item.title)}
+              </h2>
+
+              <p class="text">
+                ${escapeHTML(
+                  item.preview
+                )}
+              </p>
+            </article>
+          `;
+        }
+      ).join("");
+  }
+
+  document
+    .getElementById(
+      "clear-history"
+    )
+    ?.addEventListener(
+      "click",
+      function () {
+        localStorage.removeItem(
+          HISTORY_KEY
+        );
+
+        render();
+      }
+    );
+
+  render();
+})();
+</script>
+
+</body>
+</html>
