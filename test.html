@@ -2117,6 +2117,216 @@ document.addEventListener("click", function(event){
 </script>
 
 
+
+<!-- INDIVIDUAL FUNCTIONAL AGE MEASUREMENT RESULT -->
+<div class="sec" id="s-measure-result">
+  <div class="tnum">Functional Age Profile</div>
+
+  <div style="text-align:center;padding:18px 0 8px">
+    <div id="measure-result-title"
+         style="font-size:26px;font-weight:650;color:var(--text);line-height:1.2">
+      Measurement complete
+    </div>
+
+    <div id="measure-result-value"
+         style="font-size:42px;font-weight:650;color:var(--green);line-height:1.15;margin-top:18px">
+      —
+    </div>
+
+    <div id="measure-result-badge"
+         style="display:inline-block;border-radius:22px;padding:7px 16px;font-size:14px;font-weight:600;margin-top:12px;background:var(--gl);color:var(--green)">
+      Result saved
+    </div>
+  </div>
+
+  <div id="measure-result-text"
+       style="font-size:15px;color:var(--sec);line-height:1.65;text-align:center;padding:8px 14px 22px">
+  </div>
+
+  <button class="fa-primary-button" id="measure-result-next">
+    Save & Continue →
+  </button>
+
+  <button id="measure-result-profile"
+          style="width:100%;padding:12px;background:#fff;border:1.5px solid var(--border);border-radius:14px;font-size:14px;font-weight:550;color:var(--green);font-family:var(--font);cursor:pointer;margin-top:9px">
+    Back to Functional Age Profile
+  </button>
+</div>
+
+
+<script id="functional-age-individual-result-logic">
+(function(){
+
+  const measureOrder = [
+    "breathing",
+    "resting-hr",
+    "flexibility",
+    "balance",
+    "shoulders",
+    "srt",
+    "hrr"
+  ];
+
+  const storageKeys = {
+    "breathing": "t1",
+    "resting-hr": "t2",
+    "flexibility": "t3",
+    "balance": "t4",
+    "shoulders": "t5",
+    "srt": "t6",
+    "hrr": "hrr"
+  };
+
+  const copy = {
+    "breathing": {
+      title: "Breathing Rate",
+      good: "Your resting breathing pattern is efficient for this measure.",
+      mid: "Your breathing rate is somewhat elevated. Slower diaphragmatic breathing may improve respiratory efficiency.",
+      low: "Your breathing rate suggests that breath regulation should be a priority. Start with gentle diaphragmatic breathing."
+    },
+
+    "resting-hr": {
+      title: "Resting Heart Rate",
+      good: "Your resting heart rate is strong for this measure.",
+      mid: "Your resting heart rate has room to improve through regular aerobic movement, recovery and breath practice.",
+      low: "This result suggests cardiovascular conditioning and recovery deserve more attention."
+    },
+
+    "flexibility": {
+      title: "Forward Flexibility",
+      good: "Your posterior-chain mobility is strong for this measure.",
+      mid: "There is some restriction through the posterior chain. Regular spinal and hip mobility work can help.",
+      low: "Mobility is a clear area to work on. Begin with gentle daily spine, hip and hamstring mobility."
+    },
+
+    "balance": {
+      title: "Balance",
+      good: "Your balance and proprioceptive control are strong for this measure.",
+      mid: "Your balance has room to improve. Short daily balance and neuro-motor exercises are appropriate.",
+      low: "Balance should be a priority. Use supported balance work first and progress gradually."
+    },
+
+    "shoulders": {
+      title: "Shoulder Mobility",
+      good: "Your shoulder mobility is strong for this measure.",
+      mid: "There is moderate restriction around the shoulders and upper back. Mobility and thoracic work can help.",
+      low: "Shoulder mobility is currently limited. Begin with gentle joint recovery and upper-back mobility."
+    },
+
+    "srt": {
+      title: "Sitting-Rising Test",
+      good: "Your combined strength, mobility and coordination are strong for this measure.",
+      mid: "This result shows some room to improve lower-body strength, mobility and coordination.",
+      low: "Functional lower-body capacity should be a priority. Build it progressively with supported strength and mobility."
+    },
+
+    "hrr": {
+      title: "Heart Rate Recovery",
+      good: "Your heart rate recovered well after exertion.",
+      mid: "Your recovery is moderate. Regular movement, aerobic conditioning and recovery work can improve it.",
+      low: "Your heart rate recovery is relatively slow for this measure. Build conditioning gradually and prioritize recovery."
+    }
+  };
+
+  function rating(score){
+    if (typeof score !== "number") {
+      return {
+        badge: "Measurement saved",
+        level: "mid"
+      };
+    }
+
+    if (score <= 30) {
+      return {
+        badge: "Excellent",
+        level: "good"
+      };
+    }
+
+    if (score <= 50) {
+      return {
+        badge: "Good",
+        level: "mid"
+      };
+    }
+
+    return {
+      badge: "Needs attention",
+      level: "low"
+    };
+  }
+
+  window.showIndividualMeasurementResult = function(measure){
+    const key = storageKeys[measure];
+    if (!key) return;
+
+    let saved = {};
+
+    try {
+      saved = JSON.parse(
+        localStorage.getItem("ms_functional_measurements") || "{}"
+      );
+    } catch(e) {
+      saved = {};
+    }
+
+    const result = saved[key];
+    if (!result) return;
+
+    const cfg = copy[measure] || {};
+    const state = rating(result.score);
+
+    const title = document.getElementById("measure-result-title");
+    const value = document.getElementById("measure-result-value");
+    const badge = document.getElementById("measure-result-badge");
+    const text = document.getElementById("measure-result-text");
+
+    if (title) title.textContent = cfg.title || result.label || "Measurement complete";
+    if (value) value.textContent = result.value || result.hrr || "Saved";
+    if (badge) badge.textContent = state.badge;
+    if (text) text.textContent =
+      cfg[state.level] ||
+      "Your result has been added to your Functional Age Profile.";
+
+    document.querySelectorAll(".sec").forEach(function(section){
+      section.classList.remove("active");
+    });
+
+    const screen = document.getElementById("s-measure-result");
+    if (screen) screen.classList.add("active");
+
+    const nextButton = document.getElementById("measure-result-next");
+    const profileButton = document.getElementById("measure-result-profile");
+
+    if (profileButton) {
+      profileButton.onclick = function(){
+        window.location.href = "functional-age-profile.html";
+      };
+    }
+
+    if (nextButton) {
+      const index = measureOrder.indexOf(measure);
+      const next = index >= 0 ? measureOrder[index + 1] : null;
+
+      if (next) {
+        nextButton.textContent = "Save & Continue →";
+        nextButton.onclick = function(){
+          window.location.href = "test.html?measure=" + encodeURIComponent(next);
+        };
+      } else {
+        nextButton.textContent = "Save & Return to Profile";
+        nextButton.onclick = function(){
+          window.location.href = "functional-age-profile.html";
+        };
+      }
+    }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+})();
+</script>
+
 <script id="functional-age-measure-bridge">
 document.addEventListener("DOMContentLoaded", function () {
   const params = new URLSearchParams(window.location.search);
@@ -2173,6 +2383,64 @@ document.addEventListener("DOMContentLoaded", function () {
 
   } catch (error) {
     console.error("MoveSpan individual measurement start error:", error);
+  }
+});
+</script>
+
+
+<script id="functional-age-individual-button-hook">
+document.addEventListener("DOMContentLoaded", function(){
+  const params = new URLSearchParams(window.location.search);
+  const measure = params.get("measure");
+
+  if (!measure) return;
+
+  const buttonMap = {
+    "breathing": "b-t1",
+    "resting-hr": "b-t2",
+    "flexibility": "b-t3",
+    "balance": "b-t4",
+    "shoulders": "b-t5",
+    "srt": "b-t6"
+  };
+
+  const buttonId = buttonMap[measure];
+
+  if (buttonId) {
+    const button = document.getElementById(buttonId);
+
+    if (button) {
+      button.textContent = "See Result →";
+      button.onclick = function(){
+        if (typeof window.showIndividualMeasurementResult === "function") {
+          window.showIndividualMeasurementResult(measure);
+        }
+      };
+    }
+  }
+
+  if (measure === "hrr") {
+    const hrrResult = document.getElementById("s-hrr-res");
+
+    if (hrrResult) {
+      const primary = hrrResult.querySelector(".fa-primary-button");
+
+      if (primary) {
+        primary.textContent = "Save & Continue →";
+        primary.onclick = function(){
+          window.location.href = "functional-age-profile.html";
+        };
+      }
+
+      const retake = hrrResult.querySelector('button:not(.fa-primary-button)');
+
+      if (retake) {
+        retake.insertAdjacentHTML(
+          "afterend",
+          '<button onclick="window.location.href=\'functional-age-profile.html\'" style="width:100%;padding:12px;background:#fff;border:1.5px solid var(--border);border-radius:14px;font-size:14px;font-weight:550;color:var(--green);font-family:var(--font);cursor:pointer;margin-top:9px">Back to Functional Age Profile</button>'
+        );
+      }
+    }
   }
 });
 </script>
