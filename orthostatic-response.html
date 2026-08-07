@@ -543,15 +543,47 @@
 }
 </style>
 
-<style id="functional-age-core-button-css">
-.fa-primary-button");
 
-      if (primary) {
-        primary.textContent = "Save & Continue →";
-        primary.onclick = function(){
-          window.location.href = "functional-age-profile.html";
-        };
-      }
+<style id="functional-age-result-button-standard">
+/* Canonical Functional Age result actions */
+
+.fa-result-saved{
+  width:100%;
+  min-height:54px;
+  border:1.5px solid #BFD8C8 !important;
+  border-radius:16px !important;
+  background:#E7F3EC !important;
+  color:#5F8F70 !important;
+  font-size:16px !important;
+  font-weight:700 !important;
+  font-family:inherit !important;
+  cursor:default !important;
+  opacity:1 !important;
+}
+
+.fa-result-next{
+  width:100%;
+  min-height:54px;
+  border:0 !important;
+  border-radius:16px !important;
+  background:#2D7D52 !important;
+  color:#fff !important;
+  font-size:16px !important;
+  font-weight:700 !important;
+  font-family:inherit !important;
+}
+
+.fa-result-profile{
+  width:100%;
+  min-height:54px;
+  border:1.5px solid #D9DDE2 !important;
+  border-radius:16px !important;
+  background:#fff !important;
+  color:#2D7D52 !important;
+  font-size:16px !important;
+  font-weight:700 !important;
+  font-family:inherit !important;
+}
 </style>
 
 </head>
@@ -728,9 +760,9 @@
           <div class="result-detail" id="resultDetail"></div>
         </div>
 
-        <button class="fa-primary-button" type="button" id="saveResultBtn">Save Result</button>
-        <button class="fa-primary-button" type="button" id="nextBtn" disabled>Next Measurement →</button>
-        <button type="button" id="profileBtn" disabled style="width:100%;padding:12px;background:#fff;border:1.5px solid var(--border);border-radius:14px;font-size:14px;font-weight:550;color:var(--green);font-family:var(--font);cursor:pointer;margin-top:9px">Back to Functional Age Profile</button>
+        <button class="btn btn-green fa-result-next" type="button" id="saveResultBtn">Save Result</button>
+        <button class="btn btn-green fa-result-next" type="button" id="nextBtn" disabled>Next Measurement →</button>
+        <button class="btn btn-outline fa-result-profile" type="button" id="profileBtn" disabled>Back to Functional Age Profile</button>
 
       </section>
     </div>
@@ -1058,7 +1090,9 @@
 
       saveResultBtn.disabled = true;
       saveResultBtn.textContent = "Saved ✓";
-nextBtn.disabled = false;
+      saveResultBtn.classList.remove("fa-result-next");
+      saveResultBtn.classList.add("fa-result-saved");
+      nextBtn.disabled = false;
       profileBtn.disabled = false;
     });
 
