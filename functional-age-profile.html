@@ -196,67 +196,67 @@ h1{
   <div class="section-title">Measurements</div>
 
   <section class="list">
-    <a class="item" href="test.html?measure=breathing">
+    <a class="item" href="test.html?measure=breathing" data-measure="t1">
       <div class="icon">01</div>
       <div><div class="name">Breathing Rate</div><div class="meta">Resting breathing cycles per minute</div></div>
       <div class="status">Take →</div>
     </a>
 
-    <a class="item" href="test.html?measure=resting-hr">
+    <a class="item" href="test.html?measure=resting-hr" data-measure="t2">
       <div class="icon">02</div>
       <div><div class="name">Resting Heart Rate</div><div class="meta">Your pulse while resting</div></div>
       <div class="status">Take →</div>
     </a>
 
-    <a class="item" href="#">
+    <a class="item" href="#" data-measure="breath-inhale">
       <div class="icon">03</div>
       <div><div class="name">Breath Hold — Inhale</div><div class="meta">Inspiratory breath-hold capacity</div></div>
       <div class="status">Take →</div>
     </a>
 
-    <a class="item" href="#">
+    <a class="item" href="#" data-measure="breath-exhale">
       <div class="icon">04</div>
       <div><div class="name">Breath Hold — Exhale</div><div class="meta">Expiratory breath-hold capacity</div></div>
       <div class="status">Take →</div>
     </a>
 
-    <a class="item" href="test.html?measure=flexibility">
+    <a class="item" href="test.html?measure=flexibility" data-measure="t3">
       <div class="icon">05</div>
       <div><div class="name">Forward Flexibility</div><div class="meta">Posterior-chain mobility</div></div>
       <div class="status">Take →</div>
     </a>
 
-    <a class="item" href="test.html?measure=balance">
+    <a class="item" href="test.html?measure=balance" data-measure="t4">
       <div class="icon">06</div>
       <div><div class="name">Balance</div><div class="meta">Balance and proprioceptive control</div></div>
       <div class="status">Take →</div>
     </a>
 
-    <a class="item" href="test.html?measure=shoulders">
+    <a class="item" href="test.html?measure=shoulders" data-measure="t5">
       <div class="icon">07</div>
       <div><div class="name">Shoulder Mobility</div><div class="meta">Upper-body mobility and symmetry</div></div>
       <div class="status">Take →</div>
     </a>
 
-    <a class="item" href="test.html?measure=srt">
+    <a class="item" href="test.html?measure=srt" data-measure="t6">
       <div class="icon">08</div>
       <div><div class="name">Sitting-Rising Test</div><div class="meta">Mobility, strength and coordination</div></div>
       <div class="status">Take →</div>
     </a>
 
-    <a class="item" href="test.html?measure=hrr">
+    <a class="item" href="test.html?measure=hrr" data-measure="hrr">
       <div class="icon">09</div>
       <div><div class="name">Squat + Heart Rate Recovery</div><div class="meta">Response and recovery after physical load</div></div>
       <div class="status">Take →</div>
     </a>
 
-    <a class="item" href="#">
+    <a class="item" href="#" data-measure="orthostatic">
       <div class="icon">10</div>
       <div><div class="name">Orthostatic Response</div><div class="meta">Best in the morning or after 5+ min lying down</div></div>
       <div class="status">Take →</div>
     </a>
 
-    <a class="item" href="#">
+    <a class="item" href="#" data-measure="pushup">
       <div class="icon">11</div>
       <div><div class="name">Push-up Test</div><div class="meta">Upper-body functional strength</div></div>
       <div class="status">Take →</div>
@@ -267,5 +267,67 @@ h1{
     You do not need to complete everything at once. Return anytime to continue or repeat a measurement.
   </div>
 </main>
+
+<script>
+(function(){
+  const TOTAL = 11;
+  const STORAGE_KEY = 'ms_functional_measurements';
+
+  let saved = {};
+  try {
+    saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  } catch(e) {
+    saved = {};
+  }
+
+  let completed = 0;
+
+  document.querySelectorAll('.item[data-measure]').forEach(function(item){
+    const key = item.dataset.measure;
+    const result = saved[key];
+
+    if (!result || !result.completed) return;
+
+    completed += 1;
+
+    const status = item.querySelector('.status');
+    const meta = item.querySelector('.meta');
+
+    if (status) {
+      status.textContent = '✓ Retake';
+    }
+
+    if (meta && result.value) {
+      meta.textContent = result.value;
+    }
+
+    item.classList.add('completed');
+  });
+
+  const progressText = document.getElementById('progress-text');
+  const progressBar = document.getElementById('progress-bar');
+
+  if (progressText) {
+    progressText.textContent = completed + ' of ' + TOTAL + ' completed';
+  }
+
+  if (progressBar) {
+    progressBar.style.width = Math.round((completed / TOTAL) * 100) + '%';
+  }
+
+  const age = document.getElementById('functional-age');
+
+  if (age) {
+    if (completed < TOTAL) {
+      age.innerHTML =
+        '<span style="font-size:17px;line-height:1.35;display:block;max-width:220px;">Complete your profile to reveal</span>';
+    } else {
+      const savedAge = localStorage.getItem('ms_functional_age_value');
+      age.textContent = savedAge ? savedAge + ' yrs' : 'Ready';
+    }
+  }
+})();
+</script>
+
 </body>
 </html>
