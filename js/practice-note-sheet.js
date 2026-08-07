@@ -1,420 +1,437 @@
-(function initializePracticeNoteInsight() {
+(function initMoveSpanHomeInsights() {
   "use strict";
 
-  const STORAGE_KEY =
-    "movespan_practice_note_small_regular_v1_dismissed";
+  /*
+   * MoveSpan Home Insights v1
+   *
+   * Each insight has:
+   *   id      stable persistence identifier
+   *   type    PRACTICE NOTE / MOVEMENT INSIGHT / etc.
+   *   title   <= ~55 characters
+   *   preview ~100-150 characters
+   *   detail  ~200-300 characters
+   *
+   * Tracker-generated insights can later be supplied through:
+   *   window.movespanTrackerInsights = [...]
+   * or localStorage:
+   *   movespanTrackerInsights
+   */
 
-  const note = document.querySelector(".pnote");
-  const card = note ? note.closest(".card") : null;
-
-  const sheet = document.getElementById("practice-note-sheet");
-  const backdrop = document.getElementById(
-    "practice-note-sheet-backdrop"
-  );
-
-  const closeButton = document.getElementById(
-    "practice-sheet-close"
-  );
-
-  const gotItButton = document.getElementById(
-    "practice-sheet-got-it"
-  );
-
-  const dragZone = sheet
-    ? sheet.querySelector(".practice-sheet-drag-zone")
+  const originalNote = document.querySelector(".pnote");
+  const card = originalNote
+    ? originalNote.closest(".card")
     : null;
 
-  if (!note || !card) return;
+  const hero = document.getElementById("practice-hero");
 
-  if (sheet) {
-    sheet.hidden = true;
-    sheet.style.setProperty(
-      "display",
-      "none",
-      "important"
+  if (!card || !hero) {
+    console.warn(
+      "MoveSpan Home Insights: Practice Note card or practice hero not found."
     );
-  }
-
-  if (backdrop) {
-    backdrop.hidden = true;
-    backdrop.style.setProperty(
-      "display",
-      "none",
-      "important"
-    );
-  }
-
-
-  function moveCardAboveTodaysPractice() {
-    const practiceHero =
-      document.getElementById("practice-hero");
-
-    if (!practiceHero || !card) return false;
-
-    practiceHero.insertAdjacentElement(
-      "beforebegin",
-      card
-    );
-
-    return true;
-  }
-
-  function isDismissed() {
-    return localStorage.getItem(STORAGE_KEY) === "1";
-  }
-
-  function openSheet() {
-    if (!sheet || !backdrop) {
-      console.warn(
-        "Practice Note sheet or backdrop was not found."
-      );
-      return;
-    }
-
-    backdrop.hidden = false;
-    sheet.hidden = false;
-
-    backdrop.style.setProperty(
-      "display",
-      "block",
-      "important"
-    );
-
-    sheet.style.setProperty(
-      "display",
-      "flex",
-      "important"
-    );
-
-    sheet.style.removeProperty("transform");
-
-    document.body.classList.add(
-      "practice-sheet-open"
-    );
-
-    window.requestAnimationFrame(function () {
-      closeButton?.focus();
-    });
-  }
-
-  function closeSheet() {
-    if (!sheet || !backdrop) return;
-
-    sheet.style.removeProperty("transform");
-    sheet.classList.remove("is-dragging");
-
-    sheet.hidden = true;
-    backdrop.hidden = true;
-
-    sheet.style.setProperty(
-      "display",
-      "none",
-      "important"
-    );
-
-    backdrop.style.setProperty(
-      "display",
-      "none",
-      "important"
-    );
-
-    document.body.classList.remove(
-      "practice-sheet-open"
-    );
-  }
-
-  function renderCard() {
-    card.classList.remove(
-      "silver",
-      "practice-note-card-compact",
-      "practice-note-is-compact",
-      "practice-note-is-expanded",
-      "is-compact"
-    );
-
-    card.removeAttribute("role");
-    card.removeAttribute("tabindex");
-    card.removeAttribute("aria-label");
-
-    card.innerHTML = `
-      <div class="pnote practice-note-whoop">
-        <div class="practice-note-whoop-main">
-          <div class="practice-note-whoop-eyebrow">
-            Practice Note
-          </div>
-
-          <h2 class="practice-note-whoop-title">
-            Small, regular practice matters
-          </h2>
-
-          <p class="practice-note-whoop-text">
-            A short practice you can repeat consistently
-            is more valuable than occasional intensity.
-          </p>
-
-          <button
-            class="practice-note-whoop-read"
-            type="button"
-            data-practice-note-read
-          >
-            Read today’s note
-            <span aria-hidden="true">→</span>
-          </button>
-        </div>
-
-        <div class="practice-note-whoop-visual" aria-hidden="true">
-          <div class="practice-note-whoop-figure">
-            <svg viewBox="0 0 64 64" fill="none">
-              <path
-                d="M20 45c8-2 14-8 17-18"
-                stroke="currentColor"
-                stroke-width="3"
-                stroke-linecap="round"
-              />
-              <path
-                d="M35 29c5-8 12-11 20-10-1 9-7 15-17 17"
-                stroke="currentColor"
-                stroke-width="3"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M29 39c-5-8-12-11-20-10 1 9 7 15 17 17"
-                stroke="currentColor"
-                stroke-width="3"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <circle
-                cx="31"
-                cy="16"
-                r="5"
-                stroke="currentColor"
-                stroke-width="3"
-              />
-            </svg>
-          </div>
-        </div>
-
-        <button
-          class="practice-note-dismiss"
-          type="button"
-          data-practice-note-dismiss
-          aria-label="Mark Practice Note as complete"
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="m5 12 4 4L19 6"></path>
-          </svg>
-        </button>
-
-        <div
-          class="practice-note-complete-state"
-          aria-live="polite"
-        >
-          <div class="practice-note-complete-check">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m5 12 4 4L19 6"></path>
-            </svg>
-          </div>
-
-          <div class="practice-note-complete-label">
-            All set!
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  function dismissCard() {
-    if (card.classList.contains("practice-note-completing")) {
-      return;
-    }
-
-    const dismissButton = card.querySelector(
-      "[data-practice-note-dismiss]"
-    );
-
-    const completeState = card.querySelector(
-      ".practice-note-complete-state"
-    );
-
-    card.classList.add("practice-note-completing");
-
-    if (dismissButton) {
-      dismissButton.innerHTML =
-        '<span class="practice-note-spinner" aria-hidden="true"></span>';
-
-      dismissButton.setAttribute(
-        "aria-label",
-        "Completing Practice Note"
-      );
-    }
-
-    window.setTimeout(function () {
-      completeState?.classList.add("is-visible");
-    }, 380);
-
-    window.setTimeout(function () {
-      localStorage.setItem(STORAGE_KEY, "1");
-      card.classList.add("practice-note-removing");
-    }, 1050);
-
-    window.setTimeout(function () {
-      card.classList.add("practice-note-hidden");
-      card.remove();
-    }, 1500);
-  }
-
-  if (isDismissed()) {
-    card.remove();
     return;
   }
 
-  moveCardAboveTodaysPractice();
-  renderCard();
+  const BASE_INSIGHTS = [
+    {
+      id: "practice-note-small-regular-v2",
+      type: "Practice Note",
+      title: "Small, regular practice matters",
+      preview:
+        "A short practice you can repeat consistently is more valuable than occasional intensity.",
+      detail:
+        "The body responds especially well to movement that is manageable and easy to repeat. Consistency gives mobility, coordination and nervous-system regulation time to build."
+    }
+  ];
 
-  document.addEventListener(
-    "click",
-    function (event) {
-      const readButton =
-        event.target.closest(
-          "[data-practice-note-read]"
+  function readTrackerInsights() {
+    let stored = [];
+
+    try {
+      const raw = localStorage.getItem(
+        "movespanTrackerInsights"
+      );
+
+      const parsed = raw
+        ? JSON.parse(raw)
+        : [];
+
+      if (Array.isArray(parsed)) {
+        stored = parsed;
+      }
+    } catch (error) {
+      console.warn(
+        "MoveSpan Home Insights: stored tracker insights could not be read.",
+        error
+      );
+    }
+
+    const runtime = Array.isArray(
+      window.movespanTrackerInsights
+    )
+      ? window.movespanTrackerInsights
+      : [];
+
+    return [...runtime, ...stored]
+      .filter(function (item) {
+        return (
+          item &&
+          typeof item === "object" &&
+          typeof item.id === "string" &&
+          typeof item.title === "string"
         );
+      })
+      .map(function (item) {
+        return {
+          id: item.id,
+          type: item.type || "Movement Insight",
+          title: item.title,
+          preview: item.preview || "",
+          detail: item.detail || ""
+        };
+      });
+  }
 
-      if (readButton && card.contains(readButton)) {
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
+  function storageKey(id) {
+    return "movespanHomeInsightDismissed:" + id;
+  }
 
-        openSheet();
-        return;
+  function isDismissed(id) {
+    return (
+      localStorage.getItem(storageKey(id)) === "1"
+    );
+  }
+
+  function markDismissed(id) {
+    localStorage.setItem(storageKey(id), "1");
+  }
+
+  function getInsights() {
+    const all = [
+      ...BASE_INSIGHTS,
+      ...readTrackerInsights()
+    ];
+
+    const seen = new Set();
+
+    return all.filter(function (item) {
+      if (!item.id || seen.has(item.id)) {
+        return false;
       }
 
-      const dismissButton =
-        event.target.closest(
-          "[data-practice-note-dismiss]"
-        );
+      seen.add(item.id);
 
-      if (
-        dismissButton &&
-        card.contains(dismissButton)
-      ) {
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
+      return !isDismissed(item.id);
+    });
+  }
 
-        dismissCard();
-        return;
-      }
+  let insights = getInsights();
+  let currentIndex = 0;
+  let expanded = false;
+  let busy = false;
 
-      if (
-        closeButton &&
-        (
-          event.target === closeButton ||
-          closeButton.contains(event.target)
-        )
-      ) {
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
+  card.className = "card movespan-home-insight-card";
 
-        closeSheet();
-        return;
-      }
-
-      if (
-        gotItButton &&
-        (
-          event.target === gotItButton ||
-          gotItButton.contains(event.target)
-        )
-      ) {
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
-
-        closeSheet();
-        return;
-      }
-
-      if (event.target === backdrop) {
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
-
-        closeSheet();
-      }
-    },
-    true
+  /* Strict placement: immediately above Today's Practice. */
+  hero.insertAdjacentElement(
+    "beforebegin",
+    card
   );
 
-  document.addEventListener("keydown", function (event) {
-    if (
-      event.key === "Escape" &&
-      sheet &&
-      !sheet.hidden
-    ) {
-      closeSheet();
-    }
-  });
-
-  let dragging = false;
-  let startY = 0;
-  let currentY = 0;
-
-  function beginDrag(clientY) {
-    if (window.innerWidth >= 700) return;
-
-    dragging = true;
-    startY = clientY;
-    currentY = clientY;
-
-    sheet?.classList.add("is-dragging");
+  function escapeHTML(value) {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
   }
 
-  function moveDrag(clientY) {
-    if (!dragging || !sheet) return;
+  function numberButtons() {
+    return insights
+      .map(function (_, index) {
+        const current =
+          index === currentIndex;
 
-    currentY = clientY;
-
-    const distance = Math.max(0, currentY - startY);
-
-    sheet.style.transform =
-      "translateX(-50%) translateY(" +
-      distance +
-      "px)";
+        return `
+          <button
+            class="movespan-home-insight-number${current ? " is-current" : ""}"
+            type="button"
+            data-insight-index="${index}"
+            aria-label="Open insight ${index + 1}"
+            aria-current="${current ? "true" : "false"}"
+          >
+            ${index + 1}
+          </button>
+        `;
+      })
+      .join("");
   }
 
-  function endDrag() {
-    if (!dragging || !sheet) return;
-
-    dragging = false;
-
-    const distance = Math.max(0, currentY - startY);
-
-    sheet.classList.remove("is-dragging");
-
-    if (distance > 110) {
-      closeSheet();
+  function render() {
+    if (!insights.length) {
+      card.remove();
       return;
     }
 
-    sheet.style.transform =
-      "translateX(-50%) translateY(0)";
+    if (currentIndex >= insights.length) {
+      currentIndex = insights.length - 1;
+    }
+
+    const insight = insights[currentIndex];
+
+    card.innerHTML = `
+      <article
+        class="movespan-home-insight${expanded ? " is-expanded" : ""}"
+        data-insight-id="${escapeHTML(insight.id)}"
+      >
+        <div class="movespan-home-insight-content">
+          <div class="movespan-home-insight-type">
+            ${escapeHTML(insight.type)}
+          </div>
+
+          <h2 class="movespan-home-insight-title">
+            ${escapeHTML(insight.title)}
+          </h2>
+
+          <p class="movespan-home-insight-preview">
+            ${escapeHTML(insight.preview)}
+          </p>
+
+          <div class="movespan-home-insight-detail-wrap">
+            <div class="movespan-home-insight-detail-inner">
+              <p class="movespan-home-insight-detail">
+                ${escapeHTML(insight.detail)}
+              </p>
+            </div>
+          </div>
+
+          <button
+            class="movespan-home-insight-action"
+            type="button"
+            data-insight-toggle
+            aria-expanded="${expanded ? "true" : "false"}"
+          >
+            ${expanded ? "Close" : "Read more"}
+          </button>
+        </div>
+
+        <aside class="movespan-home-insight-side">
+          <button
+            class="movespan-home-insight-done"
+            type="button"
+            data-insight-done
+            aria-label="Dismiss this insight"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m5 12 4 4L19 6"></path>
+            </svg>
+          </button>
+
+          <div
+            class="movespan-home-insight-numbers"
+            aria-label="Today's insights"
+          >
+            ${numberButtons()}
+          </div>
+        </aside>
+
+        <div
+          class="movespan-home-insight-success"
+          aria-live="polite"
+        >
+          All set!
+        </div>
+      </article>
+    `;
   }
 
-  dragZone?.addEventListener("pointerdown", function (event) {
-    beginDrag(event.clientY);
+  function animateHeight(mutator) {
+    const startHeight =
+      card.getBoundingClientRect().height;
 
-    if (dragging) {
-      dragZone.setPointerCapture(event.pointerId);
+    card.style.height =
+      startHeight + "px";
+
+    mutator();
+
+    const endHeight =
+      card.scrollHeight;
+
+    card.style.height =
+      startHeight + "px";
+
+    requestAnimationFrame(function () {
+      card.style.height =
+        endHeight + "px";
+    });
+
+    window.setTimeout(function () {
+      card.style.removeProperty("height");
+    }, 410);
+  }
+
+  function toggleExpanded() {
+    if (busy) return;
+
+    animateHeight(function () {
+      expanded = !expanded;
+
+      const article = card.querySelector(
+        ".movespan-home-insight"
+      );
+
+      const button = card.querySelector(
+        "[data-insight-toggle]"
+      );
+
+      article?.classList.toggle(
+        "is-expanded",
+        expanded
+      );
+
+      if (button) {
+        button.textContent =
+          expanded ? "Close" : "Read more";
+
+        button.setAttribute(
+          "aria-expanded",
+          expanded ? "true" : "false"
+        );
+      }
+    });
+  }
+
+  function switchInsight(index) {
+    if (
+      busy ||
+      index === currentIndex ||
+      index < 0 ||
+      index >= insights.length
+    ) {
+      return;
+    }
+
+    busy = true;
+    expanded = false;
+
+    card.classList.add("is-switching");
+
+    window.setTimeout(function () {
+      currentIndex = index;
+      render();
+
+      requestAnimationFrame(function () {
+        card.classList.remove("is-switching");
+        busy = false;
+      });
+    }, 150);
+  }
+
+  function dismissCurrent() {
+    if (busy || !insights.length) return;
+
+    busy = true;
+
+    const insight = insights[currentIndex];
+
+    const doneButton = card.querySelector(
+      "[data-insight-done]"
+    );
+
+    const success = card.querySelector(
+      ".movespan-home-insight-success"
+    );
+
+    if (doneButton) {
+      doneButton.disabled = true;
+      doneButton.innerHTML =
+        '<span class="movespan-home-insight-spinner" aria-hidden="true"></span>';
+    }
+
+    window.setTimeout(function () {
+      success?.classList.add("is-visible");
+    }, 330);
+
+    window.setTimeout(function () {
+      markDismissed(insight.id);
+
+      insights.splice(currentIndex, 1);
+
+      if (!insights.length) {
+        const startHeight =
+          card.getBoundingClientRect().height;
+
+        card.style.height =
+          startHeight + "px";
+
+        requestAnimationFrame(function () {
+          card.classList.add("is-dismissing");
+          card.style.height = "0px";
+        });
+
+        window.setTimeout(function () {
+          card.remove();
+        }, 430);
+
+        return;
+      }
+
+      if (currentIndex >= insights.length) {
+        currentIndex =
+          insights.length - 1;
+      }
+
+      expanded = false;
+
+      card.classList.add("is-switching");
+
+      window.setTimeout(function () {
+        render();
+
+        requestAnimationFrame(function () {
+          card.classList.remove("is-switching");
+          busy = false;
+        });
+      }, 150);
+    }, 900);
+  }
+
+  card.addEventListener("click", function (event) {
+    const toggle =
+      event.target.closest("[data-insight-toggle]");
+
+    if (toggle && card.contains(toggle)) {
+      event.preventDefault();
+      event.stopPropagation();
+      toggleExpanded();
+      return;
+    }
+
+    const done =
+      event.target.closest("[data-insight-done]");
+
+    if (done && card.contains(done)) {
+      event.preventDefault();
+      event.stopPropagation();
+      dismissCurrent();
+      return;
+    }
+
+    const number =
+      event.target.closest("[data-insight-index]");
+
+    if (number && card.contains(number)) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      switchInsight(
+        Number(number.dataset.insightIndex)
+      );
     }
   });
 
-  dragZone?.addEventListener("pointermove", function (event) {
-    moveDrag(event.clientY);
-  });
+  /* Retire old global Practice Note handler. */
+  window.dismissNote = function () {};
 
-  dragZone?.addEventListener("pointerup", endDrag);
-  dragZone?.addEventListener("pointercancel", endDrag);
+  render();
 })();

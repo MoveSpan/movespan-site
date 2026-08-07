@@ -3874,6 +3874,350 @@ body.assessments-info-open {
 }
 </style>
 
+
+<style id="movespan-home-insights-standard-v1">
+/* ==========================================================
+   MoveSpan Home Insights
+   Standard:
+   - above Today's Practice
+   - short 1/3 preview
+   - Read more reveals remaining 2/3 inline
+   - Close collapses
+   - check -> spinner -> All set! -> dismiss
+   ========================================================== */
+
+.card.movespan-home-insight-card,
+.card:has(.movespan-home-insight) {
+  position: relative !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 0 !important;
+
+  margin: 0 0 18px !important;
+  padding: 0 !important;
+
+  overflow: hidden !important;
+
+  border: 1px solid rgba(25, 39, 31, .10) !important;
+  border-radius: 22px !important;
+
+  background: #fff !important;
+  background-image: none !important;
+
+  box-shadow:
+    0 8px 26px rgba(24, 42, 31, .07) !important;
+
+  transform: none !important;
+
+  transition:
+    height .38s cubic-bezier(.22,.8,.24,1),
+    opacity .28s ease,
+    margin .38s cubic-bezier(.22,.8,.24,1),
+    transform .28s ease !important;
+
+  box-sizing: border-box !important;
+}
+
+.card.movespan-home-insight-card::before,
+.card.movespan-home-insight-card::after,
+.card:has(.movespan-home-insight)::before,
+.card:has(.movespan-home-insight)::after {
+  content: none !important;
+  display: none !important;
+}
+
+.movespan-home-insight {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: minmax(0,1fr) 42px;
+
+  width: 100%;
+  min-width: 0;
+
+  padding: 19px 13px 18px 19px;
+
+  box-sizing: border-box;
+}
+
+.movespan-home-insight-content {
+  min-width: 0;
+  padding-right: 8px;
+}
+
+.movespan-home-insight-type {
+  margin: 0 0 8px;
+
+  color: #2D7D52;
+
+  font-size: 10px;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: .095em;
+  text-transform: uppercase;
+}
+
+.movespan-home-insight-title {
+  max-width: 290px;
+
+  margin: 0 0 8px;
+
+  color: #17221B;
+
+  font-size: 19px;
+  line-height: 1.22;
+  font-weight: 760;
+  letter-spacing: -.025em;
+}
+
+.movespan-home-insight-preview,
+.movespan-home-insight-detail {
+  max-width: 305px;
+
+  margin: 0;
+
+  color: #66736B;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.movespan-home-insight-detail-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+
+  opacity: 0;
+
+  transition:
+    grid-template-rows .32s cubic-bezier(.22,.8,.24,1),
+    opacity .24s ease,
+    margin .32s ease;
+}
+
+.movespan-home-insight-detail-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.movespan-home-insight.is-expanded
+.movespan-home-insight-detail-wrap {
+  grid-template-rows: 1fr;
+  margin-top: 10px;
+  opacity: 1;
+}
+
+.movespan-home-insight-action {
+  margin-top: 13px;
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  color: #2D7D52;
+
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.3;
+  font-weight: 760;
+
+  cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.movespan-home-insight-action:focus-visible,
+.movespan-home-insight-done:focus-visible,
+.movespan-home-insight-number:focus-visible {
+  outline: 2px solid rgba(45,125,82,.38);
+  outline-offset: 3px;
+}
+
+.movespan-home-insight-side {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  min-width: 42px;
+}
+
+.movespan-home-insight-done {
+  width: 38px;
+  height: 38px;
+
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 auto;
+
+  padding: 0;
+
+  border: 1px solid rgba(45,125,82,.20);
+  border-radius: 50%;
+
+  background: #F7FAF8;
+  color: #2D7D52;
+
+  cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
+
+  transition:
+    transform .16s ease,
+    background .16s ease;
+}
+
+.movespan-home-insight-done:active {
+  transform: scale(.93);
+}
+
+.movespan-home-insight-done svg {
+  width: 19px;
+  height: 19px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.movespan-home-insight-numbers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+
+  margin-top: 18px;
+}
+
+.movespan-home-insight-number {
+  width: 26px;
+  height: 26px;
+
+  display: grid;
+  place-items: center;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 50%;
+
+  background: transparent;
+  color: #9AA59E;
+
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 750;
+
+  cursor: pointer;
+}
+
+.movespan-home-insight-number.is-current {
+  background: #2D7D52;
+  color: #fff;
+}
+
+.movespan-home-insight-number:disabled {
+  cursor: default;
+}
+
+.movespan-home-insight-spinner {
+  width: 17px;
+  height: 17px;
+
+  border: 2px solid rgba(45,125,82,.20);
+  border-top-color: #2D7D52;
+  border-radius: 50%;
+
+  animation: movespan-insight-spin .65s linear infinite;
+}
+
+@keyframes movespan-insight-spin {
+  to { transform: rotate(360deg); }
+}
+
+.movespan-home-insight-success {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255,255,255,.96);
+
+  color: #2D7D52;
+
+  font-size: 16px;
+  line-height: 1.2;
+  font-weight: 780;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity .2s ease;
+}
+
+.movespan-home-insight-success.is-visible {
+  opacity: 1;
+}
+
+.card.movespan-home-insight-card.is-dismissing {
+  opacity: 0 !important;
+  margin-bottom: 0 !important;
+  transform: translateY(-8px) !important;
+}
+
+.card.movespan-home-insight-card.is-switching {
+  opacity: .25 !important;
+}
+
+/* Old Practice Note sheet is retired. */
+#practice-sheet,
+#practice-sheet-backdrop {
+  display: none !important;
+}
+
+/* Kill legacy Practice Note decorations. */
+.card.movespan-home-insight-card .pnote-fig,
+.card.movespan-home-insight-card .practice-note-whoop-visual,
+.card.movespan-home-insight-card .practice-note-chevron {
+  display: none !important;
+}
+
+@media (max-width: 390px) {
+  .movespan-home-insight {
+    grid-template-columns: minmax(0,1fr) 38px;
+    padding: 17px 11px 16px 16px;
+  }
+
+  .movespan-home-insight-title {
+    font-size: 18px;
+  }
+
+  .movespan-home-insight-preview,
+  .movespan-home-insight-detail {
+    font-size: 12.5px;
+  }
+
+  .movespan-home-insight-done {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .movespan-home-insight-detail-wrap,
+  .card.movespan-home-insight-card,
+  .movespan-home-insight-success {
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="wrap">
