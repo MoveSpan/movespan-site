@@ -796,6 +796,47 @@ body{
 <meta name="apple-mobile-web-app-title" content="MoveSpan">
 <link rel="stylesheet" href="/assets/css/movespan-navigation.css">
   <link rel="stylesheet" href="/assets/css/movespan-functional-age.css">
+
+<style id="functional-age-individual-layout-fix">
+body.individual-measure-mode{
+  background:#F4F7F5 !important;
+}
+
+body.individual-measure-mode #functional-age-mobile-root{
+  width:100% !important;
+  max-width:430px !important;
+  min-height:0 !important;
+  height:auto !important;
+  margin:24px auto !important;
+  padding:20px 16px 28px !important;
+  background:#fff !important;
+  border-radius:20px !important;
+  box-sizing:border-box !important;
+}
+
+body.individual-measure-mode #s-measure-result{
+  width:100% !important;
+  max-width:none !important;
+  min-height:0 !important;
+  margin:0 !important;
+  padding:0 !important;
+}
+
+@media (max-width:430px){
+  body.individual-measure-mode{
+    background:#fff !important;
+  }
+
+  body.individual-measure-mode #functional-age-mobile-root{
+    max-width:none !important;
+    min-height:100vh !important;
+    margin:0 !important;
+    padding:18px 16px 28px !important;
+    border-radius:0 !important;
+  }
+}
+</style>
+
 </head>
 <body class="functional-age-test-root">
 <div class="wrap">
@@ -2333,6 +2374,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const measure = params.get("measure");
 
   if (!measure) return;
+
+  document.body.classList.add("individual-measure-mode");
+
+  const mobileRoot = document.getElementById("functional-age-mobile-root");
+  const measureResult = document.getElementById("s-measure-result");
+
+  if (mobileRoot && measureResult && measureResult.parentElement !== mobileRoot) {
+    mobileRoot.appendChild(measureResult);
+  }
 
   const routes = {
     "breathing": "s-t1",
