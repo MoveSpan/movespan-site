@@ -2223,8 +2223,7 @@ document.addEventListener("click", function(event){
     "flexibility",
     "balance",
     "shoulders",
-    "srt",
-    "hrr"
+    "srt"
   ];
 
   const storageKeys = {
@@ -2666,6 +2665,284 @@ document.addEventListener("DOMContentLoaded", function () {
           };
         }
       }
+    }
+  });
+
+})();
+</script>
+
+
+<script id="functional-age-core-result-v1">
+(function(){
+
+  const CORE_KEYS = ["t1","t2","t3","t4","t5","t6"];
+
+  function readMeasurements(){
+    try{
+      return JSON.parse(localStorage.getItem("ms_functional_measurements") || "{}");
+    }catch(e){
+      return {};
+    }
+  }
+
+  function readUserAge(){
+    if (window._testAge) return Number(window._testAge);
+
+    try{
+      const onb = JSON.parse(localStorage.getItem("mw_onb") || "{}");
+      if (onb.age) return Number(onb.age);
+    }catch(e){}
+
+    if (typeof userAge !== "undefined" && userAge) {
+      return Number(userAge);
+    }
+
+    return null;
+  }
+
+  function rating(score){
+    if (score <= 30) return "Excellent";
+    if (score <= 50) return "Good";
+    return "Needs attention";
+  }
+
+  function ensureCoreResultScreen(){
+    let screen = document.getElementById("s-core-result");
+    if (screen) return screen;
+
+    screen = document.createElement("div");
+    screen.className = "sec";
+    screen.id = "s-core-result";
+
+    screen.innerHTML = `
+      <div style="font-size:13px;font-weight:600;color:var(--green);margin-bottom:8px">
+        FUNCTIONAL AGE
+      </div>
+
+      <div style="font-size:30px;font-weight:650;line-height:1.15;margin-bottom:7px">
+        Your Functional Age Estimate
+      </div>
+
+      <div style="font-size:14px;color:var(--sec);line-height:1.55;margin-bottom:22px">
+        Based on your 6 core measurements
+      </div>
+
+      <div style="text-align:center;background:var(--gl);border-radius:18px;padding:22px 16px;margin-bottom:18px">
+        <div id="core-age-value"
+             style="font-size:48px;font-weight:700;color:var(--green);line-height:1">
+          —
+        </div>
+        <div style="font-size:14px;color:var(--sec);margin-top:8px">
+          Current Functional Age Estimate
+        </div>
+      </div>
+
+      <div id="core-age-comparison"
+           style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:15px 16px;margin-bottom:18px">
+      </div>
+
+      <div style="font-size:20px;font-weight:650;margin-bottom:12px">
+        Your Functional Profile
+      </div>
+
+      <div id="core-profile-list" style="margin-bottom:18px"></div>
+
+      <div style="background:var(--gl);border-radius:16px;padding:16px;margin-bottom:18px">
+        <div style="font-size:16px;font-weight:650;color:var(--green);margin-bottom:6px">
+          Improve the accuracy of your result
+        </div>
+        <div style="font-size:13px;color:var(--sec);line-height:1.55">
+          Your current estimate is based on the core assessment.
+          Additional measurements can refine your Functional Age and build a more complete profile.
+        </div>
+      </div>
+
+      <button class="fa-primary-button"
+              onclick="window.location.href='functional-age-profile.html#additional-measurements'">
+        Continue with Additional Measurements →
+      </button>
+
+      <button type="button"
+              onclick="window.location.href='functional-age-profile.html'"
+              style="width:100%;padding:13px;margin-top:10px;background:#fff;border:1.5px solid var(--border);border-radius:14px;font-size:14px;font-weight:600;color:var(--green);font-family:var(--font);cursor:pointer">
+        View Functional Age Profile
+      </button>
+    `;
+
+    const root = document.getElementById("functional-age-mobile-root");
+    if (root) root.appendChild(screen);
+    else document.body.appendChild(screen);
+
+    return screen;
+  }
+
+  window.showCoreFunctionalAgeResult = function(){
+    const measurements = readMeasurements();
+
+    const completed = CORE_KEYS
+      .map(k => measurements[k])
+      .filter(x => x && typeof x.score === "number");
+
+    if (completed.length < 6){
+      console.warn("Core Functional Age result requested before all 6 measurements were completed.");
+      return;
+    }
+
+    /*
+      Interim MoveSpan estimate:
+      uses the current normalized score values from the six core tables.
+      Final domain weighting will replace this later.
+    */
+    const estimate = Math.round(
+      completed.reduce((sum, item) => sum + Number(item.score), 0) / completed.length
+    );
+
+    localStorage.setItem("ms_functional_age_core_estimate", String(estimate));
+    localStorage.setItem("ms_functional_age_value", String(estimate));
+    localStorage.setItem("ms_functional_age_core_done", "1");
+
+    const screen = ensureCoreResultScreen();
+
+    document.querySelectorAll(".sec").forEach(function(sec){
+      sec.classList.remove("active");
+    });
+    screen.classList.add("active");
+
+    const ageEl = document.getElementById("core-age-value");
+    if (ageEl) ageEl.textContent = estimate + " yrs";
+
+    const actualAge = readUserAge();
+    const comparison = document.getElementById("core-age-comparison");
+
+    if (comparison){
+      if (actualAge){
+        const diff = estimate - actualAge;
+
+        let diffText = "Same as your current age";
+        if (diff < 0) diffText = Math.abs(diff) + " years younger";
+        if (diff > 0) diffText = diff + " years older";
+
+        comparison.innerHTML = `
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+            <span style="font-size:14px;color:var(--sec)">Your age</span>
+            <strong>${actualAge} yrs</strong>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+            <span style="font-size:14px;color:var(--sec)">Functional Age estimate</span>
+            <strong style="color:var(--green)">${estimate} yrs</strong>
+          </div>
+
+          <div style="display:flex;justify-content:space-between">
+            <span style="font-size:14px;color:var(--sec)">Difference</span>
+            <strong>${diffText}</strong>
+          </div>
+        `;
+      }else{
+        comparison.innerHTML = `
+          <div style="font-size:13px;color:var(--sec)">
+            Complete your age in your profile to compare Functional Age with chronological age.
+          </div>
+        `;
+      }
+    }
+
+    const coreRows = [
+      ["Cardiovascular", measurements.t2],
+      ["Respiratory", measurements.t1],
+      ["Flexibility", measurements.t3],
+      ["Balance & Coordination", measurements.t4],
+      ["Shoulder Mobility", measurements.t5],
+      ["Functional Strength", measurements.t6]
+    ];
+
+    const scoredCore = coreRows
+      .filter(row => row[1] && typeof row[1].score === "number")
+      .sort((a,b) => a[1].score - b[1].score);
+
+    const strongest = scoredCore[0];
+    const focus = scoredCore[scoredCore.length - 1];
+
+    const profile = document.getElementById("core-profile-list");
+
+    if (profile){
+      const coreHtml = coreRows.map(([label,data]) => `
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--border)">
+          <div>
+            <div style="font-size:15px;font-weight:600">${label}</div>
+            ${strongest && strongest[0] === label
+              ? '<div style="font-size:11px;color:var(--green);margin-top:3px">Strongest area</div>'
+              : ''}
+            ${focus && focus[0] === label
+              ? '<div style="font-size:11px;color:#9A6A22;margin-top:3px">Focus area</div>'
+              : ''}
+          </div>
+          <div style="font-size:14px;font-weight:600;color:var(--green)">
+            ${data ? rating(data.score) : "—"}
+          </div>
+        </div>
+      `).join("");
+
+      const additionalHtml = `
+        <a href="functional-age-profile.html#breath-inhale"
+           style="display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:inherit;padding:13px 0;border-bottom:1px solid var(--border)">
+          <div>
+            <div style="font-size:15px;font-weight:600">Breath-Hold Capacity</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:3px">Inhale + exhale measurements</div>
+          </div>
+          <div style="font-size:14px;font-weight:600;color:var(--green)">Not measured →</div>
+        </a>
+
+        <a href="test.html?measure=hrr"
+           style="display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:inherit;padding:13px 0;border-bottom:1px solid var(--border)">
+          <div>
+            <div style="font-size:15px;font-weight:600">Cardiovascular Recovery</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:3px">20 squats + heart-rate recovery</div>
+          </div>
+          <div style="font-size:14px;font-weight:600;color:var(--green)">
+            ${measurements.hrr ? rating(measurements.hrr.score) : "Not measured →"}
+          </div>
+        </a>
+
+        <a href="functional-age-profile.html#orthostatic"
+           style="display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:inherit;padding:13px 0;border-bottom:1px solid var(--border)">
+          <div>
+            <div style="font-size:15px;font-weight:600">Orthostatic Response</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:3px">Best after resting or lying down</div>
+          </div>
+          <div style="font-size:14px;font-weight:600;color:var(--green)">Not measured →</div>
+        </a>
+
+        <a href="functional-age-profile.html#pushup"
+           style="display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:inherit;padding:13px 0">
+          <div>
+            <div style="font-size:15px;font-weight:600">Upper-Body Strength</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:3px">Push-up Test</div>
+          </div>
+          <div style="font-size:14px;font-weight:600;color:var(--green)">Not measured →</div>
+        </a>
+      `;
+
+      profile.innerHTML = coreHtml + additionalHtml;
+    }
+
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+
+  document.addEventListener("DOMContentLoaded", function(){
+    const params = new URLSearchParams(window.location.search);
+
+    /* Only modify the sequential CORE test.
+       Individual ?measure=srt keeps its own Save/Back flow. */
+    if (params.get("measure")) return;
+
+    const srtButton = document.getElementById("b-t6");
+
+    if (srtButton){
+      srtButton.textContent = "See My Functional Age →";
+      srtButton.onclick = function(){
+        window.showCoreFunctionalAgeResult();
+      };
     }
   });
 
