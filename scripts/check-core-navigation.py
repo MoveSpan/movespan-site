@@ -29,6 +29,7 @@ settings = load("settings.html")
 health = load("health-dashboard-v4.html")
 assessments = load("assessments.html")
 functional_intro = load("functional-age-intro.html")
+functional_profile = load("functional-age-profile.html")
 functional_test = load("test.html")
 body_assessments = load("visual.html")
 journal = load("journal.html")
@@ -107,8 +108,8 @@ require(
 require(
     "assessments.html",
     assessments,
-    ["functional-age-intro.html"],
-    "Functional Age entry"
+    ["functional-age-profile.html"],
+    "Functional Age Profile entry"
 )
 
 require(
@@ -125,7 +126,15 @@ require(
     "Home return route"
 )
 
-# Functional Age.
+# Functional Age Profile.
+require(
+    "functional-age-profile.html",
+    functional_profile,
+    ["assessments.html"],
+    "Assessments return route"
+)
+
+# Legacy Functional Age flow remains available while measurements are migrated.
 require(
     "functional-age-intro.html",
     functional_intro,
