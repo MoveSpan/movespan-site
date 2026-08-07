@@ -2487,6 +2487,44 @@ document.addEventListener("DOMContentLoaded", function(){
       button.onclick = function(){
         if (typeof window.showIndividualMeasurementResult === "function") {
           window.showIndividualMeasurementResult(measure);
+
+          /* SRT is the end of the 6-test core assessment.
+             Force the final action here so no later legacy handler
+             can turn it back into Next Measurement. */
+          if (measure === "srt") {
+            setTimeout(function(){
+              const nextButton = document.getElementById("measure-result-next");
+
+              if (!nextButton) return;
+
+              nextButton.textContent = "View Functional Age Estimate →";
+
+              nextButton.onclick = function(){
+                let measurements = {};
+
+                try {
+                  measurements = JSON.parse(
+                    localStorage.getItem("ms_functional_measurements") || "{}"
+                  );
+                } catch(e) {}
+
+                const coreKeys = ["t1","t2","t3","t4","t5","t6"];
+                const coreComplete = coreKeys.every(function(key){
+                  return measurements[key] &&
+                         typeof measurements[key].score === "number";
+                });
+
+                if (
+                  coreComplete &&
+                  typeof window.showCoreFunctionalAgeResult === "function"
+                ) {
+                  window.showCoreFunctionalAgeResult();
+                } else {
+                  window.location.href = "functional-age-profile.html";
+                }
+              };
+            }, 0);
+          }
         }
       };
     }
