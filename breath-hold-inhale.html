@@ -239,6 +239,49 @@ button{
   }
 }
 </style>
+
+<style id="functional-age-result-button-standard">
+/* Canonical Functional Age result actions */
+
+.fa-result-saved{
+  width:100%;
+  min-height:54px;
+  border:1.5px solid #BFD8C8 !important;
+  border-radius:16px !important;
+  background:#E7F3EC !important;
+  color:#5F8F70 !important;
+  font-size:16px !important;
+  font-weight:700 !important;
+  font-family:inherit !important;
+  cursor:default !important;
+  opacity:1 !important;
+}
+
+.fa-result-next{
+  width:100%;
+  min-height:54px;
+  border:0 !important;
+  border-radius:16px !important;
+  background:#2D7D52 !important;
+  color:#fff !important;
+  font-size:16px !important;
+  font-weight:700 !important;
+  font-family:inherit !important;
+}
+
+.fa-result-profile{
+  width:100%;
+  min-height:54px;
+  border:1.5px solid #D9DDE2 !important;
+  border-radius:16px !important;
+  background:#fff !important;
+  color:#2D7D52 !important;
+  font-size:16px !important;
+  font-weight:700 !important;
+  font-family:inherit !important;
+}
+</style>
+
 </head>
 
 <body>
@@ -356,14 +399,14 @@ button{
       </div>
     </div>
 
-    <button class="primary" id="save-btn">Save Result</button>
+    <button class="primary" id="save-btn" class="primary fa-result-next">Save Result</button>
 
-    <button class="secondary" id="next-btn" disabled
+    <button class="secondary fa-result-next" id="next-btn" disabled
       style="opacity:.45;pointer-events:none">
       Continue to Orthostatic Response →
     </button>
 
-    <button class="secondary" id="profile-btn" disabled
+    <button class="secondary fa-result-profile" id="profile-btn" disabled
       style="opacity:.45;pointer-events:none">
       Back to Functional Age Profile
     </button>
@@ -593,6 +636,8 @@ button{
     const profileBtn = document.getElementById("profile-btn");
 
     saveBtn.textContent = "Saved ✓";
+    saveBtn.classList.remove("fa-result-next");
+    saveBtn.classList.add("fa-result-saved");
     saveBtn.disabled = true;
 
     nextBtn.disabled = false;
