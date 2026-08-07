@@ -603,6 +603,273 @@
 }
 </style>
 
+
+<style id="orthostatic-match-additional-standard-v1">
+
+/* Orthostatic Response uses the same visual scale as Breath Hold — After Inhale */
+
+body{
+  background:#F4F7F5 !important;
+  color:#1D1D1F !important;
+}
+
+/* PAGE */
+.page{
+  width:min(100%,430px) !important;
+  max-width:430px !important;
+  min-height:100vh !important;
+  margin:0 auto !important;
+  padding:18px 16px 34px !important;
+  background:#fff !important;
+}
+
+.shell{
+  min-height:auto !important;
+  padding:0 !important;
+  background:transparent !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+}
+
+/* HEADER */
+.topbar{
+  min-height:52px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:0 !important;
+  margin-bottom:12px !important;
+}
+
+.header-title{
+  flex:1 !important;
+  padding-right:44px !important;
+  text-align:center !important;
+  font-size:17px !important;
+  line-height:1.2 !important;
+  font-weight:650 !important;
+  letter-spacing:0 !important;
+}
+
+/* BACK */
+.back{
+  width:44px !important;
+  height:44px !important;
+  min-width:44px !important;
+  min-height:44px !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:12px !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  outline:none !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  -webkit-tap-highlight-color:transparent !important;
+}
+
+.back svg{
+  width:24px !important;
+  height:24px !important;
+  stroke:#2D7D52 !important;
+  stroke-width:2.2 !important;
+  fill:none !important;
+}
+
+.back:focus,
+.back:active{
+  outline:none !important;
+  box-shadow:none !important;
+}
+
+.back:focus-visible{
+  outline:2px solid rgba(45,125,82,.22) !important;
+  outline-offset:2px !important;
+}
+
+/* PROGRESS */
+.progress{
+  width:100% !important;
+  height:7px !important;
+  margin:6px 0 14px !important;
+  border-radius:999px !important;
+  background:#EDF0EE !important;
+}
+
+/* TYPOGRAPHY */
+.eyebrow{
+  margin:0 0 10px !important;
+  color:#2D7D52 !important;
+  font-size:12px !important;
+  line-height:1.3 !important;
+  font-weight:700 !important;
+  letter-spacing:.06em !important;
+}
+
+.title{
+  margin:0 0 10px !important;
+  color:#1D1D1F !important;
+  font-size:30px !important;
+  line-height:1.1 !important;
+  letter-spacing:-.03em !important;
+  font-weight:700 !important;
+}
+
+.subtitle{
+  margin:0 0 20px !important;
+  color:#667085 !important;
+  font-size:15px !important;
+  line-height:1.55 !important;
+}
+
+/* INSTRUCTION CARD */
+.card{
+  margin:0 0 16px !important;
+  padding:18px !important;
+  border:1px solid #E4E7EC !important;
+  border-radius:20px !important;
+  background:#fff !important;
+  box-shadow:none !important;
+}
+
+.steps{
+  gap:13px !important;
+}
+
+.step{
+  grid-template-columns:30px 1fr !important;
+  gap:10px !important;
+}
+
+.step-num{
+  width:28px !important;
+  height:28px !important;
+  font-size:13px !important;
+  font-weight:700 !important;
+  background:#E7F3EC !important;
+}
+
+.step-text{
+  padding-top:3px !important;
+  font-size:14px !important;
+  line-height:1.5 !important;
+}
+
+/* SAFETY */
+.notice{
+  margin:0 0 18px !important;
+  padding:13px 14px !important;
+  border-radius:15px !important;
+  background:#FBF3DF !important;
+  color:#76581C !important;
+  font-size:12px !important;
+  line-height:1.5 !important;
+}
+
+/* STANDARD ACTION BUTTONS */
+.btn{
+  width:100% !important;
+  min-height:54px !important;
+  padding:10px 14px !important;
+  border-radius:16px !important;
+  font-size:16px !important;
+  line-height:1.3 !important;
+  font-weight:700 !important;
+  font-family:inherit !important;
+}
+
+.btn + .btn{
+  margin-top:10px !important;
+}
+
+.btn-green{
+  background:#2D7D52 !important;
+  color:#fff !important;
+}
+
+.btn-outline{
+  min-height:50px !important;
+  border:1.5px solid #E4E7EC !important;
+  background:#fff !important;
+  color:#2D7D52 !important;
+  font-size:15px !important;
+  font-weight:650 !important;
+}
+
+/* TIMER BUTTONS KEEP THEIR TERRACOTTA COLOR */
+.btn-timer{
+  background:#B46F43 !important;
+  color:#fff !important;
+}
+
+.btn-timer.secondary{
+  border:1.5px solid #D8B7A0 !important;
+  background:#F4E7DD !important;
+  color:#B46F43 !important;
+}
+
+/* MEASUREMENT SCREENS */
+.card-title{
+  margin-bottom:10px !important;
+  font-size:14px !important;
+}
+
+.helper{
+  margin:0 0 14px !important;
+  font-size:14px !important;
+  line-height:1.5 !important;
+}
+
+.field-label{
+  margin-bottom:8px !important;
+  font-size:14px !important;
+}
+
+.input{
+  padding:12px 14px !important;
+  border:1.5px solid #E4E7EC !important;
+  border-radius:12px !important;
+  font-size:22px !important;
+}
+
+/* TIMER SCALE */
+.timer-box{
+  margin:10px 0 16px !important;
+  padding:24px 10px 18px !important;
+  border-radius:20px !important;
+}
+
+.timer-num{
+  font-size:72px !important;
+  line-height:1 !important;
+  font-weight:700 !important;
+}
+
+.timer-unit{
+  margin-top:10px !important;
+  font-size:14px !important;
+}
+
+/* RESULT scale — buttons below remain governed by the already approved result standard */
+.result-value{
+  font-size:58px !important;
+  line-height:1 !important;
+  font-weight:700 !important;
+}
+
+.result-unit{
+  font-size:14px !important;
+}
+
+.status-chip{
+  padding:7px 14px !important;
+  font-size:14px !important;
+  font-weight:700 !important;
+}
+
+</style>
+
 </head>
 <body>
   <div class="page">
