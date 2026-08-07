@@ -1534,11 +1534,15 @@ function selS(level,score,el){
   document.querySelectorAll('.sc').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
 
+  const srtFullText = el.textContent.trim();
+  const srtShortText = srtFullText.split('—')[0].trim();
+
   scores['t6']={
     score:score,
     label:'Sitting-Rising Test',
     system:'Strength & Coordination',
-    value:el.textContent.trim(),
+    value:srtShortText || 'Completed',
+    detail:srtFullText,
     level:level
   };
 
@@ -2188,12 +2192,13 @@ document.addEventListener("click", function(event){
       Measurement complete
     </div>
 
-    <div id="measure-result-value"
-         style="font-size:42px;font-weight:650;color:var(--green);line-height:1.15;margin-top:18px">
+    <div id="measure-result-value" style="font-size:clamp(28px,7vw,42px);font-weight:650;color:var(--green);line-height:1.18;margin:18px auto 0;max-width:320px;text-wrap:balance">
       —
     </div>
 
-    <div id="measure-result-badge"
+    <div id="measure-result-detail" style="font-size:15px;color:var(--sec);line-height:1.6;text-align:center;max-width:320px;margin:12px auto 0;display:none"></div>
+
+<div id="measure-result-badge"
          style="display:inline-block;border-radius:22px;padding:7px 16px;font-size:14px;font-weight:600;margin-top:12px;background:var(--gl);color:var(--green)">
       Result saved
     </div>
@@ -2554,8 +2559,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "flexibility",
     "balance",
     "shoulders",
-    "srt",
-    "hrr"
+    "srt"
   ];
 
   function configureResultActions(measure){
@@ -2620,11 +2624,39 @@ document.addEventListener("DOMContentLoaded", function () {
       unlockNavigation();
     };
 
-    if (nextMeasure) {
+    if (measure === "srt") {
+      nextButton.textContent = "View Functional Age Estimate →";
+
+      nextButton.onclick = function(){
+        let measurements = {};
+        try {
+          measurements = JSON.parse(
+            localStorage.getItem("ms_functional_measurements") || "{}"
+          );
+        } catch(e) {}
+
+        const coreKeys = ["t1","t2","t3","t4","t5","t6"];
+        const coreComplete = coreKeys.every(function(key){
+          return measurements[key] && typeof measurements[key].score === "number";
+        });
+
+        if (coreComplete && typeof window.showCoreFunctionalAgeResult === "function") {
+          window.showCoreFunctionalAgeResult();
+        } else {
+          window.location.href = "functional-age-profile.html";
+        }
+      };
+
+    } else if (nextMeasure) {
+      nextButton.textContent = "Next Measurement →";
+
       nextButton.onclick = function(){
         window.location.href = "test.html?measure=" + nextMeasure;
       };
+
     } else {
+      nextButton.textContent = "Back to Functional Age Profile";
+
       nextButton.onclick = function(){
         window.location.href = "functional-age-profile.html";
       };
