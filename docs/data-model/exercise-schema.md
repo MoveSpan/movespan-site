@@ -2,7 +2,7 @@
 Doc ID: MS-ARCH-001
 Title: Exercise Schema
 Status: Approved
-Version: 1.0
+Version: 1.1
 Date: July 2026
 Parent: Content Schema v1.0 (MS-ARCH-000)
 ---
@@ -160,8 +160,63 @@ created_at: 2026-07-25
 
 ---
 
+
+## Block 5 — Intelligence Engine Scoring
+
+Fields used by the MoveSpan Adaptive Practice Engine.
+
+These fields describe the relative demand an exercise places on different functional systems.
+
+Scale:
+
+- `0` = negligible
+- `1` = low
+- `2` = moderate
+- `3` = high
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `mobility_load` | integer 0–3 | ⭕ | Mobility demand / stimulus |
+| `strength_load` | integer 0–3 | ⭕ | Strength demand |
+| `balance_load` | integer 0–3 | ⭕ | Balance demand |
+| `coordination_load` | integer 0–3 | ⭕ | Coordination complexity |
+| `cardio_load` | integer 0–3 | ⭕ | Cardiovascular demand |
+| `nervous_system_load` | integer 0–3 | ⭕ | Nervous-system / attentional load |
+| `recovery_cost` | integer 0–3 | ⭕ | Expected recovery requirement |
+
+These values are not medical measurements.
+
+They are internal relative scoring fields used together with:
+- user profile,
+- pain profile,
+- assessments,
+- breath pattern,
+- readiness,
+- practice history,
+- exercise relationships,
+- Safety Filter.
+
+No single score may determine exercise selection by itself.
+
+---
+
+## Block 6 — Adaptive Runtime Metadata
+
+Optional fields supporting session construction and runtime adaptation.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `preparation_required[]` | array | Movements or conditions recommended before this exercise |
+| `compensation_required[]` | array | Recommended compensatory movement after this exercise |
+| `regression_priority[]` | array | Preferred regression order, e.g. breath → range → support → time |
+| `supports_runtime_branching` | boolean | Exercise can participate in adaptive session branches |
+| `recommended_previous[]` | array | Preferred preceding exercises |
+| `recommended_next[]` | array | Preferred following exercises |
+
+---
+
 ## Changelog
 
 | Version | Date | Change |
 |---------|------|--------|
-| 1.0 | July 2026 | Approved with movement_type as Primary Movement Mode |
+| 1.1 | August 2026 | Added Intelligence Engine scoring and adaptive runtime metadata |\n| 1.0 | July 2026 | Approved with movement_type as Primary Movement Mode |
