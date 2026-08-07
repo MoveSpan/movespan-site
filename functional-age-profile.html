@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Functional Age Profile — MoveSpan</title>
+<link rel="stylesheet" href="/assets/css/movespan-navigation.css">
+<style>
+:root{
+  --green:#2D7D52;
+  --green-soft:#EAF4EE;
+  --text:#1D1D1F;
+  --secondary:#667085;
+  --muted:#98A2B3;
+  --border:#E4E7EC;
+  --surface:#F6F7F8;
+  --white:#fff;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--surface);
+  color:var(--text);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+.page{
+  width:min(100%,430px);
+  min-height:100vh;
+  margin:0 auto;
+  padding:18px 16px 48px;
+}
+.topbar{
+  min-height:52px;
+  display:flex;
+  align-items:center;
+  margin-bottom:12px;
+}
+.hero{
+  padding:8px 2px 18px;
+}
+.eyebrow{
+  color:var(--green);
+  font-size:12px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  margin-bottom:8px;
+}
+h1{
+  margin:0 0 8px;
+  font-size:30px;
+  line-height:1.1;
+  letter-spacing:-.035em;
+}
+.subtitle{
+  margin:0;
+  color:var(--secondary);
+  font-size:15px;
+  line-height:1.5;
+}
+.summary{
+  margin:8px 0 20px;
+  padding:18px;
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:22px;
+}
+.summary-top{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:12px;
+}
+.summary-label{
+  color:var(--secondary);
+  font-size:12px;
+  font-weight:600;
+}
+.summary-age{
+  margin-top:4px;
+  font-size:34px;
+  font-weight:700;
+}
+.summary-progress{
+  text-align:right;
+  color:var(--green);
+  font-size:13px;
+  font-weight:700;
+}
+.progress{
+  height:7px;
+  margin-top:14px;
+  background:#EDF0EE;
+  border-radius:999px;
+  overflow:hidden;
+}
+.progress > div{
+  width:0%;
+  height:100%;
+  background:var(--green);
+  border-radius:999px;
+}
+.section-title{
+  margin:22px 2px 10px;
+  color:var(--green);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+.list{
+  overflow:hidden;
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:22px;
+}
+.item{
+  min-height:76px;
+  display:grid;
+  grid-template-columns:42px 1fr auto;
+  gap:12px;
+  align-items:center;
+  padding:12px 14px;
+  color:inherit;
+  text-decoration:none;
+  border-bottom:1px solid #EDF0EE;
+}
+.item:last-child{border-bottom:0}
+.icon{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  border-radius:13px;
+  background:var(--green-soft);
+  color:var(--green);
+  font-weight:700;
+}
+.name{
+  font-size:15px;
+  font-weight:650;
+}
+.meta{
+  margin-top:4px;
+  color:var(--secondary);
+  font-size:11px;
+  line-height:1.35;
+}
+.status{
+  min-width:66px;
+  text-align:right;
+  color:var(--green);
+  font-size:12px;
+  font-weight:700;
+}
+.tip{
+  margin-top:12px;
+  padding:14px 16px;
+  border-radius:16px;
+  background:var(--green-soft);
+  color:#365F49;
+  font-size:12px;
+  line-height:1.5;
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="topbar">
+    <a class="movespan-back" href="assessments.html" aria-label="Back">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M15 18l-6-6 6-6"></path>
+      </svg>
+    </a>
+  </div>
+
+  <section class="hero">
+    <div class="eyebrow">MoveSpan Assessment</div>
+    <h1>Functional Age Profile</h1>
+    <p class="subtitle">
+      Complete the measurements at your own pace. Each result improves your functional profile.
+    </p>
+  </section>
+
+  <section class="summary">
+    <div class="summary-top">
+      <div>
+        <div class="summary-label">Current Functional Age</div>
+        <div class="summary-age" id="functional-age">—</div>
+      </div>
+      <div class="summary-progress" id="progress-text">0 of 11 completed</div>
+    </div>
+    <div class="progress"><div id="progress-bar"></div></div>
+  </section>
+
+  <div class="section-title">Measurements</div>
+
+  <section class="list">
+    <a class="item" href="test.html?measure=breathing">
+      <div class="icon">01</div>
+      <div><div class="name">Breathing Rate</div><div class="meta">Resting breathing cycles per minute</div></div>
+      <div class="status">Take →</div>
+    </a>
+
+    <a class="item" href="test.html?measure=resting-hr">
+      <div class="icon">02</div>
+      <div><div class="name">Resting Heart Rate</div><div class="meta">Your pulse while resting</div></div>
+      <div class="status">Take →</div>
+    </a>
+
+    <a class="item" href="#">
+      <div class="icon">03</div>
+      <div><div class="name">Breath Hold — Inhale</div><div class="meta">Inspiratory breath-hold capacity</div></div>
+      <div class="status">Take →</div>
+    </a>
+
+    <a class="item" href="#">
+      <div class="icon">04</div>
+      <div><div class="name">Breath Hold — Exhale</div><div class="meta">Expiratory breath-hold capacity</div></div>
+      <div class="status">Take →</div>
+    </a>
+
+    <a class="item" href="test.html?measure=flexibility">
+      <div class="icon">05</div>
+      <div><div class="name">Forward Flexibility</div><div class="meta">Posterior-chain mobility</div></div>
+      <div class="status">Take →</div>
+    </a>
+
+    <a class="item" href="test.html?measure=balance">
+      <div class="icon">06</div>
+      <div><div class="name">Balance</div><div class="meta">Balance and proprioceptive control</div></div>
+      <div class="status">Take →</div>
+    </a>
+
+    <a class="item" href="test.html?measure=shoulders">
+      <div class="icon">07</div>
+      <div><div class="name">Shoulder Mobility</div><div class="meta">Upper-body mobility and symmetry</div></div>
+      <div class="status">Take →</div>
+    </a>
+
+    <a class="item" href="test.html?measure=srt">
+      <div class="icon">08</div>
+      <div><div class="name">Sitting-Rising Test</div><div class="meta">Mobility, strength and coordination</div></div>
+      <div class="status">Take →</div>
+    </a>
+
+    <a class="item" href="test.html?measure=hrr">
+      <div class="icon">09</div>
+      <div><div class="name">Squat + Heart Rate Recovery</div><div class="meta">Response and recovery after physical load</div></div>
+      <div class="status">Take →</div>
+    </a>
+
+    <a class="item" href="#">
+      <div class="icon">10</div>
+      <div><div class="name">Orthostatic Response</div><div class="meta">Best in the morning or after 5+ min lying down</div></div>
+      <div class="status">Take →</div>
+    </a>
+
+    <a class="item" href="#">
+      <div class="icon">11</div>
+      <div><div class="name">Push-up Test</div><div class="meta">Upper-body functional strength</div></div>
+      <div class="status">Take →</div>
+    </a>
+  </section>
+
+  <div class="tip">
+    You do not need to complete everything at once. Return anytime to continue or repeat a measurement.
+  </div>
+</main>
+</body>
+</html>
