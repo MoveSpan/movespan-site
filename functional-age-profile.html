@@ -126,6 +126,24 @@ h1{
   border-bottom:1px solid #EDF0EE;
 }
 .item:last-child{border-bottom:0}
+
+.item.focused-measure{
+  position:relative;
+  background:#F2F8F4;
+  box-shadow:inset 0 0 0 2px var(--green);
+}
+
+.item.focused-measure::after{
+  content:"Start here";
+  position:absolute;
+  top:7px;
+  right:12px;
+  color:var(--green);
+  font-size:10px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
 .icon{
   width:40px;
   height:40px;
@@ -178,7 +196,7 @@ h1{
     <div class="eyebrow">MoveSpan Assessment</div>
     <h1>Functional Age Profile</h1>
     <p class="subtitle">
-      Complete the measurements at your own pace. Each result improves your functional profile.
+      Complete the 6 core measurements first, then add optional measurements to improve the accuracy of your Functional Age.
     </p>
   </section>
 
@@ -188,76 +206,85 @@ h1{
         <div class="summary-label">Current Functional Age</div>
         <div class="summary-age" id="functional-age">—</div>
       </div>
-      <div class="summary-progress" id="progress-text">0 of 11 completed</div>
+      <div class="summary-progress" id="progress-text">0 of 10 completed</div>
     </div>
     <div class="progress"><div id="progress-bar"></div></div>
   </section>
-
-  <div class="section-title">Measurements</div>
+<div class="section-title">Core Measurements</div>
 
   <section class="list">
-    <a class="item" href="test.html?measure=breathing" data-measure="t1">
+<a class="item" id="t1" href="test.html?measure=breathing" data-measure="t1">
       <div class="icon">01</div>
       <div><div class="name">Breathing Rate</div><div class="meta">Resting breathing cycles per minute</div></div>
       <div class="status">Take →</div>
     </a>
 
-    <a class="item" href="test.html?measure=resting-hr" data-measure="t2">
+<a class="item" id="t2" href="test.html?measure=resting-hr" data-measure="t2">
       <div class="icon">02</div>
       <div><div class="name">Resting Heart Rate</div><div class="meta">Your pulse while resting</div></div>
       <div class="status">Take →</div>
     </a>
 
-    <a class="item" href="#" data-measure="breath-inhale">
+<a class="item" id="t3" href="test.html?measure=flexibility" data-measure="t3">
       <div class="icon">03</div>
-      <div><div class="name">Breath Hold — Inhale</div><div class="meta">Inspiratory breath-hold capacity</div></div>
-      <div class="status">Take →</div>
-    </a>
-
-    <a class="item" href="#" data-measure="breath-exhale">
-      <div class="icon">04</div>
-      <div><div class="name">Breath Hold — Exhale</div><div class="meta">Expiratory breath-hold capacity</div></div>
-      <div class="status">Take →</div>
-    </a>
-
-    <a class="item" href="test.html?measure=flexibility" data-measure="t3">
-      <div class="icon">05</div>
       <div><div class="name">Forward Flexibility</div><div class="meta">Posterior-chain mobility</div></div>
       <div class="status">Take →</div>
     </a>
 
-    <a class="item" href="test.html?measure=balance" data-measure="t4">
-      <div class="icon">06</div>
+<a class="item" id="t4" href="test.html?measure=balance" data-measure="t4">
+      <div class="icon">04</div>
       <div><div class="name">Balance</div><div class="meta">Balance and proprioceptive control</div></div>
       <div class="status">Take →</div>
     </a>
 
-    <a class="item" href="test.html?measure=shoulders" data-measure="t5">
-      <div class="icon">07</div>
+<a class="item" id="t5" href="test.html?measure=shoulders" data-measure="t5">
+      <div class="icon">05</div>
       <div><div class="name">Shoulder Mobility</div><div class="meta">Upper-body mobility and symmetry</div></div>
       <div class="status">Take →</div>
     </a>
 
-    <a class="item" href="test.html?measure=srt" data-measure="t6">
-      <div class="icon">08</div>
+<a class="item" id="t6" href="test.html?measure=srt" data-measure="t6">
+      <div class="icon">06</div>
       <div><div class="name">Sitting-Rising Test</div><div class="meta">Mobility, strength and coordination</div></div>
       <div class="status">Take →</div>
     </a>
+  </section>
 
-    <a class="item" href="test.html?measure=hrr" data-measure="hrr">
+  <div class="section-title" id="additional-measurements">
+    Improve Your Functional Age Accuracy
+  </div>
+
+  <p style="
+    margin:0 2px 12px;
+    color:var(--secondary);
+    font-size:13px;
+    line-height:1.5;
+  ">
+    4 additional measurements can refine your Functional Age estimate.
+    Complete them in this order while you are fresh and rested.
+  </p>
+
+  <section class="list">
+<a class="item" id="breath-inhale" href="functional-age-profile.html?focus=breath-inhale#breath-inhale" data-measure="breath-inhale">
+      <div class="icon">07</div>
+      <div><div class="name">Breath Hold — Inhale</div><div class="meta">Inspiratory breath-hold capacity</div></div>
+      <div class="status">Take →</div>
+    </a>
+
+<a class="item" id="orthostatic" href="functional-age-profile.html?focus=orthostatic#orthostatic" data-measure="orthostatic">
+      <div class="icon">08</div>
+      <div><div class="name">Orthostatic Response</div><div class="meta">Best in the morning or after 5+ min lying down</div></div>
+      <div class="status">Take →</div>
+    </a>
+
+<a class="item" id="hrr" href="test.html?measure=hrr" data-measure="hrr">
       <div class="icon">09</div>
       <div><div class="name">Squat + Heart Rate Recovery</div><div class="meta">Response and recovery after physical load</div></div>
       <div class="status">Take →</div>
     </a>
 
-    <a class="item" href="#" data-measure="orthostatic">
+<a class="item" id="pushup" href="functional-age-profile.html?focus=pushup#pushup" data-measure="pushup">
       <div class="icon">10</div>
-      <div><div class="name">Orthostatic Response</div><div class="meta">Best in the morning or after 5+ min lying down</div></div>
-      <div class="status">Take →</div>
-    </a>
-
-    <a class="item" href="#" data-measure="pushup">
-      <div class="icon">11</div>
       <div><div class="name">Push-up Test</div><div class="meta">Upper-body functional strength</div></div>
       <div class="status">Take →</div>
     </a>
@@ -270,7 +297,7 @@ h1{
 
 <script>
 (function(){
-  const TOTAL = 11;
+  const TOTAL = 10;
   const STORAGE_KEY = 'ms_functional_measurements';
 
   let saved = {};
@@ -327,6 +354,28 @@ h1{
     }
   }
 })();
+</script>
+
+
+<script id="functional-age-focus-measure">
+document.addEventListener("DOMContentLoaded", function(){
+  const params = new URLSearchParams(window.location.search);
+  const focus = params.get("focus");
+
+  if (!focus) return;
+
+  const item = document.getElementById(focus);
+  if (!item) return;
+
+  item.classList.add("focused-measure");
+
+  setTimeout(function(){
+    item.scrollIntoView({
+      behavior:"smooth",
+      block:"center"
+    });
+  }, 50);
+});
 </script>
 
 </body>

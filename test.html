@@ -2782,8 +2782,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (score <= 40) {
       return {
         label:"Good",
-        color:"#4F8F73",
-        bg:"#EDF5F1"
+        color:"#347A8A",
+        bg:"#E8F2F4"
       };
     }
 
@@ -2890,7 +2890,7 @@ document.addEventListener("DOMContentLoaded", function () {
       </div>
 
       <button class="fa-primary-button"
-              onclick="window.location.href='test.html?measure=hrr'">
+              onclick="window.location.href='functional-age-profile.html?focus=breath-inhale#breath-inhale'">
         Continue with Additional Measurements →
       </button>
 
@@ -3016,11 +3016,11 @@ document.addEventListener("DOMContentLoaded", function () {
       `).join("");
 
       const additionalHtml = `
-        <a href="functional-age-profile.html#breath-inhale"
+        <a href="functional-age-profile.html?focus=breath-inhale#breath-inhale"
            style="display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:inherit;padding:13px 0;border-bottom:1px solid var(--border)">
           <div>
             <div style="font-size:15px;font-weight:600">Breath-Hold Capacity</div>
-            <div style="font-size:11px;color:var(--muted);margin-top:3px">Inhale + exhale measurements</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:3px">Inspiratory breath-hold capacity</div>
           </div>
           <div>${notMeasuredBadge()}</div>
         </a>
@@ -3038,7 +3038,7 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
         </a>
 
-        <a href="functional-age-profile.html#orthostatic"
+        <a href="functional-age-profile.html?focus=orthostatic#orthostatic"
            style="display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:inherit;padding:13px 0;border-bottom:1px solid var(--border)">
           <div>
             <div style="font-size:15px;font-weight:600">Orthostatic Response</div>
@@ -3047,7 +3047,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <div>${notMeasuredBadge()}</div>
         </a>
 
-        <a href="functional-age-profile.html#pushup"
+        <a href="functional-age-profile.html?focus=pushup#pushup"
            style="display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:inherit;padding:13px 0">
           <div>
             <div style="font-size:15px;font-weight:600">Upper-Body Strength</div>
@@ -3081,6 +3081,71 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 })();
+</script>
+
+
+<script id="functional-age-hrr-standalone-v2">
+document.addEventListener("DOMContentLoaded", function(){
+
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("measure") !== "hrr") return;
+
+  function returnToProfile(){
+    window.location.href =
+      "functional-age-profile.html?focus=hrr#hrr";
+  }
+
+  /* Back arrow */
+  document.querySelectorAll(
+    ".functional-back-button, .movespan-back"
+  ).forEach(function(back){
+    back.onclick = function(event){
+      event.preventDefault();
+      returnToProfile();
+    };
+
+    if (back.tagName === "A") {
+      back.href = "functional-age-profile.html?focus=hrr#hrr";
+    }
+  });
+
+  /*
+    HRR was originally Test 3 of the old 7-test sequence.
+    In ?measure=hrr mode it must NEVER continue into
+    Forward Flexibility / Balance / other core tests.
+  */
+  document.addEventListener("click", function(event){
+
+    const control = event.target.closest("button, a");
+    if (!control) return;
+
+    const text = (control.textContent || "")
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLowerCase();
+
+    if (text.includes("start squatting")) {
+      return;
+    }
+
+    const shouldExit =
+      text.includes("skip this test") ||
+      text.includes("temporary injury") ||
+      text.includes("ongoing knee") ||
+      text.includes("next measurement") ||
+      text.includes("next test");
+
+    if (!shouldExit) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+
+    returnToProfile();
+
+  }, true);
+
+});
 </script>
 
 </body>
