@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Breath Hold — Inhale | MoveSpan</title>
+<title>Breath Hold — After Inhale | MoveSpan</title>
 
 <link rel="stylesheet" href="/assets/css/movespan-navigation.css">
 
@@ -246,13 +246,14 @@ button{
 
   <div class="topbar">
     <a class="movespan-back"
+       id="breath-back"
        href="functional-age-profile.html#breath-inhale"
        aria-label="Back">
       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path d="M15 18l-6-6 6-6"></path>
       </svg>
     </a>
-    <div class="top-title">Breath Hold — Inhale</div>
+    <div class="top-title">Breath Hold — After Inhale</div>
   </div>
 
   <div class="progress"><div></div></div>
@@ -260,38 +261,31 @@ button{
   <!-- INTRO -->
   <section class="screen active" id="intro">
     <div class="eyebrow">Additional Measurement · 1 of 4</div>
-    <h1>Breath Hold — Inhale</h1>
+    <h1>Breath Hold — After Inhale</h1>
 
     <p class="subtitle">
-      This test measures how long you can comfortably hold your breath after a full inhale.
+      This test measures how long you can comfortably hold your breath after a full, comfortable inhale.
     </p>
 
     <div class="card instructions">
       <div class="step">
         <div class="step-num">1</div>
         <div class="step-text">
-          Sit comfortably and rest for about 1–2 minutes.
+          Sit comfortably and let your breathing settle.
         </div>
       </div>
 
       <div class="step">
         <div class="step-num">2</div>
         <div class="step-text">
-          Breathe normally. Do not hyperventilate before the test.
+          You will take 1–3 slow, deep breaths before starting the breath hold.
         </div>
       </div>
 
       <div class="step">
         <div class="step-num">3</div>
         <div class="step-text">
-          Take one full comfortable inhale, then tap <strong>Start</strong> and hold your breath.
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-text">
-          Tap <strong>Stop</strong> when you need to breathe. Do not strain for extra seconds.
+          After your final full inhale, start the timer and hold your breath comfortably.
         </div>
       </div>
     </div>
@@ -308,9 +302,57 @@ button{
     </button>
   </section>
 
+  <!-- PREPARATION -->
+  <section class="screen" id="prep-screen">
+    <div class="eyebrow">Prepare for the Measurement</div>
+    <h1>Get ready</h1>
+
+    <p class="subtitle">
+      Take 1–3 slow, deep breaths.
+    </p>
+
+    <div class="card instructions">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          Breathe in slowly and deeply, then breathe out comfortably.
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          Repeat this 1–3 times. Keep the breathing relaxed — do not hyperventilate.
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          Then take one full comfortable inhale and fill your lungs.
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text">
+          When you are ready to hold your breath, tap <strong>Start Breath Hold</strong>.
+        </div>
+      </div>
+    </div>
+
+    <button class="primary" id="begin-hold-btn">
+      Start Breath Hold
+    </button>
+
+    <button class="secondary" id="prep-back-btn">
+      Back
+    </button>
+  </section>
+
   <!-- TIMER -->
   <section class="screen" id="timer-screen">
-    <div class="eyebrow">Breath Hold — Inhale</div>
+    <div class="eyebrow">Breath Hold — After Inhale</div>
     <h1>Hold comfortably</h1>
 
     <p class="subtitle">
@@ -337,6 +379,11 @@ button{
       <div class="badge" id="result-badge">—</div>
 
       <div class="result-copy" id="result-copy"></div>
+
+      <div class="safety" style="text-align:left;margin-top:18px;margin-bottom:0">
+        After ending the breath hold, exhale slowly and gently.
+        Take a few calm breaths and allow your breathing to return to normal before continuing.
+      </div>
     </div>
 
     <button class="primary" id="save-btn">Save Result</button>
@@ -362,6 +409,7 @@ button{
   let seconds = 0;
 
   const intro = document.getElementById("intro");
+  const prepScreen = document.getElementById("prep-screen");
   const timerScreen = document.getElementById("timer-screen");
   const resultScreen = document.getElementById("result-screen");
 
@@ -374,9 +422,61 @@ button{
     document.querySelectorAll(".screen").forEach(function(el){
       el.classList.remove("active");
     });
+
     screen.classList.add("active");
+    updateBackButton(screen);
+
     window.scrollTo({top:0,behavior:"smooth"});
   }
+
+  function stopTimer(){
+    if (interval) {
+      clearInterval(interval);
+      interval = null;
+    }
+    startTime = null;
+  }
+
+  function updateBackButton(screen){
+    const back = document.getElementById("breath-back");
+    if (!back) return;
+
+    if (screen === intro) {
+      back.href = "functional-age-profile.html#breath-inhale";
+      return;
+    }
+
+    back.href = "#";
+  }
+
+  document.getElementById("breath-back").onclick = function(event){
+    const active = document.querySelector(".screen.active");
+
+    if (active === intro) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (active === prepScreen) {
+      show(intro);
+      return;
+    }
+
+    if (active === timerScreen) {
+      stopTimer();
+      seconds = 0;
+      timer.textContent = "0.0";
+      show(prepScreen);
+      return;
+    }
+
+    if (active === resultScreen) {
+      stopTimer();
+      show(prepScreen);
+      return;
+    }
+  };
 
   function metaFor(value){
     if (value >= 60) {
@@ -419,8 +519,17 @@ button{
   }
 
   document.getElementById("start-btn").onclick = function(){
+    show(prepScreen);
+  };
+
+  document.getElementById("prep-back-btn").onclick = function(){
+    show(intro);
+  };
+
+  document.getElementById("begin-hold-btn").onclick = function(){
     seconds = 0;
     timer.textContent = "0.0";
+
     show(timerScreen);
 
     startTime = performance.now();
@@ -435,6 +544,7 @@ button{
     if (!startTime) return;
 
     clearInterval(interval);
+    interval = null;
 
     seconds = (performance.now() - startTime) / 1000;
     seconds = Math.round(seconds * 10) / 10;
@@ -474,7 +584,7 @@ button{
       value:seconds.toFixed(1) + " sec",
       seconds:seconds,
       status:label,
-      label:"Breath Hold — Inhale",
+      label:"Breath Hold — After Inhale",
       system:"Respiratory",
       doneAt:new Date().toISOString()
     };
