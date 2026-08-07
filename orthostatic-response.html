@@ -721,7 +721,7 @@
         <button class="btn btn-green" type="button" id="saveResultBtn">Save Result</button>
         <button class="btn btn-green" type="button" id="nextBtn" disabled>Next Measurement →</button>
         <button class="btn btn-outline" type="button" id="profileBtn" disabled>Back to Functional Age Profile</button>
-        <div class="saved-note" id="savedResultNote"></div>
+
       </section>
     </div>
   </div>
@@ -761,7 +761,6 @@
     const saveResultBtn = document.getElementById("saveResultBtn");
     const nextBtn = document.getElementById("nextBtn");
     const profileBtn = document.getElementById("profileBtn");
-    const savedResultNote = document.getElementById("savedResultNote");
 
     let currentScreen = "intro";
 
@@ -1036,7 +1035,6 @@
       saveResultBtn.textContent = "Save Result";
       nextBtn.disabled = true;
       profileBtn.disabled = true;
-      savedResultNote.textContent = "";
 
       showScreen("result");
     });
@@ -1050,7 +1048,6 @@
       saveResultBtn.textContent = "Saved ✓";
       nextBtn.disabled = false;
       profileBtn.disabled = false;
-      savedResultNote.textContent = "Result saved to your Functional Age Profile.";
     });
 
     nextBtn.addEventListener("click", function(){
