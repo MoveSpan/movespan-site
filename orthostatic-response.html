@@ -1,691 +1,814 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Orthostatic Response | MoveSpan</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Orthostatic Response — MoveSpan</title>
+  <style>
+    :root{
+      --green:#2D7D52;
+      --green-soft:#E7F2EC;
+      --teal:#347A8A;
+      --teal-soft:#E8F1F4;
+      --amber:#A87922;
+      --amber-soft:#F7F1E2;
+      --terracotta:#B76638;
+      --terracotta-soft:#F7EBE6;
+      --timer:#B46F43;
+      --timer-soft:#F4E7DD;
+      --text:#1F1F24;
+      --sec:#667085;
+      --muted:#98A2B3;
+      --line:#D6DADF;
+      --bg:#F4F7F5;
+      --card:#FFFFFF;
+      --shadow:0 1px 0 rgba(16,24,40,.02);
+      --radius:26px;
+      --font:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
 
-<link rel="stylesheet" href="/assets/css/movespan-navigation.css">
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:var(--font)}
+    body{min-height:100vh}
 
-<style>
-:root{
-  --green:#2D7D52;
-  --green-soft:#E7F3EC;
-  --text:#1D1D1F;
-  --secondary:#667085;
-  --border:#E4E7EC;
-  --surface:#F4F7F5;
-  --white:#fff;
-}
+    .page{
+      width:100%;
+      max-width:860px;
+      margin:0 auto;
+      padding:18px;
+    }
 
-*{box-sizing:border-box}
+    .shell{
+      background:#F7F8F7;
+      border-radius:34px;
+      padding:22px 22px 28px;
+      min-height:calc(100vh - 36px);
+      box-shadow:var(--shadow);
+    }
 
-body{
-  margin:0;
-  background:var(--surface);
-  color:var(--text);
-  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-}
+    .topbar{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:18px;
+    }
 
-.page{
-  width:min(100%,430px);
-  min-height:100vh;
-  margin:0 auto;
-  padding:18px 16px 34px;
-  background:#fff;
-}
+    .back{
+      width:44px;
+      height:44px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:none;
+      background:transparent;
+      cursor:pointer;
+      -webkit-tap-highlight-color:transparent;
+    }
 
-.topbar{
-  min-height:52px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:12px;
-}
+    .back svg{
+      width:26px;
+      height:26px;
+      stroke:var(--green);
+      stroke-width:2.25;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+      fill:none;
+    }
 
-.top-title{
-  flex:1;
-  text-align:center;
-  font-size:17px;
-  font-weight:650;
-  padding-right:44px;
-}
+    .header-title{
+      flex:1;
+      text-align:center;
+      font-size:30px;
+      line-height:1.15;
+      font-weight:700;
+      letter-spacing:-.03em;
+      padding-right:44px;
+    }
 
-.progress{
-  height:7px;
-  background:#EDF0EE;
-  border-radius:999px;
-  overflow:hidden;
-  margin:6px 0 14px;
-}
+    .progress{
+      width:100%;
+      height:12px;
+      border-radius:999px;
+      background:#E4E7E4;
+      overflow:hidden;
+      margin:6px 0 22px;
+    }
 
-.progress > div{
-  width:50%;
-  height:100%;
-  background:var(--green);
-  border-radius:999px;
-}
+    .progress-fill{
+      width:50%;
+      height:100%;
+      background:var(--green);
+      border-radius:999px;
+    }
 
-.eyebrow{
-  color:var(--green);
-  font-size:12px;
-  font-weight:700;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  margin-bottom:10px;
-}
+    .screen{display:none}
+    .screen.active{display:block}
 
-h1{
-  margin:0 0 10px;
-  font-size:30px;
-  line-height:1.1;
-  letter-spacing:-.03em;
-}
+    .eyebrow{
+      font-size:18px;
+      font-weight:800;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--green);
+      margin-bottom:18px;
+    }
 
-.subtitle{
-  margin:0 0 20px;
-  color:var(--secondary);
-  font-size:15px;
-  line-height:1.55;
-}
+    .title{
+      font-size:42px;
+      line-height:1.05;
+      letter-spacing:-.04em;
+      font-weight:800;
+      margin:0 0 18px;
+    }
 
-.card{
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:18px;
-  margin-bottom:16px;
-}
+    .subtitle{
+      font-size:20px;
+      line-height:1.55;
+      color:var(--sec);
+      margin:0 0 22px;
+    }
 
-.step{
-  display:grid;
-  grid-template-columns:30px 1fr;
-  gap:10px;
-  align-items:start;
-  margin-bottom:14px;
-}
+    .card{
+      background:var(--card);
+      border:2px solid var(--line);
+      border-radius:28px;
+      padding:22px;
+      margin-bottom:18px;
+    }
 
-.step:last-child{margin-bottom:0}
+    .card-title{
+      font-size:19px;
+      font-weight:700;
+      color:#667085;
+      margin-bottom:16px;
+    }
 
-.step-num{
-  width:28px;
-  height:28px;
-  display:grid;
-  place-items:center;
-  border-radius:50%;
-  background:var(--green-soft);
-  color:var(--green);
-  font-size:13px;
-  font-weight:700;
-}
+    .steps{
+      display:grid;
+      gap:16px;
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
 
-.step-text{
-  padding-top:3px;
-  font-size:14px;
-  line-height:1.5;
-}
+    .step{
+      display:grid;
+      grid-template-columns:58px 1fr;
+      gap:14px;
+      align-items:start;
+    }
 
-.safety{
-  background:#FBF3DF;
-  color:#76581C;
-  border-radius:15px;
-  padding:13px 14px;
-  font-size:12px;
-  line-height:1.5;
-  margin-bottom:18px;
-}
+    .step-num{
+      width:58px;
+      height:58px;
+      border-radius:50%;
+      background:#E8F0EB;
+      color:var(--green);
+      font-size:24px;
+      font-weight:800;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
 
-.primary,
-.secondary{
-  width:100%;
-  min-height:54px;
-  border-radius:16px;
-  font-family:inherit;
-  font-size:16px;
-  font-weight:700;
-  cursor:pointer;
-}
+    .step-text{
+      font-size:22px;
+      line-height:1.45;
+    }
 
-.primary{
-  border:0;
-  background:var(--green);
-  color:#fff;
-}
+    .notice{
+      background:var(--amber-soft);
+      color:#7A5B1D;
+      border-radius:22px;
+      padding:22px 26px;
+      font-size:18px;
+      line-height:1.55;
+      margin:16px 0 24px;
+    }
 
-.secondary{
-  margin-top:10px;
-  border:1.5px solid var(--border);
-  background:#fff;
-  color:var(--green);
-}
+    .field-label{
+      font-size:17px;
+      font-weight:700;
+      color:#667085;
+      margin-bottom:12px;
+    }
 
-.screen{display:none}
-.screen.active{display:block}
+    .input{
+      width:100%;
+      padding:22px 28px;
+      border-radius:24px;
+      border:2px solid var(--line);
+      font-size:28px;
+      line-height:1.1;
+      color:var(--text);
+      background:#fff;
+      outline:none;
+    }
 
-.field-label{
-  font-size:13px;
-  font-weight:650;
-  color:var(--secondary);
-  margin:0 0 7px;
-}
+    .input:focus{
+      border-color:#9BC2AC;
+      box-shadow:0 0 0 4px rgba(45,125,82,.08);
+    }
 
-input{
-  width:100%;
-  min-height:56px;
-  border:1.5px solid var(--border);
-  border-radius:15px;
-  padding:12px 14px;
-  font:inherit;
-  font-size:20px;
-  color:var(--text);
-  background:#fff;
-  outline:none;
-}
+    .helper{
+      font-size:16px;
+      line-height:1.55;
+      color:var(--sec);
+      margin:0 0 16px;
+    }
 
-input:focus{
-  border-color:var(--green);
-}
+    .timer-box{
+      background:#F1F3F2;
+      border-radius:26px;
+      padding:34px 16px 26px;
+      text-align:center;
+      margin:12px 0 18px;
+    }
 
-.measure-block{
-  margin-bottom:18px;
-}
+    .timer-num{
+      font-size:112px;
+      line-height:.95;
+      letter-spacing:-.05em;
+      font-weight:800;
+      color:var(--green);
+      margin:0;
+    }
 
-.timer-box{
-  text-align:center;
-  padding:22px 12px;
-  margin:16px 0;
-  border-radius:18px;
-  background:#F6F7F8;
-}
+    .timer-unit{
+      font-size:22px;
+      color:#667085;
+      margin-top:14px;
+    }
 
-.timer{
-  font-size:54px;
-  font-weight:700;
-  line-height:1;
-  color:var(--green);
-}
+    .btn{
+      width:100%;
+      border:none;
+      border-radius:24px;
+      padding:24px 22px;
+      font-size:28px;
+      line-height:1.1;
+      font-weight:800;
+      cursor:pointer;
+      font-family:var(--font);
+      transition:.15s ease;
+      -webkit-tap-highlight-color:transparent;
+    }
 
-.timer-label{
-  margin-top:8px;
-  color:var(--secondary);
-  font-size:13px;
-}
+    .btn + .btn{margin-top:14px}
 
-.result{
-  text-align:center;
-  padding:10px 0 18px;
-}
+    .btn-green{
+      background:#4D8B5C;
+      color:#fff;
+    }
 
-.result-value{
-  font-size:58px;
-  line-height:1;
-  font-weight:700;
-  color:var(--green);
-  margin:16px 0 8px;
-}
+    .btn-green[disabled]{
+      opacity:.45;
+      cursor:not-allowed;
+    }
 
-.result-unit{
-  color:var(--secondary);
-  font-size:14px;
-}
+    .btn-timer{
+      background:var(--timer);
+      color:#fff;
+    }
 
-.badge{
-  display:inline-block;
-  margin-top:18px;
-  padding:7px 14px;
-  border-radius:999px;
-  font-size:14px;
-  font-weight:700;
-}
+    .btn-timer.secondary{
+      background:var(--timer-soft);
+      color:var(--timer);
+      border:2px solid #D8B7A0;
+    }
 
-.result-copy{
-  margin:16px auto 22px;
-  max-width:330px;
-  color:var(--secondary);
-  font-size:14px;
-  line-height:1.55;
-}
+    .btn-outline{
+      background:#fff;
+      color:var(--green);
+      border:2px solid var(--line);
+    }
 
-@media (min-width:431px){
-  .page{
-    margin:24px auto;
-    min-height:auto;
-    border-radius:24px;
-  }
-}
-</style>
+    .section-gap{
+      margin-top:26px;
+      padding-top:24px;
+      border-top:1px solid #E3E6E3;
+    }
+
+    .status-chip{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:999px;
+      padding:10px 18px;
+      font-size:18px;
+      font-weight:800;
+      margin:14px auto 0;
+    }
+
+    .status-excellent{background:var(--green-soft);color:var(--green)}
+    .status-good{background:var(--teal-soft);color:var(--teal)}
+    .status-fair{background:var(--amber-soft);color:var(--amber)}
+    .status-attention{background:var(--terracotta-soft);color:var(--terracotta)}
+
+    .result-value{
+      font-size:86px;
+      line-height:.95;
+      letter-spacing:-.05em;
+      color:var(--green);
+      font-weight:800;
+      text-align:center;
+      margin-top:12px;
+    }
+
+    .result-unit{
+      text-align:center;
+      font-size:22px;
+      color:#667085;
+      margin-top:10px;
+    }
+
+    .result-text{
+      text-align:center;
+      font-size:21px;
+      line-height:1.55;
+      color:var(--sec);
+      max-width:620px;
+      margin:18px auto 8px;
+    }
+
+    .result-detail{
+      text-align:center;
+      font-size:18px;
+      line-height:1.55;
+      color:#667085;
+      margin:6px auto 0;
+    }
+
+    .saved-note{
+      text-align:center;
+      font-size:18px;
+      color:var(--green);
+      font-weight:700;
+      margin-top:12px;
+      min-height:24px;
+    }
+
+    @media (max-width:700px){
+      .shell{
+        border-radius:26px;
+        padding:18px 18px 24px;
+        min-height:calc(100vh - 24px);
+      }
+      .header-title{font-size:26px}
+      .eyebrow{font-size:15px}
+      .title{font-size:34px}
+      .subtitle{font-size:18px}
+      .step-text{font-size:18px}
+      .btn{font-size:24px;padding:22px 18px}
+      .timer-num{font-size:86px}
+      .timer-unit{font-size:18px}
+      .input{font-size:24px;padding:20px 22px}
+      .result-value{font-size:72px}
+      .result-text{font-size:18px}
+    }
+  </style>
 </head>
-
 <body>
-<main class="page">
+  <div class="page">
+    <div class="shell">
+      <div class="topbar">
+        <button class="back" type="button" id="backButton" aria-label="Back">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg>
+        </button>
+        <div class="header-title">Orthostatic Response</div>
+      </div>
 
-  <div class="topbar">
-    <a class="movespan-back"
-       id="ortho-back"
-       href="functional-age-profile.html#orthostatic"
-       aria-label="Back">
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M15 18l-6-6 6-6"></path>
-      </svg>
-    </a>
-    <div class="top-title">Orthostatic Response</div>
+      <div class="progress"><div class="progress-fill"></div></div>
+
+      <!-- INTRO -->
+      <section class="screen active" id="screen-intro">
+        <div class="eyebrow">Additional Measurement · 2 of 4</div>
+        <h1 class="title">Orthostatic Response</h1>
+        <p class="subtitle">
+          This test checks how your pulse changes from lying down to standing.
+          It helps improve the accuracy of your functional profile.
+        </p>
+
+        <div class="card">
+          <ol class="steps">
+            <li class="step">
+              <div class="step-num">1</div>
+              <div class="step-text">
+                If you have been lying down quietly for at least 5 minutes already,
+                there is no need to wait another 5 minutes.
+              </div>
+            </li>
+            <li class="step">
+              <div class="step-num">2</div>
+              <div class="step-text">
+                Otherwise, lie down and rest for 5 minutes first.
+              </div>
+            </li>
+            <li class="step">
+              <div class="step-num">3</div>
+              <div class="step-text">
+                Then record your resting pulse while you are still lying down,
+                stand up, wait 60 seconds, and measure your pulse again.
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="notice">
+          If you feel dizzy or unsteady, stop the test and sit or lie down again.
+        </div>
+
+        <button class="btn btn-green" type="button" id="startTestBtn">Start Test →</button>
+        <button class="btn btn-outline" type="button" onclick="window.location.href='functional-age-profile.html'">Back to Functional Age Profile</button>
+      </section>
+
+      <!-- MEASUREMENT -->
+      <section class="screen" id="screen-measure">
+        <div class="eyebrow">Orthostatic Response</div>
+        <h1 class="title">Measure your pulse</h1>
+        <p class="subtitle">
+          If you are already resting quietly while lying down, you can skip the 5-minute rest timer.
+        </p>
+
+        <div class="card">
+          <div class="card-title">Optional 5-minute rest</div>
+          <p class="helper">
+            Use this only if you were moving recently and need to settle first.
+          </p>
+
+          <div class="timer-box">
+            <div class="timer-num" id="restTimerNum">5:00</div>
+            <div class="timer-unit">minutes</div>
+          </div>
+
+          <button class="btn btn-timer" type="button" id="restToggleBtn">Start 5-minute rest</button>
+          <button class="btn btn-timer secondary" type="button" id="restSkipBtn">Skip — I am already rested</button>
+
+          <div class="saved-note" id="restReadyNote"></div>
+        </div>
+
+        <div class="card">
+          <div class="field-label">Heart rate lying down</div>
+          <input id="lyingInput" class="input" inputmode="numeric" placeholder="e.g. 62" />
+          <button class="btn btn-green" type="button" id="recordLyingBtn" style="margin-top:16px">Record resting pulse</button>
+          <div class="saved-note" id="lyingSavedNote"></div>
+        </div>
+
+        <div class="card section-gap">
+          <p class="helper" style="font-size:18px;color:var(--text);margin-bottom:12px">
+            Stand up safely. When you are ready, start the 60-second standing timer.
+            You can stop and continue the timer if needed.
+          </p>
+
+          <div class="timer-box">
+            <div class="timer-num" id="standTimerNum">60</div>
+            <div class="timer-unit">seconds</div>
+          </div>
+
+          <button class="btn btn-timer" type="button" id="standToggleBtn">Start 60-second timer</button>
+
+          <div class="field-label" style="margin-top:20px">Heart rate after standing</div>
+          <input id="standingInput" class="input" inputmode="numeric" placeholder="e.g. 78" />
+          <button class="btn btn-green" type="button" id="seeResultBtn" style="margin-top:16px">See Result →</button>
+        </div>
+      </section>
+
+      <!-- RESULT -->
+      <section class="screen" id="screen-result">
+        <div class="eyebrow">Orthostatic Response</div>
+        <h1 class="title">Your result</h1>
+
+        <div class="card" style="text-align:center">
+          <div class="result-value" id="resultValue">+0</div>
+          <div class="result-unit">bpm increase</div>
+          <div id="resultChip" class="status-chip status-good">Good</div>
+          <div class="result-text" id="resultText"></div>
+          <div class="result-detail" id="resultDetail"></div>
+        </div>
+
+        <button class="btn btn-green" type="button" id="saveResultBtn">Save Result</button>
+        <button class="btn btn-green" type="button" id="nextBtn" disabled>Next Measurement →</button>
+        <button class="btn btn-outline" type="button" id="profileBtn" disabled>Back to Functional Age Profile</button>
+        <div class="saved-note" id="savedResultNote"></div>
+      </section>
+    </div>
   </div>
 
-  <div class="progress"><div></div></div>
+  <script>
+    const STORAGE_KEY = "ms_functional_measurements";
 
-  <!-- INTRO -->
-  <section class="screen active" id="intro">
+    const screens = {
+      intro: document.getElementById("screen-intro"),
+      measure: document.getElementById("screen-measure"),
+      result: document.getElementById("screen-result")
+    };
 
-    <div class="eyebrow">Additional Measurement · 2 of 4</div>
+    const backButton = document.getElementById("backButton");
+    const startTestBtn = document.getElementById("startTestBtn");
 
-    <h1>Orthostatic Response</h1>
+    const restTimerNum = document.getElementById("restTimerNum");
+    const restToggleBtn = document.getElementById("restToggleBtn");
+    const restSkipBtn = document.getElementById("restSkipBtn");
+    const restReadyNote = document.getElementById("restReadyNote");
 
-    <p class="subtitle">
-      This test looks at how your heart rate responds when you move from lying down to standing.
-      It is easiest to do when you are already resting or lying down.
-    </p>
+    const lyingInput = document.getElementById("lyingInput");
+    const recordLyingBtn = document.getElementById("recordLyingBtn");
+    const lyingSavedNote = document.getElementById("lyingSavedNote");
 
-    <div class="card">
+    const standTimerNum = document.getElementById("standTimerNum");
+    const standToggleBtn = document.getElementById("standToggleBtn");
+    const standingInput = document.getElementById("standingInput");
+    const seeResultBtn = document.getElementById("seeResultBtn");
 
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-text">
-          Start when you have been lying down or resting quietly for several minutes.
-          If you are already relaxed and resting, there is no need to wait another 5 minutes.
-        </div>
-      </div>
+    const resultValue = document.getElementById("resultValue");
+    const resultChip = document.getElementById("resultChip");
+    const resultText = document.getElementById("resultText");
+    const resultDetail = document.getElementById("resultDetail");
+    const saveResultBtn = document.getElementById("saveResultBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const profileBtn = document.getElementById("profileBtn");
+    const savedResultNote = document.getElementById("savedResultNote");
 
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-text">
-          Measure your pulse while still lying down.
-        </div>
-      </div>
+    let currentScreen = "intro";
 
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-text">
-          Stand up normally and safely.
-        </div>
-      </div>
+    let restRemaining = 300;
+    let restInterval = null;
+    let restRunning = false;
+    let restReady = false;
 
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-text">
-          After 60 seconds of standing, measure your pulse again.
-        </div>
-      </div>
+    let standRemaining = 60;
+    let standInterval = null;
+    let standRunning = false;
+    let standStartedOnce = false;
 
-    </div>
+    let restingPulse = null;
+    let standingPulse = null;
+    let pendingResult = null;
 
-    <div class="safety">
-      You only need to record your resting pulse, stand up, wait 60 seconds,
-      and measure your pulse again. Stand near a stable support.
-      If you feel dizzy or unsteady, sit or lie down immediately and do not continue the test.
-    </div>
+    function showScreen(name){
+      currentScreen = name;
+      Object.values(screens).forEach(el => el.classList.remove("active"));
+      screens[name].classList.add("active");
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
 
-    <button class="primary" id="start-test-btn">
-      Start Test →
-    </button>
+    function formatRestTime(seconds){
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return m + ":" + String(s).padStart(2, "0");
+    }
 
-    <button class="secondary"
-      onclick="window.location.href='functional-age-profile.html#orthostatic'">
-      Back to Functional Age Profile
-    </button>
+    function updateRestUI(){
+      restTimerNum.textContent = formatRestTime(restRemaining);
 
-  </section>
+      if (restRunning) {
+        restToggleBtn.textContent = "Stop timer";
+      } else if (restRemaining < 300 && restRemaining > 0 && !restReady) {
+        restToggleBtn.textContent = "Continue rest";
+      } else if (restReady) {
+        restToggleBtn.textContent = "Rest complete ✓";
+      } else {
+        restToggleBtn.textContent = "Start 5-minute rest";
+      }
+    }
 
-  <!-- MEASUREMENT -->
-  <section class="screen" id="measurement-screen">
+    function updateStandUI(){
+      standTimerNum.textContent = String(standRemaining);
 
-    <div class="eyebrow">Orthostatic Response</div>
+      if (standRunning) {
+        standToggleBtn.textContent = "Stop timer";
+      } else if (standRemaining < 60 && standRemaining > 0) {
+        standToggleBtn.textContent = "Continue timer";
+      } else if (standRemaining === 0) {
+        standToggleBtn.textContent = "Start again if needed";
+      } else {
+        standToggleBtn.textContent = "Start 60-second timer";
+      }
+    }
 
-    <h1>Measure your pulse</h1>
+    function stopRestTimer(){
+      if (restInterval) clearInterval(restInterval);
+      restInterval = null;
+      restRunning = false;
+      updateRestUI();
+    }
 
-    <p class="subtitle">
-      Enter your pulse while you are still lying down.
-      Then stand up, remain standing for 60 seconds, and measure your pulse again.
-    </p>
+    function stopStandTimer(){
+      if (standInterval) clearInterval(standInterval);
+      standInterval = null;
+      standRunning = false;
+      updateStandUI();
+    }
 
-    <div class="card">
+    function markRestReady(text){
+      restReady = true;
+      stopRestTimer();
+      restReadyNote.textContent = text;
+      restToggleBtn.disabled = true;
+      restSkipBtn.disabled = true;
+      updateRestUI();
+    }
 
-      <div class="measure-block">
-        <div class="field-label">Heart rate lying down</div>
-        <input
-          type="number"
-          id="lying-hr"
-          inputmode="numeric"
-          min="30"
-          max="220"
-          placeholder="e.g. 62">
-      </div>
+    function saveMeasurement(payload){
+      try{
+        const current = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+        current.orthostatic = Object.assign({}, payload, {
+          completed: true,
+          doneAt: new Date().toISOString()
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(current));
+      }catch(e){
+        console.warn("Orthostatic measurement save error:", e);
+      }
+    }
 
-      <button class="primary" id="stand-btn">
-        I’m ready to stand →
-      </button>
+    function classifyDifference(diff){
+      if (diff <= 10) {
+        return {
+          score: 20,
+          label: "Excellent",
+          className: "status-excellent",
+          text: "Your pulse response from lying to standing is calm and efficient for this measure."
+        };
+      }
+      if (diff <= 16) {
+        return {
+          score: 35,
+          label: "Good",
+          className: "status-good",
+          text: "Your orthostatic response looks generally good. Daily recovery and breathwork can improve it further."
+        };
+      }
+      if (diff <= 24) {
+        return {
+          score: 55,
+          label: "Fair",
+          className: "status-fair",
+          text: "Your pulse rises more than ideal when standing. Recovery capacity may benefit from regular practice."
+        };
+      }
+      return {
+        score: 75,
+        label: "Needs attention",
+        className: "status-attention",
+        text: "Your pulse rises sharply when standing. This suggests that recovery and autonomic balance need more attention."
+      };
+    }
 
-    </div>
+    function goBack(){
+      if (currentScreen === "intro") {
+        window.location.href = "functional-age-profile.html";
+        return;
+      }
+      if (currentScreen === "measure") {
+        stopRestTimer();
+        stopStandTimer();
+        showScreen("intro");
+        return;
+      }
+      if (currentScreen === "result") {
+        showScreen("measure");
+      }
+    }
 
-    <div id="standing-step" style="display:none">
+    backButton.addEventListener("click", goBack);
 
-      <div class="card">
-
-        <div style="font-size:14px;line-height:1.55">
-          Stand up safely. The timer starts when you tap the button below.
-        </div>
-
-        <div class="timer-box">
-          <div class="timer" id="timer">60</div>
-          <div class="timer-label">seconds</div>
-        </div>
-
-        <button class="primary" id="timer-btn">
-          Start 60-Second Timer
-        </button>
-
-      </div>
-
-      <div class="card" id="standing-input-card" style="display:none">
-
-        <div class="measure-block" style="margin-bottom:0">
-          <div class="field-label">Heart rate after 60 seconds standing</div>
-          <input
-            type="number"
-            id="standing-hr"
-            inputmode="numeric"
-            min="30"
-            max="220"
-            placeholder="e.g. 72">
-        </div>
-
-      </div>
-
-      <button class="primary"
-        id="see-result-btn"
-        style="display:none">
-        See Result →
-      </button>
-
-    </div>
-
-  </section>
-
-  <!-- RESULT -->
-  <section class="screen" id="result-screen">
-
-    <div class="eyebrow">Measurement Complete</div>
-
-    <h1>Your Orthostatic Response</h1>
-
-    <div class="result">
-
-      <div class="result-value" id="result-value">—</div>
-      <div class="result-unit">bpm change</div>
-
-      <div class="badge" id="result-badge">—</div>
-
-      <div class="result-copy" id="result-copy"></div>
-
-    </div>
-
-    <button class="primary" id="save-btn">
-      Save Result
-    </button>
-
-    <button class="secondary"
-      id="next-btn"
-      disabled
-      style="opacity:.45;pointer-events:none">
-      Continue to Squat + Heart Rate Recovery →
-    </button>
-
-    <button class="secondary"
-      id="profile-btn"
-      disabled
-      style="opacity:.45;pointer-events:none">
-      Back to Functional Age Profile
-    </button>
-
-  </section>
-
-</main>
-
-<script>
-(function(){
-
-  const intro = document.getElementById("intro");
-  const measurementScreen = document.getElementById("measurement-screen");
-  const resultScreen = document.getElementById("result-screen");
-
-  let interval = null;
-  let remaining = 60;
-  let lyingHR = 0;
-  let standingHR = 0;
-  let difference = 0;
-
-  function show(screen){
-    document.querySelectorAll(".screen").forEach(function(el){
-      el.classList.remove("active");
+    startTestBtn.addEventListener("click", function(){
+      showScreen("measure");
     });
 
-    screen.classList.add("active");
+    restToggleBtn.addEventListener("click", function(){
+      if (restReady) return;
 
-    const back = document.getElementById("ortho-back");
+      if (!restRunning) {
+        restRunning = true;
+        updateRestUI();
 
-    if (screen === intro) {
-      back.href = "functional-age-profile.html#orthostatic";
-    } else {
-      back.href = "#";
-    }
+        restInterval = setInterval(function(){
+          restRemaining -= 1;
+          if (restRemaining <= 0) {
+            restRemaining = 0;
+            updateRestUI();
+            markRestReady("5-minute rest complete ✓");
+            return;
+          }
+          updateRestUI();
+        }, 1000);
+      } else {
+        stopRestTimer();
+      }
+    });
 
-    window.scrollTo({top:0,behavior:"smooth"});
-  }
+    restSkipBtn.addEventListener("click", function(){
+      markRestReady("Skipped — already rested ✓");
+    });
 
-  function stopTimer(){
-    if (interval) {
-      clearInterval(interval);
-      interval = null;
-    }
-  }
+    recordLyingBtn.addEventListener("click", function(){
+      const val = parseInt(lyingInput.value, 10);
+      if (!(val > 0)) {
+        alert("Please enter your resting pulse first.");
+        return;
+      }
+      restingPulse = val;
+      lyingSavedNote.textContent = "Resting pulse recorded ✓";
+    });
 
-  function metaFor(delta){
+    standToggleBtn.addEventListener("click", function(){
+      standStartedOnce = true;
 
-    if (delta <= 10) {
-      return {
-        label:"Excellent",
-        score:20,
-        color:"#2D7D52",
-        bg:"#E7F3EC",
-        copy:"Your heart rate showed a small change after standing."
-      };
-    }
+      if (!standRunning) {
+        standRunning = true;
+        updateStandUI();
 
-    if (delta <= 15) {
-      return {
-        label:"Good",
-        score:35,
-        color:"#347A8A",
-        bg:"#E8F2F4",
-        copy:"Your heart rate response to standing was within a good range for this measurement."
-      };
-    }
+        standInterval = setInterval(function(){
+          standRemaining -= 1;
 
-    if (delta <= 20) {
-      return {
-        label:"Fair",
-        score:50,
-        color:"#A87922",
-        bg:"#FBF3DF",
-        copy:"Your heart rate increased moderately after standing."
-      };
-    }
+          if (standRemaining <= 0) {
+            standRemaining = 0;
+            stopStandTimer();
+          }
 
-    return {
-      label:"Needs attention",
-      score:70,
-      color:"#B76638",
-      bg:"#FBEDE5",
-      copy:"Your heart rate increased more strongly after standing. Treat this as a baseline and repeat the measurement under similar conditions."
-    };
-  }
+          updateStandUI();
+        }, 1000);
+      } else {
+        stopStandTimer();
+      }
+    });
 
-  document.getElementById("start-test-btn").onclick = function(){
-    show(measurementScreen);
-  };
+    seeResultBtn.addEventListener("click", function(){
+      const lying = parseInt(lyingInput.value, 10);
+      const standing = parseInt(standingInput.value, 10);
 
-  document.getElementById("stand-btn").onclick = function(){
-
-    lyingHR = Number(document.getElementById("lying-hr").value);
-
-    if (!lyingHR || lyingHR < 30 || lyingHR > 220) {
-      alert("Please enter a valid lying heart rate.");
-      return;
-    }
-
-    document.getElementById("standing-step").style.display = "block";
-    this.disabled = true;
-    this.textContent = "Resting pulse recorded ✓";
-  };
-
-  document.getElementById("timer-btn").onclick = function(){
-
-    stopTimer();
-
-    remaining = 60;
-
-    const timer = document.getElementById("timer");
-    const button = document.getElementById("timer-btn");
-
-    timer.textContent = remaining;
-    button.disabled = true;
-    button.textContent = "Timer running…";
-
-    interval = setInterval(function(){
-
-      remaining -= 1;
-      timer.textContent = remaining;
-
-      if (remaining <= 0) {
-
-        stopTimer();
-
-        button.textContent = "60 seconds complete ✓";
-
-        document.getElementById("standing-input-card").style.display = "block";
-        document.getElementById("see-result-btn").style.display = "block";
-
+      if (!(lying > 0)) {
+        alert("Please enter your pulse while lying down.");
+        return;
       }
 
-    },1000);
-  };
+      if (!(standing > 0)) {
+        alert("Please enter your pulse after standing.");
+        return;
+      }
 
-  document.getElementById("see-result-btn").onclick = function(){
+      if (!standStartedOnce) {
+        alert("Please start the 60-second standing timer first.");
+        return;
+      }
 
-    standingHR = Number(document.getElementById("standing-hr").value);
+      restingPulse = lying;
+      standingPulse = standing;
 
-    if (!standingHR || standingHR < 30 || standingHR > 220) {
-      alert("Please enter a valid standing heart rate.");
-      return;
-    }
+      const diff = Math.max(0, standingPulse - restingPulse);
+      const grade = classifyDifference(diff);
 
-    difference = standingHR - lyingHR;
+      pendingResult = {
+        score: grade.score,
+        label: "Orthostatic Response",
+        system: "Cardiovascular Recovery",
+        value: "+" + diff + " bpm",
+        detail: "Lying " + restingPulse + " bpm · Standing " + standingPulse + " bpm",
+        difference: diff,
+        restingPulse: restingPulse,
+        standingPulse: standingPulse,
+        status: grade.label
+      };
 
-    const meta = metaFor(difference);
+      resultValue.textContent = "+" + diff;
+      resultChip.textContent = grade.label;
+      resultChip.className = "status-chip " + grade.className;
+      resultText.textContent = grade.text;
+      resultDetail.textContent = "Lying " + restingPulse + " bpm • Standing " + standingPulse + " bpm";
 
-    document.getElementById("result-value").textContent =
-      (difference > 0 ? "+" : "") + difference;
+      saveResultBtn.disabled = false;
+      saveResultBtn.textContent = "Save Result";
+      nextBtn.disabled = true;
+      profileBtn.disabled = true;
+      savedResultNote.textContent = "";
 
-    const badge = document.getElementById("result-badge");
+      showScreen("result");
+    });
 
-    badge.textContent = meta.label;
-    badge.style.color = meta.color;
-    badge.style.background = meta.bg;
+    saveResultBtn.addEventListener("click", function(){
+      if (!pendingResult) return;
 
-    document.getElementById("result-copy").textContent = meta.copy;
+      saveMeasurement(pendingResult);
 
-    resultScreen.dataset.score = String(meta.score);
-    resultScreen.dataset.label = meta.label;
+      saveResultBtn.disabled = true;
+      saveResultBtn.textContent = "Saved ✓";
+      nextBtn.disabled = false;
+      profileBtn.disabled = false;
+      savedResultNote.textContent = "Result saved to your Functional Age Profile.";
+    });
 
-    show(resultScreen);
-  };
+    nextBtn.addEventListener("click", function(){
+      window.location.href = "test.html?measure=hrr";
+    });
 
-  document.getElementById("save-btn").onclick = function(){
+    profileBtn.addEventListener("click", function(){
+      window.location.href = "functional-age-profile.html";
+    });
 
-    let saved = {};
-
-    try {
-      saved = JSON.parse(
-        localStorage.getItem("ms_functional_measurements") || "{}"
-      );
-    } catch(e) {
-      saved = {};
-    }
-
-    saved["orthostatic"] = {
-      completed:true,
-      score:Number(resultScreen.dataset.score || 0),
-      status:resultScreen.dataset.label || "Recorded",
-      value:(difference > 0 ? "+" : "") + difference + " bpm",
-      lyingHR:lyingHR,
-      standingHR:standingHR,
-      difference:difference,
-      label:"Orthostatic Response",
-      system:"Cardiovascular",
-      doneAt:new Date().toISOString()
-    };
-
-    localStorage.setItem(
-      "ms_functional_measurements",
-      JSON.stringify(saved)
-    );
-
-    const save = document.getElementById("save-btn");
-    const next = document.getElementById("next-btn");
-    const profile = document.getElementById("profile-btn");
-
-    save.textContent = "Saved ✓";
-    save.disabled = true;
-
-    next.disabled = false;
-    next.style.opacity = "1";
-    next.style.pointerEvents = "auto";
-
-    profile.disabled = false;
-    profile.style.opacity = "1";
-    profile.style.pointerEvents = "auto";
-  };
-
-  document.getElementById("next-btn").onclick = function(){
-    window.location.href = "test.html?measure=hrr";
-  };
-
-  document.getElementById("profile-btn").onclick = function(){
-    window.location.href =
-      "functional-age-profile.html#orthostatic";
-  };
-
-  document.getElementById("ortho-back").onclick = function(event){
-
-    const active = document.querySelector(".screen.active");
-
-    if (active === intro) {
-      return;
-    }
-
-    event.preventDefault();
-    stopTimer();
-
-    if (active === measurementScreen) {
-      show(intro);
-      return;
-    }
-
-    if (active === resultScreen) {
-      show(measurementScreen);
-    }
-  };
-
-})();
-</script>
-
+    updateRestUI();
+    updateStandUI();
+  </script>
 </body>
 </html>
