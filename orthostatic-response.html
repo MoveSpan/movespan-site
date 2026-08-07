@@ -598,18 +598,22 @@
         <button class="btn btn-outline" type="button" onclick="window.location.href='functional-age-profile.html'">Back to Functional Age Profile</button>
       </section>
 
-      <!-- MEASUREMENT -->
-      <section class="screen" id="screen-measure">
+      <!-- RESTING MEASUREMENT -->
+      <section class="screen" id="screen-rest">
         <div class="eyebrow">Orthostatic Response</div>
-        <h1 class="title">Measure your pulse</h1>
+        <h1 class="title">Resting pulse</h1>
+
         <p class="subtitle">
-          If you are already resting quietly while lying down, you can skip the 5-minute rest timer.
+          First, make sure your body is settled. If you have already been lying
+          down quietly for at least 5 minutes, you can skip the rest timer.
         </p>
 
         <div class="card">
           <div class="card-title">Optional 5-minute rest</div>
+
           <p class="helper">
-            Use this only if you were moving recently and need to settle first.
+            Use this timer if you were moving recently. Otherwise, skip it and
+            record your resting pulse.
           </p>
 
           <div class="timer-box">
@@ -617,37 +621,89 @@
             <div class="timer-unit">minutes</div>
           </div>
 
-          <button class="btn btn-timer" type="button" id="restToggleBtn">Start 5-minute rest</button>
-          <button class="btn btn-timer secondary" type="button" id="restSkipBtn">Skip — I am already rested</button>
+          <button class="btn btn-timer"
+                  type="button"
+                  id="restToggleBtn">
+            Start 5-minute rest
+          </button>
+
+          <button class="btn btn-timer secondary"
+                  type="button"
+                  id="restSkipBtn">
+            Skip — I am already rested
+          </button>
 
           <div class="saved-note" id="restReadyNote"></div>
         </div>
 
         <div class="card">
           <div class="field-label">Heart rate lying down</div>
-          <input id="lyingInput" class="input" inputmode="numeric" placeholder="e.g. 62" />
-          <button class="btn btn-green" type="button" id="recordLyingBtn" style="margin-top:16px">Record resting pulse</button>
+
+          <input id="lyingInput"
+                 class="input"
+                 inputmode="numeric"
+                 placeholder="e.g. 62" />
+
+          <button class="btn btn-green"
+                  type="button"
+                  id="recordLyingBtn"
+                  style="margin-top:16px">
+            Record resting pulse
+          </button>
+
           <div class="saved-note" id="lyingSavedNote"></div>
         </div>
 
-        <div class="card section-gap">
-          <p class="helper" style="font-size:18px;color:var(--text);margin-bottom:12px">
-            Stand up safely. When you are ready, start the 60-second standing timer.
-            You can stop and continue the timer if needed.
-          </p>
+        <button class="btn btn-green"
+                type="button"
+                id="continueStandingBtn"
+                disabled>
+          Continue to Standing Test →
+        </button>
+      </section>
 
+
+      <!-- STANDING MEASUREMENT -->
+      <section class="screen" id="screen-standing">
+        <div class="eyebrow">Orthostatic Response</div>
+        <h1 class="title">Standing pulse</h1>
+
+        <p class="subtitle">
+          Stand up safely. When you are ready, start the 60-second timer.
+          You can stop and continue the timer if needed.
+        </p>
+
+        <div class="card">
           <div class="timer-box">
             <div class="timer-num" id="standTimerNum">60</div>
             <div class="timer-unit">seconds</div>
           </div>
 
-          <button class="btn btn-timer" type="button" id="standToggleBtn">Start 60-second timer</button>
+          <button class="btn btn-timer"
+                  type="button"
+                  id="standToggleBtn">
+            Start 60-second timer
+          </button>
+        </div>
 
-          <div class="field-label" style="margin-top:20px">Heart rate after standing</div>
-          <input id="standingInput" class="input" inputmode="numeric" placeholder="e.g. 78" />
-          <button class="btn btn-green" type="button" id="seeResultBtn" style="margin-top:16px">See Result →</button>
+        <div class="card">
+          <div class="field-label">Heart rate after standing</div>
+
+          <input id="standingInput"
+                 class="input"
+                 inputmode="numeric"
+                 placeholder="e.g. 78" />
+
+          <button class="btn btn-green"
+                  type="button"
+                  id="seeResultBtn"
+                  style="margin-top:16px">
+            See Result →
+          </button>
         </div>
       </section>
+
+
 
       <!-- RESULT -->
       <section class="screen" id="screen-result">
@@ -675,7 +731,8 @@
 
     const screens = {
       intro: document.getElementById("screen-intro"),
-      measure: document.getElementById("screen-measure"),
+      rest: document.getElementById("screen-rest"),
+      standing: document.getElementById("screen-standing"),
       result: document.getElementById("screen-result")
     };
 
@@ -690,6 +747,7 @@
     const lyingInput = document.getElementById("lyingInput");
     const recordLyingBtn = document.getElementById("recordLyingBtn");
     const lyingSavedNote = document.getElementById("lyingSavedNote");
+    const continueStandingBtn = document.getElementById("continueStandingBtn");
 
     const standTimerNum = document.getElementById("standTimerNum");
     const standToggleBtn = document.getElementById("standToggleBtn");
@@ -836,21 +894,28 @@
         window.location.href = "functional-age-profile.html";
         return;
       }
-      if (currentScreen === "measure") {
+
+      if (currentScreen === "rest") {
         stopRestTimer();
-        stopStandTimer();
         showScreen("intro");
         return;
       }
+
+      if (currentScreen === "standing") {
+        stopStandTimer();
+        showScreen("rest");
+        return;
+      }
+
       if (currentScreen === "result") {
-        showScreen("measure");
+        showScreen("standing");
       }
     }
 
     backButton.addEventListener("click", goBack);
 
     startTestBtn.addEventListener("click", function(){
-      showScreen("measure");
+      showScreen("rest");
     });
 
     restToggleBtn.addEventListener("click", function(){
@@ -881,12 +946,25 @@
 
     recordLyingBtn.addEventListener("click", function(){
       const val = parseInt(lyingInput.value, 10);
+
       if (!(val > 0)) {
         alert("Please enter your resting pulse first.");
         return;
       }
+
       restingPulse = val;
       lyingSavedNote.textContent = "Resting pulse recorded ✓";
+      continueStandingBtn.disabled = false;
+    });
+
+    continueStandingBtn.addEventListener("click", function(){
+      if (!(restingPulse > 0)) {
+        alert("Please record your resting pulse first.");
+        return;
+      }
+
+      stopRestTimer();
+      showScreen("standing");
     });
 
     standToggleBtn.addEventListener("click", function(){
