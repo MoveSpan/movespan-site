@@ -1898,8 +1898,14 @@ function restart(){
   }
 
   function functionalBack() {
-    const source =
-      new URLSearchParams(window.location.search).get("from");
+    const paramsForBack = new URLSearchParams(window.location.search);
+    const source = paramsForBack.get("from");
+    const individualMeasure = paramsForBack.get("measure");
+
+    if (individualMeasure) {
+      window.location.href = "functional-age-profile.html";
+      return;
+    }
 
     if (source === "journal") {
       window.location.href = "/journal.html";
@@ -2108,6 +2114,67 @@ document.addEventListener("click", function(event){
 
   window.updateFunctionalHeader = updateFunctionalHeader;
 })();
+</script>
+
+
+<script id="functional-age-measure-bridge">
+document.addEventListener("DOMContentLoaded", function () {
+  const params = new URLSearchParams(window.location.search);
+  const measure = params.get("measure");
+
+  if (!measure) return;
+
+  const routes = {
+    "breathing": "s-t1",
+    "resting-hr": "s-t2",
+    "flexibility": "s-t3",
+    "balance": "s-t4",
+    "shoulders": "s-t5",
+    "srt": "s-t6",
+    "hrr": "s-hrr-intro"
+  };
+
+  const screenId = routes[measure];
+  if (!screenId) return;
+
+  try {
+    document.querySelectorAll(".sec").forEach(function(section){
+      section.classList.remove("active");
+    });
+
+    const target = document.getElementById(screenId);
+
+    if (!target) {
+      throw new Error("Measurement screen not found: " + screenId);
+    }
+
+    target.classList.add("active");
+
+    const testMap = {
+      "breathing": ["t1", 1],
+      "resting-hr": ["t2", 2],
+      "flexibility": ["t3", 4],
+      "balance": ["t4", 5],
+      "shoulders": ["t5", 6]
+    };
+
+    if (testMap[measure]) {
+      const testId = testMap[measure][0];
+      const step = testMap[measure][1];
+
+      if (typeof buildOpts === "function") buildOpts(testId);
+      if (typeof sp === "function") sp(step);
+    }
+
+    if (measure === "srt" && typeof sp === "function") sp(7);
+    if (measure === "hrr" && typeof sp === "function") sp(3);
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+  } catch (error) {
+    console.error("MoveSpan individual measurement start error:", error);
+  }
+});
 </script>
 
 <script id="functional-age-external-intro-bridge">
