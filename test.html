@@ -1473,7 +1473,17 @@ document.getElementById('b-'+id).disabled=false;
 function selS(level,score,el){
   document.querySelectorAll('.sc').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
-  scores['t6']={score,label:'Sitting-Rising Test',system:'Strength & Coordination'};
+
+  scores['t6']={
+    score:score,
+    label:'Sitting-Rising Test',
+    system:'Strength & Coordination',
+    value:el.textContent.trim(),
+    level:level
+  };
+
+  saveFunctionalMeasurement('t6', scores['t6']);
+
   document.getElementById('b-t6').disabled=false;
 }
 function nt(num){
@@ -1644,7 +1654,19 @@ function saveHrr(){
   else if(hrr>=20){score=30;badge='Good recovery \u2713';}
   else if(hrr>=12){score=50;badge='Fair recovery';}
   else {score=70;badge='Low recovery';}
-  scores.hrr={score:score,label:'Heart Rate Recovery',system:'Cardiovascular',hrr:hrr,p1:a,p2:b};
+  scores.hrr={
+    score:score,
+    label:'Heart Rate Recovery',
+    system:'Cardiovascular',
+    hrr:hrr,
+    p1:a,
+    p2:b,
+    value:hrr+' bpm',
+    interpretation:badge
+  };
+
+  saveFunctionalMeasurement('hrr', scores.hrr);
+
   var n=document.getElementById('hrr-res-num'), bd=document.getElementById('hrr-res-badge');
   if(n)n.textContent=hrr;
   if(bd)bd.textContent=badge;
