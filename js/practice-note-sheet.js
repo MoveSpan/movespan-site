@@ -26,25 +26,37 @@
 
   if (!note || !card) return;
 
+  if (sheet) {
+    sheet.hidden = true;
+    sheet.style.setProperty(
+      "display",
+      "none",
+      "important"
+    );
+  }
 
-  function moveCardBelowPracticeLibrary() {
-    const practiceLibraryCard = Array.from(
-      document.querySelectorAll(".card")
-    ).find(function (candidate) {
-      const text = candidate.textContent
-        .replace(/\s+/g, " ")
-        .trim()
-        .toLowerCase();
+  if (backdrop) {
+    backdrop.hidden = true;
+    backdrop.style.setProperty(
+      "display",
+      "none",
+      "important"
+    );
+  }
 
-      return text.includes("practice library");
-    });
 
-    if (!practiceLibraryCard || !card) return;
+  function moveCardAboveTodaysPractice() {
+    const practiceHero =
+      document.getElementById("practice-hero");
 
-    practiceLibraryCard.insertAdjacentElement(
-      "afterend",
+    if (!practiceHero || !card) return false;
+
+    practiceHero.insertAdjacentElement(
+      "beforebegin",
       card
     );
+
+    return true;
   }
 
   function isDismissed() {
@@ -52,12 +64,33 @@
   }
 
   function openSheet() {
-    if (!sheet || !backdrop) return;
+    if (!sheet || !backdrop) {
+      console.warn(
+        "Practice Note sheet or backdrop was not found."
+      );
+      return;
+    }
 
     backdrop.hidden = false;
     sheet.hidden = false;
 
-    document.body.classList.add("practice-sheet-open");
+    backdrop.style.setProperty(
+      "display",
+      "block",
+      "important"
+    );
+
+    sheet.style.setProperty(
+      "display",
+      "flex",
+      "important"
+    );
+
+    sheet.style.removeProperty("transform");
+
+    document.body.classList.add(
+      "practice-sheet-open"
+    );
 
     window.requestAnimationFrame(function () {
       closeButton?.focus();
@@ -67,13 +100,27 @@
   function closeSheet() {
     if (!sheet || !backdrop) return;
 
-    sheet.style.transform = "";
+    sheet.style.removeProperty("transform");
     sheet.classList.remove("is-dragging");
 
     sheet.hidden = true;
     backdrop.hidden = true;
 
-    document.body.classList.remove("practice-sheet-open");
+    sheet.style.setProperty(
+      "display",
+      "none",
+      "important"
+    );
+
+    backdrop.style.setProperty(
+      "display",
+      "none",
+      "important"
+    );
+
+    document.body.classList.remove(
+      "practice-sheet-open"
+    );
   }
 
   function renderCard() {
@@ -171,7 +218,7 @@
           </div>
 
           <div class="practice-note-complete-label">
-            You’re set
+            All set!
           </div>
         </div>
       </div>
@@ -223,28 +270,83 @@
     return;
   }
 
-  moveCardBelowPracticeLibrary();
+  moveCardAboveTodaysPractice();
   renderCard();
 
-  card
-    .querySelector("[data-practice-note-read]")
-    ?.addEventListener("click", function (event) {
-      event.preventDefault();
-      event.stopPropagation();
-      openSheet();
-    });
+  document.addEventListener(
+    "click",
+    function (event) {
+      const readButton =
+        event.target.closest(
+          "[data-practice-note-read]"
+        );
 
-  card
-    .querySelector("[data-practice-note-dismiss]")
-    ?.addEventListener("click", function (event) {
-      event.preventDefault();
-      event.stopPropagation();
-      dismissCard();
-    });
+      if (readButton && card.contains(readButton)) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
 
-  closeButton?.addEventListener("click", closeSheet);
-  gotItButton?.addEventListener("click", closeSheet);
-  backdrop?.addEventListener("click", closeSheet);
+        openSheet();
+        return;
+      }
+
+      const dismissButton =
+        event.target.closest(
+          "[data-practice-note-dismiss]"
+        );
+
+      if (
+        dismissButton &&
+        card.contains(dismissButton)
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+
+        dismissCard();
+        return;
+      }
+
+      if (
+        closeButton &&
+        (
+          event.target === closeButton ||
+          closeButton.contains(event.target)
+        )
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+
+        closeSheet();
+        return;
+      }
+
+      if (
+        gotItButton &&
+        (
+          event.target === gotItButton ||
+          gotItButton.contains(event.target)
+        )
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+
+        closeSheet();
+        return;
+      }
+
+      if (event.target === backdrop) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+
+        closeSheet();
+      }
+    },
+    true
+  );
 
   document.addEventListener("keydown", function (event) {
     if (
