@@ -2770,10 +2770,72 @@ document.addEventListener("DOMContentLoaded", function () {
     return null;
   }
 
-  function rating(score){
-    if (score <= 30) return "Excellent";
-    if (score <= 50) return "Good";
-    return "Needs attention";
+  function statusMeta(score){
+    if (score <= 25) {
+      return {
+        label:"Excellent",
+        color:"#2D7D52",
+        bg:"#E7F3EC"
+      };
+    }
+
+    if (score <= 40) {
+      return {
+        label:"Good",
+        color:"#4F8F73",
+        bg:"#EDF5F1"
+      };
+    }
+
+    if (score <= 60) {
+      return {
+        label:"Fair",
+        color:"#A87922",
+        bg:"#FBF3DF"
+      };
+    }
+
+    return {
+      label:"Needs attention",
+      color:"#B76638",
+      bg:"#FBEDE5"
+    };
+  }
+
+  function statusBadge(score){
+    const meta = statusMeta(score);
+
+    return `
+      <span style="
+        display:inline-block;
+        padding:6px 10px;
+        border-radius:999px;
+        background:${meta.bg};
+        color:${meta.color};
+        font-size:13px;
+        font-weight:650;
+        white-space:nowrap;
+      ">
+        ${meta.label}
+      </span>
+    `;
+  }
+
+  function notMeasuredBadge(){
+    return `
+      <span style="
+        display:inline-block;
+        padding:6px 10px;
+        border-radius:999px;
+        background:#F1F3F2;
+        color:#7A817D;
+        font-size:13px;
+        font-weight:650;
+        white-space:nowrap;
+      ">
+        Not measured →
+      </span>
+    `;
   }
 
   function ensureCoreResultScreen(){
@@ -2828,7 +2890,7 @@ document.addEventListener("DOMContentLoaded", function () {
       </div>
 
       <button class="fa-primary-button"
-              onclick="window.location.href='functional-age-profile.html#additional-measurements'">
+              onclick="window.location.href='test.html?measure=hrr'">
         Continue with Additional Measurements →
       </button>
 
@@ -2947,8 +3009,8 @@ document.addEventListener("DOMContentLoaded", function () {
               ? '<div style="font-size:11px;color:#9A6A22;margin-top:3px">Focus area</div>'
               : ''}
           </div>
-          <div style="font-size:14px;font-weight:600;color:var(--green)">
-            ${data ? rating(data.score) : "—"}
+          <div>
+            ${data ? statusBadge(data.score) : notMeasuredBadge()}
           </div>
         </div>
       `).join("");
@@ -2960,7 +3022,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <div style="font-size:15px;font-weight:600">Breath-Hold Capacity</div>
             <div style="font-size:11px;color:var(--muted);margin-top:3px">Inhale + exhale measurements</div>
           </div>
-          <div style="font-size:14px;font-weight:600;color:var(--green)">Not measured →</div>
+          <div>${notMeasuredBadge()}</div>
         </a>
 
         <a href="test.html?measure=hrr"
@@ -2969,8 +3031,10 @@ document.addEventListener("DOMContentLoaded", function () {
             <div style="font-size:15px;font-weight:600">Cardiovascular Recovery</div>
             <div style="font-size:11px;color:var(--muted);margin-top:3px">20 squats + heart-rate recovery</div>
           </div>
-          <div style="font-size:14px;font-weight:600;color:var(--green)">
-            ${measurements.hrr ? rating(measurements.hrr.score) : "Not measured →"}
+          <div>
+            ${measurements.hrr
+              ? statusBadge(measurements.hrr.score)
+              : notMeasuredBadge()}
           </div>
         </a>
 
@@ -2980,7 +3044,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <div style="font-size:15px;font-weight:600">Orthostatic Response</div>
             <div style="font-size:11px;color:var(--muted);margin-top:3px">Best after resting or lying down</div>
           </div>
-          <div style="font-size:14px;font-weight:600;color:var(--green)">Not measured →</div>
+          <div>${notMeasuredBadge()}</div>
         </a>
 
         <a href="functional-age-profile.html#pushup"
@@ -2989,7 +3053,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <div style="font-size:15px;font-weight:600">Upper-Body Strength</div>
             <div style="font-size:11px;color:var(--muted);margin-top:3px">Push-up Test</div>
           </div>
-          <div style="font-size:14px;font-weight:600;color:var(--green)">Not measured →</div>
+          <div>${notMeasuredBadge()}</div>
         </a>
       `;
 
