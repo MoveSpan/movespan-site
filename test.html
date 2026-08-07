@@ -1436,11 +1436,39 @@ function buildOpts(id){
     `<button class="fa-option-card" onclick="selO('${id}',${o.s},this)">${o.t}</button>`
   ).join('');
 }
+function saveFunctionalMeasurement(id, data){
+try{
+  const key = 'ms_functional_measurements';
+  const current = JSON.parse(localStorage.getItem(key) || '{}');
+
+  current[id] = Object.assign({}, data, {
+    completed: true,
+    doneAt: new Date().toISOString()
+  });
+
+  localStorage.setItem(key, JSON.stringify(current));
+} catch(e){
+  console.warn('Functional measurement save error:', e);
+}
+}
+
 function selO(id,score,el){
-  document.querySelectorAll(`#o-${id} .topt`).forEach(b=>b.classList.remove('sel'));
-  el.classList.add('sel');
-  scores[id]={score,label:tests[id].label,system:tests[id].system};
-  document.getElementById('b-'+id).disabled=false;
+document.querySelectorAll(`#o-${id} .fa-option-card`).forEach(b=>b.classList.remove('sel'));
+el.classList.add('sel');
+
+const test = tests[id];
+const selectedText = el.textContent.trim();
+
+scores[id]={
+  score:score,
+  label:test.label,
+  system:test.system,
+  value:selectedText
+};
+
+saveFunctionalMeasurement(id, scores[id]);
+
+document.getElementById('b-'+id).disabled=false;
 }
 function selS(level,score,el){
   document.querySelectorAll('.sc').forEach(c=>c.classList.remove('sel'));
