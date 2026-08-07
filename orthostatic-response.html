@@ -651,7 +651,6 @@
             Record resting pulse
           </button>
 
-          <div class="saved-note" id="lyingSavedNote"></div>
         </div>
 
         <button class="btn btn-green"
@@ -746,7 +745,6 @@
 
     const lyingInput = document.getElementById("lyingInput");
     const recordLyingBtn = document.getElementById("recordLyingBtn");
-    const lyingSavedNote = document.getElementById("lyingSavedNote");
     const continueStandingBtn = document.getElementById("continueStandingBtn");
 
     const standTimerNum = document.getElementById("standTimerNum");
@@ -952,7 +950,10 @@
       }
 
       restingPulse = val;
-      lyingSavedNote.textContent = "Resting pulse recorded ✓";
+
+      recordLyingBtn.textContent = "Resting pulse recorded ✓";
+      recordLyingBtn.disabled = true;
+
       continueStandingBtn.disabled = false;
     });
 
