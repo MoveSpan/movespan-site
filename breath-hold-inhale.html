@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Breath Hold — Inhale | MoveSpan</title>
+
+<link rel="stylesheet" href="/assets/css/movespan-navigation.css">
+
+<style>
+:root{
+  --green:#2D7D52;
+  --green-soft:#E7F3EC;
+  --text:#1D1D1F;
+  --secondary:#667085;
+  --border:#E4E7EC;
+  --surface:#F4F7F5;
+  --white:#fff;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--surface);
+  color:var(--text);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+.page{
+  width:min(100%,430px);
+  min-height:100vh;
+  margin:0 auto;
+  padding:18px 16px 34px;
+  background:#fff;
+}
+
+.topbar{
+  min-height:52px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:12px;
+}
+
+.top-title{
+  flex:1;
+  text-align:center;
+  font-size:17px;
+  font-weight:650;
+  padding-right:44px;
+}
+
+.progress{
+  height:7px;
+  background:#EDF0EE;
+  border-radius:999px;
+  overflow:hidden;
+  margin:6px 0 14px;
+}
+
+.progress > div{
+  width:25%;
+  height:100%;
+  background:var(--green);
+  border-radius:999px;
+}
+
+.eyebrow{
+  color:var(--green);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+
+h1{
+  margin:0 0 10px;
+  font-size:30px;
+  line-height:1.1;
+  letter-spacing:-.03em;
+}
+
+.subtitle{
+  margin:0 0 20px;
+  color:var(--secondary);
+  font-size:15px;
+  line-height:1.55;
+}
+
+.card{
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:18px;
+  margin-bottom:16px;
+}
+
+.instructions{
+  display:grid;
+  gap:13px;
+}
+
+.step{
+  display:grid;
+  grid-template-columns:30px 1fr;
+  gap:10px;
+  align-items:start;
+}
+
+.step-num{
+  width:28px;
+  height:28px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:var(--green-soft);
+  color:var(--green);
+  font-size:13px;
+  font-weight:700;
+}
+
+.step-text{
+  padding-top:3px;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.safety{
+  background:#FBF3DF;
+  color:#76581C;
+  border-radius:15px;
+  padding:13px 14px;
+  font-size:12px;
+  line-height:1.5;
+  margin-bottom:18px;
+}
+
+button{
+  font-family:inherit;
+}
+
+.primary{
+  width:100%;
+  min-height:54px;
+  border:0;
+  border-radius:16px;
+  background:var(--green);
+  color:#fff;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.secondary{
+  width:100%;
+  min-height:50px;
+  margin-top:10px;
+  border:1.5px solid var(--border);
+  border-radius:16px;
+  background:#fff;
+  color:var(--green);
+  font-size:15px;
+  font-weight:650;
+  cursor:pointer;
+}
+
+.screen{
+  display:none;
+}
+
+.screen.active{
+  display:block;
+}
+
+.timer-wrap{
+  text-align:center;
+  padding:32px 10px 24px;
+}
+
+.timer{
+  font-size:72px;
+  line-height:1;
+  font-weight:700;
+  color:var(--green);
+  letter-spacing:-.04em;
+}
+
+.timer-label{
+  margin-top:10px;
+  color:var(--secondary);
+  font-size:14px;
+}
+
+.stop{
+  background:#B76638;
+}
+
+.result{
+  text-align:center;
+  padding:10px 0 18px;
+}
+
+.result-value{
+  font-size:58px;
+  line-height:1;
+  font-weight:700;
+  color:var(--green);
+  margin:16px 0 8px;
+}
+
+.result-label{
+  color:var(--secondary);
+  font-size:14px;
+}
+
+.badge{
+  display:inline-block;
+  margin-top:18px;
+  padding:7px 14px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:700;
+}
+
+.result-copy{
+  margin:16px auto 22px;
+  max-width:330px;
+  color:var(--secondary);
+  font-size:14px;
+  line-height:1.55;
+}
+
+@media (min-width:431px){
+  .page{
+    margin:24px auto;
+    min-height:auto;
+    border-radius:24px;
+  }
+}
+</style>
+</head>
+
+<body>
+<main class="page">
+
+  <div class="topbar">
+    <a class="movespan-back"
+       href="functional-age-profile.html#breath-inhale"
+       aria-label="Back">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M15 18l-6-6 6-6"></path>
+      </svg>
+    </a>
+    <div class="top-title">Breath Hold — Inhale</div>
+  </div>
+
+  <div class="progress"><div></div></div>
+
+  <!-- INTRO -->
+  <section class="screen active" id="intro">
+    <div class="eyebrow">Additional Measurement · 1 of 4</div>
+    <h1>Breath Hold — Inhale</h1>
+
+    <p class="subtitle">
+      This test measures how long you can comfortably hold your breath after a full inhale.
+    </p>
+
+    <div class="card instructions">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          Sit comfortably and rest for about 1–2 minutes.
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          Breathe normally. Do not hyperventilate before the test.
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          Take one full comfortable inhale, then tap <strong>Start</strong> and hold your breath.
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text">
+          Tap <strong>Stop</strong> when you need to breathe. Do not strain for extra seconds.
+        </div>
+      </div>
+    </div>
+
+    <div class="safety">
+      Stay seated during the test. Stop immediately if you feel dizzy, faint, chest discomfort, or unusual distress.
+    </div>
+
+    <button class="primary" id="start-btn">Start Test →</button>
+
+    <button class="secondary"
+      onclick="window.location.href='functional-age-profile.html#breath-inhale'">
+      Back to Functional Age Profile
+    </button>
+  </section>
+
+  <!-- TIMER -->
+  <section class="screen" id="timer-screen">
+    <div class="eyebrow">Breath Hold — Inhale</div>
+    <h1>Hold comfortably</h1>
+
+    <p class="subtitle">
+      Stay relaxed. Tap Stop as soon as you need to breathe.
+    </p>
+
+    <div class="timer-wrap">
+      <div class="timer" id="timer">0.0</div>
+      <div class="timer-label">seconds</div>
+    </div>
+
+    <button class="primary stop" id="stop-btn">Stop</button>
+  </section>
+
+  <!-- RESULT -->
+  <section class="screen" id="result-screen">
+    <div class="eyebrow">Measurement Complete</div>
+    <h1>Your Breath-Hold Result</h1>
+
+    <div class="result">
+      <div class="result-value" id="result-value">—</div>
+      <div class="result-label">seconds</div>
+
+      <div class="badge" id="result-badge">—</div>
+
+      <div class="result-copy" id="result-copy"></div>
+    </div>
+
+    <button class="primary" id="save-btn">Save Result</button>
+
+    <button class="secondary" id="next-btn" disabled
+      style="opacity:.45;pointer-events:none">
+      Continue to Orthostatic Response →
+    </button>
+
+    <button class="secondary" id="profile-btn" disabled
+      style="opacity:.45;pointer-events:none">
+      Back to Functional Age Profile
+    </button>
+  </section>
+
+</main>
+
+<script>
+(function(){
+
+  let startTime = null;
+  let interval = null;
+  let seconds = 0;
+
+  const intro = document.getElementById("intro");
+  const timerScreen = document.getElementById("timer-screen");
+  const resultScreen = document.getElementById("result-screen");
+
+  const timer = document.getElementById("timer");
+  const resultValue = document.getElementById("result-value");
+  const resultBadge = document.getElementById("result-badge");
+  const resultCopy = document.getElementById("result-copy");
+
+  function show(screen){
+    document.querySelectorAll(".screen").forEach(function(el){
+      el.classList.remove("active");
+    });
+    screen.classList.add("active");
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  function metaFor(value){
+    if (value >= 60) {
+      return {
+        label:"Excellent",
+        color:"#2D7D52",
+        bg:"#E7F3EC",
+        score:20,
+        copy:"Your inspiratory breath-hold capacity is strong for this measurement."
+      };
+    }
+
+    if (value >= 45) {
+      return {
+        label:"Good",
+        color:"#347A8A",
+        bg:"#E8F2F4",
+        score:35,
+        copy:"Your breath-hold capacity is in a good range for this measurement."
+      };
+    }
+
+    if (value >= 30) {
+      return {
+        label:"Fair",
+        color:"#A87922",
+        bg:"#FBF3DF",
+        score:50,
+        copy:"Your result is moderate. Breath awareness and regular respiratory practice may help improve this capacity."
+      };
+    }
+
+    return {
+      label:"Needs attention",
+      color:"#B76638",
+      bg:"#FBEDE5",
+      score:70,
+      copy:"Your result is lower for this measurement. Treat it as a baseline and avoid forcing longer holds."
+    };
+  }
+
+  document.getElementById("start-btn").onclick = function(){
+    seconds = 0;
+    timer.textContent = "0.0";
+    show(timerScreen);
+
+    startTime = performance.now();
+
+    interval = setInterval(function(){
+      seconds = (performance.now() - startTime) / 1000;
+      timer.textContent = seconds.toFixed(1);
+    }, 100);
+  };
+
+  document.getElementById("stop-btn").onclick = function(){
+    if (!startTime) return;
+
+    clearInterval(interval);
+
+    seconds = (performance.now() - startTime) / 1000;
+    seconds = Math.round(seconds * 10) / 10;
+
+    const meta = metaFor(seconds);
+
+    resultValue.textContent = seconds.toFixed(1);
+    resultBadge.textContent = meta.label;
+    resultBadge.style.color = meta.color;
+    resultBadge.style.background = meta.bg;
+    resultCopy.textContent = meta.copy;
+
+    resultScreen.dataset.score = String(meta.score);
+    resultScreen.dataset.label = meta.label;
+
+    show(resultScreen);
+  };
+
+  document.getElementById("save-btn").onclick = function(){
+
+    const score = Number(resultScreen.dataset.score || 0);
+    const label = resultScreen.dataset.label || "Recorded";
+
+    let saved = {};
+
+    try {
+      saved = JSON.parse(
+        localStorage.getItem("ms_functional_measurements") || "{}"
+      );
+    } catch(e) {
+      saved = {};
+    }
+
+    saved["breath-inhale"] = {
+      completed:true,
+      score:score,
+      value:seconds.toFixed(1) + " sec",
+      seconds:seconds,
+      status:label,
+      label:"Breath Hold — Inhale",
+      system:"Respiratory",
+      doneAt:new Date().toISOString()
+    };
+
+    localStorage.setItem(
+      "ms_functional_measurements",
+      JSON.stringify(saved)
+    );
+
+    const saveBtn = document.getElementById("save-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const profileBtn = document.getElementById("profile-btn");
+
+    saveBtn.textContent = "Saved ✓";
+    saveBtn.disabled = true;
+
+    nextBtn.disabled = false;
+    nextBtn.style.opacity = "1";
+    nextBtn.style.pointerEvents = "auto";
+
+    profileBtn.disabled = false;
+    profileBtn.style.opacity = "1";
+    profileBtn.style.pointerEvents = "auto";
+  };
+
+  document.getElementById("next-btn").onclick = function(){
+    window.location.href =
+      "functional-age-profile.html?focus=orthostatic#orthostatic";
+  };
+
+  document.getElementById("profile-btn").onclick = function(){
+    window.location.href =
+      "functional-age-profile.html#breath-inhale";
+  };
+
+})();
+</script>
+
+</body>
+</html>
