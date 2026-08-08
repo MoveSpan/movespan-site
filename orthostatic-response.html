@@ -1,421 +1,2293 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Orthostatic Response | MoveSpan</title>
 
-<link rel="stylesheet" href="/assets/css/movespan-navigation.css">
-<link rel="stylesheet" href="/assets/css/movespan-functional-age.css">
+<link rel="stylesheet" href="assets/css/movespan-functional-age.css">
+
 <style>
-html,body{margin:0;min-height:100%;background:#F6F7F8}
-body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-.fa-measurement-shell{
-  width:100%;
-  max-width:430px;
+:root{
+  --green:#2D7D52;
+  --green-soft:#BFDCCB;
+  --green-bg:#E6F2EB;
+  --orange:#B46F43;
+  --text:#17181C;
+  --muted:#667085;
+  --border:#D7DFD8;
+  --bg:#F7F9F6;
+  --outer:#EEF1EF;
+  --warn-bg:#F4ECD7;
+  --warn-text:#816222;
+}
+
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:var(--outer);
+  color:var(--text);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+.page{
+  width:min(100%,430px);
   min-height:100vh;
   margin:0 auto;
-  padding:calc(env(safe-area-inset-top) + 10px) 16px calc(env(safe-area-inset-bottom) + 40px);
-  box-sizing:border-box;
-  background:#F6F7F8;
+  padding:
+    max(14px,env(safe-area-inset-top))
+    16px
+    calc(40px + env(safe-area-inset-bottom));
+  background:var(--bg);
 }
-.fa-measurement-progress{
-  height:7px;
-  margin:0 0 16px;
-  border-radius:999px;
-  overflow:hidden;
-  background:#EDF0EE;
+
+@media(min-width:431px){
+  .page{box-shadow:0 0 32px rgba(32,47,39,.10)}
 }
-.fa-measurement-progress > div{
-  height:100%;
-  border-radius:999px;
-  background:#2D7D52;
+
+.movespan-page-header{
+  width:100%;
+  height:44px;
+  display:grid;
+  grid-template-columns:44px 1fr 44px;
+  align-items:center;
+  margin:0 0 18px;
 }
-.fa-measurement-title{
-  margin:0 0 8px;
-  color:#1D1F1E;
-  font-size:28px;
-  line-height:1.16;
+
+.movespan-page-header-title{
+  text-align:center;
+  font-size:17px;
+  line-height:1.2;
   font-weight:700;
+  letter-spacing:-.02em;
+}
+
+.movespan-page-header-spacer{
+  width:44px;
+  height:44px;
+}
+
+.movespan-back{
+  width:44px;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:var(--green);
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.movespan-back svg{width:24px;height:24px}
+
+.movespan-back path{
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.movespan-back:focus-visible{
+  outline:none;
+  border-radius:10px;
+  box-shadow:0 0 0 3px rgba(45,125,82,.18);
+}
+
+.progress{
+  display:flex;
+  gap:12px;
+  margin:4px 0 20px;
+}
+
+.progress span{
+  height:8px;
+  flex:1;
+  border-radius:999px;
+  background:#DDE4DD;
+}
+
+.progress span.active{background:var(--green)}
+
+.screen{display:none}
+.screen.active{display:block}
+#screen-intro{
+  padding-bottom:4px;
+}
+
+.eyebrow{
+  margin:0 0 12px;
+  color:var(--green);
+  font-size:15px;
+  line-height:1.25;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+h1{
+  margin:0 0 14px;
+  color:var(--text);
+  font-size:32px;
+  line-height:1.06;
+  font-weight:800;
   letter-spacing:-.03em;
 }
-.fa-measurement-sub{
-  margin:0 0 18px;
-  color:#667085;
-  font-size:15px;
-  line-height:1.55;
-}
-.fa-measurement-card{
-  margin:0 0 18px;
-  padding:16px;
-  border:1px solid #DDE3E0;
-  border-radius:16px;
-  background:#FFFFFF;
-  box-shadow:0 2px 8px rgba(0,0,0,.055);
-}
-.fa-measurement-safety{
-  margin:0 0 18px;
-  padding:14px 16px;
-  border-radius:16px;
-  background:#FBF3DF;
-  color:#76581C;
-  font-size:13px;
+
+.subtitle{
+  margin:0 0 20px;
+  color:var(--muted);
+  font-size:16px;
   line-height:1.5;
 }
-.fa-timer-box{
-  margin:0 0 14px;
-  padding:20px 12px;
-  border-radius:16px;
-  background:#FFFFFF;
-  border:1px solid #DDE3E0;
+
+.card{
+  margin:0 0 18px;
+  padding:18px;
+  border:1px solid var(--border);
+  border-radius:22px;
+  background:#fff;
+}
+
+.warning{
+  margin:0 0 18px;
+  padding:18px;
+  border-radius:22px;
+  background:var(--warn-bg);
+  color:var(--warn-text);
+  font-size:14px;
+  line-height:1.5;
+}
+
+.circle-wrap{
+  width:min(78vw,320px);
+  max-width:320px;
+  margin:18px auto 22px;
+}
+
+.timer-circle{
+  width:100%;
+  aspect-ratio:1;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  border:4px solid var(--green-soft);
+  border-radius:50%;
+  background:linear-gradient(180deg,#F8FBF8,#F2F6F2);
+  box-shadow:
+    inset 0 0 0 10px rgba(255,255,255,.58),
+    0 10px 30px rgba(45,125,82,.06);
+  cursor:pointer;
+  appearance:none;
+  -webkit-appearance:none;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.timer-circle::after{
+  content:"";
+  position:absolute;
+  inset:14px;
+  border:5px solid transparent;
+  border-radius:50%;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .18s ease,border-color .18s ease;
+}
+
+.timer-circle.running::after{
+  border-color:var(--orange);
+  opacity:1;
+}
+
+.timer-inner{
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  border:2px solid #D8E2DA;
+  border-radius:50%;
   text-align:center;
 }
-.fa-timer-value{
-  color:#1D1F1E;
-  font-size:58px;
-  line-height:1;
+
+.timer-value{
+  color:var(--green);
+  font-size:clamp(64px,18vw,92px);
+  font-weight:780;
+  line-height:.92;
+  letter-spacing:-.06em;
+  font-variant-numeric:tabular-nums;
+}
+
+.timer-circle.running .timer-value,
+.timer-circle.running .timer-hint{
+  color:var(--orange);
+}
+
+.timer-unit{
+  margin-top:10px;
+  color:var(--text);
+  font-size:17px;
   font-weight:700;
-  letter-spacing:-.04em;
 }
-.fa-timer-unit{
-  margin-top:8px;
-  color:#667085;
-  font-size:13px;
-}
-.fa-timer-button{
-  width:100%;
-  min-height:52px;
-  padding:10px 12px;
-  border:0;
-  border-radius:13px;
-  background:#B46F43;
-  color:#FFFFFF;
-  font-size:14px;
-  line-height:1.4;
-  font-weight:700;
-  cursor:pointer;
-  box-sizing:border-box;
-}
-.fa-timer-button.secondary{
+
+.timer-hint{
+  max-width:180px;
   margin-top:9px;
-  border:1px solid #D8B7A0;
-  background:#F4E7DD;
-  color:#B46F43;
+  color:var(--green);
+  font-size:13px;
+  line-height:1.25;
+  font-weight:700;
 }
-.fa-measurement-input{
+
+.answer-title{
+  margin:0 0 10px;
+  font-size:17px;
+  font-weight:750;
+}
+
+.measure-input{
   width:100%;
-  min-height:52px;
-  padding:10px 12px;
-  border:1px solid #E0E5E2;
-  border-radius:13px;
-  background:#FFFFFF;
-  color:#1D1F1E;
-  font-size:20px;
-  box-sizing:border-box;
+  min-height:56px;
+  padding:12px 14px;
+  border:1.5px solid var(--border);
+  border-radius:17px;
+  background:#fff;
+  color:var(--text);
+  font:inherit;
+  font-size:22px;
   outline:none;
 }
-.fa-measurement-input:focus{
+
+.measure-input:focus{
   border-color:#9BC2AC;
   box-shadow:0 0 0 3px rgba(45,125,82,.08);
 }
-.fa-result-value{
-  margin:18px 0 8px;
-  color:#1D1F1E;
-  font-size:52px;
-  line-height:1;
+
+.measure-input:disabled{
+  background:#F1F3F2;
+  color:#9AA19D;
+  cursor:not-allowed;
+}
+
+.primary,
+.secondary,
+.outline{
+  width:100%;
+  min-height:56px;
+  padding:10px 14px;
+  border-radius:18px;
+  font-family:inherit;
+  font-size:16px;
+  line-height:1.35;
   font-weight:700;
-  letter-spacing:-.04em;
-  text-align:center;
+  cursor:pointer;
 }
-.fa-result-unit{
-  color:#667085;
+
+.primary{
+  border:0;
+  background:var(--green);
+  color:#fff;
+}
+
+.secondary{
+  margin-top:9px;
+  border:1.5px solid var(--green-soft);
+  background:var(--green-bg);
+  color:var(--green);
+}
+
+.outline{
+  margin-top:9px;
+  border:1.5px solid var(--border);
+  background:#fff;
+  color:var(--green);
+}
+
+.primary:disabled{
+  border:1px solid var(--green-soft);
+  background:var(--green-bg);
+  color:#71927D;
+  cursor:not-allowed;
+}
+
+.text-action{
+  width:100%;
+  padding:4px 0;
+  border:0;
+  background:transparent;
+  color:var(--green);
+  font-family:inherit;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.result-card{
+  margin:20px 0 18px;
+  padding:21px;
+  border:1px solid rgba(45,125,82,.25);
+  border-radius:22px;
+  background:#fff;
+  text-align:center;
+  box-shadow:0 12px 30px rgba(45,125,82,.08);
+}
+
+.result-value{
+  font-size:54px;
+  line-height:1;
+  font-weight:780;
+  letter-spacing:-.05em;
+}
+
+.result-unit{
+  margin-top:5px;
+  color:var(--muted);
   font-size:14px;
-  text-align:center;
+  font-weight:650;
 }
-.fa-result-badge{
-  display:table;
-  margin:16px auto;
-  padding:7px 14px;
+
+.result-badge{
+  display:inline-flex;
+  margin:16px auto 10px;
+  padding:8px 15px;
   border-radius:999px;
   font-size:14px;
   font-weight:700;
 }
-.fa-status-excellent{background:#E7F3EC;color:#2D7D52}
-.fa-status-good{background:#E8F2F4;color:#347A8A}
-.fa-status-fair{background:#FBF3DF;color:#A87922}
-.fa-status-attention{background:#FBEDE5;color:#B76638}
-.fa-result-copy{
-  margin:0 0 18px;
-  color:#667085;
-  font-size:14px;
-  line-height:1.55;
+
+.excellent{background:#E7F3EC;color:#2D7D52}
+.good{background:#E8F2F4;color:#347A8A}
+.fair{background:#FBF3DF;color:#A87922}
+.attention{background:#FBEDE5;color:#B76638}
+
+.result-detail{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.42;
+}
+
+@media(max-width:390px){
+  .circle-wrap{width:min(74vw,286px)}
+  .timer-circle::after{inset:12px;border-width:4px}
+}
+
+.prep-steps{
+  margin:20px 0 18px;
+  padding:18px;
+  border:1px solid var(--border);
+  border-radius:22px;
+  background:#fff;
+}
+
+.prep-step{
+  display:grid;
+  grid-template-columns:40px 1fr;
+  gap:14px;
+  align-items:start;
+  margin-bottom:18px;
+  color:var(--text);
+  font-size:15px;
+  line-height:1.48;
+}
+
+.prep-step:last-child{
+  margin-bottom:0;
+}
+
+.prep-number{
+  width:32px;
+  height:32px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:var(--green-bg);
+  color:var(--green);
+  font-size:15px;
+  font-weight:750;
+}
+
+.rest-skip-note{
+  max-width:340px;
+  margin:0 auto 12px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.45;
   text-align:center;
 }
-.fa-secondary-button{
+
+
+.pulse-method-title{
+  margin:0 0 12px;
+  color:var(--text);
+  font-size:16px;
+  font-weight:750;
+}
+
+.pulse-method-grid{
+  display:grid;
+  gap:10px;
+}
+
+.pulse-method-card{
   width:100%;
-  min-height:52px;
-  margin-top:9px;
-  padding:10px 12px;
-  border:1px solid #E0E5E2;
-  border-radius:13px;
-  background:#FFFFFF;
-  color:#2D7D52;
-  font-size:14px;
-  line-height:1.4;
-  font-weight:700;
-  box-sizing:border-box;
+  min-height:92px;
+  display:grid;
+  grid-template-columns:48px 1fr 24px;
+  gap:13px;
+  align-items:center;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:20px;
+  background:#fff;
+  color:var(--text);
+  font-family:inherit;
+  text-align:left;
   cursor:pointer;
 }
-@media(min-width:431px){body{background:#EEF1EF}}
+
+.pulse-method-card:active{
+  transform:translateY(1px);
+}
+
+.pulse-method-icon{
+  width:48px;
+  height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:15px;
+  background:var(--green-bg);
+  color:var(--green);
+}
+
+.pulse-method-icon svg{
+  width:25px;
+  height:25px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.9;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.pulse-method-copy strong{
+  display:block;
+  margin-bottom:4px;
+  font-size:16px;
+  line-height:1.25;
+}
+
+.pulse-method-copy small{
+  display:block;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.4;
+}
+
+.pulse-method-arrow{
+  color:var(--green);
+  font-size:34px;
+  line-height:1;
+}
+
+.pulse-panel{
+  margin-top:14px;
+}
+
+.pulse-device-row{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.pulse-device-input{
+  width:130px;
+  min-height:60px;
+  padding:10px 12px;
+  border:1.5px solid var(--border);
+  border-radius:17px;
+  background:#fff;
+  color:var(--text);
+  font-family:inherit;
+  font-size:30px;
+  font-weight:700;
+  text-align:center;
+  outline:none;
+}
+
+.pulse-device-input:focus{
+  border-color:#9BC2AC;
+  box-shadow:0 0 0 3px rgba(45,125,82,.08);
+}
+
+.pulse-device-unit{
+  color:var(--muted);
+  font-size:15px;
+  font-weight:700;
+}
+
+.pulse-position-card{
+  margin-bottom:16px;
+  padding:14px;
+  border-radius:17px;
+  background:var(--green-bg);
+  color:var(--text);
+  font-size:14px;
+  line-height:1.45;
+}
+
+.pulse-tap-zone{
+  position:relative;
+  display:grid;
+  place-content:center;
+  width:min(76vw,310px);
+  aspect-ratio:1;
+  margin:12px auto 18px;
+  overflow:hidden;
+  border:2px solid rgba(45,125,82,.34);
+  border-radius:50%;
+  background:
+    radial-gradient(circle at center,
+      rgba(255,255,255,.98) 0 52%,
+      rgba(234,244,238,.94) 100%);
+  color:var(--text);
+  font-family:inherit;
+  text-align:center;
+  cursor:pointer;
+  box-shadow:
+    0 16px 40px rgba(45,125,82,.10),
+    inset 0 0 0 9px rgba(45,125,82,.045);
+  -webkit-tap-highlight-color:transparent;
+}
+
+.pulse-tap-zone.running{
+  border-color:var(--green);
+}
+
+.pulse-tap-zone::after{
+  content:"";
+  position:absolute;
+  inset:16px;
+  border:5px solid transparent;
+  border-radius:50%;
+  pointer-events:none;
+}
+
+.pulse-tap-zone.running::after{
+  border-color:var(--orange);
+}
+
+.pulse-tap-zone:active{
+  transform:scale(.988);
+}
+
+.pulse-tap-count{
+  color:var(--green);
+  font-size:clamp(64px,18vw,92px);
+  font-weight:780;
+  line-height:.92;
+  letter-spacing:-.06em;
+}
+
+.pulse-tap-zone.running .pulse-tap-count{
+  color:var(--orange);
+}
+
+.pulse-tap-unit{
+  margin-top:5px;
+  color:var(--text);
+  font-size:17px;
+  font-weight:700;
+}
+
+.pulse-tap-time{
+  margin-top:15px;
+  color:var(--muted);
+  font-size:17px;
+  font-variant-numeric:tabular-nums;
+}
+
+.pulse-tap-instruction{
+  max-width:190px;
+  margin:7px auto 0;
+  color:var(--green);
+  font-size:13px;
+  font-weight:700;
+  line-height:1.25;
+}
+
+.pulse-tap-zone.running .pulse-tap-instruction{
+  color:var(--orange);
+}
+
+.pulse-minimum-note{
+  max-width:330px;
+  margin:0 auto 17px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.42;
+  text-align:center;
+}
+
+.pulse-measured-result{
+  margin:14px 0;
+  padding:16px;
+  border:1px solid rgba(45,125,82,.25);
+  border-radius:18px;
+  background:#fff;
+  text-align:center;
+}
+
+.pulse-measured-result strong{
+  color:var(--green);
+  font-size:38px;
+  letter-spacing:-.04em;
+}
+
+.pulse-measured-result span{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.choose-other{
+  width:100%;
+  padding:10px 0 0;
+  border:0;
+  background:transparent;
+  color:var(--green);
+  font-family:inherit;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+@media(max-width:390px){
+  .pulse-tap-zone{
+    width:min(74vw,282px);
+  }
+}
+
+
+.pulse-help-toggle{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin:0 0 14px;
+  padding:12px 2px;
+  border:0;
+  background:transparent;
+  color:var(--green);
+  font-family:inherit;
+  font-size:14px;
+  font-weight:750;
+  text-align:left;
+  cursor:pointer;
+}
+
+.pulse-help-arrow{
+  font-size:24px;
+  line-height:1;
+  transition:transform .18s ease;
+}
+
+.pulse-help-toggle.open .pulse-help-arrow{
+  transform:rotate(90deg);
+}
+
+.pulse-help-panel{
+  margin:-2px 0 16px;
+  padding:16px;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:#fff;
+}
+
+.pulse-help-step{
+  display:grid;
+  grid-template-columns:30px 1fr;
+  gap:11px;
+  align-items:start;
+  margin-bottom:13px;
+  color:var(--text);
+  font-size:13px;
+  line-height:1.45;
+}
+
+.pulse-help-step:last-child{
+  margin-bottom:0;
+}
+
+.pulse-help-num{
+  width:26px;
+  height:26px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:var(--green-bg);
+  color:var(--green);
+  font-size:12px;
+  font-weight:800;
+}
+
+.pulse-help-warning{
+  margin-top:14px;
+  padding-top:13px;
+  border-top:1px solid var(--border);
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.45;
+}
+
+.pulse-ready-copy{
+  margin:0 0 14px;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.48;
+}
+
+.pulse-start-button{
+  width:100%;
+  min-height:56px;
+  margin-bottom:14px;
+  padding:10px 14px;
+  border:0;
+  border-radius:18px;
+  background:var(--green);
+  color:#fff;
+  font-family:inherit;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.pulse-start-button:disabled{
+  background:var(--green-bg);
+  color:#71927D;
+  cursor:not-allowed;
+}
+
+.pulse-tap-zone.waiting{
+  opacity:.72;
+  cursor:default;
+}
+
+.pulse-tap-zone.complete{
+  cursor:default;
+}
+
+.pulse-tap-zone.complete::after{
+  border-color:transparent;
+}
+
+.pulse-auto-note{
+  max-width:330px;
+  margin:0 auto 16px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.42;
+  text-align:center;
+}
+
+
+/* ===== Orthostatic pulse help drawer ===== */
+
+.pulse-help-button{
+  width:100%;
+  min-height:54px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin:0 0 16px;
+  padding:10px 16px;
+  border:0;
+  border-radius:18px;
+  background:var(--orange);
+  color:#fff;
+  font-family:inherit;
+  font-size:16px;
+  line-height:1.25;
+  font-weight:700;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.pulse-help-button .arrow{
+  font-size:21px;
+  line-height:1;
+}
+
+.pulse-drawer-overlay{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  background:rgba(20,25,22,.30);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .22s ease;
+}
+
+.pulse-drawer-overlay.open{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.pulse-drawer{
+  position:absolute;
+  top:0;
+  right:0;
+  width:min(92vw,400px);
+  height:100%;
+  overflow-y:auto;
+  padding:
+    max(14px,env(safe-area-inset-top))
+    18px
+    calc(30px + env(safe-area-inset-bottom));
+  background:#fff;
+  box-shadow:-16px 0 38px rgba(20,25,22,.16);
+  transform:translateX(100%);
+  transition:transform .24s ease;
+  -webkit-overflow-scrolling:touch;
+}
+
+.pulse-drawer-overlay.open .pulse-drawer{
+  transform:translateX(0);
+}
+
+.pulse-drawer-header{
+  display:grid;
+  grid-template-columns:44px 1fr 44px;
+  align-items:center;
+  min-height:44px;
+  margin-bottom:14px;
+}
+
+.pulse-drawer-back{
+  width:44px;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:var(--green);
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.pulse-drawer-back svg{
+  width:24px;
+  height:24px;
+}
+
+.pulse-drawer-back path{
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.pulse-drawer-title{
+  text-align:center;
+  font-size:18px;
+  font-weight:750;
+  letter-spacing:-.02em;
+}
+
+.pulse-neck-illustration{
+  width:100%;
+  margin:2px 0 18px;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:22px;
+  background:#F7F9F6;
+}
+
+.pulse-neck-illustration svg{
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:190px;
+}
+
+.pulse-help-steps{
+  margin:0 0 18px;
+}
+
+.pulse-help-step{
+  display:grid;
+  grid-template-columns:32px 1fr;
+  gap:12px;
+  align-items:start;
+  margin-bottom:15px;
+  color:var(--text);
+  font-size:14px;
+  line-height:1.45;
+}
+
+.pulse-help-step:last-child{
+  margin-bottom:0;
+}
+
+.pulse-help-num{
+  width:28px;
+  height:28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:var(--green-bg);
+  color:var(--green);
+  font-size:13px;
+  font-weight:800;
+}
+
+.pulse-help-warning{
+  margin:0 0 18px;
+  padding:14px 15px;
+  border-radius:17px;
+  background:#FBF3DF;
+  color:#76581C;
+  font-size:13px;
+  line-height:1.45;
+}
+
+
+/* ===== Canonical manual pulse interaction ===== */
+
+.pulse-measure-copy{
+  margin:0 0 14px;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.48;
+}
+
+.pulse-measure-copy strong{
+  color:var(--text);
+}
+
+.pulse-tap-zone.ready{
+  cursor:pointer;
+}
+
+.pulse-tap-zone.complete{
+  cursor:default;
+}
+
+.pulse-tap-zone.complete::after{
+  border-color:transparent;
+}
+
+.pulse-result-check{
+  margin:14px 0 16px;
+  padding:17px;
+  border:1px solid rgba(45,125,82,.25);
+  border-radius:22px;
+  background:#fff;
+  text-align:center;
+}
+
+.pulse-result-check .label{
+  color:var(--muted);
+  font-size:13px;
+  font-weight:700;
+}
+
+.pulse-result-check .value{
+  margin:5px 0 5px;
+  color:var(--green);
+  font-size:54px;
+  line-height:1;
+  font-weight:780;
+  letter-spacing:-.05em;
+}
+
+.pulse-result-check .beats{
+  color:var(--text);
+  font-size:14px;
+  font-weight:650;
+}
+
+.pulse-result-check .verify{
+  margin-top:10px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.42;
+}
+
+.pulse-switch-method{
+  width:100%;
+  margin-top:12px;
+  padding:10px 4px;
+  border:0;
+  background:transparent;
+  color:var(--green);
+  font-family:inherit;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.pulse-try-button{
+  width:100%;
+  min-height:56px;
+  padding:10px 14px;
+  border:1.5px solid var(--green-soft);
+  border-radius:18px;
+  background:var(--green-bg);
+  color:var(--green);
+  font-family:inherit;
+  font-size:16px;
+  line-height:1.35;
+  font-weight:700;
+  cursor:pointer;
+}
+
+@media(max-width:390px){
+  .pulse-drawer{
+    width:94vw;
+  }
+}
+
+
+/* ===== Device pulse entry inside canonical measurement circle ===== */
+
+.pulse-device-circle{
+  width:min(78vw,320px);
+  max-width:320px;
+  aspect-ratio:1;
+  margin:18px auto 22px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  border:4px solid var(--green-soft);
+  border-radius:50%;
+  background:linear-gradient(180deg,#F8FBF8,#F2F6F2);
+  box-shadow:
+    inset 0 0 0 10px rgba(255,255,255,.58),
+    0 10px 30px rgba(45,125,82,.06);
+}
+
+.pulse-device-circle-inner{
+  width:calc(100% - 36px);
+  height:calc(100% - 36px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  border:2px solid #D8E2DA;
+  border-radius:50%;
+}
+
+.pulse-device-circle-label{
+  margin-bottom:10px;
+  color:var(--green);
+  font-size:13px;
+  font-weight:700;
+  text-align:center;
+}
+
+.pulse-device-circle-entry{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+}
+
+.pulse-device-circle-input{
+  width:118px;
+  min-height:66px;
+  padding:6px 8px;
+  border:0;
+  border-bottom:2px solid var(--green-soft);
+  background:transparent;
+  color:var(--text);
+  font-family:inherit;
+  font-size:54px;
+  line-height:1;
+  font-weight:780;
+  letter-spacing:-.05em;
+  text-align:center;
+  outline:none;
+}
+
+.pulse-device-circle-input:focus{
+  border-bottom-color:var(--green);
+}
+
+.pulse-device-circle-unit{
+  color:var(--muted);
+  font-size:17px;
+  font-weight:700;
+}
+
+.pulse-device-circle-hint{
+  max-width:190px;
+  margin-top:14px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.35;
+  text-align:center;
+}
+
+@media(max-width:390px){
+  .pulse-device-circle{
+    width:min(74vw,286px);
+  }
+}
+
+
+/* ===== Orthostatic final state corrections ===== */
+
+#restPulseCard,
+#standingPulseCard{
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+
+#restPulseCard .pulse-device-circle,
+#standingPulseCard .pulse-device-circle{
+  margin-top:18px;
+}
+
+.ortho-hidden{
+  display:none !important;
+}
+
+/* Manual pulse is a real separate measurement screen */
+.ortho-manual-screen{
+  display:none;
+}
+
+.ortho-manual-screen.active{
+  display:block;
+}
+
+.ortho-manual-screen .pulse-help-button{
+  margin-top:6px;
+}
+
+/* confidence / verification block */
+.pulse-confidence{
+  margin:14px 0 16px;
+  padding:16px;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:#fff;
+}
+
+.pulse-confidence-title{
+  margin:0 0 10px;
+  color:var(--text);
+  font-size:15px;
+  line-height:1.35;
+  font-weight:750;
+  text-align:center;
+}
+
+.pulse-confidence-options{
+  display:flex;
+  gap:8px;
+}
+
+.pulse-confidence-option{
+  flex:1;
+  min-height:46px;
+  padding:8px 6px;
+  border:1.5px solid var(--border);
+  border-radius:14px;
+  background:#fff;
+  color:var(--green);
+  font-family:inherit;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.pulse-confidence-option.selected{
+  border-color:var(--green);
+  background:var(--green-bg);
+}
+
+.pulse-result-warning{
+  margin-top:10px;
+  color:#A87922;
+  font-size:13px;
+  line-height:1.42;
+  text-align:center;
+}
+
+
+/* ===== Orthostatic compact page + result interpretation ===== */
+
+.page{
+  min-height:auto !important;
+}
+
+.result-badge{
+  border:0;
+  font-family:inherit;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.result-badge::after{
+  content:"  ›";
+  font-size:.95em;
+  opacity:.72;
+}
+
+.result-badge:focus-visible{
+  outline:none;
+  box-shadow:0 0 0 3px rgba(45,125,82,.14);
+}
+
+.ortho-result-overlay{
+  position:fixed;
+  inset:0;
+  z-index:1200;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:22px;
+  background:rgba(20,25,22,.30);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .18s ease;
+}
+
+.ortho-result-overlay.open{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.ortho-result-modal{
+  position:relative;
+  width:min(100%,360px);
+  padding:24px 20px 20px;
+  border:1px solid var(--border);
+  border-radius:22px;
+  background:#fff;
+  box-shadow:0 18px 50px rgba(20,25,22,.16);
+  transform:translateY(8px) scale(.985);
+  transition:transform .18s ease;
+}
+
+.ortho-result-overlay.open .ortho-result-modal{
+  transform:translateY(0) scale(1);
+}
+
+.ortho-result-close{
+  position:absolute;
+  top:10px;
+  right:10px;
+  width:44px;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  border:0;
+  border-radius:12px;
+  background:transparent;
+  color:var(--green);
+  font-family:inherit;
+  font-size:28px;
+  line-height:1;
+  cursor:pointer;
+}
+
+.ortho-result-modal-label{
+  margin:0 38px 8px 0;
+  color:var(--green);
+  font-size:13px;
+  line-height:1.3;
+  font-weight:800;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+}
+
+.ortho-result-modal-title{
+  margin:0 38px 12px 0;
+  color:var(--text);
+  font-size:26px;
+  line-height:1.1;
+  font-weight:800;
+  letter-spacing:-.03em;
+}
+
+.ortho-result-modal-range{
+  margin:0 0 12px;
+  color:var(--green);
+  font-size:13px;
+  line-height:1.4;
+  font-weight:700;
+}
+
+.ortho-result-modal-copy{
+  margin:0;
+  color:var(--muted);
+  font-size:15px;
+  line-height:1.52;
+}
+
+
+/* ===== Result interpretation affordance ===== */
+
+.result-badge{
+  min-height:48px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  padding:9px 16px;
+}
+
+.result-badge::before{
+  content:"i";
+  width:20px;
+  height:20px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1.5px solid currentColor;
+  border-radius:50%;
+  font-size:12px;
+  line-height:1;
+  font-weight:800;
+}
+
+.result-badge::after{
+  content:"›";
+  margin-left:1px;
+  font-size:22px;
+  line-height:1;
+  font-weight:700;
+  opacity:.85;
+}
+
+.result-badge:active{
+  transform:scale(.98);
+}
+
+.result-interpretation-hint{
+  margin-top:-4px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.3;
+  text-align:center;
+}
+
 </style>
-
 </head>
-<body>
-<main class="fa-measurement-shell">
 
-<div class="movespan-page-header functional-test-header">
-  <button class="functional-back-button" id="backButton" type="button" aria-label="Back">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M15 18l-6-6 6-6"></path>
-    </svg>
-  </button>
-  <div class="movespan-page-header-title">Functional Age Test</div>
-  <div class="movespan-page-header-spacer"></div>
+<body>
+<main class="page">
+
+  <header class="movespan-page-header">
+    <button class="movespan-back" id="backBtn" type="button" aria-label="Back">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M15 18l-6-6 6-6"></path>
+      </svg>
+    </button>
+    <div class="movespan-page-header-title">Functional Age Test</div>
+    <div class="movespan-page-header-spacer"></div>
+  </header>
+
+  <div class="progress" aria-hidden="true">
+    <span></span>
+    <span class="active"></span>
+    <span></span>
+  </div>
+
+  <section class="screen active" id="screen-intro">
+    <div class="eyebrow">Additional Measurement · 2 of 4</div>
+
+    <h1>Orthostatic Response</h1>
+
+    <p class="subtitle">
+      Measure how your pulse changes when you move from lying down to standing.
+    </p>
+
+    <div class="prep-steps">
+      <div class="prep-step">
+        <div class="prep-number">1</div>
+        <div>
+          Lie down comfortably and remain still for 5 minutes so your pulse can settle.
+        </div>
+      </div>
+
+      <div class="prep-step">
+        <div class="prep-number">2</div>
+        <div>
+          Measure and save your resting pulse while you are still lying down.
+        </div>
+      </div>
+
+      <div class="prep-step">
+        <div class="prep-number">3</div>
+        <div>
+          Stand up safely, wait 60 seconds, then measure and save your pulse again.
+        </div>
+      </div>
+    </div>
+
+    <div class="warning">
+      If you feel dizzy, faint, or unsteady when standing, stop the test and sit or lie down.
+    </div>
+
+    <button class="primary" id="startBtn" type="button">Start Test →</button>
+    <button class="outline" id="profileIntroBtn" type="button">Back to Functional Age Profile</button>
+  </section>
+
+  <section class="screen" id="screen-rest">
+    <div class="eyebrow">Orthostatic Response · Step 1 of 2</div>
+    <h1>Resting Pulse</h1>
+    <p class="subtitle">
+      Lie down comfortably and allow your pulse to settle before measuring.
+    </p>
+
+    <div class="circle-wrap" id="restTimerArea">
+      <button class="timer-circle" id="restCircle" type="button">
+        <div class="timer-inner">
+          <div class="timer-value" id="restValue">5:00</div>
+          <div class="timer-unit">minutes</div>
+          <div class="timer-hint" id="restHint">Tap to start</div>
+        </div>
+      </button>
+    </div>
+
+    <div class="rest-skip-note" id="restSkipNote">
+      If you have already been lying quietly and resting for at least 5 minutes,
+      with no recent walking or physical activity, you can skip this timer.
+    </div>
+
+    <button class="text-action" id="restSkip" type="button">
+      I have already rested for 5 minutes
+    </button>
+
+    <div class="card" id="restPulseCard" style="margin-top:18px" hidden>
+
+      <div id="restDeviceMode">
+        <div class="pulse-device-circle">
+          <div class="pulse-device-circle-inner">
+            <div class="pulse-device-circle-label">
+              Enter Pulse from Your Device
+            </div>
+
+            <div class="pulse-device-circle-entry">
+              <input
+                class="pulse-device-circle-input"
+                id="restDeviceInput"
+                type="number"
+                inputmode="numeric"
+                min="35"
+                max="220"
+                placeholder="--"
+                aria-label="Resting pulse in beats per minute">
+              <span class="pulse-device-circle-unit">bpm</span>
+            </div>
+
+            <div class="pulse-device-circle-hint">
+              Check your current heart rate on your watch or wearable, then enter it here.
+            </div>
+          </div>
+        </div>
+
+        <button class="primary" id="restDeviceSave" type="button">
+          Save Result
+        </button>
+
+        <button class="secondary" id="restDeviceToManual" type="button">
+          Measure Manually ›
+        </button>
+      </div>
+
+      <div class="pulse-panel" id="restManualPanel" hidden>
+
+        <button class="pulse-help-button pulse-help-open" type="button">
+          How to find your pulse
+          <span class="arrow">›</span>
+        </button>
+
+        <p class="pulse-measure-copy">
+          <strong>Feel your pulse first.</strong>
+          Your first tap starts the 20-second timer and counts the first heartbeat.
+          Keep tapping once for every heartbeat until the timer stops automatically.
+        </p>
+
+        <button class="pulse-tap-zone ready" id="restPulseTap" type="button">
+          <div class="pulse-tap-count" id="restPulseCount">0</div>
+          <div class="pulse-tap-unit">beats</div>
+          <div class="pulse-tap-time" id="restPulseElapsed">0:20</div>
+          <div class="pulse-tap-instruction" id="restPulseInstruction">
+            Tap with the first heartbeat
+          </div>
+        </button>
+
+        <button class="pulse-try-button" id="restPulseAgain" type="button">
+          Try Again
+        </button>
+
+        <div class="pulse-result-check" id="restPulseResult" hidden>
+          <div class="label">Your measured pulse</div>
+          <div class="value" id="restPulseBpm">0 bpm</div>
+          <div class="beats" id="restPulseBeats">0 beats in 20 seconds</div>
+          <div class="pulse-confidence" id="restPulseConfidence">
+            <div class="pulse-confidence-title">
+              Does this result match what you felt?
+            </div>
+
+            <div class="pulse-confidence-options">
+              <button class="pulse-confidence-option"
+                      type="button"
+                      data-stage="rest"
+                      data-confidence="yes">
+                Yes
+              </button>
+
+              <button class="pulse-confidence-option"
+                      type="button"
+                      data-stage="rest"
+                      data-confidence="not-sure">
+                Not sure
+              </button>
+            </div>
+          </div>
+          <div class="verify">
+            Does this look right? If you missed or added taps,
+            try again before saving.
+          </div>
+        </div>
+
+        <button class="primary" id="restPulseSave" type="button" hidden style="margin-top:10px">
+          Save Result
+        </button>
+
+        <button class="pulse-switch-method" id="restManualToDevice" type="button">
+          Enter Pulse from Your Device ›
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-standing">
+    <div class="eyebrow">Orthostatic Response · Step 2 of 2</div>
+    <h1>Standing Pulse</h1>
+    <p class="subtitle">
+      Stand safely, then tap the circle. Measure your pulse after the full 60 seconds.
+    </p>
+
+    <div class="circle-wrap" id="standingTimerArea">
+      <button class="timer-circle" id="standCircle" type="button">
+        <div class="timer-inner">
+          <div class="timer-value" id="standValue">1:00</div>
+          <div class="timer-unit">minutes</div>
+          <div class="timer-hint" id="standHint">Tap to start</div>
+        </div>
+      </button>
+    </div>
+
+    <div class="card" id="standingPulseCard" hidden>
+
+      <div id="standingDeviceMode">
+        <div class="pulse-device-circle">
+          <div class="pulse-device-circle-inner">
+            <div class="pulse-device-circle-label">
+              Enter Pulse from Your Device
+            </div>
+
+            <div class="pulse-device-circle-entry">
+              <input
+                class="pulse-device-circle-input"
+                id="standingDeviceInput"
+                type="number"
+                inputmode="numeric"
+                min="35"
+                max="220"
+                placeholder="--"
+                aria-label="Standing pulse in beats per minute">
+              <span class="pulse-device-circle-unit">bpm</span>
+            </div>
+
+            <div class="pulse-device-circle-hint">
+              Check your current heart rate on your watch or wearable, then enter it here.
+            </div>
+          </div>
+        </div>
+
+        <button class="primary" id="standingDeviceSave" type="button">
+          Save Result
+        </button>
+
+        <button class="secondary" id="standingDeviceToManual" type="button">
+          Measure Manually ›
+        </button>
+      </div>
+
+      <div class="pulse-panel" id="standingManualPanel" hidden>
+
+        <button class="pulse-help-button pulse-help-open" type="button">
+          How to find your pulse
+          <span class="arrow">›</span>
+        </button>
+
+        <p class="pulse-measure-copy">
+          <strong>Feel your pulse first.</strong>
+          Your first tap starts the 20-second timer and counts the first heartbeat.
+          Keep tapping once for every heartbeat until the timer stops automatically.
+        </p>
+
+        <button class="pulse-tap-zone ready" id="standingPulseTap" type="button">
+          <div class="pulse-tap-count" id="standingPulseCount">0</div>
+          <div class="pulse-tap-unit">beats</div>
+          <div class="pulse-tap-time" id="standingPulseElapsed">0:20</div>
+          <div class="pulse-tap-instruction" id="standingPulseInstruction">
+            Tap with the first heartbeat
+          </div>
+        </button>
+
+        <button class="pulse-try-button" id="standingPulseAgain" type="button">
+          Try Again
+        </button>
+
+        <div class="pulse-result-check" id="standingPulseResult" hidden>
+          <div class="label">Your measured pulse</div>
+          <div class="value" id="standingPulseBpm">0 bpm</div>
+          <div class="beats" id="standingPulseBeats">0 beats in 20 seconds</div>
+          <div class="pulse-confidence" id="standingPulseConfidence">
+            <div class="pulse-confidence-title">
+              Does this result match what you felt?
+            </div>
+
+            <div class="pulse-confidence-options">
+              <button class="pulse-confidence-option"
+                      type="button"
+                      data-stage="standing"
+                      data-confidence="yes">
+                Yes
+              </button>
+
+              <button class="pulse-confidence-option"
+                      type="button"
+                      data-stage="standing"
+                      data-confidence="not-sure">
+                Not sure
+              </button>
+            </div>
+          </div>
+          <div class="verify">
+            Does this look right? If you missed or added taps,
+            try again before saving.
+          </div>
+        </div>
+
+        <button class="primary" id="standingPulseSave" type="button" hidden style="margin-top:10px">
+          Save Result
+        </button>
+
+        <button class="pulse-switch-method" id="standingManualToDevice" type="button">
+          Enter Pulse from Your Device ›
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-result">
+    <div class="eyebrow">Functional Age Profile</div>
+    <h1>Your Result</h1>
+
+    <div class="result-card">
+      <div class="result-value" id="resultValue">+0</div>
+      <div class="result-unit">bpm increase</div>
+      <button class="result-badge good"
+            id="resultBadge"
+            type="button"
+            aria-haspopup="dialog"
+            aria-controls="orthoResultOverlay">
+      Good
+    </button>
+      <div class="result-interpretation-hint">Tap for interpretation</div>
+      <div class="result-detail" id="resultDetail"></div>
+    </div>
+
+    <button class="primary" id="nextBtn" type="button">Start Next Measurement →</button>
+    <button class="outline" id="profileBtn" type="button">Back to Functional Age Profile</button>
+  </section>
+
+</main>
+
+<div class="pulse-drawer-overlay" id="pulseHelpOverlay" aria-hidden="true">
+  <aside class="pulse-drawer" id="pulseHelpDrawer" role="dialog" aria-modal="true" aria-labelledby="pulseHelpTitle">
+
+    <div class="pulse-drawer-header">
+      <button class="pulse-drawer-back" id="pulseHelpBack" type="button" aria-label="Close">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"></path>
+        </svg>
+      </button>
+
+      <div class="pulse-drawer-title" id="pulseHelpTitle">
+        How to find your pulse
+      </div>
+
+      <div></div>
+    </div>
+
+    <div class="pulse-neck-illustration" aria-hidden="true">
+      <svg viewBox="0 0 320 190" role="img">
+        <defs>
+          <linearGradient id="skinPulse" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#E8C4A9"/>
+            <stop offset="1" stop-color="#C99372"/>
+          </linearGradient>
+        </defs>
+
+        <!-- head / neck -->
+        <path
+          d="M126 20
+             C108 32 100 49 101 70
+             C102 91 112 105 126 114
+             L123 159
+             C147 174 184 174 207 158
+             L204 112
+             C219 101 228 84 228 64
+             C228 37 207 18 177 14
+             C157 12 140 14 126 20Z"
+          fill="url(#skinPulse)"/>
+
+        <!-- neck groove -->
+        <path
+          d="M163 103 C157 120 155 137 157 158"
+          fill="none"
+          stroke="#9D6C51"
+          stroke-width="3"
+          stroke-linecap="round"
+          opacity=".65"/>
+
+        <!-- hand -->
+        <path
+          d="M62 151
+             C80 141 96 134 115 130
+             L145 123
+             C151 121 155 124 155 129
+             C155 133 152 136 147 138
+             L124 145
+             L157 138
+             C164 137 168 140 168 145
+             C168 150 164 153 159 154
+             L125 160
+             C104 165 86 169 69 175Z"
+          fill="#D8A17E"/>
+
+        <!-- index/middle finger placement -->
+        <path
+          d="M101 132 C119 121 136 115 153 113"
+          fill="none"
+          stroke="#D8A17E"
+          stroke-width="15"
+          stroke-linecap="round"/>
+
+        <path
+          d="M105 144 C123 134 140 129 157 127"
+          fill="none"
+          stroke="#D8A17E"
+          stroke-width="14"
+          stroke-linecap="round"/>
+
+        <!-- pulse target -->
+        <circle cx="158" cy="120" r="8" fill="#B46F43"/>
+        <circle cx="158" cy="120" r="15" fill="none" stroke="#B46F43" stroke-width="2" opacity=".55"/>
+
+        <!-- pulse wave -->
+        <path
+          d="M224 117 h17 l7-13 10 28 8-17 h20"
+          fill="none"
+          stroke="#2D7D52"
+          stroke-width="4"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <div class="pulse-help-steps">
+      <div class="pulse-help-step">
+        <div class="pulse-help-num">1</div>
+        <div>Choose one side of your neck.</div>
+      </div>
+
+      <div class="pulse-help-step">
+        <div class="pulse-help-num">2</div>
+        <div>
+          Place your index and middle fingers gently in the soft groove
+          beside your windpipe, just below the jaw.
+        </div>
+      </div>
+
+      <div class="pulse-help-step">
+        <div class="pulse-help-num">3</div>
+        <div>
+          Move your fingers slightly until you clearly feel each heartbeat.
+          Press lightly. Do not use your thumb.
+        </div>
+      </div>
+
+      <div class="pulse-help-step">
+        <div class="pulse-help-num">4</div>
+        <div>
+          Keep your other hand free. You will use it to tap the screen
+          once for every heartbeat.
+        </div>
+      </div>
+    </div>
+
+    <div class="pulse-help-warning">
+      Use only one side of the neck and press gently.
+      Stop if you feel dizzy or uncomfortable.
+    </div>
+
+    <button class="primary" id="pulseHelpDone" type="button">
+      Got it, I'm ready
+    </button>
+  </aside>
 </div>
 
 
-<div class="fa-measurement-progress"><div style="width:80%"></div></div>
 
-<section class="functional-screen-stage fa-screen active" id="screen-intro">
-  <div class="fa-step-label">FUNCTIONAL AGE PROFILE</div>
-  <h1 class="fa-measurement-title">Orthostatic Response</h1>
-  <p class="fa-measurement-sub">
-    This test checks how your pulse changes from lying down to standing.
-  </p>
+<div class="ortho-result-overlay"
+     id="orthoResultOverlay"
+     aria-hidden="true">
 
-  <div class="fa-instruction-card">
-    <p><strong>How to perform the test</strong></p>
-    <p style="margin-top:8px">
-      Rest lying down for 5 minutes if needed, record your pulse,
-      stand up safely, wait 60 seconds, then measure your pulse again.
+  <div class="ortho-result-modal"
+       role="dialog"
+       aria-modal="true"
+       aria-labelledby="orthoResultModalTitle">
+
+    <button class="ortho-result-close"
+            id="orthoResultClose"
+            type="button"
+            aria-label="Close">
+      ×
+    </button>
+
+    <div class="ortho-result-modal-label">
+      Orthostatic Response
+    </div>
+
+    <h2 class="ortho-result-modal-title"
+        id="orthoResultModalTitle">
+      Good
+    </h2>
+
+    <div class="ortho-result-modal-range"
+         id="orthoResultModalRange">
+    </div>
+
+    <p class="ortho-result-modal-copy"
+       id="orthoResultModalCopy">
     </p>
+
   </div>
-
-  <div class="fa-measurement-safety">
-    If you feel dizzy or unsteady, stop the test and sit or lie down.
-  </div>
-
-  <button class="fa-primary-button" id="startBtn">Start Test →</button>
-  <button class="fa-secondary-button" id="profileIntroBtn">Back to Functional Age Profile</button>
-</section>
-
-<section class="functional-screen-stage fa-screen" id="screen-rest" style="display:none">
-  <div class="fa-step-label">FUNCTIONAL AGE PROFILE</div>
-  <h1 class="fa-measurement-title">Resting Pulse</h1>
-  <p class="fa-measurement-sub">Measure your pulse while lying down and relaxed.</p>
-
-  <div class="fa-measurement-card">
-    <div class="fa-timer-box">
-      <div class="fa-timer-value" id="restTimer">5:00</div>
-      <div class="fa-timer-unit">minutes</div>
-    </div>
-
-    <button class="fa-timer-button" id="restToggle">Start 5-minute rest</button>
-    <button class="fa-timer-button secondary" id="restSkip">Skip — I am already rested</button>
-  </div>
-
-  <div class="fa-measurement-card">
-    <div class="fa-answer-title">Heart rate lying down</div>
-    <input class="fa-measurement-input" id="lyingInput" type="number" inputmode="numeric" placeholder="e.g. 62">
-    <button class="fa-primary-button" id="recordLying" style="margin-top:12px">Record Resting Pulse</button>
-  </div>
-
-  <button class="fa-primary-button" id="continueBtn" disabled>Continue to Standing Test →</button>
-</section>
-
-<section class="functional-screen-stage fa-screen" id="screen-standing" style="display:none">
-  <div class="fa-step-label">FUNCTIONAL AGE PROFILE</div>
-  <h1 class="fa-measurement-title">Standing Pulse</h1>
-  <p class="fa-measurement-sub">Stand safely, wait 60 seconds, then measure your pulse again.</p>
-
-  <div class="fa-measurement-card">
-    <div class="fa-timer-box">
-      <div class="fa-timer-value" id="standTimer">60</div>
-      <div class="fa-timer-unit">seconds</div>
-    </div>
-
-    <button class="fa-timer-button" id="standToggle">Start 60-second timer</button>
-  </div>
-
-  <div class="fa-measurement-card">
-    <div class="fa-answer-title">Heart rate after standing</div>
-    <input class="fa-measurement-input" id="standingInput" type="number" inputmode="numeric" placeholder="e.g. 78">
-    <button class="fa-primary-button" id="resultBtn" style="margin-top:12px">See Result →</button>
-  </div>
-</section>
-
-<section class="functional-screen-stage fa-screen" id="screen-result" style="display:none">
-  <div class="fa-step-label">FUNCTIONAL AGE PROFILE</div>
-  <h1 class="fa-measurement-title">Your Result</h1>
-
-  <div class="fa-result-value" id="resultValue">+0</div>
-  <div class="fa-result-unit">bpm increase</div>
-  <div class="fa-result-badge fa-status-good" id="resultBadge">Good</div>
-  <div class="fa-result-copy" id="resultCopy"></div>
-
-  <button class="fa-primary-button" id="saveBtn">Save Result</button>
-  <button class="fa-primary-button" id="nextBtn" disabled style="margin-top:9px">Next Measurement →</button>
-  <button class="fa-secondary-button" id="profileBtn" disabled>Back to Functional Age Profile</button>
-</section>
-</main>
+</div>
 
 <script>
 (function(){
   const STORAGE_KEY="ms_functional_measurements";
+  const PROFILE_URL="functional-age-profile.html";
+  const NEXT_URL="test.html?measure=hrr";
 
-  const intro=document.getElementById("screen-intro");
-  const rest=document.getElementById("screen-rest");
-  const standing=document.getElementById("screen-standing");
-  const result=document.getElementById("screen-result");
+  const screens={
+    intro:document.getElementById("screen-intro"),
+    rest:document.getElementById("screen-rest"),
+    standing:document.getElementById("screen-standing"),
+    result:document.getElementById("screen-result")
+  };
 
   let current="intro";
-  let lying=null;
+  let lyingPulse=null;
   let standingPulse=null;
+  let lyingMethod=null;
+  let standingMethod=null;
+
   let restLeft=300;
-  let standLeft=60;
-  let restInt=null;
-  let standInt=null;
+  let restTimer=null;
   let restRunning=false;
+
+  let standLeft=60;
+  let standTimer=null;
   let standRunning=false;
 
-  function show(el,name){
-    [intro,rest,standing,result].forEach(x=>x.style.display="none");
-    el.style.display="block";
-    current=name;
-    scrollTo(0,0);
-  }
+  const manual={
+    rest:{
+      tap:document.getElementById("restPulseTap"),
+      count:document.getElementById("restPulseCount"),
+      elapsed:document.getElementById("restPulseElapsed"),
+      instruction:document.getElementById("restPulseInstruction"),
+      result:document.getElementById("restPulseResult"),
+      bpm:document.getElementById("restPulseBpm"),
+      beatsLabel:document.getElementById("restPulseBeats"),
+      save:document.getElementById("restPulseSave"),
+      again:document.getElementById("restPulseAgain"),
+      beats:0,
+      secondsLeft:20,
+      interval:null,
+      running:false,
+      complete:false,
+      value:null
+    },
 
-  function pulse(id){
-    const el=document.getElementById(id);
-    const v=Number(el.value);
-    if(!Number.isFinite(v)||v<35||v>220){el.focus();return null}
-    return Math.round(v);
-  }
-
-  function fmtRest(){
-    restTimer.textContent=Math.floor(restLeft/60)+":"+String(restLeft%60).padStart(2,"0");
-  }
-
-  startBtn.onclick=()=>show(rest,"rest");
-
-  restToggle.onclick=function(){
-    if(restRunning){
-      clearInterval(restInt);
-      restRunning=false;
-      this.textContent="Continue 5-minute rest";
-      return;
+    standing:{
+      tap:document.getElementById("standingPulseTap"),
+      count:document.getElementById("standingPulseCount"),
+      elapsed:document.getElementById("standingPulseElapsed"),
+      instruction:document.getElementById("standingPulseInstruction"),
+      result:document.getElementById("standingPulseResult"),
+      bpm:document.getElementById("standingPulseBpm"),
+      beatsLabel:document.getElementById("standingPulseBeats"),
+      save:document.getElementById("standingPulseSave"),
+      again:document.getElementById("standingPulseAgain"),
+      beats:0,
+      secondsLeft:20,
+      interval:null,
+      running:false,
+      complete:false,
+      value:null
     }
+  };
 
-    if(restLeft<=0)return;
+  function show(name){
+    Object.entries(screens).forEach(([key,el])=>{
+      el.classList.toggle("active",key===name);
+    });
+    current=name;
+    window.scrollTo(0,0);
+  }
+
+  function validPulseValue(v){
+    const n=Number(v);
+    if(!Number.isFinite(n)||n<35||n>220)return null;
+    return Math.round(n);
+  }
+
+  function formatRest(){
+    restValue.textContent=
+      Math.floor(restLeft/60)+":"+String(restLeft%60).padStart(2,"0");
+  }
+
+  function formatStanding(){
+    standValue.textContent=
+      Math.floor(standLeft/60)+":"+String(standLeft%60).padStart(2,"0");
+  }
+
+  function unlockRestPulse(){
+    clearInterval(restTimer);
+    restTimer=null;
+    restRunning=false;
+    restCircle.classList.remove("running");
+
+    document.getElementById("restTimerArea").classList.add("ortho-hidden");
+
+    const note=document.getElementById("restSkipNote");
+    if(note)note.classList.add("ortho-hidden");
+
+    if(restSkip)restSkip.classList.add("ortho-hidden");
+
+    restPulseCard.hidden=false;
+    openMethod("rest","device");
+
+    setTimeout(()=>{
+      restDeviceInput.focus();
+    },120);
+  }
+
+  function unlockStandingPulse(){
+    clearInterval(standTimer);
+    standTimer=null;
+    standRunning=false;
+    standCircle.classList.remove("running");
+
+    document.getElementById("standingTimerArea").classList.add("ortho-hidden");
+
+    standingPulseCard.hidden=false;
+    openMethod("standing","device");
+
+    setTimeout(()=>{
+      standingDeviceInput.focus();
+    },120);
+  }
+
+  restCircle.onclick=function(){
+    if(restRunning||restLeft<=0)return;
 
     restRunning=true;
-    this.textContent="Stop";
+    restCircle.classList.add("running");
+    restHint.textContent="Resting…";
 
-    restInt=setInterval(()=>{
+    restTimer=setInterval(()=>{
       restLeft--;
-      fmtRest();
-      if(restLeft<=0){
-        clearInterval(restInt);
-        restRunning=false;
-        this.textContent="Rest complete ✓";
+      if(restLeft<0)restLeft=0;
+      formatRest();
+
+      if(restLeft===0){
+        unlockRestPulse();
       }
     },1000);
   };
 
-  restSkip.onclick=()=>{
+  restSkip.onclick=function(){
     restLeft=0;
-    fmtRest();
-    restToggle.textContent="Rest complete ✓";
+    formatRest();
+    unlockRestPulse();
   };
 
-  recordLying.onclick=function(){
-    const v=pulse("lyingInput");
-    if(v===null)return;
+  standCircle.onclick=function(){
+    if(standRunning||standLeft<=0)return;
 
-    lying=v;
-    this.textContent="Resting Pulse Recorded ✓";
-    this.disabled=true;
-    continueBtn.disabled=false;
+    standRunning=true;
+    standCircle.classList.add("running");
+    standHint.textContent="Standing…";
+
+    standTimer=setInterval(()=>{
+      standLeft--;
+      if(standLeft<0)standLeft=0;
+      formatStanding();
+
+      if(standLeft===0){
+        unlockStandingPulse();
+      }
+    },1000);
   };
 
-  continueBtn.onclick=()=>show(standing,"standing");
+  function openMethod(stage,method){
+    const prefix=stage==="rest" ? "rest" : "standing";
 
-  standToggle.onclick=function(){
-    if(standRunning){
-      clearInterval(standInt);
-      standRunning=false;
-      this.textContent="Continue 60-second timer";
+    const device=document.getElementById(prefix+"DeviceMode");
+    const manualPanel=document.getElementById(prefix+"ManualPanel");
+
+    if(method==="device"){
+      device.hidden=false;
+      manualPanel.hidden=true;
+
+      current=stage;
+      window.scrollTo(0,0);
       return;
     }
 
-    if(standLeft<=0)return;
+    device.hidden=true;
+    manualPanel.hidden=false;
 
-    standRunning=true;
-    this.textContent="Stop";
+    resetManual(stage);
 
-    standInt=setInterval(()=>{
-      standLeft--;
-      standTimer.textContent=standLeft;
-      if(standLeft<=0){
-        clearInterval(standInt);
-        standRunning=false;
-        this.textContent="60 seconds complete ✓";
-      }
-    },1000);
-  };
-
-  function classify(d){
-    if(d<=10)return["Excellent",20,"fa-status-excellent","Your pulse response to standing is very stable."];
-    if(d<=16)return["Good",35,"fa-status-good","Your orthostatic response looks generally good."];
-    if(d<=24)return["Fair",55,"fa-status-fair","Your pulse rises more noticeably after standing."];
-    return["Needs attention",75,"fa-status-attention","Your pulse rises substantially after standing."];
+    current=stage+"-manual";
+    window.scrollTo(0,0);
   }
 
-  resultBtn.onclick=()=>{
-    if(lying===null){show(rest,"rest");return}
+  function resetManual(stage){
+    const m=manual[stage];
 
-    const v=pulse("standingInput");
+    if(m.interval){
+      clearInterval(m.interval);
+      m.interval=null;
+    }
+
+    m.beats=0;
+    m.secondsLeft=20;
+    m.running=false;
+    m.complete=false;
+    m.value=null;
+
+    m.count.textContent="0";
+    m.elapsed.textContent="0:20";
+    m.instruction.textContent="Tap with the first heartbeat";
+
+    m.tap.disabled=false;
+    m.tap.classList.remove("running","complete","waiting");
+    m.tap.classList.add("ready");
+
+    m.result.hidden=true;
+    m.save.hidden=true;
+
+    document.querySelectorAll(
+      '.pulse-confidence-option[data-stage="'+stage+'"]'
+    ).forEach(x=>x.classList.remove("selected"));
+
+    if(stage==="rest" && typeof restConfidence!=="undefined")restConfidence=null;
+    if(stage==="standing" && typeof standingConfidence!=="undefined")standingConfidence=null;
+
+    m.again.hidden=false;
+  }
+
+  function startManualFromFirstTap(stage){
+    const m=manual[stage];
+
+    m.running=true;
+    m.complete=false;
+    m.secondsLeft=20;
+
+    m.tap.classList.remove("ready","complete");
+    m.tap.classList.add("running");
+
+    m.instruction.textContent="Keep tapping every heartbeat";
+
+    m.beats=1;
+    m.count.textContent="1";
+
+    m.interval=setInterval(()=>{
+      m.secondsLeft--;
+
+      if(m.secondsLeft<0){
+        m.secondsLeft=0;
+      }
+
+      m.elapsed.textContent=
+        "0:"+String(m.secondsLeft).padStart(2,"0");
+
+      if(m.secondsLeft===0){
+        completeManual(stage);
+      }
+    },1000);
+  }
+
+  function registerTap(stage){
+    const m=manual[stage];
+
+    if(m.complete)return;
+
+    if(!m.running){
+      startManualFromFirstTap(stage);
+      return;
+    }
+
+    m.beats++;
+    m.count.textContent=String(m.beats);
+  }
+
+  function completeManual(stage){
+    const m=manual[stage];
+
+    if(m.interval){
+      clearInterval(m.interval);
+      m.interval=null;
+    }
+
+    m.running=false;
+    m.complete=true;
+
+    m.tap.classList.remove("running","ready");
+    m.tap.classList.add("complete");
+
+    m.elapsed.textContent="0:00";
+    m.instruction.textContent="Measurement complete";
+
+    const bpm=m.beats*3;
+
+    m.beatsLabel.textContent=
+      m.beats+" "+(m.beats===1 ? "beat" : "beats")+" in 20 seconds";
+
+    m.result.hidden=false;
+
+    m.value=bpm;
+    m.bpm.textContent=bpm+" bpm";
+    m.save.hidden=false;
+
+    const verify=m.result.querySelector(".verify");
+
+    if(bpm<35||bpm>220){
+      if(verify){
+        verify.innerHTML=
+          '<span class="pulse-result-warning">' +
+          'This result looks unusual. Check that you tapped once for every heartbeat. ' +
+          'If you think you missed or added taps, use Try Again.' +
+          '</span>';
+      }
+    }else{
+      if(verify){
+        verify.textContent=
+          "Check the result before saving. If you missed or added taps, use Try Again.";
+      }
+    }
+  }
+
+  function classify(delta){
+    if(delta<=10)return["Excellent",20,"excellent"];
+    if(delta<=16)return["Good",35,"good"];
+    if(delta<=24)return["Fair",55,"fair"];
+    return["Needs attention",75,"attention"];
+  }
+
+  function saveRest(value,method){
+    const v=validPulseValue(value);
     if(v===null)return;
 
+    lyingPulse=v;
+    lyingMethod=method;
+
+    show("standing");
+  }
+
+  function saveStanding(value,method){
+    const v=validPulseValue(value);
+    if(v===null||lyingPulse===null)return;
+
     standingPulse=v;
+    standingMethod=method;
 
-    const d=Math.max(0,standingPulse-lying);
-    const r=classify(d);
-
-    resultValue.textContent="+"+d;
-    resultBadge.textContent=r[0];
-    resultBadge.className="fa-result-badge "+r[2];
-    resultCopy.textContent="Lying "+lying+" bpm · Standing "+standingPulse+" bpm";
-
-    window.__ortho={delta:d,score:r[1],status:r[0]};
-    show(result,"result");
-  };
-
-  saveBtn.onclick=function(){
-    const r=window.__ortho;
-    if(!r)return;
+    const delta=Math.max(0,standingPulse-lyingPulse);
+    const r=classify(delta);
 
     let data={};
-    try{data=JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}")}catch(e){}
+
+    try{
+      data=JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}");
+    }catch(e){
+      data={};
+    }
 
     data.orthostatic={
       completed:true,
-      score:r.score,
-      value:r.delta,
-      bpmIncrease:r.delta,
-      lyingPulse:lying,
+      score:r[1],
+      value:delta,
+      bpmIncrease:delta,
+
+      lyingPulse:lyingPulse,
+      lyingMethod:lyingMethod,
+      lyingConfidence:typeof restConfidence!=="undefined" ? restConfidence : null,
+
       standingPulse:standingPulse,
-      status:r.status,
+      standingMethod:standingMethod,
+      standingConfidence:typeof standingConfidence!=="undefined" ? standingConfidence : null,
+
+      standingProtocol:
+        standingMethod==="manual_20s"
+          ? "60-second standing wait + 20-second manual pulse window"
+          : "60-second standing wait + current device reading",
+
+      status:r[0],
       label:"Orthostatic Response",
       system:"Cardiovascular",
       doneAt:new Date().toISOString()
@@ -423,23 +2295,276 @@ body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 
     localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
 
-    this.textContent="Saved ✓";
-    this.disabled=true;
-    nextBtn.disabled=false;
-    profileBtn.disabled=false;
+    resultValue.textContent="+"+delta;
+    resultBadge.textContent=r[0];
+    resultBadge.className="result-badge "+r[2];
+
+    resultDetail.textContent=
+      "Lying "+lyingPulse+" bpm · Standing "+standingPulse+" bpm";
+
+    show("result");
+  }
+
+  // ===== method selection =====
+
+
+
+  restManualToDevice.onclick=()=>openMethod("rest","device");
+  standingManualToDevice.onclick=()=>openMethod("standing","device");
+
+  restDeviceToManual.onclick=()=>openMethod("rest","manual");
+  standingDeviceToManual.onclick=()=>openMethod("standing","manual");
+
+  // ===== manual pulse =====
+
+  restPulseTap.onclick=()=>registerTap("rest");
+  standingPulseTap.onclick=()=>registerTap("standing");
+
+  restPulseAgain.onclick=()=>resetManual("rest");
+  standingPulseAgain.onclick=()=>resetManual("standing");
+
+  restPulseSave.onclick=function(){
+    if(manual.rest.value!==null){
+      saveRest(manual.rest.value,"manual_20s");
+    }
   };
 
-  nextBtn.onclick=()=>location.href="test.html?measure=hrr";
-  profileBtn.onclick=profileIntroBtn.onclick=()=>location.href="functional-age-profile.html";
-
-  backButton.onclick=()=>{
-    if(current==="intro")location.href="functional-age-profile.html";
-    else if(current==="rest")show(intro,"intro");
-    else if(current==="standing")show(rest,"rest");
-    else show(standing,"standing");
+  standingPulseSave.onclick=function(){
+    if(manual.standing.value!==null){
+      saveStanding(manual.standing.value,"manual_20s");
+    }
   };
 
-  fmtRest();
+  // ===== result confidence =====
+
+  let restConfidence=null;
+  let standingConfidence=null;
+
+  document.querySelectorAll(".pulse-confidence-option").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const stage=btn.dataset.stage;
+      const value=btn.dataset.confidence;
+
+      document.querySelectorAll(
+        '.pulse-confidence-option[data-stage="'+stage+'"]'
+      ).forEach(x=>x.classList.remove("selected"));
+
+      btn.classList.add("selected");
+
+      if(stage==="rest")restConfidence=value;
+      if(stage==="standing")standingConfidence=value;
+    });
+  });
+
+  // ===== device entry =====
+
+  restDeviceSave.onclick=function(){
+    const v=validPulseValue(restDeviceInput.value);
+
+    if(v===null){
+      restDeviceInput.focus();
+      return;
+    }
+
+    saveRest(v,"device_manual_entry");
+  };
+
+  standingDeviceSave.onclick=function(){
+    const v=validPulseValue(standingDeviceInput.value);
+
+    if(v===null){
+      standingDeviceInput.focus();
+      return;
+    }
+
+    saveStanding(v,"device_manual_entry");
+  };
+
+  // ===== help drawer =====
+
+  const pulseHelpOverlay=document.getElementById("pulseHelpOverlay");
+  const pulseHelpDrawer=document.getElementById("pulseHelpDrawer");
+  const pulseHelpBack=document.getElementById("pulseHelpBack");
+  const pulseHelpDone=document.getElementById("pulseHelpDone");
+
+  function openPulseHelp(){
+    pulseHelpOverlay.classList.add("open");
+    pulseHelpOverlay.setAttribute("aria-hidden","false");
+    document.body.style.overflow="hidden";
+  }
+
+  function closePulseHelp(){
+    pulseHelpOverlay.classList.remove("open");
+    pulseHelpOverlay.setAttribute("aria-hidden","true");
+    document.body.style.overflow="";
+  }
+
+  document.querySelectorAll(".pulse-help-open").forEach(btn=>{
+    btn.addEventListener("click",openPulseHelp);
+  });
+
+  pulseHelpBack.onclick=closePulseHelp;
+  pulseHelpDone.onclick=closePulseHelp;
+
+  pulseHelpOverlay.addEventListener("click",e=>{
+    if(e.target===pulseHelpOverlay){
+      closePulseHelp();
+    }
+  });
+
+  // swipe right to close drawer
+  let drawerTouchStartX=null;
+  let drawerTouchStartY=null;
+
+  pulseHelpDrawer.addEventListener("touchstart",e=>{
+    const t=e.touches[0];
+    drawerTouchStartX=t.clientX;
+    drawerTouchStartY=t.clientY;
+  },{passive:true});
+
+  pulseHelpDrawer.addEventListener("touchend",e=>{
+    if(drawerTouchStartX===null)return;
+
+    const t=e.changedTouches[0];
+    const dx=t.clientX-drawerTouchStartX;
+    const dy=Math.abs(t.clientY-drawerTouchStartY);
+
+    if(dx>70 && dy<80){
+      closePulseHelp();
+    }
+
+    drawerTouchStartX=null;
+    drawerTouchStartY=null;
+  },{passive:true});
+
+
+  // ===== result interpretation modal =====
+
+  const orthoResultOverlay=document.getElementById("orthoResultOverlay");
+  const orthoResultClose=document.getElementById("orthoResultClose");
+  const orthoResultModalTitle=document.getElementById("orthoResultModalTitle");
+  const orthoResultModalRange=document.getElementById("orthoResultModalRange");
+  const orthoResultModalCopy=document.getElementById("orthoResultModalCopy");
+
+  const orthoInterpretations={
+    "Excellent":{
+      range:"Pulse increase: 0–10 bpm",
+      copy:
+        "Your pulse changed very little after standing. This indicates a stable response to the change in body position within the MoveSpan Functional Age test."
+    },
+
+    "Good":{
+      range:"Pulse increase: 11–16 bpm",
+      copy:
+        "Your pulse increased moderately after standing. This is generally a good response within the MoveSpan Functional Age test."
+    },
+
+    "Fair":{
+      range:"Pulse increase: 17–24 bpm",
+      copy:
+        "Your pulse increased more noticeably after standing. Repeat the test under similar resting conditions if you want to confirm the result."
+    },
+
+    "Needs attention":{
+      range:"Pulse increase: 25+ bpm",
+      copy:
+        "Your pulse increased substantially after standing. Consider repeating the measurement when well rested. If standing regularly causes dizziness, faintness, or discomfort, discuss it with a healthcare professional."
+    }
+  };
+
+  function openOrthoInterpretation(){
+    const status=resultBadge.textContent.trim().replace(/›/g,"").trim();
+    const item=orthoInterpretations[status];
+
+    orthoResultModalTitle.textContent=status;
+
+    if(item){
+      orthoResultModalRange.textContent=item.range;
+      orthoResultModalCopy.textContent=item.copy;
+    }else{
+      orthoResultModalRange.textContent="";
+      orthoResultModalCopy.textContent=
+        "This status summarizes how your pulse changed after standing.";
+    }
+
+    orthoResultOverlay.classList.add("open");
+    orthoResultOverlay.setAttribute("aria-hidden","false");
+    document.body.style.overflow="hidden";
+  }
+
+  function closeOrthoInterpretation(){
+    orthoResultOverlay.classList.remove("open");
+    orthoResultOverlay.setAttribute("aria-hidden","true");
+    document.body.style.overflow="";
+  }
+
+  resultBadge.addEventListener("click",openOrthoInterpretation);
+  orthoResultClose.addEventListener("click",closeOrthoInterpretation);
+
+  orthoResultOverlay.addEventListener("click",e=>{
+    if(e.target===orthoResultOverlay){
+      closeOrthoInterpretation();
+    }
+  });
+
+  document.addEventListener("keydown",e=>{
+    if(e.key==="Escape" && orthoResultOverlay.classList.contains("open")){
+      closeOrthoInterpretation();
+    }
+  });
+
+  // ===== screen navigation =====
+
+  startBtn.onclick=()=>show("rest");
+
+  profileIntroBtn.onclick=()=>location.href=PROFILE_URL;
+  profileBtn.onclick=()=>location.href=PROFILE_URL;
+  nextBtn.onclick=()=>location.href=NEXT_URL;
+
+  backBtn.onclick=function(){
+    if(current==="intro"){
+      location.href=PROFILE_URL;
+      return;
+    }
+
+    if(current==="rest"){
+      show("intro");
+      return;
+    }
+
+    if(current==="rest-manual"){
+      openMethod("rest","device");
+      return;
+    }
+
+    if(current==="standing-manual"){
+      openMethod("standing","device");
+      return;
+    }
+
+    if(current==="standing"){
+      show("rest");
+      return;
+    }
+
+    if(current==="result"){
+      show("standing");
+    }
+  };
+
+  formatRest();
+  formatStanding();
+
+  restPulseCard.hidden=true;
+  standingPulseCard.hidden=true;
+
+  resetManual("rest");
+  resetManual("standing");
+
+  openMethod("rest","device");
+  openMethod("standing","device");
+
+  show("intro");
 })();
 </script>
 </body>
