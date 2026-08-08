@@ -1,334 +1,774 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Breath Hold — After Inhale | MoveSpan</title>
-
-<link rel="stylesheet" href="/assets/css/movespan-navigation.css">
-<link rel="stylesheet" href="/assets/css/movespan-functional-age.css">
-<style>
-html,body{margin:0;min-height:100%;background:#F6F7F8}
-body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-.fa-measurement-shell{
-  width:100%;
-  max-width:430px;
-  min-height:100vh;
-  margin:0 auto;
-  padding:calc(env(safe-area-inset-top) + 10px) 16px calc(env(safe-area-inset-bottom) + 40px);
-  box-sizing:border-box;
-  background:#F6F7F8;
-}
-.fa-measurement-progress{
-  height:7px;
-  margin:0 0 16px;
-  border-radius:999px;
-  overflow:hidden;
-  background:#EDF0EE;
-}
-.fa-measurement-progress > div{
-  height:100%;
-  border-radius:999px;
-  background:#2D7D52;
-}
-.fa-measurement-title{
-  margin:0 0 8px;
-  color:#1D1F1E;
-  font-size:28px;
-  line-height:1.16;
-  font-weight:700;
-  letter-spacing:-.03em;
-}
-.fa-measurement-sub{
-  margin:0 0 18px;
-  color:#667085;
-  font-size:15px;
-  line-height:1.55;
-}
-.fa-measurement-card{
-  margin:0 0 18px;
-  padding:16px;
-  border:1px solid #DDE3E0;
-  border-radius:16px;
-  background:#FFFFFF;
-  box-shadow:0 2px 8px rgba(0,0,0,.055);
-}
-.fa-measurement-safety{
-  margin:0 0 18px;
-  padding:14px 16px;
-  border-radius:16px;
-  background:#FBF3DF;
-  color:#76581C;
-  font-size:13px;
-  line-height:1.5;
-}
-.fa-timer-box{
-  margin:0 0 14px;
-  padding:20px 12px;
-  border-radius:16px;
-  background:#FFFFFF;
-  border:1px solid #DDE3E0;
-  text-align:center;
-}
-.fa-timer-value{
-  color:#1D1F1E;
-  font-size:58px;
-  line-height:1;
-  font-weight:700;
-  letter-spacing:-.04em;
-}
-.fa-timer-unit{
-  margin-top:8px;
-  color:#667085;
-  font-size:13px;
-}
-.fa-timer-button{
-  width:100%;
-  min-height:52px;
-  padding:10px 12px;
-  border:0;
-  border-radius:13px;
-  background:#B46F43;
-  color:#FFFFFF;
-  font-size:14px;
-  line-height:1.4;
-  font-weight:700;
-  cursor:pointer;
-  box-sizing:border-box;
-}
-.fa-timer-button.secondary{
-  margin-top:9px;
-  border:1px solid #D8B7A0;
-  background:#F4E7DD;
-  color:#B46F43;
-}
-.fa-measurement-input{
-  width:100%;
-  min-height:52px;
-  padding:10px 12px;
-  border:1px solid #E0E5E2;
-  border-radius:13px;
-  background:#FFFFFF;
-  color:#1D1F1E;
-  font-size:20px;
-  box-sizing:border-box;
-  outline:none;
-}
-.fa-measurement-input:focus{
-  border-color:#9BC2AC;
-  box-shadow:0 0 0 3px rgba(45,125,82,.08);
-}
-.fa-result-value{
-  margin:18px 0 8px;
-  color:#1D1F1E;
-  font-size:52px;
-  line-height:1;
-  font-weight:700;
-  letter-spacing:-.04em;
-  text-align:center;
-}
-.fa-result-unit{
-  color:#667085;
-  font-size:14px;
-  text-align:center;
-}
-.fa-result-badge{
-  display:table;
-  margin:16px auto;
-  padding:7px 14px;
-  border-radius:999px;
-  font-size:14px;
-  font-weight:700;
-}
-.fa-status-excellent{background:#E7F3EC;color:#2D7D52}
-.fa-status-good{background:#E8F2F4;color:#347A8A}
-.fa-status-fair{background:#FBF3DF;color:#A87922}
-.fa-status-attention{background:#FBEDE5;color:#B76638}
-.fa-result-copy{
-  margin:0 0 18px;
-  color:#667085;
-  font-size:14px;
-  line-height:1.55;
-  text-align:center;
-}
-.fa-secondary-button{
-  width:100%;
-  min-height:52px;
-  margin-top:9px;
-  padding:10px 12px;
-  border:1px solid #E0E5E2;
-  border-radius:13px;
-  background:#FFFFFF;
-  color:#2D7D52;
-  font-size:14px;
-  line-height:1.4;
-  font-weight:700;
-  box-sizing:border-box;
-  cursor:pointer;
-}
-@media(min-width:431px){body{background:#EEF1EF}}
-</style>
-
-</head>
-<body>
-<main class="fa-measurement-shell">
-
-<div class="movespan-page-header functional-test-header">
-  <button class="functional-back-button" id="backButton" type="button" aria-label="Back">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M15 18l-6-6 6-6"></path>
-    </svg>
-  </button>
-  <div class="movespan-page-header-title">Functional Age Test</div>
-  <div class="movespan-page-header-spacer"></div>
-</div>
-
-
-<div class="fa-measurement-progress"><div style="width:70%"></div></div>
-
-<section class="functional-screen-stage fa-screen active" id="screen-intro">
-  <div class="fa-step-label">FUNCTIONAL AGE PROFILE</div>
-  <h1 class="fa-measurement-title">Breath Hold — After Inhale</h1>
-  <p class="fa-measurement-sub">
-    This measurement looks at how comfortably you can hold your breath after a normal deep inhale.
-  </p>
-
-  <div class="fa-instruction-card">
-    <p><strong>How to perform the test</strong></p>
-    <p style="margin-top:8px">
-      Take 1–3 slow, deep breaths. Then inhale comfortably, hold your breath,
-      and stop the timer when you need to breathe.
-    </p>
-    <p class="fa-instruction-note">
-      Do not hyperventilate before the test.
-    </p>
-  </div>
-
-  <div class="fa-measurement-safety">
-    Stop immediately if you feel dizzy or uncomfortable.
-  </div>
-
-  <button class="fa-primary-button" id="startBtn">Start Test →</button>
-  <button class="fa-secondary-button" id="profileIntroBtn">Back to Functional Age Profile</button>
-</section>
-
-<section class="functional-screen-stage fa-screen" id="screen-test" style="display:none">
-  <div class="fa-step-label">FUNCTIONAL AGE PROFILE</div>
-  <h1 class="fa-measurement-title">Breath Hold — After Inhale</h1>
-  <p class="fa-measurement-sub">Take a comfortable inhale, then start the timer.</p>
-
-  <div class="fa-timer-box">
-    <div class="fa-timer-value" id="timerValue">0.0</div>
-    <div class="fa-timer-unit">seconds</div>
-  </div>
-
-  <button class="fa-timer-button" id="timerBtn">Start Breath Hold</button>
-</section>
-
-<section class="functional-screen-stage fa-screen" id="screen-result" style="display:none">
-  <div class="fa-step-label">FUNCTIONAL AGE PROFILE</div>
-  <h1 class="fa-measurement-title">Your Result</h1>
-
-  <div class="fa-result-value" id="resultValue">0.0</div>
-  <div class="fa-result-unit">seconds</div>
-  <div class="fa-result-badge fa-status-good" id="resultBadge">Good</div>
-  <div class="fa-result-copy" id="resultCopy"></div>
-
-  <button class="fa-primary-button" id="saveBtn">Save Result</button>
-  <button class="fa-primary-button" id="nextBtn" disabled style="margin-top:9px">Next Measurement →</button>
-  <button class="fa-secondary-button" id="profileBtn" disabled>Back to Functional Age Profile</button>
-</section>
-</main>
-
-<script>
-(function(){
-  const STORAGE_KEY="ms_functional_measurements";
-  const intro=document.getElementById("screen-intro");
-  const test=document.getElementById("screen-test");
-  const result=document.getElementById("screen-result");
-
-  let current="intro";
-  let running=false;
-  let startedAt=0;
-  let timer=null;
-  let seconds=0;
-
-  function show(el,name){
-    [intro,test,result].forEach(x=>x.style.display="none");
-    el.style.display="block";
-    current=name;
-    scrollTo(0,0);
-  }
-
-  function classify(sec){
-    if(sec>=60)return["Excellent",20,"fa-status-excellent","Your breath-hold capacity is excellent."];
-    if(sec>=45)return["Good",35,"fa-status-good","Your breath-hold capacity is good."];
-    if(sec>=30)return["Fair",50,"fa-status-fair","Your breath-hold capacity is moderate."];
-    return["Needs attention",70,"fa-status-attention","Your breath-hold capacity is currently limited."];
-  }
-
-  startBtn.onclick=()=>show(test,"test");
-
-  timerBtn.onclick=function(){
-    if(!running){
-      running=true;
-      startedAt=performance.now();
-      this.textContent="Stop";
-      timer=setInterval(()=>{
-        seconds=(performance.now()-startedAt)/1000;
-        timerValue.textContent=seconds.toFixed(1);
-      },100);
-      return;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Breath Hold — After Inhale | MoveSpan</title>
+  <link rel="stylesheet" href="assets/css/movespan-functional-age.css" />
+  <style>
+    :root{
+      --green:#2D7D52;
+      --green-soft:#BFDCCB;
+      --green-soft-2:#E6F2EB;
+      --text:#17181C;
+      --muted:#667085;
+      --border:#D7DFD8;
+      --card:#FFFFFF;
+      --bg:#F3F5F2;
+      --warn-bg:#EEE7D5;
+      --warn-text:#8A6926;
+      --orange:#B56F42;
+      --orange-soft:#EED7C9;
+      --shadow:0 1px 4px rgba(0,0,0,.045);
     }
 
-    clearInterval(timer);
-    running=false;
-    seconds=(performance.now()-startedAt)/1000;
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    body{padding:24px 12px}
+    .page{
+      width:100%;
+      max-width:430px;
+      margin:0 auto;
+      background:#F7F9F6;
+      border-radius:28px;
+      padding:18px 18px 22px;
+    }
 
-    const r=classify(seconds);
-    resultValue.textContent=seconds.toFixed(1);
-    resultBadge.textContent=r[0];
-    resultBadge.className="fa-result-badge "+r[2];
-    resultCopy.textContent=r[3];
-    window.__breath={seconds:seconds,status:r[0],score:r[1]};
+    .movespan-page-header{
+      display:grid;
+      grid-template-columns:44px 1fr 44px;
+      align-items:center;
+      gap:10px;
+      margin-bottom:16px;
+    }
+    .movespan-page-header-title{
+      text-align:center;
+      font-size:17px;
+      line-height:1.25;
+      font-weight:700;
+      color:var(--text);
+    }
+    .movespan-page-header-spacer{width:44px;height:44px}
 
-    show(result,"result");
-  };
+    .movespan-back{
+      width:44px;
+      height:44px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--green);
+      text-decoration:none;
+      -webkit-tap-highlight-color:transparent;
+      background:transparent;
+      border:none;
+      border-radius:0;
+      box-shadow:none;
+      padding:0;
+      appearance:none;
+      cursor:pointer;
+    }
+    .movespan-back svg{width:24px;height:24px}
+    .movespan-back path{
+      stroke:currentColor;
+      stroke-width:2.2;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+      fill:none;
+    }
+    .movespan-back:focus-visible{
+      outline:none;
+      box-shadow:0 0 0 3px rgba(45,125,82,.18);
+      border-radius:10px;
+    }
 
-  saveBtn.onclick=function(){
-    const r=window.__breath;
-    if(!r)return;
+    .progress{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin:4px 0 18px;
+    }
+    .progress span{
+      height:8px;
+      flex:1;
+      border-radius:999px;
+      background:#DDE4DD;
+      overflow:hidden;
+    }
+    .progress span.active{background:var(--green)}
 
-    let data={};
-    try{data=JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}")}catch(e){}
+    .fa-step-label{
+      margin:0 0 12px;
+      font-size:17px;
+      line-height:1.2;
+      font-weight:800;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--green);
+    }
 
-    data["breath-inhale"]={
-      completed:true,
-      score:r.score,
-      value:r.seconds,
-      seconds:r.seconds,
-      status:r.status,
-      label:"Breath Hold — After Inhale",
-      system:"Respiratory",
-      doneAt:new Date().toISOString()
-    };
+    .fa-measurement-h1{
+      margin:0 0 14px;
+      font-size:32px;
+      line-height:1.06;
+      font-weight:800;
+      letter-spacing:-.03em;
+      color:var(--text);
+    }
 
-    localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
-    this.textContent="Saved ✓";
-    this.disabled=true;
-    nextBtn.disabled=false;
-    profileBtn.disabled=false;
-  };
+    .fa-measurement-subtitle{
+      margin:0 0 18px;
+      font-size:16px;
+      line-height:1.5;
+      color:var(--muted);
+    }
 
-  nextBtn.onclick=()=>location.href="orthostatic-response.html";
-  profileBtn.onclick=profileIntroBtn.onclick=()=>location.href="functional-age-profile.html";
+    .helper-card,
+    .warning-card{
+      border-radius:22px;
+      padding:18px;
+      margin:0 0 18px;
+    }
 
-  backButton.onclick=()=>{
-    if(current==="intro")location.href="functional-age-profile.html";
-    else if(current==="test")show(intro,"intro");
-    else show(test,"test");
-  };
-})();
-</script>
+    .helper-card{
+      background:#EEF2EF;
+      border:1px solid #E2E8E2;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.55;
+    }
+
+    .warning-card{
+      background:var(--warn-bg);
+      color:var(--warn-text);
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .screen{display:none}
+    .screen.active{display:block}
+
+    .circle-wrap{
+      margin:16px auto 18px;
+      width:min(78vw,320px);
+      max-width:320px;
+    }
+
+    .circle-button{
+      width:100%;
+      aspect-ratio:1 / 1;
+      position:relative;
+      border-radius:50%;
+      border:4px solid var(--green-soft);
+      background:linear-gradient(180deg,#F8FBF8 0%, #F2F6F2 100%);
+      box-shadow:inset 0 0 0 10px rgba(255,255,255,.55);
+      padding:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      transition:border-color .2s ease, box-shadow .2s ease, transform .08s ease;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .circle-button:active{transform:scale(.995)}
+    .circle-button.ready{
+      border-color:var(--green-soft);
+      box-shadow:
+        inset 0 0 0 10px rgba(255,255,255,.55),
+        0 0 0 1px rgba(45,125,82,.04);
+    }
+    .circle-button.running{
+      border-color:var(--orange);
+      box-shadow:
+        inset 0 0 0 10px rgba(255,255,255,.55),
+        0 0 0 10px rgba(181,111,66,.10);
+    }
+    .circle-inner{
+      width:100%;
+      height:100%;
+      border-radius:50%;
+      border:2px solid #D8E2DA;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:22px;
+      background:rgba(255,255,255,.45);
+    }
+    .circle-center{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+    }
+    .circle-value{
+      font-size:clamp(64px,18vw,92px);
+      line-height:.92;
+      font-weight:780;
+      letter-spacing:-.06em;
+      color:var(--green);
+    }
+    .circle-unit{
+      font-size:17px;
+      line-height:1.2;
+      color:var(--muted);
+    }
+    .circle-hint{
+      font-size:15px;
+      line-height:1.2;
+      font-weight:700;
+      color:var(--green);
+    }
+    .circle-button.running .circle-hint{color:var(--orange)}
+    .circle-button.running .circle-value{color:var(--orange)}
+
+    .text-link{
+      width:100%;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:none;
+      border:none;
+      padding:6px 0 0;
+      font-size:15px;
+      line-height:1.3;
+      font-weight:700;
+      color:var(--green);
+      cursor:pointer;
+      text-decoration:none;
+    }
+
+    .fa-primary-button{
+      width:100%;
+      min-height:56px;
+      margin:0;
+      padding:10px 12px;
+      border:0;
+      border-radius:18px;
+      background:#2D7D52;
+      color:#FFFFFF;
+      box-shadow:0 1px 4px rgba(0,0,0,.045);
+      font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      font-size:14px;
+      line-height:1.4;
+      font-weight:700;
+      text-align:center;
+      text-decoration:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-sizing:border-box;
+      cursor:pointer;
+    }
+    .fa-primary-button:active{transform:translateY(1px)}
+    .fa-primary-button:disabled{
+      border:1px solid #BFDCCB;
+      background:#E6F2EB;
+      color:#5F8E72;
+      box-shadow:none;
+      cursor:not-allowed;
+    }
+
+    .fa-outline-button{
+      width:100%;
+      min-height:56px;
+      margin:9px 0 0;
+      padding:10px 12px;
+      border:1.5px solid var(--border);
+      border-radius:18px;
+      background:#fff;
+      color:var(--green);
+      font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      font-size:14px;
+      line-height:1.4;
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      cursor:pointer;
+      box-sizing:border-box;
+    }
+
+    .timer-accent{
+      background:var(--orange);
+      color:#fff;
+    }
+    .timer-accent:disabled{
+      background:#EAD7CA;
+      border:1px solid #EAD7CA;
+      color:#9B6F53;
+    }
+
+    .result-value{
+      margin:8px 0 4px;
+      font-size:76px;
+      line-height:1;
+      font-weight:800;
+      letter-spacing:-.04em;
+      color:var(--text);
+      text-align:center;
+    }
+    .result-unit{
+      margin:0 0 16px;
+      font-size:17px;
+      line-height:1.2;
+      color:var(--muted);
+      text-align:center;
+    }
+    .result-pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:999px;
+      margin:0 auto 16px;
+      font-size:16px;
+      font-weight:700;
+    }
+    .result-pill.excellent{background:#E6F2EB;color:#2D7D52}
+    .result-pill.good{background:#D9E8E3;color:#347A8A}
+    .result-pill.fair{background:#EEDFCA;color:#A87922}
+    .result-pill.attention{background:#EEDFD6;color:#B76638}
+    .result-copy{
+      margin:0 0 18px;
+      font-size:15px;
+      line-height:1.55;
+      color:var(--muted);
+      text-align:center;
+    }
+
+    .result-buttons{margin-top:8px}
+    .result-buttons .fa-primary-button + .fa-primary-button{margin-top:9px}
+
+    [hidden]{display:none !important}
+
+    /* MoveSpan measurement state:
+       green = ready / stopped
+       orange inner ring = active measurement */
+    .circle-button::after{
+      content:"";
+      position:absolute;
+      inset:14px;
+      border:5px solid transparent;
+      border-radius:50%;
+      pointer-events:none;
+      opacity:0;
+      transform:scale(.985);
+      transition:
+        opacity .18s ease,
+        border-color .18s ease,
+        transform .18s ease;
+    }
+
+    .circle-button.running::after,
+    .circle-button.paused::after{
+      border-color:var(--orange);
+      opacity:1;
+      transform:scale(1);
+    }
+
+    .circle-button.running .circle-value,
+    .circle-button.running .circle-hint,
+    .circle-button.paused .circle-value,
+    .circle-button.paused .circle-hint{
+      color:var(--orange);
+    }
+
+    .circle-button.ready .circle-value{
+      color:var(--green);
+    }
+
+    .circle-button.ready .circle-hint{
+      color:var(--green);
+    }
+
+
+    @media (max-width:390px){
+      .circle-wrap{
+        width:min(74vw,286px);
+      }
+      .circle-button::after{
+        inset:12px;
+        border-width:4px;
+      }
+    }
+
+
+    .prep-steps{
+      margin:20px 0 18px;
+      padding:18px;
+      border:1px solid #DDE3DF;
+      border-radius:22px;
+      background:#FFFFFF;
+    }
+
+    .prep-step{
+      display:grid;
+      grid-template-columns:40px 1fr;
+      gap:14px;
+      align-items:start;
+      margin-bottom:18px;
+      font-size:15px;
+      line-height:1.48;
+      color:var(--text);
+    }
+
+    .prep-step:last-child{
+      margin-bottom:0;
+    }
+
+    .prep-number{
+      width:32px;
+      height:32px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#E6F2EB;
+      color:var(--green);
+      font-size:15px;
+      font-weight:750;
+    }
+
+    #stoppedActions{
+      margin-top:18px;
+    }
+
+
+    .fa-secondary-button{
+      width:100%;
+      min-height:56px;
+      margin:9px 0 0;
+      padding:10px 12px;
+      border:1.5px solid #BFDCCB;
+      border-radius:18px;
+      background:#E6F2EB;
+      color:#2D7D52;
+      font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      font-size:16px;
+      line-height:1.4;
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      box-sizing:border-box;
+      cursor:pointer;
+    }
+
+    .fa-secondary-button:active{
+      transform:translateY(1px);
+    }
+
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="movespan-page-header">
+      <button class="movespan-back" id="backBtn" type="button" aria-label="Back">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M15 18l-6-6 6-6"></path>
+        </svg>
+      </button>
+      <div class="movespan-page-header-title">Functional Age Test</div>
+      <div class="movespan-page-header-spacer"></div>
+    </div>
+
+    <div class="progress" aria-hidden="true">
+      <span class="active"></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <section class="screen active" id="screen-intro">
+      <div class="fa-step-label">Additional Measurement · 1 of 4</div>
+
+      <h1 class="fa-measurement-h1">Breath Hold — Inhale</h1>
+
+      <p class="fa-measurement-subtitle">
+        Measure how long you can comfortably hold your breath after a full inhale.
+      </p>
+
+      <div class="prep-steps">
+        <div class="prep-step">
+          <div class="prep-number">1</div>
+          <div>Sit comfortably and rest for about 1–2 minutes.</div>
+        </div>
+
+        <div class="prep-step">
+          <div class="prep-number">2</div>
+          <div>Breathe normally. Do not hyperventilate before the test.</div>
+        </div>
+
+        <div class="prep-step">
+          <div class="prep-number">3</div>
+          <div>Take 1–3 slow, deep breaths. After your final comfortable inhale, hold your breath and tap the circle to start.</div>
+        </div>
+
+        <div class="prep-step">
+          <div class="prep-number">4</div>
+          <div>When you feel the need to breathe, tap the circle again to stop and record your result. Do not strain for extra seconds.</div>
+        </div>
+      </div>
+
+      <div class="warning-card">
+        Stay seated during the test. Stop immediately if you feel dizzy, faint, chest discomfort, or unusual distress.
+      </div>
+
+      <button class="fa-primary-button" id="startTestBtn" type="button">Start Test →</button>
+      <button class="fa-secondary-button" id="nextMeasurementBtn" type="button">Start Next Measurement →</button>
+      <button class="fa-outline-button" id="profileFromIntroBtn" type="button">Back to Functional Age Profile</button>
+    </section>
+
+    <section class="screen" id="screen-measure">
+      <div class="fa-step-label">Breath Hold — After Inhale</div>
+
+      <h1 class="fa-measurement-h1">Prepare and hold</h1>
+
+      <p class="fa-measurement-subtitle">
+        Take 1–3 slow, deep breaths. After your final comfortable inhale, hold your breath and tap the circle. When you need to breathe, tap the circle again to stop.
+      </p>
+
+      <div class="circle-wrap">
+        <button class="circle-button ready" id="circleBtn" type="button" aria-label="Breath hold timer">
+          <div class="circle-inner">
+            <div class="circle-center">
+              <div class="circle-value" id="circleValue">0.0</div>
+              <div class="circle-unit">seconds</div>
+              <div class="circle-hint" id="circleHint">Tap to start</div>
+            </div>
+          </div>
+        </button>
+      </div>
+
+      <div id="stoppedActions" hidden>
+        <button class="fa-primary-button" id="confirmAttemptBtn" type="button">Save Result</button>
+        <button class="fa-outline-button" id="tryAgainBtn" type="button">Try Again</button>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-result">
+      <div class="fa-step-label">Functional Age Profile</div>
+      <h1 class="fa-measurement-h1">Your Result</h1>
+
+      <div class="result-value" id="resultValue">0.0</div>
+      <div class="result-unit">seconds</div>
+
+      <div style="display:flex;justify-content:center">
+        <div class="result-pill attention" id="resultPill">Needs attention</div>
+      </div>
+
+      <p class="result-copy" id="resultCopy"></p>
+
+      <div class="warning-card">
+        After ending the breath hold, exhale slowly and gently. Take a few calm breaths and allow your breathing to return to normal before continuing.
+      </div>
+
+      <div class="result-buttons">
+        <button class="fa-outline-button" id="resultRetryBtn" type="button">Measure Breath Hold</button>
+        <button class="fa-primary-button" id="nextBtn" type="button">Next Measurement →</button>
+        <button class="fa-outline-button" id="profileBtn" type="button">Back to Functional Age Profile</button>
+      </div>
+
+
+    </section>
+  </div>
+
+  <script>
+    (function(){
+      const STORAGE_KEY = "ms_functional_measurements";
+      const PROFILE_URL = "functional-age-profile.html";
+
+      const intro = document.getElementById("screen-intro");
+      const measure = document.getElementById("screen-measure");
+
+      const backBtn = document.getElementById("backBtn");
+      const startTestBtn = document.getElementById("startTestBtn");
+      const profileFromIntroBtn = document.getElementById("profileFromIntroBtn");
+      const nextMeasurementBtn = document.getElementById("nextMeasurementBtn");
+
+      const circleBtn = document.getElementById("circleBtn");
+      const circleValue = document.getElementById("circleValue");
+      const circleHint = document.getElementById("circleHint");
+
+      const stoppedActions = document.getElementById("stoppedActions");
+      const confirmAttemptBtn = document.getElementById("confirmAttemptBtn");
+      const tryAgainBtn = document.getElementById("tryAgainBtn");
+
+      let currentScreen = "intro";
+      let running = false;
+      let startedAt = 0;
+      let elapsedMs = 0;
+      let rafId = null;
+      let stoppedSeconds = 0;
+
+      function show(name){
+        currentScreen = name;
+        intro.classList.toggle("active", name === "intro");
+        measure.classList.toggle("active", name === "measure");
+      }
+
+      function secondsText(){
+        return (elapsedMs / 1000).toFixed(1);
+      }
+
+      function resetAttempt(){
+        running = false;
+
+        if (rafId){
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+
+        startedAt = 0;
+        elapsedMs = 0;
+        stoppedSeconds = 0;
+
+        circleValue.textContent = "0.0";
+        circleHint.textContent = "Tap to start";
+
+        circleBtn.classList.remove("running", "paused");
+        circleBtn.classList.add("ready");
+
+        stoppedActions.hidden = true;
+
+        confirmAttemptBtn.disabled = false;
+        confirmAttemptBtn.textContent = "Save Result";
+      }
+
+      function tick(now){
+        if (!running) return;
+
+        elapsedMs = now - startedAt;
+        circleValue.textContent = secondsText();
+
+        rafId = requestAnimationFrame(tick);
+      }
+
+      function startAttempt(){
+        resetAttempt();
+
+        running = true;
+        startedAt = performance.now();
+
+        circleBtn.classList.remove("ready");
+        circleBtn.classList.add("running");
+
+        circleHint.textContent = "Tap to stop";
+
+        rafId = requestAnimationFrame(tick);
+      }
+
+      function stopAttempt(){
+        if (!running) return;
+
+        running = false;
+
+        if (rafId){
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+
+        elapsedMs = performance.now() - startedAt;
+        stoppedSeconds = Number((elapsedMs / 1000).toFixed(1));
+
+        circleValue.textContent = stoppedSeconds.toFixed(1);
+        circleHint.textContent = "Attempt complete";
+
+        circleBtn.classList.remove("running", "paused");
+        circleBtn.classList.add("ready");
+
+        stoppedActions.hidden = false;
+      }
+
+      function saveResult(){
+        if (stoppedSeconds <= 0) return;
+
+        let data = {};
+
+        try{
+          data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+        }catch(e){
+          data = {};
+        }
+
+        let status = "Needs attention";
+        let score = 70;
+
+        if (stoppedSeconds >= 60){
+          status = "Excellent";
+          score = 20;
+        }else if (stoppedSeconds >= 45){
+          status = "Good";
+          score = 35;
+        }else if (stoppedSeconds >= 30){
+          status = "Fair";
+          score = 50;
+        }
+
+        data["breath-inhale"] = {
+          completed: true,
+          score: score,
+          value: stoppedSeconds,
+          seconds: stoppedSeconds,
+          status: status,
+          label: "Breath Hold — After Inhale",
+          system: "Respiratory",
+          doneAt: new Date().toISOString()
+        };
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+
+        confirmAttemptBtn.textContent = "Saved ✓";
+        confirmAttemptBtn.disabled = true;
+
+        setTimeout(function(){
+          resetAttempt();
+          show("intro");
+        }, 300);
+      }
+
+      circleBtn.addEventListener("click", function(){
+        if (running){
+          stopAttempt();
+        }else if (stoppedSeconds === 0){
+          startAttempt();
+        }
+      });
+
+      tryAgainBtn.addEventListener("click", function(){
+        resetAttempt();
+      });
+
+      confirmAttemptBtn.addEventListener("click", saveResult);
+
+      startTestBtn.addEventListener("click", function(){
+        resetAttempt();
+        show("measure");
+      });
+
+      nextMeasurementBtn.addEventListener("click", function(){
+        window.location.href = "orthostatic-response.html";
+      });
+
+      profileFromIntroBtn.addEventListener("click", function(){
+        window.location.href = PROFILE_URL;
+      });
+
+      backBtn.addEventListener("click", function(){
+        if (currentScreen === "measure"){
+          resetAttempt();
+          show("intro");
+        }else{
+          window.location.href = PROFILE_URL;
+        }
+      });
+
+      resetAttempt();
+      show("intro");
+    })();
+  </script>
 </body>
 </html>

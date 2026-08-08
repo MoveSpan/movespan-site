@@ -439,3 +439,246 @@ MoveSpan must feel like ONE product.
 Moving between Home, Health, Assessments, Functional Age, Journal, Reset Break, Settings and Practice Player must not feel like moving between separately designed applications.
 
 Visual consistency is a product requirement.
+
+<!-- MOVESPAN MOBILE MEASUREMENT STANDARD START -->
+
+## MoveSpan Mobile Measurement UI
+
+Status: CANONICAL
+
+Reference implementation:
+`measure.html` — Breath Snapshot measurement flows.
+
+This standard applies to:
+
+- Breath Snapshot
+- Functional Age measurements
+- Body Assessments where measurements are interactive
+- future pulse, breathing, timer, repetition and tap-based measurements
+
+### Mobile Shell
+
+- max app width: 430px
+- horizontal page padding: 16px
+- centered on larger screens
+- safe-area aware
+- mobile geometry remains canonical on desktop
+
+### Circular Measurement Control
+
+Canonical responsive size:
+
+- normal maximum: approximately 310–320px
+- width controlled responsively with viewport units
+- aspect-ratio: 1 / 1
+- border-radius: 50%
+
+Small-screen fallback:
+
+- approximately 282–286px at <=390px where needed
+
+The circle is a primary touch target, not decoration.
+
+### Circular Measurement Typography
+
+Primary measurement value:
+
+- font-size: clamp(64px, 18vw, 92px)
+- heavy weight approximately 780
+- line-height approximately .92
+- tight negative letter-spacing
+
+Measurement unit:
+
+- 17px
+- weight 700
+
+Secondary timer/time value:
+
+- 17px
+- tabular numerals where appropriate
+
+Instruction inside or below circle:
+
+- 13px
+- weight 700
+- approximately 1.25 line-height
+
+### Circle State Colors
+
+Ready / inactive:
+
+- MoveSpan green: #2D7D52
+
+Active timing:
+
+- MoveSpan timer terracotta: #B46F43
+
+When a timed measurement starts:
+
+green -> terracotta
+
+When timing stops:
+
+terracotta -> green / result state
+
+Color changes indicate state.
+Geometry does not change.
+
+
+### Circular Control State Semantics
+
+The circular measurement control keeps the MoveSpan green structure visible in all states.
+
+**Ready**
+- green outer structure
+- no orange active ring
+
+**Running / active measurement**
+- green outer structure remains
+- a terracotta/orange ring appears inside the green circle
+- active measurement value/instruction may use the same terracotta accent
+
+Canonical active timer color:
+`#B46F43`
+
+**Paused**
+- when a measurement supports pause, the orange inner ring remains visible
+- this communicates that the current measurement session has not ended
+
+**Stopped / completed attempt**
+- orange active ring disappears
+- circular control returns to green
+- result is presented for review/save
+
+Orange therefore means:
+
+`measurement session is active`
+
+It is a state indicator, not a decorative alternate theme.
+
+### Measurement Cards
+
+Typical interactive/result cards:
+
+- radius: approximately 20–22px
+- padding: approximately 18–21px
+- white surface
+- subtle MoveSpan green border where appropriate
+- restrained shadow
+
+Canonical result card example:
+
+- padding: 21px
+- radius: 22px
+- subtle green-tinted border/shadow
+
+### Result Typography
+
+Primary result value:
+
+- approximately 54px
+- weight approximately 780
+- tight negative tracking
+
+Result unit:
+
+- approximately 14px
+- strong readable weight
+
+Result detail:
+
+- 14px
+- weight approximately 650
+
+Supporting result note:
+
+- 13px
+- line-height approximately 1.42
+
+### Primary Measurement Buttons
+
+Measurement flows use large mobile touch targets.
+
+Canonical target:
+
+- minimum height approximately 54–56px
+- radius approximately 17–18px
+- readable 15–16px text
+- full width where the action is primary
+
+Green:
+normal primary continuation
+
+Terracotta:
+active timer action where a circular control is not used
+
+### Restart Pattern
+
+A failed or unwanted attempt must be repeatable without leaving the measurement flow.
+
+Canonical label:
+
+`Start again`
+
+Restart:
+
+- clears the current unsaved attempt
+- resets timer/count
+- returns the measurement control to ready green
+- does not erase a previously saved result unless explicitly requested
+
+### Save Pattern
+
+Canonical:
+
+`Save Result`
+
+after success:
+
+`Saved ✓`
+
+Confirmation appears inside the initiating button.
+
+Do not add redundant saved-confirmation text below the button.
+
+### Result Navigation
+
+After saving:
+
+1. `Saved ✓`
+2. continuation to the next measurement
+3. return to the parent measurement/profile menu
+
+For Functional Age:
+
+- `Next Measurement →` or explicit next measurement name
+- `Back to Functional Age Profile`
+
+### Functional Age Relationship
+
+Functional Age does not define a separate visual measurement system.
+
+Functional Age uses this MoveSpan Mobile Measurement UI.
+
+Its measurement-specific differences are limited to:
+
+- measurement instructions
+- type of control
+- result logic
+- status interpretation
+
+It must reuse the same:
+
+- mobile shell
+- header
+- Back
+- typography hierarchy
+- circular controls
+- cards
+- buttons
+- result presentation
+- restart interaction
+- save interaction
+
+<!-- MOVESPAN MOBILE MEASUREMENT STANDARD END -->
